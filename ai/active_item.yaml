@@ -1,8 +1,24 @@
-id: null
-title: null
-goal: null
-status: idle
-owner_role: null
-related_files: []
-acceptance_criteria: []
-done_definition: []
+id: ITEM-0001
+title: Scaffold Django project tracker baseline
+goal: Establish the single-project Django skeleton under `apps/project-tracker/` with the tracker app wired into settings, URLs, templates, and static assets.
+status: in_progress
+owner_role: DEV
+related_files:
+  - apps/project-tracker/manage.py
+  - apps/project-tracker/project_tracker/settings.py
+  - apps/project-tracker/project_tracker/urls.py
+  - apps/project-tracker/tracker/apps.py
+  - apps/project-tracker/tracker/urls.py
+  - apps/project-tracker/templates/tracker/base.html
+  - apps/project-tracker/static/tracker/app.css
+  - apps/project-tracker/static/tracker/app.js
+acceptance_criteria:
+  - Django project files exist under `apps/project-tracker/` and run as a single project with one main `tracker` app.
+  - Settings are configured for SQLite, templates, and static files within the approved project structure.
+  - Root URLconf includes the tracker app URLconf and a baseline route that can render a tracker template.
+  - Shared base template and static assets are wired so later views can extend them without restructuring.
+done_definition:
+  - Project skeleton is committed in code with no extra packages or speculative app splits.
+  - `tracker` app is installed and reachable through the project URL configuration.
+  - Baseline template and static files load through Django's standard configuration.
+  - Any tests added for the scaffold pass locally, or the dev handoff notes state why tests were deferred for this slice.

@@ -1,16 +1,16 @@
 # Next Agent
 
-- Current role: `PLANNER`
-- Prompt: `ai/prompts/03-planner.md`
+- Current role: `DEV`
+- Prompt: `ai/prompts/04-dev.md`
 - Execution command for Codex sessions: **Follow `ai/next_agent.yaml` exactly.**
 - If role mismatch with `ai/active_agent.txt`, print: `WAITING FOR BATON`
 
 ## Handoff Notes
 
-- The architecture baseline is documented in `context/repo/architecture.md`.
-- Keep the implementation as one Django project under `apps/project-tracker/` with one main product app rather than splitting into multiple Django apps or platform layers.
-- Plan around server-rendered pages plus small async CRUD interactions. Prefer HTML partial responses for create, update, and delete flows; use JSON only where a partial would be needlessly awkward.
-- The planner should turn this into incremental items that establish project scaffolding first, then domain models/forms/admin, then page views/templates, then no-reload interaction wiring, then tests/validation.
-- Required user-facing views are dashboard, project list, project detail with tasks, and tag filter/detail.
-- Core model surface is intentionally small: `Project`, `Task`, and `Tag` with direct Django ORM relationships and SQLite-backed aggregates for dashboard counts.
-- No clarification or exception was needed. `ai/user-questions.yaml` remains `status: none`, and `ai/decision-lock.yaml` remains unchanged.
+- Active item is `ITEM-0001`: scaffold the Django project baseline under `apps/project-tracker/`.
+- Create one Django project and one main `tracker` app only. Do not introduce DRF, extra pip packages, multiple Django apps, or speculative service layers.
+- Start with the skeleton in the architecture doc: `manage.py`, `project_tracker/` settings and URLs, `tracker/` app config and URLs, plus `templates/tracker/base.html` and `static/tracker/app.css` / `app.js`.
+- Wire SQLite, templates, and static assets in standard Django configuration so later pages can extend the base without rework.
+- Provide at least one baseline route and template render so the scaffold is visibly connected end to end.
+- Keep future work in mind: later items will add domain models/forms/admin, then dashboard/list/detail/tag pages, then async partial-based CRUD, then tests and validation.
+- No clarification or exception was needed. Leave `ai/user-questions.yaml` at `status: none` unless execution uncovers a real blocker.
