@@ -1,0 +1,1436 @@
+Script started on 2026-03-11 23:35:15-05:00 [COMMAND="codex exec --model gpt-5.4 --full-auto Follow\ ai/next_agent.yaml\ exactly. " TERM="xterm-256color" TTY="/dev/pts/0" COLUMNS="184" LINES="43"]
+OpenAI Codex v0.114.0 (research preview)
+--------
+[1mworkdir:[0m /home/sundaram/code/temp/test
+[1mmodel:[0m gpt-5.4
+[1mprovider:[0m openai
+[1mapproval:[0m never
+[1msandbox:[0m workspace-write [workdir, /tmp, $TMPDIR, /home/sundaram/.codex/memories]
+[1mreasoning effort:[0m medium
+[1mreasoning summaries:[0m none
+[1msession id:[0m 019ce053-d019-7052-b899-7c1dbccace8d
+--------
+[36muser[0m
+Follow ai/next_agent.yaml exactly.
+[36mmcp startup:[0m no servers
+[35m[3mcodex[0m[0m
+I’m going to inspect `ai/next_agent.yaml` and any local instructions it references, then I’ll execute the workflow it specifies as closely as possible.
+[35m[3mexec[0m[0m
+[1m/bin/bash -lc pwd[0m in /home/sundaram/code/temp/test[32m succeeded in 0ms:[0m
+[2m/home/sundaram/code/temp/test[0m
+[35m[3mexec[0m[0m
+[1m/bin/bash -lc 'rg --files'[0m in /home/sundaram/code/temp/test[32m succeeded in 0ms:[0m
+[2mpoetry.lock
+ai/next_agent.yaml
+ai/backlog.yaml
+ai/goal.yaml
+ai/requirements.md
+ai/logs/step-008-DEV.log
+ai/logs/step-003-ARCHITECT.log
+ai/logs/step-008-PLANNER.log
+ai/logs/step-006-VALIDATOR.log
+ai/logs/step-005-VALIDATOR.log
+ai/logs/step-002-VALIDATOR.log
+ai/logs/step-002-REVIEWER.log
+ai/logs/step-009-REVIEWER.log
+ai/logs/step-007-REVIEWER.log
+ai/logs/step-006-REVIEWER.log
+ai/logs/step-007-DEV.log
+ai/logs/step-002-DEV.log
+ai/logs/step-009-DEV.log
+ai/logs/step-001-DEV.log
+ai/logs/step-002-PLANNER.log[0m
+[35m[3mcodex[0m[0m
+I have the repository layout. Next I’m reading the baton files and the exact `next_agent` instructions so I can execute the required step rather than guessing.
+[35m[3mexec[0m[0m
+[1m/bin/bash -lc "sed -n '1,220p' ai/next_agent.yaml"[0m in /home/sundaram/code/temp/test[35m[3mexec[0m[0m
+[1m/bin/bash -lc "sed -n '1,220p' ai/next_agent.md"[0m in /home/sundaram/code/temp/test[32m succeeded in 0ms:[0m
+[2mnext_role: PLANNER
+prompt_file: ai/prompts/03-planner.md
+read:
+  - ai/backlog.yaml
+  - ai/active_item.yaml
+  - ai/goal.yaml
+  - ai/decision-lock.yaml
+  - ai/review.md
+  - ai/constitution.yaml
+  - ai/active_agent.txt
+  - ai/next_agent.md
+  - ai/user-questions.yaml
+allowed_edits:
+  - ai/backlog.yaml
+  - ai/active_item.yaml
+  - ai/decision-lock.yaml
+  - ai/user-questions.yaml
+  - ai/iterations/ITER-0001.md
+  - ai/active_agent.txt
+  - ai/next_agent.yaml[0m
+[32m succeeded in 0ms:[0m
+[2m# Next Agent
+
+- Current role: `PLANNER`
+- Prompt: `ai/prompts/03-planner.md`
+- Execution command for Codex sessions: **Follow `ai/next_agent.yaml` exactly.**
+
+## Handoff Summary
+
+- `ITEM-0008` is accepted and marked done.
+- [README.md](/home/sundaram/code/temp/test/apps/project-tracker/README.md) now matches the locked `pyenv` plus Poetry workflow, stays project-local under `apps/project-tracker/`, preserves the `manage.py` entrypoint, and retains the exact `ModuleNotFoundError: No module named 'django'` caveat as an environment/setup issue.
+- Reviewer confirmed the documented verification path in the current workspace:
+  - `python3 -m py_compile $(find apps/project-tracker -name '*.py' | sort)`
+  - `poetry run python apps/project-tracker/manage.py test tracker.tests.test_domain tracker.tests.test_views` with 36 tests green
+
+## Planning Focus
+
+- Select the next backlog decision now that `ITEM-0008` is complete.
+- Keep the locked stack and tooling constraints unchanged unless a later item explicitly requires a decision update.[0m
+[35m[3mexec[0m[0m
+[1m/bin/bash -lc "sed -n '1,220p' AGENTS.md"[0m in /home/sundaram/code/temp/test[31m exited 2 in 0ms:[0m
+[2msed: can't read AGENTS.md: No such file or directory[0m
+[35m[3mcodex[0m[0m
+`ai/next_agent.yaml` makes this a planning step. I’m loading the planning prompt and the current baton state, then I’ll update only the allowed baton files for the next handoff.
+[35m[3mexec[0m[0m
+[1m/bin/bash -lc "sed -n '1,260p' ai/backlog.yaml"[0m in /home/sundaram/code/temp/test[35m[3mexec[0m[0m
+[1m/bin/bash -lc "sed -n '1,260p' ai/prompts/03-planner.md"[0m in /home/sundaram/code/temp/test[32m succeeded in 0ms:[0m
+[2mitems:
+  - id: ITEM-0001
+    title: Scaffold Django project tracker baseline
+    goal: Establish the single-project Django skeleton under `apps/project-tracker/` with the tracker app wired into settings, URLs, templates, and static assets.
+    type: feature
+    status: done
+    priority: high
+    dependencies: []
+    notes:
+      - Keep one Django project with one main `tracker` app.
+      - Create the baseline file structure for settings, root URLs, app URLs, templates, and static assets.
+      - Include a base template and shared asset wiring that later CRUD pages can extend.
+  - id: ITEM-0002
+    title: Implement tracker domain models and forms
+    goal: Add `Project`, `Task`, and `Tag` models, related forms, admin registration, and database migrations that match the approved domain surface.
+    type: feature
+    status: done
+    priority: high
+    dependencies:
+      - ITEM-0001[0m
+[32m succeeded in 0ms:[0m
+[2m# ROLE: PLANNER
+
+## 1) Baton check
+- Read `ai/active_agent.txt`.
+- If value is not exactly `PLANNER`, output exactly:
+`WAITING FOR BATON`
+- Stop.
+
+## 2) Required reads
+- `ai/goal.yaml`
+- `ai/backlog.yaml`
+- `ai/active_item.yaml`
+- `ai/decision-lock.yaml`
+- `ai/user-questions.yaml`
+- `ai/constitution.yaml`
+- `ai/review.md`
+- `ai/next_agent.md`
+
+## 3) Allowed edits (only)
+- `ai/backlog.yaml`[0m
+[35m[3mexec[0m[0m
+[1m/bin/bash -lc "sed -n '1,260p' ai/active_item.yaml"[0m in /home/sundaram/code/temp/test[35m[3mexec[0m[0m
+[1m/bin/bash -lc "sed -n '1,260p' ai/goal.yaml"[0m in /home/sundaram/code/temp/test[32m succeeded in 0ms:[0m
+[2mid: ITEM-0008
+title: Document local setup and verification workflow
+goal: "Add concise project-local documentation under `apps/project-tracker/` covering Django setup, test commands, and the known workspace limitation blocking runtime verification."
+status: done
+owner_role: REVIEWER
+related_files:
+  - apps/project-tracker/README.md
+  - apps/project-tracker/manage.py
+  - apps/project-tracker/project_tracker/settings.py
+acceptance_criteria:
+  - "A project-local README or equivalent doc is added under `apps/project-tracker/` with concrete setup steps for creating a Python environment, installing Django, applying migrations, and running the development server."
+  - "The documentation lists the focused verification commands for `py_compile` and the Django test modules currently used by the project."
+  - "The known workspace limitation is documented explicitly as `ModuleNotFoundError: No module named 'django'`, framed as an environment/setup issue rather than a tracker application defect."
+  - "The documentation stays aligned with the locked stack: Django, SQLite, and vanilla HTML/CSS/JS only."
+done_definition:
+  - "The new documentation reflects the current repository layout and existing `manage.py` entrypoint without inventing new tooling."
+  - "The listed commands are specific enough for a fresh local checkout to reproduce migrations, server startup, and focused test execution once Django is installed."
+  - "If DEV cannot run Django commands in the workspace, the handoff and review artifacts keep that runtime limitation visible."[0m
+[35m[3mexec[0m[0m
+[1m/bin/bash -lc "sed -n '1,260p' ai/review.md"[0m in /home/sundaram/code/temp/test[32m succeeded in 0ms:[0m
+[2mproject_goal: Build a personal project tracker web app using Django with a SQLite database and HTML/JS frontend
+success_criteria:
+  - Django REST endpoints for CRUD operations on projects, tasks, and tags
+  - Each project has a name, description, status (active/completed/archived), and created date
+  - Each task belongs to a project and has a title, status (todo/in_progress/done), priority (low/medium/high), and due date
+  - Tags can be assigned to both projects and tasks (many-to-many)
+  - Frontend has separate views for projects list, project detail (showing its tasks), and a tag filter view
+  - Adding/editing/deleting entities works without full page reload
+  - Dashboard view showing summary stats (total projects, tasks by status, overdue tasks)
+  - Data persists in SQLite database
+context_notes:
+  - Use Django with SQLite backend
+  - Frontend is plain HTML, CSS, and vanilla JS (no React/Vue/Angular)
+  - Django serves both the API and static/template files
+  - All code lives in apps/project-tracker/
+  - Use Django models with proper foreign key and many-to-many relationships
+  - Use Poetry for dependency management (pyproject.toml at the repository root)
+  - Use pyenv for Python version management (Python 3.12+)
+  - Run Django commands via `poetry run python manage.py ...`
+constraints:[0m
+[32m succeeded in 0ms:[0m
+[2m# Review Notes
+
+Use this file for reviewer outcomes:
+
+- **DONE**: item accepted and loop returns to PLANNER for next item.
+- **REVISE**: route back to specific role with explicit gap list.
+- **ESCALATE**: WAITING FOR USER only for approved escalation categories.
+
+## Judgment Warnings
+
+- Flag any introduction of React, Next.js, DRF, extra pip packages, or cloud/deployment scaffolding as scope drift unless requirements are updated.
+- Flag architecture that splits the app into speculative layers, services, or multiple Django apps without a demonstrated need.
+- Flag CRUD implementations that require full page reloads, since no-reload interactions are part of acceptance.
+
+## Architecture Decisions
+
+- Use a single Django project under `apps/project-tracker/` with one main product app for projects, tasks, and tags.
+- Treat server-rendered templates as the primary UI and use small async `fetch` flows for no-reload CRUD interactions.
+- Prefer HTML partial responses for mutations; allow narrow JSON responses only when HTML would be more awkward for the specific interaction.
+- Keep domain logic in models, forms, and views; reject speculative service, repository, command-bus, or multi-app splits.[0m
+[35m[3mexec[0m[0m
+[1m/bin/bash -lc "sed -n '1,260p' ai/decision-lock.yaml"[0m in /home/sundaram/code/temp/test[32m succeeded in 0ms:[0m
+[2mconfirmed_by_user: false
+blocked_on_user: false
+last_user_decision: null
+approved_exceptions: []
+approved_decisions: [][0m
+[35m[3mexec[0m[0m
+[1m/bin/bash -lc "sed -n '1,260p' ai/user-questions.yaml"[0m in /home/sundaram/code/temp/test[32m succeeded in 0ms:[0m
+[2mstatus: none
+return_to_role: null
+questions: [][0m
+[35m[3mexec[0m[0m
+[1m/bin/bash -lc "sed -n '1,120p' ai/active_agent.txt"[0m in /home/sundaram/code/temp/test[35m[3mexec[0m[0m
+[1m/bin/bash -lc "sed -n '1,260p' ai/constitution.yaml"[0m in /home/sundaram/code/temp/test[32m succeeded in 0ms:[0m
+[2mPLANNER[0m
+[32m succeeded in 0ms:[0m
+[2mcore_rules:
+  - state lives in files, not chat memory
+  - baton ownership is authoritative
+  - roles must not edit outside allowed files
+baton_rules:
+  - if active agent mismatch, print exactly WAITING FOR BATON
+  - baton must be handed off explicitly
+edit_rules:
+  - only edit allowed files listed in the current role prompt
+stop_rules:
+  - if human clarification is needed, print exactly WAITING FOR USER
+  - always append an iteration log entry before handoff[0m
+[35m[3mcodex[0m[0m
+All backlog items are already marked `done`, so I’m checking the existing baton pattern to see how this repo expects planning to behave at project completion before I write the next handoff files.
+[35m[3mexec[0m[0m
+[1m/bin/bash -lc "sed -n '1,220p' ai/iterations/ITER-0001.md"[0m in /home/sundaram/code/temp/test[32m succeeded in 0ms:[0m
+[2m# ITER-0001 Decision Log
+
+| Timestamp | Role | Decision | Why |
+|-----------|------|----------|-----|
+| 2026-03-11 | PRODUCT_OWNER | Defined the one-page product requirements from the project goal and handed off for engineering judgment review | The workflow needs a concrete scope and acceptance baseline before architecture and planning can proceed |
+| 2026-03-11 | SENIOR_JUDGMENTAL_ENGINEER | Locked simplification guardrails around a single Django + SQLite + vanilla JS modular monolith and warned against framework/platform drift | The architect needs explicit constraints so the design stays aligned with the product goal instead of inheriting conflicting default stack preferences |
+| 2026-03-11 | ARCHITECT | Defined a single-project Django architecture centered on one product app, server-rendered templates, and HTML-partial based no-reload CRUD flows | The planner and developer need concrete boundaries, file targets, and implementation tradeoffs before breaking work into execution items |
+| 2026-03-11 | PLANNER | Broke delivery into scaffold, domain, page, async CRUD, and test slices and activated the scaffold item for development | The developer needs a small implementation-ready first step with explicit file targets before starting code changes |
+| 2026-03-12 | DEV | Scaffolded the Django project baseline with one tracker app, routed a rendered dashboard page, and added a smoke test for the root view | ITEM-0001 required an end-to-end project skeleton before later slices can add models, pages, and async CRUD behavior |
+| 2026-03-12 | VALIDATOR | Accepted the scaffold baseline as meeting ITEM-0001 acceptance criteria and handed off to review with an environment caveat on Django-dependent tests | The slice is structurally correct and free of scope drift, but full runtime validation remains blocked until Django is installed in the workspace |
+| 2026-03-12 | REVIEWER | Marked ITEM-0001 done and returned the baton to planning for the next implementation slice | The scaffold meets the locked architecture and acceptance criteria, and the blocked Django test run is an environment limitation rather than a gap in the delivered slice |
+| 2026-03-12 | PLANNER | Activated ITEM-0002 for domain model, form, admin, and migration work and handed off implementation to DEV | The scaffold is complete, and the domain layer is the next dependency needed before server-rendered pages and no-reload CRUD flows can be built |
+| 2026-03-12 | DEV | Implemented tracker domain models, forms, admin registration, a manual initial migration, and domain-focused tests for ITEM-0002 | The next slices depend on concrete project, task, and tag persistence plus validated form surfaces inside the existing Django app |
+| 2026-03-12 | VALIDATOR | Accepted the domain model slice for ITEM-0002 and handed off to review with a documented Django-environment caveat | The implemented models, forms, admin wiring, and manual migration align with the locked requirements, and the remaining verification gap is limited to missing Django in the workspace |
+| 2026-03-12 | REVIEWER | Marked ITEM-0002 done and returned the baton to planning for the next implementation slice | The domain models, forms, admin wiring, and initial migration satisfy the locked slice, and the blocked Django runtime checks remain an environment caveat rather than a delivered-code gap |
+| 2026-03-12 | PLANNER | Activated ITEM-0003 for server-rendered dashboard, project list/detail, and tag detail page implementation and handed off to DEV | The domain layer is accepted, so the next dependency-ready slice is the read-only page surface that prepares the app for later no-reload CRUD work |
+| 2026-03-11 | DEV | Implemented ORM-backed dashboard aggregates, project list/detail and tag detail pages, and focused view tests for ITEM-0003 | The read-only server-rendered page slice now uses the accepted domain models directly and is ready for validator review, with Django runtime execution still blocked by the missing package in the workspace |
+| 2026-03-12 | VALIDATOR | Accepted the read-only page slice for ITEM-0003 and handed off to review with the Django-environment caveat preserved | Static validation passed, acceptance criteria are met by inspection, and the only blocked verification step is the missing Django package in the workspace |
+| 2026-03-12 | REVIEWER | Marked ITEM-0003 done and returned the baton to planning for the next implementation slice | The read-only tracker pages satisfy the locked acceptance criteria without scope drift, and the blocked Django runtime checks remain an environment caveat rather than a delivered-code gap |
+| 2026-03-12 | PLANNER | Split the async CRUD epic into project and task/tag mutation slices, activated ITEM-0004, and handed implementation to DEV | The original no-reload CRUD item was too large for one safe pass, and project mutations are the smallest vertical slice that builds directly on the accepted read-only pages |[0m
+[35m[3mexec[0m[0m
+[1m/bin/bash -lc "sed -n '1,240p' scripts/generate-next-agent.sh"[0m in /home/sundaram/code/temp/test[32m succeeded in 0ms:[0m
+[2m#!/usr/bin/env bash
+set -euo pipefail
+#
+# Usage: ./scripts/generate-next-agent.sh <ROLE> [--notes "context"] [--return-to "ROLE"]
+#
+# Generates ai/next_agent.yaml with the correct config for the given role.
+# Pass --notes to include handoff context (what was done, what to watch for).
+# Pass --return-to to specify which role the baton returns to (used with HUMAN).
+# Called by each role prompt at handoff time so agents don't hand-write YAML.
+
+ROOT="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)"
+cd "$ROOT"
+
+ROLE=""
+NOTES=""
+RETURN_TO=""
+
+# Parse args
+while [[ $# -gt 0 ]]; do
+  case "$1" in[0m
+[35m[3mexec[0m[0m
+[1m/bin/bash -lc "sed -n '1,220p' ai/defaults/templates/next-agent-template.yaml"[0m in /home/sundaram/code/temp/test[32m succeeded in 0ms:[0m
+[2mnext_role: <ROLE>
+prompt_file: ai/prompts/<prompt-file>.md
+read:
+  - ai/goal.yaml
+  - ai/judgment.yaml
+  - ai/constitution.yaml
+  - ai/backlog.yaml
+  - ai/active_item.yaml
+  - ai/decision-lock.yaml
+  - ai/active_agent.txt
+  - ai/next_agent.md
+allowed_edits:
+  - <list of files this role may edit>
+stop_conditions:
+  - WAITING FOR BATON when active agent mismatch
+  - WAITING FOR USER when clarification is required
+success_criteria:
+  - <what must be true for handoff>
+handoff_on_success:
+  print_exact: HANDOFF TO <NEXT_ROLE>[0m
+[35m[3mexec[0m[0m
+[1m/bin/bash -lc "sed -n '1,220p' ai/logs/baton.log"[0m in /home/sundaram/code/temp/test[35m[3mexec[0m[0m
+[1m/bin/bash -lc "sed -n '1,220p' ai/logs/step-010-VALIDATOR.log"[0m in /home/sundaram/code/temp/test[35m[3mexec[0m[0m
+[1m/bin/bash -lc "sed -n '1,200p' ai/logs/step-010-DEV.log"[0m in /home/sundaram/code/temp/test[32m succeeded in 0ms:[0m
+[2m# Baton run log
+# Timestamped entries from scripts/run-baton.sh are appended here.
+[2026-03-12T02:50:22Z] STEP 1 START role=PRODUCT_OWNER executor=codex model=gpt-5.4
+[2026-03-12T02:51:31Z] STEP 1 END role=PRODUCT_OWNER result=HANDOFF to=SENIOR_JUDGMENTAL_ENGINEER
+[2026-03-12T02:51:31Z] STEP 2 START role=SENIOR_JUDGMENTAL_ENGINEER executor=codex model=gpt-5.4
+[2026-03-12T02:52:54Z] STEP 2 END role=SENIOR_JUDGMENTAL_ENGINEER result=HANDOFF to=ARCHITECT
+[2026-03-12T02:52:54Z] STEP 3 START role=ARCHITECT executor=codex model=gpt-5.4
+[2026-03-12T02:54:32Z] STEP 3 END role=ARCHITECT result=HANDOFF to=PLANNER
+[2026-03-12T02:54:32Z] STEP 4 START role=PLANNER executor=codex model=gpt-5.4
+[2026-03-12T02:56:01Z] STEP 4 END role=PLANNER result=HANDOFF to=DEV
+[2026-03-12T02:56:01Z] STEP 5 START role=DEV executor=codex model=gpt-5.4
+[2026-03-12T02:56:01Z] STEP 5 END role=DEV result=INVALID_STATE
+[2026-03-12T02:59:31Z] STEP 1 START role=DEV executor=codex model=gpt-5.4
+[2026-03-12T03:02:06Z] STEP 1 END role=DEV result=HANDOFF to=VALIDATOR
+[2026-03-12T03:02:06Z] STEP 2 START role=VALIDATOR executor=codex model=gpt-5.4
+[2026-03-12T03:03:28Z] STEP 2 END role=VALIDATOR result=HANDOFF to=REVIEWER
+[2026-03-12T03:03:28Z] STEP 3 START role=REVIEWER executor=codex model=gpt-5.4
+[2026-03-12T03:04:53Z] STEP 3 END role=REVIEWER result=HANDOFF to=PLANNER
+[2026-03-12T03:04:53Z] STEP 4 START role=PLANNER executor=codex model=gpt-5.4
+[2026-03-12T03:06:23Z] STEP 4 END role=PLANNER result=HANDOFF to=DEV[0m
+[32m succeeded in 0ms:[0m
+[2mScript started on 2026-03-11 22:16:21-05:00 [COMMAND="codex exec --model gpt-5.4 --full-auto Follow\ ai/next_agent.yaml\ exactly. " TERM="xterm-256color" TTY="/dev/pts/0" COLUMNS="184" LINES="43"]
+OpenAI Codex v0.114.0 (research preview)
+--------
+[1mworkdir:[0m /home/sundaram/code/temp/test
+[1mmodel:[0m gpt-5.4
+[1mprovider:[0m openai
+[1mapproval:[0m never
+[1msandbox:[0m workspace-write [workdir, /tmp, $TMPDIR, /home/sundaram/.codex/memories]
+[1mreasoning effort:[0m medium
+[1mreasoning summaries:[0m none
+[1msession id:[0m 019ce00b-95ce-7192-8780-60f6445ab300
+--------
+[36muser[0m
+Follow ai/next_agent.yaml exactly.
+[36mmcp startup:[0m no servers
+[35m[3mcodex[0m[0m
+I’m going to inspect `ai/next_agent.yaml` and the surrounding repo context first, then I’ll execute its instructions as literally as possible within this workspace.
+[35m[3mexec[0m[0m
+[1m/bin/bash -lc pwd[0m in /home/sundaram/code/temp/test[32m succeeded in 0ms:[0m
+[2m/home/sundaram/code/temp/test[0m[0m
+[32m succeeded in 0ms:[0m
+[2mScript started on 2026-03-11 22:44:22-05:00 [COMMAND="codex exec --model gpt-5.4 --full-auto Follow\ ai/next_agent.yaml\ exactly. " TERM="xterm-256color" TTY="/dev/pts/0" COLUMNS="184" LINES="43"]
+OpenAI Codex v0.114.0 (research preview)
+--------
+[1mworkdir:[0m /home/sundaram/code/temp/test
+[1mmodel:[0m gpt-5.4
+[1mprovider:[0m openai
+[1mapproval:[0m never
+[1msandbox:[0m workspace-write [workdir, /tmp, $TMPDIR, /home/sundaram/.codex/memories]
+[1mreasoning effort:[0m medium
+[1mreasoning summaries:[0m none
+[1msession id:[0m 019ce025-3da0-7451-b98a-3e0f085bc70c
+--------
+[36muser[0m
+Follow ai/next_agent.yaml exactly.
+[36mmcp startup:[0m no servers
+[35m[3mcodex[0m[0m
+I’m checking the repository instructions and opening `ai/next_agent.yaml` so I can follow it exactly before making any changes.
+[35m[3mexec[0m[0m
+[1m/bin/bash -lc pwd[0m in /home/sundaram/code/temp/test[32m succeeded in 0ms:[0m
+[2m/home/sundaram/code/temp/test[0m[0m
+[35m[3mcodex[0m[0m
+I’ve confirmed there isn’t an existing “project complete” convention in the visible baton files. I’m checking the planner/reviewer prompt set for any terminal-state pattern, because all current backlog items are done and I need the next handoff to stay coherent.
+[35m[3mexec[0m[0m
+[1m/bin/bash -lc "sed -n '1,260p' ai/prompts/06-reviewer.md"[0m in /home/sundaram/code/temp/test[32m succeeded in 0ms:[0m
+[2m# ROLE: REVIEWER
+
+## 1) Baton check
+- Read `ai/active_agent.txt`.
+- If value is not exactly `REVIEWER`, output exactly:
+`WAITING FOR BATON`
+- Stop.
+
+## 2) Required reads
+- `ai/goal.yaml`
+- `ai/active_item.yaml`
+- `ai/backlog.yaml`
+- `ai/review.md`
+- `ai/decision-lock.yaml`
+- `ai/user-questions.yaml`
+- `ai/constitution.yaml`
+- `ai/next_agent.md`
+
+## 3) Allowed edits (only)
+- `ai/review.md`[0m
+[35m[3mexec[0m[0m
+[1m/bin/bash -lc "sed -n '1,260p' ai/prompts/04-dev.md"[0m in /home/sundaram/code/temp/test[32m succeeded in 0ms:[0m
+[2m# ROLE: DEV
+
+## 1) Baton check
+- Read `ai/active_agent.txt`.
+- If value is not exactly `DEV`, output exactly:
+`WAITING FOR BATON`
+- Stop.
+
+## 2) Required reads
+- `ai/goal.yaml`
+- `ai/active_item.yaml`
+- `ai/requirements.md`
+- `ai/judgment.yaml`
+- `ai/simplification.md`
+- `ai/decision-lock.yaml`
+- `ai/user-questions.yaml`
+- `ai/constitution.yaml`
+- `ai/next_agent.md`
+- Relevant files in `apps/`, `infra/`, `context/repo/`
+[0m
+[35m[3mexec[0m[0m
+[1m/bin/bash -lc "sed -n '1,220p' ai/logs/step-008-PLANNER.log"[0m in /home/sundaram/code/temp/test[32m succeeded in 0ms:[0m
+[2mScript started on 2026-03-11 22:11:38-05:00 [COMMAND="codex exec --model gpt-5.4 --full-auto Follow\ ai/next_agent.yaml\ exactly. " TERM="xterm-256color" TTY="/dev/pts/0" COLUMNS="184" LINES="43"]
+OpenAI Codex v0.114.0 (research preview)
+--------
+[1mworkdir:[0m /home/sundaram/code/temp/test
+[1mmodel:[0m gpt-5.4
+[1mprovider:[0m openai
+[1mapproval:[0m never
+[1msandbox:[0m workspace-write [workdir, /tmp, $TMPDIR, /home/sundaram/.codex/memories]
+[1mreasoning effort:[0m medium
+[1mreasoning summaries:[0m none
+[1msession id:[0m 019ce007-42a6-7341-a34b-d393b3fe56b8
+--------
+[36muser[0m
+Follow ai/next_agent.yaml exactly.
+[36mmcp startup:[0m no servers
+[35m[3mcodex[0m[0m
+I’m checking the workspace instructions and the target file so I can follow `ai/next_agent.yaml` exactly rather than guessing its workflow.
+[35m[3mexec[0m[0m
+[1m/bin/bash -lc pwd[0m in /home/sundaram/code/temp/test[32m succeeded in 0ms:[0m
+[2m/home/sundaram/code/temp/test[0m[0m
+[35m[3mexec[0m[0m
+[1m/bin/bash -lc 'rg -n "all backlog|project complete|complete" ai/prompts ai/defaults ai/*.md ai/*.yaml'[0m in /home/sundaram/code/temp/test[32m succeeded in 0ms:[0m
+[2mai/next_agent.md:17:- Select the next backlog decision now that `ITEM-0008` is complete.
+ai/requirements.md:33:- Projects support CRUD and include `name`, `description`, `status` (`active`, `completed`, `archived`), and `created_date`
+ai/requirements.md:37:- Create, edit, and delete interactions for projects, tasks, and tags complete without a full page reload
+ai/goal.yaml:4:  - Each project has a name, description, status (active/completed/archived), and created date[0m
+[35m[3mcodex[0m[0m
+I found a coherent next slice: the reviewer history already calls out committed `__pycache__` files as repository hygiene noise. I’m updating the baton state to activate that cleanup as the next DEV task, then I’ll regenerate the next-agent handoff files.
+[3m[35mfile update[0m[0m
+[35mM /home/sundaram/code/temp/test/ai/iterations/ITER-0001.md[0m
+@@ -46 +46,2 @@
+ | 2026-03-12 | REVIEWER | Marked ITEM-0008 done and returned the baton to planning for the next backlog decision | The project-local README now matches the locked pyenv plus Poetry workflow, preserves the exact setup caveat as an environment issue, and the documented focused Django test command passes end to end in the current workspace |
+[32m+| 2026-03-12 | PLANNER | Activated ITEM-0009 to remove tracked Python bytecode artifacts from `apps/project-tracker/` and handed the cleanup slice to DEV | All user-facing tracker work is complete, and the next smallest implementation-ready task is the repository-hygiene cleanup already called out by prior review notes without changing the locked stack or behavior |[0m
+[35mM /home/sundaram/code/temp/test/ai/active_item.yaml[0m
+@@ -1,18 +1,20 @@
+[31m-id: ITEM-0008[0m
+[31m-title: Document local setup and verification workflow[0m
+[31m-goal: "Add concise project-local documentation under `apps/project-tracker/` covering Django setup, test commands, and the known workspace limitation blocking runtime verification."[0m
+[31m-status: done[0m
+[31m-owner_role: REVIEWER[0m
+[32m+id: ITEM-0009[0m
+[32m+title: Remove tracked Python bytecode artifacts[0m
+[32m+goal: "Clean tracked `__pycache__` directories and `.pyc` files from `apps/project-tracker/` so the repository reflects source-controlled Django code only."[0m
+[32m+status: ready[0m
+[32m+owner_role: DEV[0m
+ related_files:
+[31m-  - apps/project-tracker/README.md[0m
+[31m-  - apps/project-tracker/manage.py[0m
+[31m-  - apps/project-tracker/project_tracker/settings.py[0m
+[32m+  - apps/project-tracker/__pycache__/[0m
+[32m+  - apps/project-tracker/project_tracker/__pycache__/[0m
+[32m+  - apps/project-tracker/tracker/__pycache__/[0m
+[32m+  - apps/project-tracker/tracker/migrations/__pycache__/[0m
+[32m+  - apps/project-tracker/tracker/tests/__pycache__/[0m
+ acceptance_criteria:
+[31m-  - "A project-local README or equivalent doc is added under `apps/project-tracker/` with concrete setup steps for creating a Python environment, installing Django, applying migrations, and running the development server."[0m
+[31m-  - "The documentation lists the focused verification commands for `py_compile` and the Django test modules currently used by the project."[0m
+[31m-  - "The known workspace limitation is documented explicitly as `ModuleNotFoundError: No module named 'django'`, framed as an environment/setup issue rather than a tracker application defect."[0m
+[31m-  - "The documentation stays aligned with the locked stack: Django, SQLite, and vanilla HTML/CSS/JS only."[0m
+[32m+  - "Tracked Python bytecode artifacts under `apps/project-tracker/` are removed from the working tree, including nested `__pycache__` directories and `.pyc` files."[0m
+[32m+  - "No source `.py`, template, static, or documentation files change as part of the cleanup."[0m
+[32m+  - "The accepted verification commands still pass after the cleanup: `python3 -m py_compile $(find apps/project-tracker -name '*.py' | sort)` and `poetry run python apps/project-tracker/manage.py test tracker.tests.test_domain tracker.tests.test_views`."[0m
+[32m+  - "The cleanup stays inside the existing project-local Django app tree and introduces no new tooling or stack changes."[0m
+ done_definition:
+[31m-  - "The new documentation reflects the current repository layout and existing `manage.py` entrypoint without inventing new tooling."[0m
+[31m-  - "The listed commands are specific enough for a fresh local checkout to reproduce migrations, server startup, and focused test execution once Django is installed."[0m
+[31m-  - "If DEV cannot run Django commands in the workspace, the handoff and review artifacts keep that runtime limitation visible."[0m
+[32m+  - "All tracked bytecode artifacts targeted by the slice are deleted from `apps/project-tracker/`."[0m
+[32m+  - "Verification evidence records the post-cleanup `py_compile` and focused Django test results."[0m
+[32m+  - "The handoff keeps the cleanup scoped as repository hygiene rather than a product-behavior change."[0m
+[35mM /home/sundaram/code/temp/test/ai/next_agent.md[0m
+@@ -2,3 +2,3 @@
+ 
+[31m-- Current role: `PLANNER`[0m
+[32m+- Current role: `DEV`[0m
+ - Prompt: `ai/prompts/03-planner.md`
+@@ -9,10 +9,22 @@
+ - `ITEM-0008` is accepted and marked done.
+[31m-- [README.md](/home/sundaram/code/temp/test/apps/project-tracker/README.md) now matches the locked `pyenv` plus Poetry workflow, stays project-local under `apps/project-tracker/`, preserves the `manage.py` entrypoint, and retains the exact `ModuleNotFoundError: No module named 'django'` caveat as an environment/setup issue.[0m
+[31m-- Reviewer confirmed the documented verification path in the current workspace:[0m
+[31m-  - `python3 -m py_compile $(find apps/project-tracker -name '*.py' | sort)`[0m
+[31m-  - `poetry run python apps/project-tracker/manage.py test tracker.tests.test_domain tracker.tests.test_views` with 36 tests green[0m
+[32m+- Planning has activated `ITEM-0009` as a small repository-hygiene follow-up already called out in prior review notes: remove tracked Python bytecode artifacts from `apps/project-tracker/`.[0m
+[32m+- Keep the existing locked stack and behavior unchanged. This slice is cleanup only, not feature work.[0m
+[32m+[0m
+[32m+## Active Item[0m
+[32m+[0m
+[32m+- `ITEM-0009` Remove tracked Python bytecode artifacts[0m
+[32m+- Goal: clean tracked `__pycache__` directories and `.pyc` files from `apps/project-tracker/` so the repository reflects source-controlled Django code only.[0m
+ 
+[31m-## Planning Focus[0m
+[32m+## DEV Focus[0m
+ 
+[31m-- Select the next backlog decision now that `ITEM-0008` is complete.[0m
+[31m-- Keep the locked stack and tooling constraints unchanged unless a later item explicitly requires a decision update.[0m
+[32m+- Delete tracked bytecode artifacts under:[0m
+[32m+  - `apps/project-tracker/__pycache__/`[0m
+[32m+  - `apps/project-tracker/project_tracker/__pycache__/`[0m
+[32m+  - `apps/project-tracker/tracker/__pycache__/`[0m
+[32m+  - `apps/project-tracker/tracker/migrations/__pycache__/`[0m
+[32m+  - `apps/project-tracker/tracker/tests/__pycache__/`[0m
+[32m+- Do not modify source files, templates, static assets, or docs for this slice.[0m
+[32m+- Re-run:[0m
+[32m+  - `python3 -m py_compile $(find apps/project-tracker -name '*.py' | sort)`[0m
+[32m+  - `poetry run python apps/project-tracker/manage.py test tracker.tests.test_domain tracker.tests.test_views`[0m
+[32m+- Record cleanup and verification evidence in `ai/review.md`, then hand off to VALIDATOR.[0m
+[35mM /home/sundaram/code/temp/test/ai/backlog.yaml[0m
+@@ -96 +96,13 @@
+       - Preserve the current `ModuleNotFoundError: No module named 'django'` caveat as an environment issue, not a product-code defect.
+[32m+  - id: ITEM-0009[0m
+[32m+    title: Remove tracked Python bytecode artifacts[0m
+[32m+    goal: Clean tracked `__pycache__` directories and `.pyc` files from `apps/project-tracker/` so the repository reflects source-controlled Django code only.[0m
+[32m+    type: chore[0m
+[32m+    status: ready[0m
+[32m+    priority: low[0m
+[32m+    dependencies:[0m
+[32m+      - ITEM-0008[0m
+[32m+    notes:[0m
+[32m+      - Limit the cleanup to tracked Python bytecode artifacts under `apps/project-tracker/`.[0m
+[32m+      - Do not introduce new tooling or repository-root changes such as `.gitignore` updates in this slice.[0m
+[32m+      - Re-run the accepted `py_compile` and focused Django test commands after cleanup to confirm no behavioral regression.[0m
+[32mapply_patch(auto_approved=true) exited 0 in 7ms:[0m
+[2mSuccess. Updated the following files:[0m
+[2mM /home/sundaram/code/temp/test/ai/backlog.yaml[0m
+[2mM /home/sundaram/code/temp/test/ai/active_item.yaml[0m
+[2mM /home/sundaram/code/temp/test/ai/next_agent.md[0m
+[2mM /home/sundaram/code/temp/test/ai/iterations/ITER-0001.md[0m
+[3m[35mfile update:[0m[0m
+diff --git a/ai/active_item.yaml b/ai/active_item.yaml
+index f499080475332e249df1b11480f216102f391241..8a78e0042eb4f8788ee54b90988f43f2e591dd13
+--- a/ai/active_item.yaml
++++ b/ai/active_item.yaml
+@@ -1,18 +1,20 @@
+-id: ITEM-0008
+-title: Document local setup and verification workflow
+-goal: "Add concise project-local documentation under `apps/project-tracker/` covering Django setup, test commands, and the known workspace limitation blocking runtime verification."
+-status: done
+-owner_role: REVIEWER
++id: ITEM-0009
++title: Remove tracked Python bytecode artifacts
++goal: "Clean tracked `__pycache__` directories and `.pyc` files from `apps/project-tracker/` so the repository reflects source-controlled Django code only."
++status: ready
++owner_role: DEV
+ related_files:
+-  - apps/project-tracker/README.md
+-  - apps/project-tracker/manage.py
+-  - apps/project-tracker/project_tracker/settings.py
++  - apps/project-tracker/__pycache__/
++  - apps/project-tracker/project_tracker/__pycache__/
++  - apps/project-tracker/tracker/__pycache__/
++  - apps/project-tracker/tracker/migrations/__pycache__/
++  - apps/project-tracker/tracker/tests/__pycache__/
+ acceptance_criteria:
+-  - "A project-local README or equivalent doc is added under `apps/project-tracker/` with concrete setup steps for creating a Python environment, installing Django, applying migrations, and running the development server."
+-  - "The documentation lists the focused verification commands for `py_compile` and the Django test modules currently used by the project."
+-  - "The known workspace limitation is documented explicitly as `ModuleNotFoundError: No module named 'django'`, framed as an environment/setup issue rather than a tracker application defect."
+-  - "The documentation stays aligned with the locked stack: Django, SQLite, and vanilla HTML/CSS/JS only."
++  - "Tracked Python bytecode artifacts under `apps/project-tracker/` are removed from the working tree, including nested `__pycache__` directories and `.pyc` files."
++  - "No source `.py`, template, static, or documentation files change as part of the cleanup."
++  - "The accepted verification commands still pass after the cleanup: `python3 -m py_compile $(find apps/project-tracker -name '*.py' | sort)` and `poetry run python apps/project-tracker/manage.py test tracker.tests.test_domain tracker.tests.test_views`."
++  - "The cleanup stays inside the existing project-local Django app tree and introduces no new tooling or stack changes."
+ done_definition:
+-  - "The new documentation reflects the current repository layout and existing `manage.py` entrypoint without inventing new tooling."
+-  - "The listed commands are specific enough for a fresh local checkout to reproduce migrations, server startup, and focused test execution once Django is installed."
+-  - "If DEV cannot run Django commands in the workspace, the handoff and review artifacts keep that runtime limitation visible."
++  - "All tracked bytecode artifacts targeted by the slice are deleted from `apps/project-tracker/`."
++  - "Verification evidence records the post-cleanup `py_compile` and focused Django test results."
++  - "The handoff keeps the cleanup scoped as repository hygiene rather than a product-behavior change."
+diff --git a/ai/backlog.yaml b/ai/backlog.yaml
+index 275d04abb701550063bbba66e7a67f9bac5a4515..9d043b51c1d3e26b9d6039ea8f4a4298fe5adaa7
+--- a/ai/backlog.yaml
++++ b/ai/backlog.yaml
+@@ -94,3 +94,15 @@
+       - Keep the documentation close to the Django app so DEV can edit inside allowed paths.
+       - Capture the exact `manage.py` commands for running the server, migrations, and focused tests once Django is installed.
+       - Preserve the current `ModuleNotFoundError: No module named 'django'` caveat as an environment issue, not a product-code defect.
++  - id: ITEM-0009
++    title: Remove tracked Python bytecode artifacts
++    goal: Clean tracked `__pycache__` directories and `.pyc` files from `apps/project-tracker/` so the repository reflects source-controlled Django code only.
++    type: chore
++    status: ready
++    priority: low
++    dependencies:
++      - ITEM-0008
++    notes:
++      - Limit the cleanup to tracked Python bytecode artifacts under `apps/project-tracker/`.
++      - Do not introduce new tooling or repository-root changes such as `.gitignore` updates in this slice.
++      - Re-run the accepted `py_compile` and focused Django test commands after cleanup to confirm no behavioral regression.
+diff --git a/ai/iterations/ITER-0001.md b/ai/iterations/ITER-0001.md
+index 3759ea7dea8cafbf629de4d7faf6dca1eefe57d9..0aa1f57244f6130580ff5c2ffcb50d169ad9eb18
+--- a/ai/iterations/ITER-0001.md
++++ b/ai/iterations/ITER-0001.md
+@@ -44,3 +44,4 @@
+ | 2026-03-12 | DEV | Corrected the project-local README to use the locked `pyenv` plus Poetry workflow and reran the accepted verification commands for ITEM-0008 | The reviewer-required fix was to remove setup-tooling drift without changing the manage.py entrypoint, focused verification surface, or the documented `ModuleNotFoundError: No module named 'django'` environment caveat, and the Poetry-backed Django test run now passes in this workspace |
+ | 2026-03-12 | VALIDATOR | Accepted ITEM-0008 for reviewer handoff after confirming the README matches the locked pyenv plus Poetry workflow and rerunning the documented verification commands successfully | The documentation now stays within the approved toolchain, preserves the exact environment caveat framing, and the focused Django test command passes end to end in the current Poetry environment |
+ | 2026-03-12 | REVIEWER | Marked ITEM-0008 done and returned the baton to planning for the next backlog decision | The project-local README now matches the locked pyenv plus Poetry workflow, preserves the exact setup caveat as an environment issue, and the documented focused Django test command passes end to end in the current workspace |
++| 2026-03-12 | PLANNER | Activated ITEM-0009 to remove tracked Python bytecode artifacts from `apps/project-tracker/` and handed the cleanup slice to DEV | All user-facing tracker work is complete, and the next smallest implementation-ready task is the repository-hygiene cleanup already called out by prior review notes without changing the locked stack or behavior |
+diff --git a/ai/next_agent.md b/ai/next_agent.md
+index 68e2f75b0945aaf250814fd41a5a90d3ce5c2024..9b0b47d4cae39ad7632a0ee0269f42d8aa6476f8
+--- a/ai/next_agent.md
++++ b/ai/next_agent.md
+@@ -1,18 +1,30 @@
+ # Next Agent
+ 
+-- Current role: `PLANNER`
++- Current role: `DEV`
+ - Prompt: `ai/prompts/03-planner.md`
+ - Execution command for Codex sessions: **Follow `ai/next_agent.yaml` exactly.**
+ 
+ ## Handoff Summary
+ 
+ - `ITEM-0008` is accepted and marked done.
+-- [README.md](/home/sundaram/code/temp/test/apps/project-tracker/README.md) now matches the locked `pyenv` plus Poetry workflow, stays project-local under `apps/project-tracker/`, preserves the `manage.py` entrypoint, and retains the exact `ModuleNotFoundError: No module named 'django'` caveat as an environment/setup issue.
+-- Reviewer confirmed the documented verification path in the current workspace:
+-  - `python3 -m py_compile $(find apps/project-tracker -name '*.py' | sort)`
+-  - `poetry run python apps/project-tracker/manage.py test tracker.tests.test_domain tracker.tests.test_views` with 36 tests green
++- Planning has activated `ITEM-0009` as a small repository-hygiene follow-up already called out in prior review notes: remove tracked Python bytecode artifacts from `apps/project-tracker/`.
++- Keep the existing locked stack and behavior unchanged. This slice is cleanup only, not feature work.
++
++## Active Item
++
++- `ITEM-0009` Remove tracked Python bytecode artifacts
++- Goal: clean tracked `__pycache__` directories and `.pyc` files from `apps/project-tracker/` so the repository reflects source-controlled Django code only.
+ 
+-## Planning Focus
++## DEV Focus
+ 
+-- Select the next backlog decision now that `ITEM-0008` is complete.
+-- Keep the locked stack and tooling constraints unchanged unless a later item explicitly requires a decision update.
++- Delete tracked bytecode artifacts under:
++  - `apps/project-tracker/__pycache__/`
++  - `apps/project-tracker/project_tracker/__pycache__/`
++  - `apps/project-tracker/tracker/__pycache__/`
++  - `apps/project-tracker/tracker/migrations/__pycache__/`
++  - `apps/project-tracker/tracker/tests/__pycache__/`
++- Do not modify source files, templates, static assets, or docs for this slice.
++- Re-run:
++  - `python3 -m py_compile $(find apps/project-tracker -name '*.py' | sort)`
++  - `poetry run python apps/project-tracker/manage.py test tracker.tests.test_domain tracker.tests.test_views`
++- Record cleanup and verification evidence in `ai/review.md`, then hand off to VALIDATOR.
+
+[3m[35mfile update:[0m[0m
+diff --git a/ai/active_item.yaml b/ai/active_item.yaml
+index f499080475332e249df1b11480f216102f391241..8a78e0042eb4f8788ee54b90988f43f2e591dd13
+--- a/ai/active_item.yaml
++++ b/ai/active_item.yaml
+@@ -1,18 +1,20 @@
+-id: ITEM-0008
+-title: Document local setup and verification workflow
+-goal: "Add concise project-local documentation under `apps/project-tracker/` covering Django setup, test commands, and the known workspace limitation blocking runtime verification."
+-status: done
+-owner_role: REVIEWER
++id: ITEM-0009
++title: Remove tracked Python bytecode artifacts
++goal: "Clean tracked `__pycache__` directories and `.pyc` files from `apps/project-tracker/` so the repository reflects source-controlled Django code only."
++status: ready
++owner_role: DEV
+ related_files:
+-  - apps/project-tracker/README.md
+-  - apps/project-tracker/manage.py
+-  - apps/project-tracker/project_tracker/settings.py
++  - apps/project-tracker/__pycache__/
++  - apps/project-tracker/project_tracker/__pycache__/
++  - apps/project-tracker/tracker/__pycache__/
++  - apps/project-tracker/tracker/migrations/__pycache__/
++  - apps/project-tracker/tracker/tests/__pycache__/
+ acceptance_criteria:
+-  - "A project-local README or equivalent doc is added under `apps/project-tracker/` with concrete setup steps for creating a Python environment, installing Django, applying migrations, and running the development server."
+-  - "The documentation lists the focused verification commands for `py_compile` and the Django test modules currently used by the project."
+-  - "The known workspace limitation is documented explicitly as `ModuleNotFoundError: No module named 'django'`, framed as an environment/setup issue rather than a tracker application defect."
+-  - "The documentation stays aligned with the locked stack: Django, SQLite, and vanilla HTML/CSS/JS only."
++  - "Tracked Python bytecode artifacts under `apps/project-tracker/` are removed from the working tree, including nested `__pycache__` directories and `.pyc` files."
++  - "No source `.py`, template, static, or documentation files change as part of the cleanup."
++  - "The accepted verification commands still pass after the cleanup: `python3 -m py_compile $(find apps/project-tracker -name '*.py' | sort)` and `poetry run python apps/project-tracker/manage.py test tracker.tests.test_domain tracker.tests.test_views`."
++  - "The cleanup stays inside the existing project-local Django app tree and introduces no new tooling or stack changes."
+ done_definition:
+-  - "The new documentation reflects the current repository layout and existing `manage.py` entrypoint without inventing new tooling."
+-  - "The listed commands are specific enough for a fresh local checkout to reproduce migrations, server startup, and focused test execution once Django is installed."
+-  - "If DEV cannot run Django commands in the workspace, the handoff and review artifacts keep that runtime limitation visible."
++  - "All tracked bytecode artifacts targeted by the slice are deleted from `apps/project-tracker/`."
++  - "Verification evidence records the post-cleanup `py_compile` and focused Django test results."
++  - "The handoff keeps the cleanup scoped as repository hygiene rather than a product-behavior change."
+diff --git a/ai/backlog.yaml b/ai/backlog.yaml
+index 275d04abb701550063bbba66e7a67f9bac5a4515..9d043b51c1d3e26b9d6039ea8f4a4298fe5adaa7
+--- a/ai/backlog.yaml
++++ b/ai/backlog.yaml
+@@ -94,3 +94,15 @@
+       - Keep the documentation close to the Django app so DEV can edit inside allowed paths.
+       - Capture the exact `manage.py` commands for running the server, migrations, and focused tests once Django is installed.
+       - Preserve the current `ModuleNotFoundError: No module named 'django'` caveat as an environment issue, not a product-code defect.
++  - id: ITEM-0009
++    title: Remove tracked Python bytecode artifacts
++    goal: Clean tracked `__pycache__` directories and `.pyc` files from `apps/project-tracker/` so the repository reflects source-controlled Django code only.
++    type: chore
++    status: ready
++    priority: low
++    dependencies:
++      - ITEM-0008
++    notes:
++      - Limit the cleanup to tracked Python bytecode artifacts under `apps/project-tracker/`.
++      - Do not introduce new tooling or repository-root changes such as `.gitignore` updates in this slice.
++      - Re-run the accepted `py_compile` and focused Django test commands after cleanup to confirm no behavioral regression.
+diff --git a/ai/iterations/ITER-0001.md b/ai/iterations/ITER-0001.md
+index 3759ea7dea8cafbf629de4d7faf6dca1eefe57d9..0aa1f57244f6130580ff5c2ffcb50d169ad9eb18
+--- a/ai/iterations/ITER-0001.md
++++ b/ai/iterations/ITER-0001.md
+@@ -44,3 +44,4 @@
+ | 2026-03-12 | DEV | Corrected the project-local README to use the locked `pyenv` plus Poetry workflow and reran the accepted verification commands for ITEM-0008 | The reviewer-required fix was to remove setup-tooling drift without changing the manage.py entrypoint, focused verification surface, or the documented `ModuleNotFoundError: No module named 'django'` environment caveat, and the Poetry-backed Django test run now passes in this workspace |
+ | 2026-03-12 | VALIDATOR | Accepted ITEM-0008 for reviewer handoff after confirming the README matches the locked pyenv plus Poetry workflow and rerunning the documented verification commands successfully | The documentation now stays within the approved toolchain, preserves the exact environment caveat framing, and the focused Django test command passes end to end in the current Poetry environment |
+ | 2026-03-12 | REVIEWER | Marked ITEM-0008 done and returned the baton to planning for the next backlog decision | The project-local README now matches the locked pyenv plus Poetry workflow, preserves the exact setup caveat as an environment issue, and the documented focused Django test command passes end to end in the current workspace |
++| 2026-03-12 | PLANNER | Activated ITEM-0009 to remove tracked Python bytecode artifacts from `apps/project-tracker/` and handed the cleanup slice to DEV | All user-facing tracker work is complete, and the next smallest implementation-ready task is the repository-hygiene cleanup already called out by prior review notes without changing the locked stack or behavior |
+diff --git a/ai/next_agent.md b/ai/next_agent.md
+index 68e2f75b0945aaf250814fd41a5a90d3ce5c2024..9b0b47d4cae39ad7632a0ee0269f42d8aa6476f8
+--- a/ai/next_agent.md
++++ b/ai/next_agent.md
+@@ -1,18 +1,30 @@
+ # Next Agent
+ 
+-- Current role: `PLANNER`
++- Current role: `DEV`
+ - Prompt: `ai/prompts/03-planner.md`
+ - Execution command for Codex sessions: **Follow `ai/next_agent.yaml` exactly.**
+ 
+ ## Handoff Summary
+ 
+ - `ITEM-0008` is accepted and marked done.
+-- [README.md](/home/sundaram/code/temp/test/apps/project-tracker/README.md) now matches the locked `pyenv` plus Poetry workflow, stays project-local under `apps/project-tracker/`, preserves the `manage.py` entrypoint, and retains the exact `ModuleNotFoundError: No module named 'django'` caveat as an environment/setup issue.
+-- Reviewer confirmed the documented verification path in the current workspace:
+-  - `python3 -m py_compile $(find apps/project-tracker -name '*.py' | sort)`
+-  - `poetry run python apps/project-tracker/manage.py test tracker.tests.test_domain tracker.tests.test_views` with 36 tests green
++- Planning has activated `ITEM-0009` as a small repository-hygiene follow-up already called out in prior review notes: remove tracked Python bytecode artifacts from `apps/project-tracker/`.
++- Keep the existing locked stack and behavior unchanged. This slice is cleanup only, not feature work.
++
++## Active Item
++
++- `ITEM-0009` Remove tracked Python bytecode artifacts
++- Goal: clean tracked `__pycache__` directories and `.pyc` files from `apps/project-tracker/` so the repository reflects source-controlled Django code only.
+ 
+-## Planning Focus
++## DEV Focus
+ 
+-- Select the next backlog decision now that `ITEM-0008` is complete.
+-- Keep the locked stack and tooling constraints unchanged unless a later item explicitly requires a decision update.
++- Delete tracked bytecode artifacts under:
++  - `apps/project-tracker/__pycache__/`
++  - `apps/project-tracker/project_tracker/__pycache__/`
++  - `apps/project-tracker/tracker/__pycache__/`
++  - `apps/project-tracker/tracker/migrations/__pycache__/`
++  - `apps/project-tracker/tracker/tests/__pycache__/`
++- Do not modify source files, templates, static assets, or docs for this slice.
++- Re-run:
++  - `python3 -m py_compile $(find apps/project-tracker -name '*.py' | sort)`
++  - `poetry run python apps/project-tracker/manage.py test tracker.tests.test_domain tracker.tests.test_views`
++- Record cleanup and verification evidence in `ai/review.md`, then hand off to VALIDATOR.
+
+[35m[3mcodex[0m[0m
+The baton files are updated. I’m fixing the handoff metadata, regenerating `ai/next_agent.yaml` via the repo script, and then I’ll switch `ai/active_agent.txt` to `DEV` to complete the planner turn.
+[3m[35mfile update[0m[0m
+[35mM /home/sundaram/code/temp/test/ai/next_agent.md[0m
+@@ -3,3 +3,3 @@
+ - Current role: `DEV`
+[31m-- Prompt: `ai/prompts/03-planner.md`[0m
+[32m+- Prompt: `ai/prompts/04-dev.md`[0m
+ - Execution command for Codex sessions: **Follow `ai/next_agent.yaml` exactly.**
+[32mapply_patch(auto_approved=true) exited 0 in 7ms:[0m
+[2mSuccess. Updated the following files:[0m
+[2mM /home/sundaram/code/temp/test/ai/next_agent.md[0m
+[3m[35mfile update:[0m[0m
+diff --git a/ai/active_item.yaml b/ai/active_item.yaml
+index f499080475332e249df1b11480f216102f391241..8a78e0042eb4f8788ee54b90988f43f2e591dd13
+--- a/ai/active_item.yaml
++++ b/ai/active_item.yaml
+@@ -1,18 +1,20 @@
+-id: ITEM-0008
+-title: Document local setup and verification workflow
+-goal: "Add concise project-local documentation under `apps/project-tracker/` covering Django setup, test commands, and the known workspace limitation blocking runtime verification."
+-status: done
+-owner_role: REVIEWER
++id: ITEM-0009
++title: Remove tracked Python bytecode artifacts
++goal: "Clean tracked `__pycache__` directories and `.pyc` files from `apps/project-tracker/` so the repository reflects source-controlled Django code only."
++status: ready
++owner_role: DEV
+ related_files:
+-  - apps/project-tracker/README.md
+-  - apps/project-tracker/manage.py
+-  - apps/project-tracker/project_tracker/settings.py
++  - apps/project-tracker/__pycache__/
++  - apps/project-tracker/project_tracker/__pycache__/
++  - apps/project-tracker/tracker/__pycache__/
++  - apps/project-tracker/tracker/migrations/__pycache__/
++  - apps/project-tracker/tracker/tests/__pycache__/
+ acceptance_criteria:
+-  - "A project-local README or equivalent doc is added under `apps/project-tracker/` with concrete setup steps for creating a Python environment, installing Django, applying migrations, and running the development server."
+-  - "The documentation lists the focused verification commands for `py_compile` and the Django test modules currently used by the project."
+-  - "The known workspace limitation is documented explicitly as `ModuleNotFoundError: No module named 'django'`, framed as an environment/setup issue rather than a tracker application defect."
+-  - "The documentation stays aligned with the locked stack: Django, SQLite, and vanilla HTML/CSS/JS only."
++  - "Tracked Python bytecode artifacts under `apps/project-tracker/` are removed from the working tree, including nested `__pycache__` directories and `.pyc` files."
++  - "No source `.py`, template, static, or documentation files change as part of the cleanup."
++  - "The accepted verification commands still pass after the cleanup: `python3 -m py_compile $(find apps/project-tracker -name '*.py' | sort)` and `poetry run python apps/project-tracker/manage.py test tracker.tests.test_domain tracker.tests.test_views`."
++  - "The cleanup stays inside the existing project-local Django app tree and introduces no new tooling or stack changes."
+ done_definition:
+-  - "The new documentation reflects the current repository layout and existing `manage.py` entrypoint without inventing new tooling."
+-  - "The listed commands are specific enough for a fresh local checkout to reproduce migrations, server startup, and focused test execution once Django is installed."
+-  - "If DEV cannot run Django commands in the workspace, the handoff and review artifacts keep that runtime limitation visible."
++  - "All tracked bytecode artifacts targeted by the slice are deleted from `apps/project-tracker/`."
++  - "Verification evidence records the post-cleanup `py_compile` and focused Django test results."
++  - "The handoff keeps the cleanup scoped as repository hygiene rather than a product-behavior change."
+diff --git a/ai/backlog.yaml b/ai/backlog.yaml
+index 275d04abb701550063bbba66e7a67f9bac5a4515..9d043b51c1d3e26b9d6039ea8f4a4298fe5adaa7
+--- a/ai/backlog.yaml
++++ b/ai/backlog.yaml
+@@ -94,3 +94,15 @@
+       - Keep the documentation close to the Django app so DEV can edit inside allowed paths.
+       - Capture the exact `manage.py` commands for running the server, migrations, and focused tests once Django is installed.
+       - Preserve the current `ModuleNotFoundError: No module named 'django'` caveat as an environment issue, not a product-code defect.
++  - id: ITEM-0009
++    title: Remove tracked Python bytecode artifacts
++    goal: Clean tracked `__pycache__` directories and `.pyc` files from `apps/project-tracker/` so the repository reflects source-controlled Django code only.
++    type: chore
++    status: ready
++    priority: low
++    dependencies:
++      - ITEM-0008
++    notes:
++      - Limit the cleanup to tracked Python bytecode artifacts under `apps/project-tracker/`.
++      - Do not introduce new tooling or repository-root changes such as `.gitignore` updates in this slice.
++      - Re-run the accepted `py_compile` and focused Django test commands after cleanup to confirm no behavioral regression.
+diff --git a/ai/iterations/ITER-0001.md b/ai/iterations/ITER-0001.md
+index 3759ea7dea8cafbf629de4d7faf6dca1eefe57d9..0aa1f57244f6130580ff5c2ffcb50d169ad9eb18
+--- a/ai/iterations/ITER-0001.md
++++ b/ai/iterations/ITER-0001.md
+@@ -44,3 +44,4 @@
+ | 2026-03-12 | DEV | Corrected the project-local README to use the locked `pyenv` plus Poetry workflow and reran the accepted verification commands for ITEM-0008 | The reviewer-required fix was to remove setup-tooling drift without changing the manage.py entrypoint, focused verification surface, or the documented `ModuleNotFoundError: No module named 'django'` environment caveat, and the Poetry-backed Django test run now passes in this workspace |
+ | 2026-03-12 | VALIDATOR | Accepted ITEM-0008 for reviewer handoff after confirming the README matches the locked pyenv plus Poetry workflow and rerunning the documented verification commands successfully | The documentation now stays within the approved toolchain, preserves the exact environment caveat framing, and the focused Django test command passes end to end in the current Poetry environment |
+ | 2026-03-12 | REVIEWER | Marked ITEM-0008 done and returned the baton to planning for the next backlog decision | The project-local README now matches the locked pyenv plus Poetry workflow, preserves the exact setup caveat as an environment issue, and the documented focused Django test command passes end to end in the current workspace |
++| 2026-03-12 | PLANNER | Activated ITEM-0009 to remove tracked Python bytecode artifacts from `apps/project-tracker/` and handed the cleanup slice to DEV | All user-facing tracker work is complete, and the next smallest implementation-ready task is the repository-hygiene cleanup already called out by prior review notes without changing the locked stack or behavior |
+diff --git a/ai/next_agent.md b/ai/next_agent.md
+index 68e2f75b0945aaf250814fd41a5a90d3ce5c2024..5b2a7de1e91bd03df1e84f1b449f950c2af85145
+--- a/ai/next_agent.md
++++ b/ai/next_agent.md
+@@ -1,18 +1,30 @@
+ # Next Agent
+ 
+-- Current role: `PLANNER`
+-- Prompt: `ai/prompts/03-planner.md`
++- Current role: `DEV`
++- Prompt: `ai/prompts/04-dev.md`
+ - Execution command for Codex sessions: **Follow `ai/next_agent.yaml` exactly.**
+ 
+ ## Handoff Summary
+ 
+ - `ITEM-0008` is accepted and marked done.
+-- [README.md](/home/sundaram/code/temp/test/apps/project-tracker/README.md) now matches the locked `pyenv` plus Poetry workflow, stays project-local under `apps/project-tracker/`, preserves the `manage.py` entrypoint, and retains the exact `ModuleNotFoundError: No module named 'django'` caveat as an environment/setup issue.
+-- Reviewer confirmed the documented verification path in the current workspace:
+-  - `python3 -m py_compile $(find apps/project-tracker -name '*.py' | sort)`
+-  - `poetry run python apps/project-tracker/manage.py test tracker.tests.test_domain tracker.tests.test_views` with 36 tests green
++- Planning has activated `ITEM-0009` as a small repository-hygiene follow-up already called out in prior review notes: remove tracked Python bytecode artifacts from `apps/project-tracker/`.
++- Keep the existing locked stack and behavior unchanged. This slice is cleanup only, not feature work.
++
++## Active Item
++
++- `ITEM-0009` Remove tracked Python bytecode artifacts
++- Goal: clean tracked `__pycache__` directories and `.pyc` files from `apps/project-tracker/` so the repository reflects source-controlled Django code only.
+ 
+-## Planning Focus
++## DEV Focus
+ 
+-- Select the next backlog decision now that `ITEM-0008` is complete.
+-- Keep the locked stack and tooling constraints unchanged unless a later item explicitly requires a decision update.
++- Delete tracked bytecode artifacts under:
++  - `apps/project-tracker/__pycache__/`
++  - `apps/project-tracker/project_tracker/__pycache__/`
++  - `apps/project-tracker/tracker/__pycache__/`
++  - `apps/project-tracker/tracker/migrations/__pycache__/`
++  - `apps/project-tracker/tracker/tests/__pycache__/`
++- Do not modify source files, templates, static assets, or docs for this slice.
++- Re-run:
++  - `python3 -m py_compile $(find apps/project-tracker -name '*.py' | sort)`
++  - `poetry run python apps/project-tracker/manage.py test tracker.tests.test_domain tracker.tests.test_views`
++- Record cleanup and verification evidence in `ai/review.md`, then hand off to VALIDATOR.
+
+[3m[35mfile update:[0m[0m
+diff --git a/ai/active_item.yaml b/ai/active_item.yaml
+index f499080475332e249df1b11480f216102f391241..8a78e0042eb4f8788ee54b90988f43f2e591dd13
+--- a/ai/active_item.yaml
++++ b/ai/active_item.yaml
+@@ -1,18 +1,20 @@
+-id: ITEM-0008
+-title: Document local setup and verification workflow
+-goal: "Add concise project-local documentation under `apps/project-tracker/` covering Django setup, test commands, and the known workspace limitation blocking runtime verification."
+-status: done
+-owner_role: REVIEWER
++id: ITEM-0009
++title: Remove tracked Python bytecode artifacts
++goal: "Clean tracked `__pycache__` directories and `.pyc` files from `apps/project-tracker/` so the repository reflects source-controlled Django code only."
++status: ready
++owner_role: DEV
+ related_files:
+-  - apps/project-tracker/README.md
+-  - apps/project-tracker/manage.py
+-  - apps/project-tracker/project_tracker/settings.py
++  - apps/project-tracker/__pycache__/
++  - apps/project-tracker/project_tracker/__pycache__/
++  - apps/project-tracker/tracker/__pycache__/
++  - apps/project-tracker/tracker/migrations/__pycache__/
++  - apps/project-tracker/tracker/tests/__pycache__/
+ acceptance_criteria:
+-  - "A project-local README or equivalent doc is added under `apps/project-tracker/` with concrete setup steps for creating a Python environment, installing Django, applying migrations, and running the development server."
+-  - "The documentation lists the focused verification commands for `py_compile` and the Django test modules currently used by the project."
+-  - "The known workspace limitation is documented explicitly as `ModuleNotFoundError: No module named 'django'`, framed as an environment/setup issue rather than a tracker application defect."
+-  - "The documentation stays aligned with the locked stack: Django, SQLite, and vanilla HTML/CSS/JS only."
++  - "Tracked Python bytecode artifacts under `apps/project-tracker/` are removed from the working tree, including nested `__pycache__` directories and `.pyc` files."
++  - "No source `.py`, template, static, or documentation files change as part of the cleanup."
++  - "The accepted verification commands still pass after the cleanup: `python3 -m py_compile $(find apps/project-tracker -name '*.py' | sort)` and `poetry run python apps/project-tracker/manage.py test tracker.tests.test_domain tracker.tests.test_views`."
++  - "The cleanup stays inside the existing project-local Django app tree and introduces no new tooling or stack changes."
+ done_definition:
+-  - "The new documentation reflects the current repository layout and existing `manage.py` entrypoint without inventing new tooling."
+-  - "The listed commands are specific enough for a fresh local checkout to reproduce migrations, server startup, and focused test execution once Django is installed."
+-  - "If DEV cannot run Django commands in the workspace, the handoff and review artifacts keep that runtime limitation visible."
++  - "All tracked bytecode artifacts targeted by the slice are deleted from `apps/project-tracker/`."
++  - "Verification evidence records the post-cleanup `py_compile` and focused Django test results."
++  - "The handoff keeps the cleanup scoped as repository hygiene rather than a product-behavior change."
+diff --git a/ai/backlog.yaml b/ai/backlog.yaml
+index 275d04abb701550063bbba66e7a67f9bac5a4515..9d043b51c1d3e26b9d6039ea8f4a4298fe5adaa7
+--- a/ai/backlog.yaml
++++ b/ai/backlog.yaml
+@@ -94,3 +94,15 @@
+       - Keep the documentation close to the Django app so DEV can edit inside allowed paths.
+       - Capture the exact `manage.py` commands for running the server, migrations, and focused tests once Django is installed.
+       - Preserve the current `ModuleNotFoundError: No module named 'django'` caveat as an environment issue, not a product-code defect.
++  - id: ITEM-0009
++    title: Remove tracked Python bytecode artifacts
++    goal: Clean tracked `__pycache__` directories and `.pyc` files from `apps/project-tracker/` so the repository reflects source-controlled Django code only.
++    type: chore
++    status: ready
++    priority: low
++    dependencies:
++      - ITEM-0008
++    notes:
++      - Limit the cleanup to tracked Python bytecode artifacts under `apps/project-tracker/`.
++      - Do not introduce new tooling or repository-root changes such as `.gitignore` updates in this slice.
++      - Re-run the accepted `py_compile` and focused Django test commands after cleanup to confirm no behavioral regression.
+diff --git a/ai/iterations/ITER-0001.md b/ai/iterations/ITER-0001.md
+index 3759ea7dea8cafbf629de4d7faf6dca1eefe57d9..0aa1f57244f6130580ff5c2ffcb50d169ad9eb18
+--- a/ai/iterations/ITER-0001.md
++++ b/ai/iterations/ITER-0001.md
+@@ -44,3 +44,4 @@
+ | 2026-03-12 | DEV | Corrected the project-local README to use the locked `pyenv` plus Poetry workflow and reran the accepted verification commands for ITEM-0008 | The reviewer-required fix was to remove setup-tooling drift without changing the manage.py entrypoint, focused verification surface, or the documented `ModuleNotFoundError: No module named 'django'` environment caveat, and the Poetry-backed Django test run now passes in this workspace |
+ | 2026-03-12 | VALIDATOR | Accepted ITEM-0008 for reviewer handoff after confirming the README matches the locked pyenv plus Poetry workflow and rerunning the documented verification commands successfully | The documentation now stays within the approved toolchain, preserves the exact environment caveat framing, and the focused Django test command passes end to end in the current Poetry environment |
+ | 2026-03-12 | REVIEWER | Marked ITEM-0008 done and returned the baton to planning for the next backlog decision | The project-local README now matches the locked pyenv plus Poetry workflow, preserves the exact setup caveat as an environment issue, and the documented focused Django test command passes end to end in the current workspace |
++| 2026-03-12 | PLANNER | Activated ITEM-0009 to remove tracked Python bytecode artifacts from `apps/project-tracker/` and handed the cleanup slice to DEV | All user-facing tracker work is complete, and the next smallest implementation-ready task is the repository-hygiene cleanup already called out by prior review notes without changing the locked stack or behavior |
+diff --git a/ai/next_agent.md b/ai/next_agent.md
+index 68e2f75b0945aaf250814fd41a5a90d3ce5c2024..5b2a7de1e91bd03df1e84f1b449f950c2af85145
+--- a/ai/next_agent.md
++++ b/ai/next_agent.md
+@@ -1,18 +1,30 @@
+ # Next Agent
+ 
+-- Current role: `PLANNER`
+-- Prompt: `ai/prompts/03-planner.md`
++- Current role: `DEV`
++- Prompt: `ai/prompts/04-dev.md`
+ - Execution command for Codex sessions: **Follow `ai/next_agent.yaml` exactly.**
+ 
+ ## Handoff Summary
+ 
+ - `ITEM-0008` is accepted and marked done.
+-- [README.md](/home/sundaram/code/temp/test/apps/project-tracker/README.md) now matches the locked `pyenv` plus Poetry workflow, stays project-local under `apps/project-tracker/`, preserves the `manage.py` entrypoint, and retains the exact `ModuleNotFoundError: No module named 'django'` caveat as an environment/setup issue.
+-- Reviewer confirmed the documented verification path in the current workspace:
+-  - `python3 -m py_compile $(find apps/project-tracker -name '*.py' | sort)`
+-  - `poetry run python apps/project-tracker/manage.py test tracker.tests.test_domain tracker.tests.test_views` with 36 tests green
++- Planning has activated `ITEM-0009` as a small repository-hygiene follow-up already called out in prior review notes: remove tracked Python bytecode artifacts from `apps/project-tracker/`.
++- Keep the existing locked stack and behavior unchanged. This slice is cleanup only, not feature work.
++
++## Active Item
++
++- `ITEM-0009` Remove tracked Python bytecode artifacts
++- Goal: clean tracked `__pycache__` directories and `.pyc` files from `apps/project-tracker/` so the repository reflects source-controlled Django code only.
+ 
+-## Planning Focus
++## DEV Focus
+ 
+-- Select the next backlog decision now that `ITEM-0008` is complete.
+-- Keep the locked stack and tooling constraints unchanged unless a later item explicitly requires a decision update.
++- Delete tracked bytecode artifacts under:
++  - `apps/project-tracker/__pycache__/`
++  - `apps/project-tracker/project_tracker/__pycache__/`
++  - `apps/project-tracker/tracker/__pycache__/`
++  - `apps/project-tracker/tracker/migrations/__pycache__/`
++  - `apps/project-tracker/tracker/tests/__pycache__/`
++- Do not modify source files, templates, static assets, or docs for this slice.
++- Re-run:
++  - `python3 -m py_compile $(find apps/project-tracker -name '*.py' | sort)`
++  - `poetry run python apps/project-tracker/manage.py test tracker.tests.test_domain tracker.tests.test_views`
++- Record cleanup and verification evidence in `ai/review.md`, then hand off to VALIDATOR.
+
+[35m[3mexec[0m[0m
+[1m/bin/bash -lc "printf 'DEV
+' > ai/active_agent.txt"[0m in /home/sundaram/code/temp/test[32m succeeded in 0ms:[0m
+[2m[0m
+[35m[3mexec[0m[0m
+[1m/bin/bash -lc './scripts/generate-next-agent.sh DEV --notes "ITEM-0009 active | remove tracked __pycache__ and .pyc files under apps/project-tracker | rerun py_compile and focused Django tests | do not change source, templates, static assets, or docs"'[0m in /home/sundaram/code/temp/test[32m succeeded in 0ms:[0m
+[2mGenerated ai/next_agent.yaml for DEV (next: VALIDATOR)[0m
+[3m[35mfile update:[0m[0m
+diff --git a/ai/active_item.yaml b/ai/active_item.yaml
+index f499080475332e249df1b11480f216102f391241..8a78e0042eb4f8788ee54b90988f43f2e591dd13
+--- a/ai/active_item.yaml
++++ b/ai/active_item.yaml
+@@ -1,18 +1,20 @@
+-id: ITEM-0008
+-title: Document local setup and verification workflow
+-goal: "Add concise project-local documentation under `apps/project-tracker/` covering Django setup, test commands, and the known workspace limitation blocking runtime verification."
+-status: done
+-owner_role: REVIEWER
++id: ITEM-0009
++title: Remove tracked Python bytecode artifacts
++goal: "Clean tracked `__pycache__` directories and `.pyc` files from `apps/project-tracker/` so the repository reflects source-controlled Django code only."
++status: ready
++owner_role: DEV
+ related_files:
+-  - apps/project-tracker/README.md
+-  - apps/project-tracker/manage.py
+-  - apps/project-tracker/project_tracker/settings.py
++  - apps/project-tracker/__pycache__/
++  - apps/project-tracker/project_tracker/__pycache__/
++  - apps/project-tracker/tracker/__pycache__/
++  - apps/project-tracker/tracker/migrations/__pycache__/
++  - apps/project-tracker/tracker/tests/__pycache__/
+ acceptance_criteria:
+-  - "A project-local README or equivalent doc is added under `apps/project-tracker/` with concrete setup steps for creating a Python environment, installing Django, applying migrations, and running the development server."
+-  - "The documentation lists the focused verification commands for `py_compile` and the Django test modules currently used by the project."
+-  - "The known workspace limitation is documented explicitly as `ModuleNotFoundError: No module named 'django'`, framed as an environment/setup issue rather than a tracker application defect."
+-  - "The documentation stays aligned with the locked stack: Django, SQLite, and vanilla HTML/CSS/JS only."
++  - "Tracked Python bytecode artifacts under `apps/project-tracker/` are removed from the working tree, including nested `__pycache__` directories and `.pyc` files."
++  - "No source `.py`, template, static, or documentation files change as part of the cleanup."
++  - "The accepted verification commands still pass after the cleanup: `python3 -m py_compile $(find apps/project-tracker -name '*.py' | sort)` and `poetry run python apps/project-tracker/manage.py test tracker.tests.test_domain tracker.tests.test_views`."
++  - "The cleanup stays inside the existing project-local Django app tree and introduces no new tooling or stack changes."
+ done_definition:
+-  - "The new documentation reflects the current repository layout and existing `manage.py` entrypoint without inventing new tooling."
+-  - "The listed commands are specific enough for a fresh local checkout to reproduce migrations, server startup, and focused test execution once Django is installed."
+-  - "If DEV cannot run Django commands in the workspace, the handoff and review artifacts keep that runtime limitation visible."
++  - "All tracked bytecode artifacts targeted by the slice are deleted from `apps/project-tracker/`."
++  - "Verification evidence records the post-cleanup `py_compile` and focused Django test results."
++  - "The handoff keeps the cleanup scoped as repository hygiene rather than a product-behavior change."
+diff --git a/ai/backlog.yaml b/ai/backlog.yaml
+index 275d04abb701550063bbba66e7a67f9bac5a4515..9d043b51c1d3e26b9d6039ea8f4a4298fe5adaa7
+--- a/ai/backlog.yaml
++++ b/ai/backlog.yaml
+@@ -94,3 +94,15 @@
+       - Keep the documentation close to the Django app so DEV can edit inside allowed paths.
+       - Capture the exact `manage.py` commands for running the server, migrations, and focused tests once Django is installed.
+       - Preserve the current `ModuleNotFoundError: No module named 'django'` caveat as an environment issue, not a product-code defect.
++  - id: ITEM-0009
++    title: Remove tracked Python bytecode artifacts
++    goal: Clean tracked `__pycache__` directories and `.pyc` files from `apps/project-tracker/` so the repository reflects source-controlled Django code only.
++    type: chore
++    status: ready
++    priority: low
++    dependencies:
++      - ITEM-0008
++    notes:
++      - Limit the cleanup to tracked Python bytecode artifacts under `apps/project-tracker/`.
++      - Do not introduce new tooling or repository-root changes such as `.gitignore` updates in this slice.
++      - Re-run the accepted `py_compile` and focused Django test commands after cleanup to confirm no behavioral regression.
+diff --git a/ai/iterations/ITER-0001.md b/ai/iterations/ITER-0001.md
+index 3759ea7dea8cafbf629de4d7faf6dca1eefe57d9..0aa1f57244f6130580ff5c2ffcb50d169ad9eb18
+--- a/ai/iterations/ITER-0001.md
++++ b/ai/iterations/ITER-0001.md
+@@ -44,3 +44,4 @@
+ | 2026-03-12 | DEV | Corrected the project-local README to use the locked `pyenv` plus Poetry workflow and reran the accepted verification commands for ITEM-0008 | The reviewer-required fix was to remove setup-tooling drift without changing the manage.py entrypoint, focused verification surface, or the documented `ModuleNotFoundError: No module named 'django'` environment caveat, and the Poetry-backed Django test run now passes in this workspace |
+ | 2026-03-12 | VALIDATOR | Accepted ITEM-0008 for reviewer handoff after confirming the README matches the locked pyenv plus Poetry workflow and rerunning the documented verification commands successfully | The documentation now stays within the approved toolchain, preserves the exact environment caveat framing, and the focused Django test command passes end to end in the current Poetry environment |
+ | 2026-03-12 | REVIEWER | Marked ITEM-0008 done and returned the baton to planning for the next backlog decision | The project-local README now matches the locked pyenv plus Poetry workflow, preserves the exact setup caveat as an environment issue, and the documented focused Django test command passes end to end in the current workspace |
++| 2026-03-12 | PLANNER | Activated ITEM-0009 to remove tracked Python bytecode artifacts from `apps/project-tracker/` and handed the cleanup slice to DEV | All user-facing tracker work is complete, and the next smallest implementation-ready task is the repository-hygiene cleanup already called out by prior review notes without changing the locked stack or behavior |
+diff --git a/ai/next_agent.md b/ai/next_agent.md
+index 68e2f75b0945aaf250814fd41a5a90d3ce5c2024..5b2a7de1e91bd03df1e84f1b449f950c2af85145
+--- a/ai/next_agent.md
++++ b/ai/next_agent.md
+@@ -1,18 +1,30 @@
+ # Next Agent
+ 
+-- Current role: `PLANNER`
+-- Prompt: `ai/prompts/03-planner.md`
++- Current role: `DEV`
++- Prompt: `ai/prompts/04-dev.md`
+ - Execution command for Codex sessions: **Follow `ai/next_agent.yaml` exactly.**
+ 
+ ## Handoff Summary
+ 
+ - `ITEM-0008` is accepted and marked done.
+-- [README.md](/home/sundaram/code/temp/test/apps/project-tracker/README.md) now matches the locked `pyenv` plus Poetry workflow, stays project-local under `apps/project-tracker/`, preserves the `manage.py` entrypoint, and retains the exact `ModuleNotFoundError: No module named 'django'` caveat as an environment/setup issue.
+-- Reviewer confirmed the documented verification path in the current workspace:
+-  - `python3 -m py_compile $(find apps/project-tracker -name '*.py' | sort)`
+-  - `poetry run python apps/project-tracker/manage.py test tracker.tests.test_domain tracker.tests.test_views` with 36 tests green
++- Planning has activated `ITEM-0009` as a small repository-hygiene follow-up already called out in prior review notes: remove tracked Python bytecode artifacts from `apps/project-tracker/`.
++- Keep the existing locked stack and behavior unchanged. This slice is cleanup only, not feature work.
++
++## Active Item
++
++- `ITEM-0009` Remove tracked Python bytecode artifacts
++- Goal: clean tracked `__pycache__` directories and `.pyc` files from `apps/project-tracker/` so the repository reflects source-controlled Django code only.
+ 
+-## Planning Focus
++## DEV Focus
+ 
+-- Select the next backlog decision now that `ITEM-0008` is complete.
+-- Keep the locked stack and tooling constraints unchanged unless a later item explicitly requires a decision update.
++- Delete tracked bytecode artifacts under:
++  - `apps/project-tracker/__pycache__/`
++  - `apps/project-tracker/project_tracker/__pycache__/`
++  - `apps/project-tracker/tracker/__pycache__/`
++  - `apps/project-tracker/tracker/migrations/__pycache__/`
++  - `apps/project-tracker/tracker/tests/__pycache__/`
++- Do not modify source files, templates, static assets, or docs for this slice.
++- Re-run:
++  - `python3 -m py_compile $(find apps/project-tracker -name '*.py' | sort)`
++  - `poetry run python apps/project-tracker/manage.py test tracker.tests.test_domain tracker.tests.test_views`
++- Record cleanup and verification evidence in `ai/review.md`, then hand off to VALIDATOR.
+
+[35m[3mcodex[0m[0m
+I’ve handed the baton files forward. I’m doing one final consistency check on `ai/next_agent.yaml`, `ai/active_agent.txt`, and the active item so the planner state is internally consistent before I stop.
+[35m[3mexec[0m[0m
+[1m/bin/bash -lc "sed -n '1,40p' ai/active_agent.txt"[0m in /home/sundaram/code/temp/test[35m[3mexec[0m[0m
+[1m/bin/bash -lc "sed -n '1,220p' ai/next_agent.yaml"[0m in /home/sundaram/code/temp/test[35m[3mexec[0m[0m
+[1m/bin/bash -lc "sed -n '1,220p' ai/active_item.yaml"[0m in /home/sundaram/code/temp/test[35m[3mexec[0m[0m
+[1m/bin/bash -lc "sed -n '1,220p' ai/next_agent.md"[0m in /home/sundaram/code/temp/test[32m succeeded in 0ms:[0m
+[2mnext_role: DEV
+prompt_file: ai/prompts/04-dev.md
+read:
+  - ai/active_item.yaml
+  - ai/requirements.md
+  - ai/judgment.yaml
+  - ai/simplification.md
+  - ai/decision-lock.yaml
+  - ai/goal.yaml
+  - ai/constitution.yaml
+  - ai/active_agent.txt
+  - ai/next_agent.md
+  - ai/user-questions.yaml
+allowed_edits:
+  - apps/
+  - infra/
+  - ai/review.md
+  - ai/decision-lock.yaml
+  - ai/user-questions.yaml
+  - ai/iterations/ITER-0001.md[0m
+[32m succeeded in 0ms:[0m
+[2mDEV[0m
+[32m succeeded in 0ms:[0m
+[2m# Next Agent
+
+- Current role: `DEV`
+- Prompt: `ai/prompts/04-dev.md`
+- Execution command for Codex sessions: **Follow `ai/next_agent.yaml` exactly.**
+
+## Handoff Summary
+
+- `ITEM-0008` is accepted and marked done.
+- Planning has activated `ITEM-0009` as a small repository-hygiene follow-up already called out in prior review notes: remove tracked Python bytecode artifacts from `apps/project-tracker/`.
+- Keep the existing locked stack and behavior unchanged. This slice is cleanup only, not feature work.
+
+## Active Item
+
+- `ITEM-0009` Remove tracked Python bytecode artifacts
+- Goal: clean tracked `__pycache__` directories and `.pyc` files from `apps/project-tracker/` so the repository reflects source-controlled Django code only.
+
+## DEV Focus
+
+- Delete tracked bytecode artifacts under:[0m
+[32m succeeded in 0ms:[0m
+[2mid: ITEM-0009
+title: Remove tracked Python bytecode artifacts
+goal: "Clean tracked `__pycache__` directories and `.pyc` files from `apps/project-tracker/` so the repository reflects source-controlled Django code only."
+status: ready
+owner_role: DEV
+related_files:
+  - apps/project-tracker/__pycache__/
+  - apps/project-tracker/project_tracker/__pycache__/
+  - apps/project-tracker/tracker/__pycache__/
+  - apps/project-tracker/tracker/migrations/__pycache__/
+  - apps/project-tracker/tracker/tests/__pycache__/
+acceptance_criteria:
+  - "Tracked Python bytecode artifacts under `apps/project-tracker/` are removed from the working tree, including nested `__pycache__` directories and `.pyc` files."
+  - "No source `.py`, template, static, or documentation files change as part of the cleanup."
+  - "The accepted verification commands still pass after the cleanup: `python3 -m py_compile $(find apps/project-tracker -name '*.py' | sort)` and `poetry run python apps/project-tracker/manage.py test tracker.tests.test_domain tracker.tests.test_views`."
+  - "The cleanup stays inside the existing project-local Django app tree and introduces no new tooling or stack changes."
+done_definition:
+  - "All tracked bytecode artifacts targeted by the slice are deleted from `apps/project-tracker/`."
+  - "Verification evidence records the post-cleanup `py_compile` and focused Django test results."
+  - "The handoff keeps the cleanup scoped as repository hygiene rather than a product-behavior change."[0m
+[3m[35mfile update:[0m[0m
+diff --git a/ai/active_item.yaml b/ai/active_item.yaml
+index f499080475332e249df1b11480f216102f391241..8a78e0042eb4f8788ee54b90988f43f2e591dd13
+--- a/ai/active_item.yaml
++++ b/ai/active_item.yaml
+@@ -1,18 +1,20 @@
+-id: ITEM-0008
+-title: Document local setup and verification workflow
+-goal: "Add concise project-local documentation under `apps/project-tracker/` covering Django setup, test commands, and the known workspace limitation blocking runtime verification."
+-status: done
+-owner_role: REVIEWER
++id: ITEM-0009
++title: Remove tracked Python bytecode artifacts
++goal: "Clean tracked `__pycache__` directories and `.pyc` files from `apps/project-tracker/` so the repository reflects source-controlled Django code only."
++status: ready
++owner_role: DEV
+ related_files:
+-  - apps/project-tracker/README.md
+-  - apps/project-tracker/manage.py
+-  - apps/project-tracker/project_tracker/settings.py
++  - apps/project-tracker/__pycache__/
++  - apps/project-tracker/project_tracker/__pycache__/
++  - apps/project-tracker/tracker/__pycache__/
++  - apps/project-tracker/tracker/migrations/__pycache__/
++  - apps/project-tracker/tracker/tests/__pycache__/
+ acceptance_criteria:
+-  - "A project-local README or equivalent doc is added under `apps/project-tracker/` with concrete setup steps for creating a Python environment, installing Django, applying migrations, and running the development server."
+-  - "The documentation lists the focused verification commands for `py_compile` and the Django test modules currently used by the project."
+-  - "The known workspace limitation is documented explicitly as `ModuleNotFoundError: No module named 'django'`, framed as an environment/setup issue rather than a tracker application defect."
+-  - "The documentation stays aligned with the locked stack: Django, SQLite, and vanilla HTML/CSS/JS only."
++  - "Tracked Python bytecode artifacts under `apps/project-tracker/` are removed from the working tree, including nested `__pycache__` directories and `.pyc` files."
++  - "No source `.py`, template, static, or documentation files change as part of the cleanup."
++  - "The accepted verification commands still pass after the cleanup: `python3 -m py_compile $(find apps/project-tracker -name '*.py' | sort)` and `poetry run python apps/project-tracker/manage.py test tracker.tests.test_domain tracker.tests.test_views`."
++  - "The cleanup stays inside the existing project-local Django app tree and introduces no new tooling or stack changes."
+ done_definition:
+-  - "The new documentation reflects the current repository layout and existing `manage.py` entrypoint without inventing new tooling."
+-  - "The listed commands are specific enough for a fresh local checkout to reproduce migrations, server startup, and focused test execution once Django is installed."
+-  - "If DEV cannot run Django commands in the workspace, the handoff and review artifacts keep that runtime limitation visible."
++  - "All tracked bytecode artifacts targeted by the slice are deleted from `apps/project-tracker/`."
++  - "Verification evidence records the post-cleanup `py_compile` and focused Django test results."
++  - "The handoff keeps the cleanup scoped as repository hygiene rather than a product-behavior change."
+diff --git a/ai/backlog.yaml b/ai/backlog.yaml
+index 275d04abb701550063bbba66e7a67f9bac5a4515..9d043b51c1d3e26b9d6039ea8f4a4298fe5adaa7
+--- a/ai/backlog.yaml
++++ b/ai/backlog.yaml
+@@ -94,3 +94,15 @@
+       - Keep the documentation close to the Django app so DEV can edit inside allowed paths.
+       - Capture the exact `manage.py` commands for running the server, migrations, and focused tests once Django is installed.
+       - Preserve the current `ModuleNotFoundError: No module named 'django'` caveat as an environment issue, not a product-code defect.
++  - id: ITEM-0009
++    title: Remove tracked Python bytecode artifacts
++    goal: Clean tracked `__pycache__` directories and `.pyc` files from `apps/project-tracker/` so the repository reflects source-controlled Django code only.
++    type: chore
++    status: ready
++    priority: low
++    dependencies:
++      - ITEM-0008
++    notes:
++      - Limit the cleanup to tracked Python bytecode artifacts under `apps/project-tracker/`.
++      - Do not introduce new tooling or repository-root changes such as `.gitignore` updates in this slice.
++      - Re-run the accepted `py_compile` and focused Django test commands after cleanup to confirm no behavioral regression.
+diff --git a/ai/iterations/ITER-0001.md b/ai/iterations/ITER-0001.md
+index 3759ea7dea8cafbf629de4d7faf6dca1eefe57d9..0aa1f57244f6130580ff5c2ffcb50d169ad9eb18
+--- a/ai/iterations/ITER-0001.md
++++ b/ai/iterations/ITER-0001.md
+@@ -44,3 +44,4 @@
+ | 2026-03-12 | DEV | Corrected the project-local README to use the locked `pyenv` plus Poetry workflow and reran the accepted verification commands for ITEM-0008 | The reviewer-required fix was to remove setup-tooling drift without changing the manage.py entrypoint, focused verification surface, or the documented `ModuleNotFoundError: No module named 'django'` environment caveat, and the Poetry-backed Django test run now passes in this workspace |
+ | 2026-03-12 | VALIDATOR | Accepted ITEM-0008 for reviewer handoff after confirming the README matches the locked pyenv plus Poetry workflow and rerunning the documented verification commands successfully | The documentation now stays within the approved toolchain, preserves the exact environment caveat framing, and the focused Django test command passes end to end in the current Poetry environment |
+ | 2026-03-12 | REVIEWER | Marked ITEM-0008 done and returned the baton to planning for the next backlog decision | The project-local README now matches the locked pyenv plus Poetry workflow, preserves the exact setup caveat as an environment issue, and the documented focused Django test command passes end to end in the current workspace |
++| 2026-03-12 | PLANNER | Activated ITEM-0009 to remove tracked Python bytecode artifacts from `apps/project-tracker/` and handed the cleanup slice to DEV | All user-facing tracker work is complete, and the next smallest implementation-ready task is the repository-hygiene cleanup already called out by prior review notes without changing the locked stack or behavior |
+diff --git a/ai/next_agent.md b/ai/next_agent.md
+index 68e2f75b0945aaf250814fd41a5a90d3ce5c2024..5b2a7de1e91bd03df1e84f1b449f950c2af85145
+--- a/ai/next_agent.md
++++ b/ai/next_agent.md
+@@ -1,18 +1,30 @@
+ # Next Agent
+ 
+-- Current role: `PLANNER`
+-- Prompt: `ai/prompts/03-planner.md`
++- Current role: `DEV`
++- Prompt: `ai/prompts/04-dev.md`
+ - Execution command for Codex sessions: **Follow `ai/next_agent.yaml` exactly.**
+ 
+ ## Handoff Summary
+ 
+ - `ITEM-0008` is accepted and marked done.
+-- [README.md](/home/sundaram/code/temp/test/apps/project-tracker/README.md) now matches the locked `pyenv` plus Poetry workflow, stays project-local under `apps/project-tracker/`, preserves the `manage.py` entrypoint, and retains the exact `ModuleNotFoundError: No module named 'django'` caveat as an environment/setup issue.
+-- Reviewer confirmed the documented verification path in the current workspace:
+-  - `python3 -m py_compile $(find apps/project-tracker -name '*.py' | sort)`
+-  - `poetry run python apps/project-tracker/manage.py test tracker.tests.test_domain tracker.tests.test_views` with 36 tests green
++- Planning has activated `ITEM-0009` as a small repository-hygiene follow-up already called out in prior review notes: remove tracked Python bytecode artifacts from `apps/project-tracker/`.
++- Keep the existing locked stack and behavior unchanged. This slice is cleanup only, not feature work.
++
++## Active Item
++
++- `ITEM-0009` Remove tracked Python bytecode artifacts
++- Goal: clean tracked `__pycache__` directories and `.pyc` files from `apps/project-tracker/` so the repository reflects source-controlled Django code only.
+ 
+-## Planning Focus
++## DEV Focus
+ 
+-- Select the next backlog decision now that `ITEM-0008` is complete.
+-- Keep the locked stack and tooling constraints unchanged unless a later item explicitly requires a decision update.
++- Delete tracked bytecode artifacts under:
++  - `apps/project-tracker/__pycache__/`
++  - `apps/project-tracker/project_tracker/__pycache__/`
++  - `apps/project-tracker/tracker/__pycache__/`
++  - `apps/project-tracker/tracker/migrations/__pycache__/`
++  - `apps/project-tracker/tracker/tests/__pycache__/`
++- Do not modify source files, templates, static assets, or docs for this slice.
++- Re-run:
++  - `python3 -m py_compile $(find apps/project-tracker -name '*.py' | sort)`
++  - `poetry run python apps/project-tracker/manage.py test tracker.tests.test_domain tracker.tests.test_views`
++- Record cleanup and verification evidence in `ai/review.md`, then hand off to VALIDATOR.
+
+[35m[3mcodex[0m[0m
+HANDOFF TO DEV
+[3m[35mfile update:[0m[0m
+diff --git a/ai/active_item.yaml b/ai/active_item.yaml
+index f499080475332e249df1b11480f216102f391241..8a78e0042eb4f8788ee54b90988f43f2e591dd13
+--- a/ai/active_item.yaml
++++ b/ai/active_item.yaml
+@@ -1,18 +1,20 @@
+-id: ITEM-0008
+-title: Document local setup and verification workflow
+-goal: "Add concise project-local documentation under `apps/project-tracker/` covering Django setup, test commands, and the known workspace limitation blocking runtime verification."
+-status: done
+-owner_role: REVIEWER
++id: ITEM-0009
++title: Remove tracked Python bytecode artifacts
++goal: "Clean tracked `__pycache__` directories and `.pyc` files from `apps/project-tracker/` so the repository reflects source-controlled Django code only."
++status: ready
++owner_role: DEV
+ related_files:
+-  - apps/project-tracker/README.md
+-  - apps/project-tracker/manage.py
+-  - apps/project-tracker/project_tracker/settings.py
++  - apps/project-tracker/__pycache__/
++  - apps/project-tracker/project_tracker/__pycache__/
++  - apps/project-tracker/tracker/__pycache__/
++  - apps/project-tracker/tracker/migrations/__pycache__/
++  - apps/project-tracker/tracker/tests/__pycache__/
+ acceptance_criteria:
+-  - "A project-local README or equivalent doc is added under `apps/project-tracker/` with concrete setup steps for creating a Python environment, installing Django, applying migrations, and running the development server."
+-  - "The documentation lists the focused verification commands for `py_compile` and the Django test modules currently used by the project."
+-  - "The known workspace limitation is documented explicitly as `ModuleNotFoundError: No module named 'django'`, framed as an environment/setup issue rather than a tracker application defect."
+-  - "The documentation stays aligned with the locked stack: Django, SQLite, and vanilla HTML/CSS/JS only."
++  - "Tracked Python bytecode artifacts under `apps/project-tracker/` are removed from the working tree, including nested `__pycache__` directories and `.pyc` files."
++  - "No source `.py`, template, static, or documentation files change as part of the cleanup."
++  - "The accepted verification commands still pass after the cleanup: `python3 -m py_compile $(find apps/project-tracker -name '*.py' | sort)` and `poetry run python apps/project-tracker/manage.py test tracker.tests.test_domain tracker.tests.test_views`."
++  - "The cleanup stays inside the existing project-local Django app tree and introduces no new tooling or stack changes."
+ done_definition:
+-  - "The new documentation reflects the current repository layout and existing `manage.py` entrypoint without inventing new tooling."
+-  - "The listed commands are specific enough for a fresh local checkout to reproduce migrations, server startup, and focused test execution once Django is installed."
+-  - "If DEV cannot run Django commands in the workspace, the handoff and review artifacts keep that runtime limitation visible."
++  - "All tracked bytecode artifacts targeted by the slice are deleted from `apps/project-tracker/`."
++  - "Verification evidence records the post-cleanup `py_compile` and focused Django test results."
++  - "The handoff keeps the cleanup scoped as repository hygiene rather than a product-behavior change."
+diff --git a/ai/backlog.yaml b/ai/backlog.yaml
+index 275d04abb701550063bbba66e7a67f9bac5a4515..9d043b51c1d3e26b9d6039ea8f4a4298fe5adaa7
+--- a/ai/backlog.yaml
++++ b/ai/backlog.yaml
+@@ -94,3 +94,15 @@
+       - Keep the documentation close to the Django app so DEV can edit inside allowed paths.
+       - Capture the exact `manage.py` commands for running the server, migrations, and focused tests once Django is installed.
+       - Preserve the current `ModuleNotFoundError: No module named 'django'` caveat as an environment issue, not a product-code defect.
++  - id: ITEM-0009
++    title: Remove tracked Python bytecode artifacts
++    goal: Clean tracked `__pycache__` directories and `.pyc` files from `apps/project-tracker/` so the repository reflects source-controlled Django code only.
++    type: chore
++    status: ready
++    priority: low
++    dependencies:
++      - ITEM-0008
++    notes:
++      - Limit the cleanup to tracked Python bytecode artifacts under `apps/project-tracker/`.
++      - Do not introduce new tooling or repository-root changes such as `.gitignore` updates in this slice.
++      - Re-run the accepted `py_compile` and focused Django test commands after cleanup to confirm no behavioral regression.
+diff --git a/ai/iterations/ITER-0001.md b/ai/iterations/ITER-0001.md
+index 3759ea7dea8cafbf629de4d7faf6dca1eefe57d9..0aa1f57244f6130580ff5c2ffcb50d169ad9eb18
+--- a/ai/iterations/ITER-0001.md
++++ b/ai/iterations/ITER-0001.md
+@@ -44,3 +44,4 @@
+ | 2026-03-12 | DEV | Corrected the project-local README to use the locked `pyenv` plus Poetry workflow and reran the accepted verification commands for ITEM-0008 | The reviewer-required fix was to remove setup-tooling drift without changing the manage.py entrypoint, focused verification surface, or the documented `ModuleNotFoundError: No module named 'django'` environment caveat, and the Poetry-backed Django test run now passes in this workspace |
+ | 2026-03-12 | VALIDATOR | Accepted ITEM-0008 for reviewer handoff after confirming the README matches the locked pyenv plus Poetry workflow and rerunning the documented verification commands successfully | The documentation now stays within the approved toolchain, preserves the exact environment caveat framing, and the focused Django test command passes end to end in the current Poetry environment |
+ | 2026-03-12 | REVIEWER | Marked ITEM-0008 done and returned the baton to planning for the next backlog decision | The project-local README now matches the locked pyenv plus Poetry workflow, preserves the exact setup caveat as an environment issue, and the documented focused Django test command passes end to end in the current workspace |
++| 2026-03-12 | PLANNER | Activated ITEM-0009 to remove tracked Python bytecode artifacts from `apps/project-tracker/` and handed the cleanup slice to DEV | All user-facing tracker work is complete, and the next smallest implementation-ready task is the repository-hygiene cleanup already called out by prior review notes without changing the locked stack or behavior |
+diff --git a/ai/next_agent.md b/ai/next_agent.md
+index 68e2f75b0945aaf250814fd41a5a90d3ce5c2024..5b2a7de1e91bd03df1e84f1b449f950c2af85145
+--- a/ai/next_agent.md
++++ b/ai/next_agent.md
+@@ -1,18 +1,30 @@
+ # Next Agent
+ 
+-- Current role: `PLANNER`
+-- Prompt: `ai/prompts/03-planner.md`
++- Current role: `DEV`
++- Prompt: `ai/prompts/04-dev.md`
+ - Execution command for Codex sessions: **Follow `ai/next_agent.yaml` exactly.**
+ 
+ ## Handoff Summary
+ 
+ - `ITEM-0008` is accepted and marked done.
+-- [README.md](/home/sundaram/code/temp/test/apps/project-tracker/README.md) now matches the locked `pyenv` plus Poetry workflow, stays project-local under `apps/project-tracker/`, preserves the `manage.py` entrypoint, and retains the exact `ModuleNotFoundError: No module named 'django'` caveat as an environment/setup issue.
+-- Reviewer confirmed the documented verification path in the current workspace:
+-  - `python3 -m py_compile $(find apps/project-tracker -name '*.py' | sort)`
+-  - `poetry run python apps/project-tracker/manage.py test tracker.tests.test_domain tracker.tests.test_views` with 36 tests green
++- Planning has activated `ITEM-0009` as a small repository-hygiene follow-up already called out in prior review notes: remove tracked Python bytecode artifacts from `apps/project-tracker/`.
++- Keep the existing locked stack and behavior unchanged. This slice is cleanup only, not feature work.
++
++## Active Item
++
++- `ITEM-0009` Remove tracked Python bytecode artifacts
++- Goal: clean tracked `__pycache__` directories and `.pyc` files from `apps/project-tracker/` so the repository reflects source-controlled Django code only.
+ 
+-## Planning Focus
++## DEV Focus
+ 
+-- Select the next backlog decision now that `ITEM-0008` is complete.
+-- Keep the locked stack and tooling constraints unchanged unless a later item explicitly requires a decision update.
++- Delete tracked bytecode artifacts under:
++  - `apps/project-tracker/__pycache__/`
++  - `apps/project-tracker/project_tracker/__pycache__/`
++  - `apps/project-tracker/tracker/__pycache__/`
++  - `apps/project-tracker/tracker/migrations/__pycache__/`
++  - `apps/project-tracker/tracker/tests/__pycache__/`
++- Do not modify source files, templates, static assets, or docs for this slice.
++- Re-run:
++  - `python3 -m py_compile $(find apps/project-tracker -name '*.py' | sort)`
++  - `poetry run python apps/project-tracker/manage.py test tracker.tests.test_domain tracker.tests.test_views`
++- Record cleanup and verification evidence in `ai/review.md`, then hand off to VALIDATOR.
+
+[3m[35mtokens used[0m[0m
+35,598
+
+Script done on 2026-03-11 23:37:02-05:00 [COMMAND_EXIT_CODE="0"]

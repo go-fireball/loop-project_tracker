@@ -1,0 +1,31 @@
+<article class="list-card">
+  <div class="list-card-main">
+    <h3><a href="{% url 'tracker:project_detail' project.id %}">{{ project.name }}</a></h3>
+    <p>{{ project.description|default:"No description provided yet." }}</p>
+  </div>
+  <div class="meta-cluster">
+    <span class="badge">{{ project.get_status_display }}</span>
+    {% if source_page == "project_list" %}
+      <span class="meta-copy">{{ project.task_count }} total tasks</span>
+      <span class="meta-copy">{{ project.open_task_count }} open tasks</span>
+    {% endif %}
+    <span class="meta-copy">Created {{ project.created_date }}</span>
+    {% for tag in project.tags.all %}
+      <a class="chip" href="{% url 'tracker:tag_detail' tag.id %}">{{ tag.name }}</a>
+    {% empty %}
+      <span class="meta-copy">No tags</span>
+    {% endfor %}
+    {% if source_page %}
+      <form
+        action="{% url 'tracker:project_delete' project.id %}"
+        method="post"
+        data-async-form
+        data-confirm="Delete {{ project.name }}?"
+      >
+        {% csrf_token %}
+        <input type="hidden" name="source_page" value="{{ source_page }}">
+        <button class="button-secondary" type="submit">Delete</button>
+      </form>
+    {% endif %}
+  </div>
+</article>

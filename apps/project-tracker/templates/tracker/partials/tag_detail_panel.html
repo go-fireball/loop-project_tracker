@@ -1,0 +1,94 @@
+<section class="panel">
+  {% if selected_tag %}
+    <div class="panel-heading">
+      <div>
+        <h2>Tag: {{ selected_tag.name }}</h2>
+        <p class="section-copy">Projects and tasks associated with this shared tracker tag.</p>
+      </div>
+      <div class="action-row">
+        <a
+          class="button-secondary"
+          href="{% url 'tracker:tag_update' selected_tag.id %}"
+          data-async-link
+        >Edit tag</a>
+        <form
+          action="{% url 'tracker:tag_delete' selected_tag.id %}"
+          method="post"
+          data-async-form
+          data-confirm="Delete {{ selected_tag.name }}?"
+        >
+          {% csrf_token %}
+          <button class="button-danger" type="submit">Delete tag</button>
+        </form>
+      </div>
+    </div>
+
+    <section class="entity-group">
+      <div class="panel-heading">
+        <div>
+          <h3>Projects</h3>
+        </div>
+      </div>
+      {% if selected_tag.projects.all %}
+        <div class="stack">
+          {% for project in selected_tag.projects.all %}
+            <article class="list-card">
+              <div class="list-card-main">
+                <h3><a href="{% url 'tracker:project_detail' project.id %}">{{ project.name }}</a></h3>
+                <p>{{ project.description|default:"No description provided yet." }}</p>
+              </div>
+              <div class="meta-cluster">
+                <span class="badge">{{ project.get_status_display }}</span>
+                <span class="meta-copy">Created {{ project.created_date }}</span>
+              </div>
+            </article>
+          {% endfor %}
+        </div>
+      {% else %}
+        <p class="empty-state">No projects use this tag yet.</p>
+      {% endif %}
+    </section>
+
+    <section class="entity-group">
+      <div class="panel-heading">
+        <div>
+          <h3>Tasks</h3>
+        </div>
+      </div>
+      {% if selected_tag.tasks.all %}
+        <div class="stack">
+          {% for task in selected_tag.tasks.all %}
+            <article class="list-card">
+              <div class="list-card-main">
+                <h3>{{ task.title }}</h3>
+                <p><a href="{% url 'tracker:project_detail' task.project.id %}">{{ task.project.name }}</a></p>
+              </div>
+              <div class="meta-cluster">
+                <span class="badge">{{ task.get_status_display }}</span>
+                <span class="meta-copy">Priority {{ task.get_priority_display }}</span>
+                {% if task.due_date %}
+                  <span class="meta-copy">Due {{ task.due_date }}</span>
+                {% else %}
+                  <span class="meta-copy">No due date</span>
+                {% endif %}
+              </div>
+            </article>
+          {% endfor %}
+        </div>
+      {% else %}
+        <p class="empty-state">No tasks use this tag yet.</p>
+      {% endif %}
+    </section>
+  {% else %}
+    <div class="panel-heading">
+      <div>
+        <h2>Select a tag</h2>
+        <p class="section-copy">Choose a tag from the list to inspect related projects and tasks.</p>
+      </div>
+    </div>
+    {% if deleted_tag_name %}
+      <p class="status">Deleted tag: {{ deleted_tag_name }}</p>
+    {% endif %}
+    <p class="empty-state">The selected tag details will appear here.</p>
+  {% endif %}
+</section>

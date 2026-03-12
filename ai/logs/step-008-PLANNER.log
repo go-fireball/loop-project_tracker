@@ -1,0 +1,1180 @@
+Script started on 2026-03-11 22:11:38-05:00 [COMMAND="codex exec --model gpt-5.4 --full-auto Follow\ ai/next_agent.yaml\ exactly. " TERM="xterm-256color" TTY="/dev/pts/0" COLUMNS="184" LINES="43"]
+OpenAI Codex v0.114.0 (research preview)
+--------
+[1mworkdir:[0m /home/sundaram/code/temp/test
+[1mmodel:[0m gpt-5.4
+[1mprovider:[0m openai
+[1mapproval:[0m never
+[1msandbox:[0m workspace-write [workdir, /tmp, $TMPDIR, /home/sundaram/.codex/memories]
+[1mreasoning effort:[0m medium
+[1mreasoning summaries:[0m none
+[1msession id:[0m 019ce007-42a6-7341-a34b-d393b3fe56b8
+--------
+[36muser[0m
+Follow ai/next_agent.yaml exactly.
+[36mmcp startup:[0m no servers
+[35m[3mcodex[0m[0m
+I’m checking the workspace instructions and the target file so I can follow `ai/next_agent.yaml` exactly rather than guessing its workflow.
+[35m[3mexec[0m[0m
+[1m/bin/bash -lc pwd[0m in /home/sundaram/code/temp/test[32m succeeded in 0ms:[0m
+[2m/home/sundaram/code/temp/test[0m
+[35m[3mexec[0m[0m
+[1m/bin/bash -lc 'rg --files'[0m in /home/sundaram/code/temp/test[32m succeeded in 0ms:[0m
+[2mai/logs/step-003-ARCHITECT.log
+ai/logs/step-006-VALIDATOR.log
+ai/logs/step-002-VALIDATOR.log
+ai/logs/step-007-REVIEWER.log
+ai/logs/step-001-DEV.log
+ai/logs/step-002-SENIOR_JUDGMENTAL_ENGINEER.log
+ai/logs/step-003-REVIEWER.log
+ai/logs/baton.log
+ai/logs/step-005-DEV.log
+ai/logs/step-004-PLANNER.log
+ai/logs/step-001-PRODUCT_OWNER.log
+ai/next_agent.md
+ai/active_agent.txt
+init.sh
+ai/defaults/user-questions.yaml
+ai/prompts/00-product-owner.md
+ai/defaults/logs/baton.log
+ai/prompts/04-dev.md
+ai/prompts/06-reviewer.md
+ai/prompts/03-planner.md[0m
+[35m[3mcodex[0m[0m
+I found the baton files. Next I’m reading `ai/next_agent.yaml` and the related handoff context to determine the exact role, scope, and required outputs for this turn.
+[35m[3mexec[0m[0m
+[1m/bin/bash -lc "sed -n '1,220p' ai/next_agent.md"[0m in /home/sundaram/code/temp/test[32m succeeded in 0ms:[0m
+[2m# Next Agent
+
+- Current role: `PLANNER`
+- Prompt: `ai/prompts/03-planner.md`
+- Execution command for Codex sessions: **Follow `ai/next_agent.yaml` exactly.**
+- If role mismatch with `ai/active_agent.txt`, print: `WAITING FOR BATON`
+
+## Handoff Notes
+
+- `ITEM-0002` is accepted and marked done.
+- Reviewer decision: DONE with an environment caveat, not a code gap.
+- What was accepted:
+  - `Project`, `Task`, and `Tag` models exist with the locked statuses, priorities, and relationships.
+  - Forms and admin wiring stay inside the approved single-app Django shape.
+  - `tracker/migrations/0001_initial.py` matches the implemented schema on static inspection.
+  - No scope drift or speculative architecture was introduced.
+- Validation evidence:
+  - `python3 -m py_compile $(find apps/project-tracker -name '*.py' | sort)` passed.
+  - `python3 apps/project-tracker/manage.py test tracker.tests.test_domain tracker.tests.test_views` failed with `ModuleNotFoundError: No module named 'django'`.
+- Planning guidance:[0m
+[35m[3mexec[0m[0m
+[1m/bin/bash -lc "sed -n '1,220p' ai/next_agent.yaml"[0m in /home/sundaram/code/temp/test[32m succeeded in 0ms:[0m
+[2mnext_role: PLANNER
+prompt_file: ai/prompts/03-planner.md
+read:
+  - ai/backlog.yaml
+  - ai/active_item.yaml
+  - ai/goal.yaml
+  - ai/decision-lock.yaml
+  - ai/review.md
+  - ai/constitution.yaml
+  - ai/active_agent.txt
+  - ai/next_agent.md
+  - ai/user-questions.yaml
+allowed_edits:
+  - ai/backlog.yaml
+  - ai/active_item.yaml
+  - ai/decision-lock.yaml
+  - ai/user-questions.yaml
+  - ai/iterations/ITER-0001.md
+  - ai/active_agent.txt
+  - ai/next_agent.yaml[0m
+[35m[3mexec[0m[0m
+[1m/bin/bash -lc "sed -n '1,260p' ai/logs/baton.log"[0m in /home/sundaram/code/temp/test[35m[3mexec[0m[0m
+[1m/bin/bash -lc "sed -n '1,220p' ai/active_agent.txt"[0m in /home/sundaram/code/temp/test[32m succeeded in 0ms:[0m
+[2m# Baton run log
+# Timestamped entries from scripts/run-baton.sh are appended here.
+[2026-03-12T02:50:22Z] STEP 1 START role=PRODUCT_OWNER executor=codex model=gpt-5.4
+[2026-03-12T02:51:31Z] STEP 1 END role=PRODUCT_OWNER result=HANDOFF to=SENIOR_JUDGMENTAL_ENGINEER
+[2026-03-12T02:51:31Z] STEP 2 START role=SENIOR_JUDGMENTAL_ENGINEER executor=codex model=gpt-5.4
+[2026-03-12T02:52:54Z] STEP 2 END role=SENIOR_JUDGMENTAL_ENGINEER result=HANDOFF to=ARCHITECT
+[2026-03-12T02:52:54Z] STEP 3 START role=ARCHITECT executor=codex model=gpt-5.4
+[2026-03-12T02:54:32Z] STEP 3 END role=ARCHITECT result=HANDOFF to=PLANNER
+[2026-03-12T02:54:32Z] STEP 4 START role=PLANNER executor=codex model=gpt-5.4
+[2026-03-12T02:56:01Z] STEP 4 END role=PLANNER result=HANDOFF to=DEV
+[2026-03-12T02:56:01Z] STEP 5 START role=DEV executor=codex model=gpt-5.4
+[2026-03-12T02:56:01Z] STEP 5 END role=DEV result=INVALID_STATE
+[2026-03-12T02:59:31Z] STEP 1 START role=DEV executor=codex model=gpt-5.4
+[2026-03-12T03:02:06Z] STEP 1 END role=DEV result=HANDOFF to=VALIDATOR
+[2026-03-12T03:02:06Z] STEP 2 START role=VALIDATOR executor=codex model=gpt-5.4
+[2026-03-12T03:03:28Z] STEP 2 END role=VALIDATOR result=HANDOFF to=REVIEWER
+[2026-03-12T03:03:28Z] STEP 3 START role=REVIEWER executor=codex model=gpt-5.4
+[2026-03-12T03:04:53Z] STEP 3 END role=REVIEWER result=HANDOFF to=PLANNER
+[2026-03-12T03:04:53Z] STEP 4 START role=PLANNER executor=codex model=gpt-5.4
+[2026-03-12T03:06:23Z] STEP 4 END role=PLANNER result=HANDOFF to=DEV[0m
+[32m succeeded in 0ms:[0m
+[2mPLANNER[0m
+[35m[3mcodex[0m[0m
+I’ve confirmed the baton is currently on `PLANNER`, so I can proceed. I’m reading the planning prompt and the current state files now to select the next implementation-ready item and update the handoff.
+[35m[3mexec[0m[0m
+[1m/bin/bash -lc "sed -n '1,260p' ai/prompts/03-planner.md"[0m in /home/sundaram/code/temp/test[32m succeeded in 0ms:[0m
+[2m# ROLE: PLANNER
+
+## 1) Baton check
+- Read `ai/active_agent.txt`.
+- If value is not exactly `PLANNER`, output exactly:
+`WAITING FOR BATON`
+- Stop.
+
+## 2) Required reads
+- `ai/goal.yaml`
+- `ai/backlog.yaml`
+- `ai/active_item.yaml`
+- `ai/decision-lock.yaml`
+- `ai/user-questions.yaml`
+- `ai/constitution.yaml`
+- `ai/review.md`
+- `ai/next_agent.md`
+
+## 3) Allowed edits (only)
+- `ai/backlog.yaml`[0m
+[35m[3mexec[0m[0m
+[1m/bin/bash -lc "sed -n '1,260p' ai/decision-lock.yaml"[0m in /home/sundaram/code/temp/test[32m succeeded in 0ms:[0m
+[2mconfirmed_by_user: false
+blocked_on_user: false
+last_user_decision: null
+approved_exceptions: []
+approved_decisions: [][0m
+[35m[3mexec[0m[0m
+[1m/bin/bash -lc "sed -n '1,260p' ai/goal.yaml"[0m in /home/sundaram/code/temp/test[35m[3mexec[0m[0m
+[1m/bin/bash -lc "sed -n '1,260p' ai/review.md"[0m in /home/sundaram/code/temp/test[32m succeeded in 0ms:[0m
+[2mproject_goal: Build a personal project tracker web app using Django with a SQLite database and HTML/JS frontend
+success_criteria:
+  - Django REST endpoints for CRUD operations on projects, tasks, and tags
+  - Each project has a name, description, status (active/completed/archived), and created date
+  - Each task belongs to a project and has a title, status (todo/in_progress/done), priority (low/medium/high), and due date
+  - Tags can be assigned to both projects and tasks (many-to-many)
+  - Frontend has separate views for projects list, project detail (showing its tasks), and a tag filter view
+  - Adding/editing/deleting entities works without full page reload
+  - Dashboard view showing summary stats (total projects, tasks by status, overdue tasks)
+  - Data persists in SQLite database
+context_notes:
+  - Use Django with SQLite backend
+  - Frontend is plain HTML, CSS, and vanilla JS (no React/Vue/Angular)
+  - Django serves both the API and static/template files
+  - All code lives in apps/project-tracker/
+  - Use Django models with proper foreign key and many-to-many relationships
+constraints:
+  - Django and its built-in dependencies only, no additional pip packages (no DRF, no celery, etc.)
+  - No frontend JS frameworks
+  - Single Django project, no microservices[0m
+[32m succeeded in 0ms:[0m
+[2m# Review Notes
+
+Use this file for reviewer outcomes:
+
+- **DONE**: item accepted and loop returns to PLANNER for next item.
+- **REVISE**: route back to specific role with explicit gap list.
+- **ESCALATE**: WAITING FOR USER only for approved escalation categories.
+
+## Judgment Warnings
+
+- Flag any introduction of React, Next.js, DRF, extra pip packages, or cloud/deployment scaffolding as scope drift unless requirements are updated.
+- Flag architecture that splits the app into speculative layers, services, or multiple Django apps without a demonstrated need.
+- Flag CRUD implementations that require full page reloads, since no-reload interactions are part of acceptance.
+
+## Architecture Decisions
+
+- Use a single Django project under `apps/project-tracker/` with one main product app for projects, tasks, and tags.
+- Treat server-rendered templates as the primary UI and use small async `fetch` flows for no-reload CRUD interactions.
+- Prefer HTML partial responses for mutations; allow narrow JSON responses only when HTML would be more awkward for the specific interaction.
+- Keep domain logic in models, forms, and views; reject speculative service, repository, command-bus, or multi-app splits.[0m
+[35m[3mexec[0m[0m
+[1m/bin/bash -lc "sed -n '1,260p' ai/constitution.yaml"[0m in /home/sundaram/code/temp/test[32m succeeded in 0ms:[0m
+[2mcore_rules:
+  - state lives in files, not chat memory
+  - baton ownership is authoritative
+  - roles must not edit outside allowed files
+baton_rules:
+  - if active agent mismatch, print exactly WAITING FOR BATON
+  - baton must be handed off explicitly
+edit_rules:
+  - only edit allowed files listed in the current role prompt
+stop_rules:
+  - if human clarification is needed, print exactly WAITING FOR USER
+  - always append an iteration log entry before handoff[0m
+[35m[3mexec[0m[0m
+[1m/bin/bash -lc "sed -n '1,260p' ai/backlog.yaml"[0m in /home/sundaram/code/temp/test[35m[3mexec[0m[0m
+[1m/bin/bash -lc "sed -n '1,260p' ai/active_item.yaml"[0m in /home/sundaram/code/temp/test[32m succeeded in 0ms:[0m
+[2mitems:
+  - id: ITEM-0001
+    title: Scaffold Django project tracker baseline
+    goal: Establish the single-project Django skeleton under `apps/project-tracker/` with the tracker app wired into settings, URLs, templates, and static assets.
+    type: feature
+    status: done
+    priority: high
+    dependencies: []
+    notes:
+      - Keep one Django project with one main `tracker` app.
+      - Create the baseline file structure for settings, root URLs, app URLs, templates, and static assets.
+      - Include a base template and shared asset wiring that later CRUD pages can extend.
+  - id: ITEM-0002
+    title: Implement tracker domain models and forms
+    goal: Add `Project`, `Task`, and `Tag` models, related forms, admin registration, and database migrations that match the approved domain surface.
+    type: feature
+    status: done
+    priority: high
+    dependencies:
+      - ITEM-0001[0m
+[32m succeeded in 0ms:[0m
+[2mid: ITEM-0002
+title: Implement tracker domain models and forms
+goal: "Add Project, Task, and Tag models, related forms, admin registration, and database migrations that match the approved domain surface."
+status: done
+owner_role: REVIEWER
+related_files:
+  - apps/project-tracker/tracker/models.py
+  - apps/project-tracker/tracker/forms.py
+  - apps/project-tracker/tracker/admin.py
+  - apps/project-tracker/tracker/migrations/
+  - apps/project-tracker/tracker/tests/
+acceptance_criteria:
+  - "`Project`, `Task`, and `Tag` models exist in `tracker/models.py` with the approved field set and Django ORM relationships."
+  - "`Task` has a foreign key to `Project`, and tags can be assigned to both projects and tasks via many-to-many relationships."
+  - "Model and form validation enforce the approved enumerated choices and basic required-field constraints without introducing service layers."
+  - "Admin registration covers the domain models with practical list/display configuration for inspection."
+  - "Initial migration files for the domain schema are present under `tracker/migrations/`."
+done_definition:
+  - "Domain models, forms, admin wiring, and migrations are implemented inside the existing `tracker` app only."
+  - "Field choices align with the locked statuses and priorities from `ai/goal.yaml`."[0m
+[35m[3mexec[0m[0m
+[1m/bin/bash -lc "sed -n '1,260p' ai/user-questions.yaml"[0m in /home/sundaram/code/temp/test[32m succeeded in 0ms:[0m
+[2mstatus: none
+return_to_role: null
+questions: [][0m
+[35m[3mcodex[0m[0m
+The state is clean: no pending user decisions, `ITEM-0002` is done, and `ITEM-0003` is the next dependency-ready slice. I’m preparing the planning edits now: promote `ITEM-0003` to active, keep the runtime Django caveat visible, append the iteration log, and generate the DEV handoff.
+[35m[3mexec[0m[0m
+[1m/bin/bash -lc "sed -n '1,220p' ai/iterations/ITER-0001.md"[0m in /home/sundaram/code/temp/test[32m succeeded in 0ms:[0m
+[2m# ITER-0001 Decision Log
+
+| Timestamp | Role | Decision | Why |
+|-----------|------|----------|-----|
+| 2026-03-11 | PRODUCT_OWNER | Defined the one-page product requirements from the project goal and handed off for engineering judgment review | The workflow needs a concrete scope and acceptance baseline before architecture and planning can proceed |
+| 2026-03-11 | SENIOR_JUDGMENTAL_ENGINEER | Locked simplification guardrails around a single Django + SQLite + vanilla JS modular monolith and warned against framework/platform drift | The architect needs explicit constraints so the design stays aligned with the product goal instead of inheriting conflicting default stack preferences |
+| 2026-03-11 | ARCHITECT | Defined a single-project Django architecture centered on one product app, server-rendered templates, and HTML-partial based no-reload CRUD flows | The planner and developer need concrete boundaries, file targets, and implementation tradeoffs before breaking work into execution items |
+| 2026-03-11 | PLANNER | Broke delivery into scaffold, domain, page, async CRUD, and test slices and activated the scaffold item for development | The developer needs a small implementation-ready first step with explicit file targets before starting code changes |
+| 2026-03-12 | DEV | Scaffolded the Django project baseline with one tracker app, routed a rendered dashboard page, and added a smoke test for the root view | ITEM-0001 required an end-to-end project skeleton before later slices can add models, pages, and async CRUD behavior |
+| 2026-03-12 | VALIDATOR | Accepted the scaffold baseline as meeting ITEM-0001 acceptance criteria and handed off to review with an environment caveat on Django-dependent tests | The slice is structurally correct and free of scope drift, but full runtime validation remains blocked until Django is installed in the workspace |
+| 2026-03-12 | REVIEWER | Marked ITEM-0001 done and returned the baton to planning for the next implementation slice | The scaffold meets the locked architecture and acceptance criteria, and the blocked Django test run is an environment limitation rather than a gap in the delivered slice |
+| 2026-03-12 | PLANNER | Activated ITEM-0002 for domain model, form, admin, and migration work and handed off implementation to DEV | The scaffold is complete, and the domain layer is the next dependency needed before server-rendered pages and no-reload CRUD flows can be built |
+| 2026-03-12 | DEV | Implemented tracker domain models, forms, admin registration, a manual initial migration, and domain-focused tests for ITEM-0002 | The next slices depend on concrete project, task, and tag persistence plus validated form surfaces inside the existing Django app |
+| 2026-03-12 | VALIDATOR | Accepted the domain model slice for ITEM-0002 and handed off to review with a documented Django-environment caveat | The implemented models, forms, admin wiring, and manual migration align with the locked requirements, and the remaining verification gap is limited to missing Django in the workspace |
+| 2026-03-12 | REVIEWER | Marked ITEM-0002 done and returned the baton to planning for the next implementation slice | The domain models, forms, admin wiring, and initial migration satisfy the locked slice, and the blocked Django runtime checks remain an environment caveat rather than a delivered-code gap |[0m
+[35m[3mexec[0m[0m
+[1m/bin/bash -lc "sed -n '1,220p' scripts/generate-next-agent.sh"[0m in /home/sundaram/code/temp/test[32m succeeded in 0ms:[0m
+[2m#!/usr/bin/env bash
+set -euo pipefail
+#
+# Usage: ./scripts/generate-next-agent.sh <ROLE> [--notes "context"] [--return-to "ROLE"]
+#
+# Generates ai/next_agent.yaml with the correct config for the given role.
+# Pass --notes to include handoff context (what was done, what to watch for).
+# Pass --return-to to specify which role the baton returns to (used with HUMAN).
+# Called by each role prompt at handoff time so agents don't hand-write YAML.
+
+ROOT="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)"
+cd "$ROOT"
+
+ROLE=""
+NOTES=""
+RETURN_TO=""
+
+# Parse args
+while [[ $# -gt 0 ]]; do
+  case "$1" in[0m
+[35m[3mexec[0m[0m
+[1m/bin/bash -lc "sed -n '1,220p' ai/templates/next-agent-template.yaml"[0m in /home/sundaram/code/temp/test[32m succeeded in 0ms:[0m
+[2mnext_role: <ROLE>
+prompt_file: ai/prompts/<prompt-file>.md
+read:
+  - ai/goal.yaml
+  - ai/judgment.yaml
+  - ai/constitution.yaml
+  - ai/backlog.yaml
+  - ai/active_item.yaml
+  - ai/decision-lock.yaml
+  - ai/active_agent.txt
+  - ai/next_agent.md
+allowed_edits:
+  - <list of files this role may edit>
+stop_conditions:
+  - WAITING FOR BATON when active agent mismatch
+  - WAITING FOR USER when clarification is required
+success_criteria:
+  - <what must be true for handoff>
+handoff_on_success:
+  print_exact: HANDOFF TO <NEXT_ROLE>[0m
+[35m[3mcodex[0m[0m
+I have the planner workflow and log format. Before writing the handoff, I’m sampling the current tracker app so the DEV notes point to the exact files that should change for `ITEM-0003`, not a generic guess.
+[35m[3mexec[0m[0m
+[1m/bin/bash -lc "sed -n '1,260p' apps/project-tracker/tracker/views.py"[0m in /home/sundaram/code/temp/test[32m succeeded in 0ms:[0m
+[2mfrom django.shortcuts import render
+
+
+def dashboard(request):
+    return render(
+        request,
+        "tracker/dashboard.html",
+        {
+            "page_title": "Project Tracker",
+            "app_ready": True,
+        },
+    )[0m
+[35m[3mexec[0m[0m
+[1m/bin/bash -lc "sed -n '1,260p' apps/project-tracker/templates/tracker/dashboard.html"[0m in /home/sundaram/code/temp/test[35m[3mexec[0m[0m
+[1m/bin/bash -lc "sed -n '1,220p' apps/project-tracker/tracker/urls.py"[0m in /home/sundaram/code/temp/test[35m[3mexec[0m[0m
+[1m/bin/bash -lc "sed -n '1,260p' apps/project-tracker/tracker/models.py"[0m in /home/sundaram/code/temp/test[35m[3mexec[0m[0m
+[1m/bin/bash -lc "sed -n '1,260p' apps/project-tracker/tracker/tests/test_views.py"[0m in /home/sundaram/code/temp/test[32m succeeded in 0ms:[0m
+[2mfrom django.urls import path
+
+from .views import dashboard
+
+app_name = "tracker"
+
+urlpatterns = [
+    path("", dashboard, name="dashboard"),
+][0m
+[32m succeeded in 0ms:[0m
+[2m{% extends "tracker/base.html" %}
+
+{% block title %}Project Tracker{% endblock %}
+
+{% block content %}
+  <section class="panel">
+    <h2>Baseline route is live</h2>
+    <p>The Django project scaffold is connected end to end.</p>
+    <ul class="checklist">
+      <li>Root URLconf includes the tracker app.</li>
+      <li>Templates resolve from the shared project template directory.</li>
+      <li>Static CSS and JavaScript are loaded through Django static files.</li>
+    </ul>
+    {% if app_ready %}
+      <p class="status">Ready for models, forms, and asynchronous CRUD slices.</p>
+    {% endif %}
+  </section>
+{% endblock %}[0m
+[32m succeeded in 0ms:[0m
+[2mfrom django.core.exceptions import ValidationError
+from django.db import models
+from django.utils import timezone
+
+
+class Tag(models.Model):
+    name = models.CharField(max_length=100, unique=True)
+
+    class Meta:
+        ordering = ["name"]
+
+    def __str__(self) -> str:
+        return self.name
+
+
+class Project(models.Model):
+    STATUS_ACTIVE = "active"
+    STATUS_COMPLETED = "completed"
+    STATUS_ARCHIVED = "archived"
+    STATUS_CHOICES = [[0m
+[32m succeeded in 0ms:[0m
+[2mfrom django.test import SimpleTestCase
+from django.urls import reverse
+
+
+class DashboardViewTests(SimpleTestCase):
+    def test_dashboard_route_renders(self):
+        response = self.client.get(reverse("tracker:dashboard"))
+
+        self.assertEqual(response.status_code, 200)
+        self.assertContains(response, "Project Tracker")
+        self.assertTemplateUsed(response, "tracker/dashboard.html")[0m
+[35m[3mcodex[0m[0m
+I’m updating the planner-owned state files now: `ITEM-0003` becomes active, the backlog will reflect that transition, and the next handoff notes will focus DEV on the view/template/test slice plus the deferred Django runtime verification.
+[3m[35mfile update[0m[0m
+[35mM /home/sundaram/code/temp/test/ai/active_item.yaml[0m
+@@ -1,22 +1,21 @@
+[31m-id: ITEM-0002[0m
+[31m-title: Implement tracker domain models and forms[0m
+[31m-goal: "Add Project, Task, and Tag models, related forms, admin registration, and database migrations that match the approved domain surface."[0m
+[31m-status: done[0m
+[31m-owner_role: REVIEWER[0m
+[32m+id: ITEM-0003[0m
+[32m+title: Build server-rendered tracker pages[0m
+[32m+goal: "Deliver dashboard, project list, project detail with tasks, and tag detail pages using Django views, templates, and SQLite-backed aggregates."[0m
+[32m+status: ready[0m
+[32m+owner_role: DEV[0m
+ related_files:
+[31m-  - apps/project-tracker/tracker/models.py[0m
+[31m-  - apps/project-tracker/tracker/forms.py[0m
+[31m-  - apps/project-tracker/tracker/admin.py[0m
+[31m-  - apps/project-tracker/tracker/migrations/[0m
+[32m+  - apps/project-tracker/tracker/views.py[0m
+[32m+  - apps/project-tracker/tracker/urls.py[0m
+[32m+  - apps/project-tracker/templates/tracker/[0m
+   - apps/project-tracker/tracker/tests/
+ acceptance_criteria:
+[31m-  - "`Project`, `Task`, and `Tag` models exist in `tracker/models.py` with the approved field set and Django ORM relationships."[0m
+[31m-  - "`Task` has a foreign key to `Project`, and tags can be assigned to both projects and tasks via many-to-many relationships."[0m
+[31m-  - "Model and form validation enforce the approved enumerated choices and basic required-field constraints without introducing service layers."[0m
+[31m-  - "Admin registration covers the domain models with practical list/display configuration for inspection."[0m
+[31m-  - "Initial migration files for the domain schema are present under `tracker/migrations/`."[0m
+[32m+  - "Dashboard renders live tracker aggregates: total projects, task counts grouped by status, and overdue task count."[0m
+[32m+  - "Projects list page renders all projects with their key metadata and navigation from the dashboard."[0m
+[32m+  - "Project detail page renders the selected project, its tags, and its related tasks."[0m
+[32m+  - "Tag detail page renders the selected tag with linked projects and tasks."[0m
+[32m+  - "URLs, views, and templates stay inside the existing single-app Django structure with server-rendered HTML."[0m
+ done_definition:
+[31m-  - "Domain models, forms, admin wiring, and migrations are implemented inside the existing `tracker` app only."[0m
+[31m-  - "Field choices align with the locked statuses and priorities from `ai/goal.yaml`."[0m
+[31m-  - "No extra Django apps, third-party packages, or speculative service/repository layers are introduced."[0m
+[31m-  - "Tests cover the domain rules if the environment allows Django to run, or the handoff documents the blocking limitation."[0m
+[32m+  - "Views use direct Django ORM queries and aggregates against the existing models without introducing service or repository layers."[0m
+[32m+  - "Templates extend the shared base template and provide navigation across dashboard, project list, project detail, and tag detail pages."[0m
+[32m+  - "Focused Django view tests cover the new routes and key rendered data if Django is available, or the handoff documents the blocking limitation."[0m
+[32m+  - "The existing runtime caveat remains documented so Django migration and test execution can be retried once the environment has Django installed."[0m
+[35mM /home/sundaram/code/temp/test/ai/backlog.yaml[0m
+@@ -29,3 +29,3 @@
+     type: feature
+[31m-    status: todo[0m
+[32m+    status: in_progress[0m
+     priority: high
+[35mM /home/sundaram/code/temp/test/ai/iterations/ITER-0001.md[0m
+@@ -15 +15,2 @@
+ | 2026-03-12 | REVIEWER | Marked ITEM-0002 done and returned the baton to planning for the next implementation slice | The domain models, forms, admin wiring, and initial migration satisfy the locked slice, and the blocked Django runtime checks remain an environment caveat rather than a delivered-code gap |
+[32m+| 2026-03-12 | PLANNER | Activated ITEM-0003 for server-rendered dashboard, project list/detail, and tag detail page implementation and handed off to DEV | The domain layer is accepted, so the next dependency-ready slice is the read-only page surface that prepares the app for later no-reload CRUD work |[0m
+[32mapply_patch(auto_approved=true) exited 0 in 6ms:[0m
+[2mSuccess. Updated the following files:[0m
+[2mM /home/sundaram/code/temp/test/ai/backlog.yaml[0m
+[2mM /home/sundaram/code/temp/test/ai/active_item.yaml[0m
+[2mM /home/sundaram/code/temp/test/ai/iterations/ITER-0001.md[0m
+[3m[35mfile update:[0m[0m
+diff --git a/ai/active_item.yaml b/ai/active_item.yaml
+index 06646081dea8573460e0da085a5ee0482fbb54d2..a0ddc58e1241cf4195bd0cb84a5fff3dfa849a43
+--- a/ai/active_item.yaml
++++ b/ai/active_item.yaml
+@@ -1,22 +1,21 @@
+-id: ITEM-0002
+-title: Implement tracker domain models and forms
+-goal: "Add Project, Task, and Tag models, related forms, admin registration, and database migrations that match the approved domain surface."
+-status: done
+-owner_role: REVIEWER
++id: ITEM-0003
++title: Build server-rendered tracker pages
++goal: "Deliver dashboard, project list, project detail with tasks, and tag detail pages using Django views, templates, and SQLite-backed aggregates."
++status: ready
++owner_role: DEV
+ related_files:
+-  - apps/project-tracker/tracker/models.py
+-  - apps/project-tracker/tracker/forms.py
+-  - apps/project-tracker/tracker/admin.py
+-  - apps/project-tracker/tracker/migrations/
++  - apps/project-tracker/tracker/views.py
++  - apps/project-tracker/tracker/urls.py
++  - apps/project-tracker/templates/tracker/
+   - apps/project-tracker/tracker/tests/
+ acceptance_criteria:
+-  - "`Project`, `Task`, and `Tag` models exist in `tracker/models.py` with the approved field set and Django ORM relationships."
+-  - "`Task` has a foreign key to `Project`, and tags can be assigned to both projects and tasks via many-to-many relationships."
+-  - "Model and form validation enforce the approved enumerated choices and basic required-field constraints without introducing service layers."
+-  - "Admin registration covers the domain models with practical list/display configuration for inspection."
+-  - "Initial migration files for the domain schema are present under `tracker/migrations/`."
++  - "Dashboard renders live tracker aggregates: total projects, task counts grouped by status, and overdue task count."
++  - "Projects list page renders all projects with their key metadata and navigation from the dashboard."
++  - "Project detail page renders the selected project, its tags, and its related tasks."
++  - "Tag detail page renders the selected tag with linked projects and tasks."
++  - "URLs, views, and templates stay inside the existing single-app Django structure with server-rendered HTML."
+ done_definition:
+-  - "Domain models, forms, admin wiring, and migrations are implemented inside the existing `tracker` app only."
+-  - "Field choices align with the locked statuses and priorities from `ai/goal.yaml`."
+-  - "No extra Django apps, third-party packages, or speculative service/repository layers are introduced."
+-  - "Tests cover the domain rules if the environment allows Django to run, or the handoff documents the blocking limitation."
++  - "Views use direct Django ORM queries and aggregates against the existing models without introducing service or repository layers."
++  - "Templates extend the shared base template and provide navigation across dashboard, project list, project detail, and tag detail pages."
++  - "Focused Django view tests cover the new routes and key rendered data if Django is available, or the handoff documents the blocking limitation."
++  - "The existing runtime caveat remains documented so Django migration and test execution can be retried once the environment has Django installed."
+diff --git a/ai/backlog.yaml b/ai/backlog.yaml
+index e7217ff9b16837e3ba6fe98df8f92adf72092d03..e17108259f1bf7f2030792411dc733980952a41a
+--- a/ai/backlog.yaml
++++ b/ai/backlog.yaml
+@@ -27,7 +27,7 @@
+     title: Build server-rendered tracker pages
+     goal: Deliver dashboard, project list, project detail with tasks, and tag detail pages using Django views, templates, and SQLite-backed aggregates.
+     type: feature
+-    status: todo
++    status: in_progress
+     priority: high
+     dependencies:
+       - ITEM-0002
+diff --git a/ai/iterations/ITER-0001.md b/ai/iterations/ITER-0001.md
+index 9c2af9b7f7d09777da8d13c24d12e5eee36b6c23..e062ee859400acfd2d26f65ed386537c6f6f1d40
+--- a/ai/iterations/ITER-0001.md
++++ b/ai/iterations/ITER-0001.md
+@@ -13,3 +13,4 @@
+ | 2026-03-12 | DEV | Implemented tracker domain models, forms, admin registration, a manual initial migration, and domain-focused tests for ITEM-0002 | The next slices depend on concrete project, task, and tag persistence plus validated form surfaces inside the existing Django app |
+ | 2026-03-12 | VALIDATOR | Accepted the domain model slice for ITEM-0002 and handed off to review with a documented Django-environment caveat | The implemented models, forms, admin wiring, and manual migration align with the locked requirements, and the remaining verification gap is limited to missing Django in the workspace |
+ | 2026-03-12 | REVIEWER | Marked ITEM-0002 done and returned the baton to planning for the next implementation slice | The domain models, forms, admin wiring, and initial migration satisfy the locked slice, and the blocked Django runtime checks remain an environment caveat rather than a delivered-code gap |
++| 2026-03-12 | PLANNER | Activated ITEM-0003 for server-rendered dashboard, project list/detail, and tag detail page implementation and handed off to DEV | The domain layer is accepted, so the next dependency-ready slice is the read-only page surface that prepares the app for later no-reload CRUD work |
+
+[3m[35mfile update:[0m[0m
+diff --git a/ai/active_item.yaml b/ai/active_item.yaml
+index 06646081dea8573460e0da085a5ee0482fbb54d2..a0ddc58e1241cf4195bd0cb84a5fff3dfa849a43
+--- a/ai/active_item.yaml
++++ b/ai/active_item.yaml
+@@ -1,22 +1,21 @@
+-id: ITEM-0002
+-title: Implement tracker domain models and forms
+-goal: "Add Project, Task, and Tag models, related forms, admin registration, and database migrations that match the approved domain surface."
+-status: done
+-owner_role: REVIEWER
++id: ITEM-0003
++title: Build server-rendered tracker pages
++goal: "Deliver dashboard, project list, project detail with tasks, and tag detail pages using Django views, templates, and SQLite-backed aggregates."
++status: ready
++owner_role: DEV
+ related_files:
+-  - apps/project-tracker/tracker/models.py
+-  - apps/project-tracker/tracker/forms.py
+-  - apps/project-tracker/tracker/admin.py
+-  - apps/project-tracker/tracker/migrations/
++  - apps/project-tracker/tracker/views.py
++  - apps/project-tracker/tracker/urls.py
++  - apps/project-tracker/templates/tracker/
+   - apps/project-tracker/tracker/tests/
+ acceptance_criteria:
+-  - "`Project`, `Task`, and `Tag` models exist in `tracker/models.py` with the approved field set and Django ORM relationships."
+-  - "`Task` has a foreign key to `Project`, and tags can be assigned to both projects and tasks via many-to-many relationships."
+-  - "Model and form validation enforce the approved enumerated choices and basic required-field constraints without introducing service layers."
+-  - "Admin registration covers the domain models with practical list/display configuration for inspection."
+-  - "Initial migration files for the domain schema are present under `tracker/migrations/`."
++  - "Dashboard renders live tracker aggregates: total projects, task counts grouped by status, and overdue task count."
++  - "Projects list page renders all projects with their key metadata and navigation from the dashboard."
++  - "Project detail page renders the selected project, its tags, and its related tasks."
++  - "Tag detail page renders the selected tag with linked projects and tasks."
++  - "URLs, views, and templates stay inside the existing single-app Django structure with server-rendered HTML."
+ done_definition:
+-  - "Domain models, forms, admin wiring, and migrations are implemented inside the existing `tracker` app only."
+-  - "Field choices align with the locked statuses and priorities from `ai/goal.yaml`."
+-  - "No extra Django apps, third-party packages, or speculative service/repository layers are introduced."
+-  - "Tests cover the domain rules if the environment allows Django to run, or the handoff documents the blocking limitation."
++  - "Views use direct Django ORM queries and aggregates against the existing models without introducing service or repository layers."
++  - "Templates extend the shared base template and provide navigation across dashboard, project list, project detail, and tag detail pages."
++  - "Focused Django view tests cover the new routes and key rendered data if Django is available, or the handoff documents the blocking limitation."
++  - "The existing runtime caveat remains documented so Django migration and test execution can be retried once the environment has Django installed."
+diff --git a/ai/backlog.yaml b/ai/backlog.yaml
+index e7217ff9b16837e3ba6fe98df8f92adf72092d03..e17108259f1bf7f2030792411dc733980952a41a
+--- a/ai/backlog.yaml
++++ b/ai/backlog.yaml
+@@ -27,7 +27,7 @@
+     title: Build server-rendered tracker pages
+     goal: Deliver dashboard, project list, project detail with tasks, and tag detail pages using Django views, templates, and SQLite-backed aggregates.
+     type: feature
+-    status: todo
++    status: in_progress
+     priority: high
+     dependencies:
+       - ITEM-0002
+diff --git a/ai/iterations/ITER-0001.md b/ai/iterations/ITER-0001.md
+index 9c2af9b7f7d09777da8d13c24d12e5eee36b6c23..e062ee859400acfd2d26f65ed386537c6f6f1d40
+--- a/ai/iterations/ITER-0001.md
++++ b/ai/iterations/ITER-0001.md
+@@ -13,3 +13,4 @@
+ | 2026-03-12 | DEV | Implemented tracker domain models, forms, admin registration, a manual initial migration, and domain-focused tests for ITEM-0002 | The next slices depend on concrete project, task, and tag persistence plus validated form surfaces inside the existing Django app |
+ | 2026-03-12 | VALIDATOR | Accepted the domain model slice for ITEM-0002 and handed off to review with a documented Django-environment caveat | The implemented models, forms, admin wiring, and manual migration align with the locked requirements, and the remaining verification gap is limited to missing Django in the workspace |
+ | 2026-03-12 | REVIEWER | Marked ITEM-0002 done and returned the baton to planning for the next implementation slice | The domain models, forms, admin wiring, and initial migration satisfy the locked slice, and the blocked Django runtime checks remain an environment caveat rather than a delivered-code gap |
++| 2026-03-12 | PLANNER | Activated ITEM-0003 for server-rendered dashboard, project list/detail, and tag detail page implementation and handed off to DEV | The domain layer is accepted, so the next dependency-ready slice is the read-only page surface that prepares the app for later no-reload CRUD work |
+
+[35m[3mcodex[0m[0m
+The planning state is updated. I’m writing a concrete DEV handoff now so the next step is narrowly scoped to read-only pages and tests, with no ambiguity about files, routes, or the still-blocked Django runtime checks.
+[3m[35mfile update[0m[0m
+[35mM /home/sundaram/code/temp/test/ai/next_agent.md[0m
+@@ -2,4 +2,4 @@
+ 
+[31m-- Current role: `PLANNER`[0m
+[31m-- Prompt: `ai/prompts/03-planner.md`[0m
+[32m+- Current role: `DEV`[0m
+[32m+- Prompt: `ai/prompts/04-dev.md`[0m
+ - Execution command for Codex sessions: **Follow `ai/next_agent.yaml` exactly.**
+@@ -9,14 +9,27 @@
+ 
+[31m-- `ITEM-0002` is accepted and marked done.[0m
+[31m-- Reviewer decision: DONE with an environment caveat, not a code gap.[0m
+[31m-- What was accepted:[0m
+[31m-  - `Project`, `Task`, and `Tag` models exist with the locked statuses, priorities, and relationships.[0m
+[31m-  - Forms and admin wiring stay inside the approved single-app Django shape.[0m
+[31m-  - `tracker/migrations/0001_initial.py` matches the implemented schema on static inspection.[0m
+[31m-  - No scope drift or speculative architecture was introduced.[0m
+[31m-- Validation evidence:[0m
+[31m-  - `python3 -m py_compile $(find apps/project-tracker -name '*.py' | sort)` passed.[0m
+[31m-  - `python3 apps/project-tracker/manage.py test tracker.tests.test_domain tracker.tests.test_views` failed with `ModuleNotFoundError: No module named 'django'`.[0m
+[31m-- Planning guidance:[0m
+[31m-  - Activate the next dependency-ready item, which should be `ITEM-0003` unless state files indicate a stronger reason to reorder.[0m
+[31m-  - Preserve the runtime caveat so later validation includes migration and focused Django test execution once the environment has Django available.[0m
+[32m+- Active item: `ITEM-0003` and it is implementation-ready.[0m
+[32m+- Goal: replace the scaffold-only tracker pages with real server-rendered read views for dashboard, projects, project detail, and tag detail.[0m
+[32m+- Files expected to change:[0m
+[32m+  - `apps/project-tracker/tracker/views.py`[0m
+[32m+  - `apps/project-tracker/tracker/urls.py`[0m
+[32m+  - `apps/project-tracker/templates/tracker/dashboard.html`[0m
+[32m+  - `apps/project-tracker/templates/tracker/` for new list/detail templates[0m
+[32m+  - `apps/project-tracker/tracker/tests/test_views.py`[0m
+[32m+- Existing domain models are accepted and should be used directly:[0m
+[32m+  - `Project` with status and tags[0m
+[32m+  - `Task` with project, status, priority, due date, and tags[0m
+[32m+  - `Tag` shared across projects and tasks[0m
+[32m+- Implementation plan:[0m
+[32m+  - Expand `dashboard` to compute total project count, task counts grouped by status, overdue task count, and a small recent-project or navigation context using direct ORM queries.[0m
+[32m+  - Add server-rendered list/detail views and URL routes for projects and tags.[0m
+[32m+  - Project detail should include the selected project, its tags, and its related tasks.[0m
+[32m+  - Tag detail should include the selected tag plus associated projects and tasks.[0m
+[32m+  - Keep templates extending `tracker/base.html`; no async CRUD work belongs in this slice.[0m
+[32m+  - Add focused view tests that cover the new routes and key rendered content.[0m
+[32m+- Constraints to preserve:[0m
+[32m+  - Stay inside the single existing `tracker` app and current Django project.[0m
+[32m+  - No REST endpoints, no service/repository layer, no extra packages, no speculative architecture.[0m
+[32m+  - Prefer direct ORM aggregates and simple template composition.[0m
+[32m+- Validation caveat to keep visible:[0m
+[32m+  - `python3 -m py_compile $(find apps/project-tracker -name '*.py' | sort)` has been passing.[0m
+[32m+  - Django runtime commands are still blocked in this workspace with `ModuleNotFoundError: No module named 'django'`, so if that remains true, document it rather than masking it.[0m
+[35mM /home/sundaram/code/temp/test/ai/active_agent.txt[0m
+@@ -1 +1 @@
+[31m-PLANNER[0m
+[32m+DEV[0m
+[32mapply_patch(auto_approved=true) exited 0 in 7ms:[0m
+[2mSuccess. Updated the following files:[0m
+[2mM /home/sundaram/code/temp/test/ai/next_agent.md[0m
+[2mM /home/sundaram/code/temp/test/ai/active_agent.txt[0m
+[3m[35mfile update:[0m[0m
+diff --git a/ai/active_agent.txt b/ai/active_agent.txt
+index b51ee722eae8ec12054c26b379735fcea599c2f6..a8b82c6896062c7b336ccc8bf7533a20fac54932
+--- a/ai/active_agent.txt
++++ b/ai/active_agent.txt
+@@ -1 +1 @@
+-PLANNER
++DEV
+diff --git a/ai/active_item.yaml b/ai/active_item.yaml
+index 06646081dea8573460e0da085a5ee0482fbb54d2..a0ddc58e1241cf4195bd0cb84a5fff3dfa849a43
+--- a/ai/active_item.yaml
++++ b/ai/active_item.yaml
+@@ -1,22 +1,21 @@
+-id: ITEM-0002
+-title: Implement tracker domain models and forms
+-goal: "Add Project, Task, and Tag models, related forms, admin registration, and database migrations that match the approved domain surface."
+-status: done
+-owner_role: REVIEWER
++id: ITEM-0003
++title: Build server-rendered tracker pages
++goal: "Deliver dashboard, project list, project detail with tasks, and tag detail pages using Django views, templates, and SQLite-backed aggregates."
++status: ready
++owner_role: DEV
+ related_files:
+-  - apps/project-tracker/tracker/models.py
+-  - apps/project-tracker/tracker/forms.py
+-  - apps/project-tracker/tracker/admin.py
+-  - apps/project-tracker/tracker/migrations/
++  - apps/project-tracker/tracker/views.py
++  - apps/project-tracker/tracker/urls.py
++  - apps/project-tracker/templates/tracker/
+   - apps/project-tracker/tracker/tests/
+ acceptance_criteria:
+-  - "`Project`, `Task`, and `Tag` models exist in `tracker/models.py` with the approved field set and Django ORM relationships."
+-  - "`Task` has a foreign key to `Project`, and tags can be assigned to both projects and tasks via many-to-many relationships."
+-  - "Model and form validation enforce the approved enumerated choices and basic required-field constraints without introducing service layers."
+-  - "Admin registration covers the domain models with practical list/display configuration for inspection."
+-  - "Initial migration files for the domain schema are present under `tracker/migrations/`."
++  - "Dashboard renders live tracker aggregates: total projects, task counts grouped by status, and overdue task count."
++  - "Projects list page renders all projects with their key metadata and navigation from the dashboard."
++  - "Project detail page renders the selected project, its tags, and its related tasks."
++  - "Tag detail page renders the selected tag with linked projects and tasks."
++  - "URLs, views, and templates stay inside the existing single-app Django structure with server-rendered HTML."
+ done_definition:
+-  - "Domain models, forms, admin wiring, and migrations are implemented inside the existing `tracker` app only."
+-  - "Field choices align with the locked statuses and priorities from `ai/goal.yaml`."
+-  - "No extra Django apps, third-party packages, or speculative service/repository layers are introduced."
+-  - "Tests cover the domain rules if the environment allows Django to run, or the handoff documents the blocking limitation."
++  - "Views use direct Django ORM queries and aggregates against the existing models without introducing service or repository layers."
++  - "Templates extend the shared base template and provide navigation across dashboard, project list, project detail, and tag detail pages."
++  - "Focused Django view tests cover the new routes and key rendered data if Django is available, or the handoff documents the blocking limitation."
++  - "The existing runtime caveat remains documented so Django migration and test execution can be retried once the environment has Django installed."
+diff --git a/ai/backlog.yaml b/ai/backlog.yaml
+index e7217ff9b16837e3ba6fe98df8f92adf72092d03..e17108259f1bf7f2030792411dc733980952a41a
+--- a/ai/backlog.yaml
++++ b/ai/backlog.yaml
+@@ -27,7 +27,7 @@
+     title: Build server-rendered tracker pages
+     goal: Deliver dashboard, project list, project detail with tasks, and tag detail pages using Django views, templates, and SQLite-backed aggregates.
+     type: feature
+-    status: todo
++    status: in_progress
+     priority: high
+     dependencies:
+       - ITEM-0002
+diff --git a/ai/iterations/ITER-0001.md b/ai/iterations/ITER-0001.md
+index 9c2af9b7f7d09777da8d13c24d12e5eee36b6c23..e062ee859400acfd2d26f65ed386537c6f6f1d40
+--- a/ai/iterations/ITER-0001.md
++++ b/ai/iterations/ITER-0001.md
+@@ -13,3 +13,4 @@
+ | 2026-03-12 | DEV | Implemented tracker domain models, forms, admin registration, a manual initial migration, and domain-focused tests for ITEM-0002 | The next slices depend on concrete project, task, and tag persistence plus validated form surfaces inside the existing Django app |
+ | 2026-03-12 | VALIDATOR | Accepted the domain model slice for ITEM-0002 and handed off to review with a documented Django-environment caveat | The implemented models, forms, admin wiring, and manual migration align with the locked requirements, and the remaining verification gap is limited to missing Django in the workspace |
+ | 2026-03-12 | REVIEWER | Marked ITEM-0002 done and returned the baton to planning for the next implementation slice | The domain models, forms, admin wiring, and initial migration satisfy the locked slice, and the blocked Django runtime checks remain an environment caveat rather than a delivered-code gap |
++| 2026-03-12 | PLANNER | Activated ITEM-0003 for server-rendered dashboard, project list/detail, and tag detail page implementation and handed off to DEV | The domain layer is accepted, so the next dependency-ready slice is the read-only page surface that prepares the app for later no-reload CRUD work |
+diff --git a/ai/next_agent.md b/ai/next_agent.md
+index 31d33be9ac835fa9bfb1722dffb2f27c0f53d7b7..308497e1aa01c5597e200344e88e6d5d7909b118
+--- a/ai/next_agent.md
++++ b/ai/next_agent.md
+@@ -1,22 +1,35 @@
+ # Next Agent
+ 
+-- Current role: `PLANNER`
+-- Prompt: `ai/prompts/03-planner.md`
++- Current role: `DEV`
++- Prompt: `ai/prompts/04-dev.md`
+ - Execution command for Codex sessions: **Follow `ai/next_agent.yaml` exactly.**
+ - If role mismatch with `ai/active_agent.txt`, print: `WAITING FOR BATON`
+ 
+ ## Handoff Notes
+ 
+-- `ITEM-0002` is accepted and marked done.
+-- Reviewer decision: DONE with an environment caveat, not a code gap.
+-- What was accepted:
+-  - `Project`, `Task`, and `Tag` models exist with the locked statuses, priorities, and relationships.
+-  - Forms and admin wiring stay inside the approved single-app Django shape.
+-  - `tracker/migrations/0001_initial.py` matches the implemented schema on static inspection.
+-  - No scope drift or speculative architecture was introduced.
+-- Validation evidence:
+-  - `python3 -m py_compile $(find apps/project-tracker -name '*.py' | sort)` passed.
+-  - `python3 apps/project-tracker/manage.py test tracker.tests.test_domain tracker.tests.test_views` failed with `ModuleNotFoundError: No module named 'django'`.
+-- Planning guidance:
+-  - Activate the next dependency-ready item, which should be `ITEM-0003` unless state files indicate a stronger reason to reorder.
+-  - Preserve the runtime caveat so later validation includes migration and focused Django test execution once the environment has Django available.
++- Active item: `ITEM-0003` and it is implementation-ready.
++- Goal: replace the scaffold-only tracker pages with real server-rendered read views for dashboard, projects, project detail, and tag detail.
++- Files expected to change:
++  - `apps/project-tracker/tracker/views.py`
++  - `apps/project-tracker/tracker/urls.py`
++  - `apps/project-tracker/templates/tracker/dashboard.html`
++  - `apps/project-tracker/templates/tracker/` for new list/detail templates
++  - `apps/project-tracker/tracker/tests/test_views.py`
++- Existing domain models are accepted and should be used directly:
++  - `Project` with status and tags
++  - `Task` with project, status, priority, due date, and tags
++  - `Tag` shared across projects and tasks
++- Implementation plan:
++  - Expand `dashboard` to compute total project count, task counts grouped by status, overdue task count, and a small recent-project or navigation context using direct ORM queries.
++  - Add server-rendered list/detail views and URL routes for projects and tags.
++  - Project detail should include the selected project, its tags, and its related tasks.
++  - Tag detail should include the selected tag plus associated projects and tasks.
++  - Keep templates extending `tracker/base.html`; no async CRUD work belongs in this slice.
++  - Add focused view tests that cover the new routes and key rendered content.
++- Constraints to preserve:
++  - Stay inside the single existing `tracker` app and current Django project.
++  - No REST endpoints, no service/repository layer, no extra packages, no speculative architecture.
++  - Prefer direct ORM aggregates and simple template composition.
++- Validation caveat to keep visible:
++  - `python3 -m py_compile $(find apps/project-tracker -name '*.py' | sort)` has been passing.
++  - Django runtime commands are still blocked in this workspace with `ModuleNotFoundError: No module named 'django'`, so if that remains true, document it rather than masking it.
+
+[3m[35mfile update:[0m[0m
+diff --git a/ai/active_agent.txt b/ai/active_agent.txt
+index b51ee722eae8ec12054c26b379735fcea599c2f6..a8b82c6896062c7b336ccc8bf7533a20fac54932
+--- a/ai/active_agent.txt
++++ b/ai/active_agent.txt
+@@ -1 +1 @@
+-PLANNER
++DEV
+diff --git a/ai/active_item.yaml b/ai/active_item.yaml
+index 06646081dea8573460e0da085a5ee0482fbb54d2..a0ddc58e1241cf4195bd0cb84a5fff3dfa849a43
+--- a/ai/active_item.yaml
++++ b/ai/active_item.yaml
+@@ -1,22 +1,21 @@
+-id: ITEM-0002
+-title: Implement tracker domain models and forms
+-goal: "Add Project, Task, and Tag models, related forms, admin registration, and database migrations that match the approved domain surface."
+-status: done
+-owner_role: REVIEWER
++id: ITEM-0003
++title: Build server-rendered tracker pages
++goal: "Deliver dashboard, project list, project detail with tasks, and tag detail pages using Django views, templates, and SQLite-backed aggregates."
++status: ready
++owner_role: DEV
+ related_files:
+-  - apps/project-tracker/tracker/models.py
+-  - apps/project-tracker/tracker/forms.py
+-  - apps/project-tracker/tracker/admin.py
+-  - apps/project-tracker/tracker/migrations/
++  - apps/project-tracker/tracker/views.py
++  - apps/project-tracker/tracker/urls.py
++  - apps/project-tracker/templates/tracker/
+   - apps/project-tracker/tracker/tests/
+ acceptance_criteria:
+-  - "`Project`, `Task`, and `Tag` models exist in `tracker/models.py` with the approved field set and Django ORM relationships."
+-  - "`Task` has a foreign key to `Project`, and tags can be assigned to both projects and tasks via many-to-many relationships."
+-  - "Model and form validation enforce the approved enumerated choices and basic required-field constraints without introducing service layers."
+-  - "Admin registration covers the domain models with practical list/display configuration for inspection."
+-  - "Initial migration files for the domain schema are present under `tracker/migrations/`."
++  - "Dashboard renders live tracker aggregates: total projects, task counts grouped by status, and overdue task count."
++  - "Projects list page renders all projects with their key metadata and navigation from the dashboard."
++  - "Project detail page renders the selected project, its tags, and its related tasks."
++  - "Tag detail page renders the selected tag with linked projects and tasks."
++  - "URLs, views, and templates stay inside the existing single-app Django structure with server-rendered HTML."
+ done_definition:
+-  - "Domain models, forms, admin wiring, and migrations are implemented inside the existing `tracker` app only."
+-  - "Field choices align with the locked statuses and priorities from `ai/goal.yaml`."
+-  - "No extra Django apps, third-party packages, or speculative service/repository layers are introduced."
+-  - "Tests cover the domain rules if the environment allows Django to run, or the handoff documents the blocking limitation."
++  - "Views use direct Django ORM queries and aggregates against the existing models without introducing service or repository layers."
++  - "Templates extend the shared base template and provide navigation across dashboard, project list, project detail, and tag detail pages."
++  - "Focused Django view tests cover the new routes and key rendered data if Django is available, or the handoff documents the blocking limitation."
++  - "The existing runtime caveat remains documented so Django migration and test execution can be retried once the environment has Django installed."
+diff --git a/ai/backlog.yaml b/ai/backlog.yaml
+index e7217ff9b16837e3ba6fe98df8f92adf72092d03..e17108259f1bf7f2030792411dc733980952a41a
+--- a/ai/backlog.yaml
++++ b/ai/backlog.yaml
+@@ -27,7 +27,7 @@
+     title: Build server-rendered tracker pages
+     goal: Deliver dashboard, project list, project detail with tasks, and tag detail pages using Django views, templates, and SQLite-backed aggregates.
+     type: feature
+-    status: todo
++    status: in_progress
+     priority: high
+     dependencies:
+       - ITEM-0002
+diff --git a/ai/iterations/ITER-0001.md b/ai/iterations/ITER-0001.md
+index 9c2af9b7f7d09777da8d13c24d12e5eee36b6c23..e062ee859400acfd2d26f65ed386537c6f6f1d40
+--- a/ai/iterations/ITER-0001.md
++++ b/ai/iterations/ITER-0001.md
+@@ -13,3 +13,4 @@
+ | 2026-03-12 | DEV | Implemented tracker domain models, forms, admin registration, a manual initial migration, and domain-focused tests for ITEM-0002 | The next slices depend on concrete project, task, and tag persistence plus validated form surfaces inside the existing Django app |
+ | 2026-03-12 | VALIDATOR | Accepted the domain model slice for ITEM-0002 and handed off to review with a documented Django-environment caveat | The implemented models, forms, admin wiring, and manual migration align with the locked requirements, and the remaining verification gap is limited to missing Django in the workspace |
+ | 2026-03-12 | REVIEWER | Marked ITEM-0002 done and returned the baton to planning for the next implementation slice | The domain models, forms, admin wiring, and initial migration satisfy the locked slice, and the blocked Django runtime checks remain an environment caveat rather than a delivered-code gap |
++| 2026-03-12 | PLANNER | Activated ITEM-0003 for server-rendered dashboard, project list/detail, and tag detail page implementation and handed off to DEV | The domain layer is accepted, so the next dependency-ready slice is the read-only page surface that prepares the app for later no-reload CRUD work |
+diff --git a/ai/next_agent.md b/ai/next_agent.md
+index 31d33be9ac835fa9bfb1722dffb2f27c0f53d7b7..308497e1aa01c5597e200344e88e6d5d7909b118
+--- a/ai/next_agent.md
++++ b/ai/next_agent.md
+@@ -1,22 +1,35 @@
+ # Next Agent
+ 
+-- Current role: `PLANNER`
+-- Prompt: `ai/prompts/03-planner.md`
++- Current role: `DEV`
++- Prompt: `ai/prompts/04-dev.md`
+ - Execution command for Codex sessions: **Follow `ai/next_agent.yaml` exactly.**
+ - If role mismatch with `ai/active_agent.txt`, print: `WAITING FOR BATON`
+ 
+ ## Handoff Notes
+ 
+-- `ITEM-0002` is accepted and marked done.
+-- Reviewer decision: DONE with an environment caveat, not a code gap.
+-- What was accepted:
+-  - `Project`, `Task`, and `Tag` models exist with the locked statuses, priorities, and relationships.
+-  - Forms and admin wiring stay inside the approved single-app Django shape.
+-  - `tracker/migrations/0001_initial.py` matches the implemented schema on static inspection.
+-  - No scope drift or speculative architecture was introduced.
+-- Validation evidence:
+-  - `python3 -m py_compile $(find apps/project-tracker -name '*.py' | sort)` passed.
+-  - `python3 apps/project-tracker/manage.py test tracker.tests.test_domain tracker.tests.test_views` failed with `ModuleNotFoundError: No module named 'django'`.
+-- Planning guidance:
+-  - Activate the next dependency-ready item, which should be `ITEM-0003` unless state files indicate a stronger reason to reorder.
+-  - Preserve the runtime caveat so later validation includes migration and focused Django test execution once the environment has Django available.
++- Active item: `ITEM-0003` and it is implementation-ready.
++- Goal: replace the scaffold-only tracker pages with real server-rendered read views for dashboard, projects, project detail, and tag detail.
++- Files expected to change:
++  - `apps/project-tracker/tracker/views.py`
++  - `apps/project-tracker/tracker/urls.py`
++  - `apps/project-tracker/templates/tracker/dashboard.html`
++  - `apps/project-tracker/templates/tracker/` for new list/detail templates
++  - `apps/project-tracker/tracker/tests/test_views.py`
++- Existing domain models are accepted and should be used directly:
++  - `Project` with status and tags
++  - `Task` with project, status, priority, due date, and tags
++  - `Tag` shared across projects and tasks
++- Implementation plan:
++  - Expand `dashboard` to compute total project count, task counts grouped by status, overdue task count, and a small recent-project or navigation context using direct ORM queries.
++  - Add server-rendered list/detail views and URL routes for projects and tags.
++  - Project detail should include the selected project, its tags, and its related tasks.
++  - Tag detail should include the selected tag plus associated projects and tasks.
++  - Keep templates extending `tracker/base.html`; no async CRUD work belongs in this slice.
++  - Add focused view tests that cover the new routes and key rendered content.
++- Constraints to preserve:
++  - Stay inside the single existing `tracker` app and current Django project.
++  - No REST endpoints, no service/repository layer, no extra packages, no speculative architecture.
++  - Prefer direct ORM aggregates and simple template composition.
++- Validation caveat to keep visible:
++  - `python3 -m py_compile $(find apps/project-tracker -name '*.py' | sort)` has been passing.
++  - Django runtime commands are still blocked in this workspace with `ModuleNotFoundError: No module named 'django'`, so if that remains true, document it rather than masking it.
+
+[35m[3mexec[0m[0m
+[1m/bin/bash -lc './scripts/generate-next-agent.sh DEV --notes "ITEM-0003 active | implement dashboard aggregates plus project list/detail and tag detail server-rendered pages | modify tracker views urls templates and view tests | preserve documented Django-missing runtime caveat if still blocked"'[0m in /home/sundaram/code/temp/test[32m succeeded in 0ms:[0m
+[2mGenerated ai/next_agent.yaml for DEV (next: VALIDATOR)[0m
+[3m[35mfile update:[0m[0m
+diff --git a/ai/active_agent.txt b/ai/active_agent.txt
+index b51ee722eae8ec12054c26b379735fcea599c2f6..a8b82c6896062c7b336ccc8bf7533a20fac54932
+--- a/ai/active_agent.txt
++++ b/ai/active_agent.txt
+@@ -1 +1 @@
+-PLANNER
++DEV
+diff --git a/ai/active_item.yaml b/ai/active_item.yaml
+index 06646081dea8573460e0da085a5ee0482fbb54d2..a0ddc58e1241cf4195bd0cb84a5fff3dfa849a43
+--- a/ai/active_item.yaml
++++ b/ai/active_item.yaml
+@@ -1,22 +1,21 @@
+-id: ITEM-0002
+-title: Implement tracker domain models and forms
+-goal: "Add Project, Task, and Tag models, related forms, admin registration, and database migrations that match the approved domain surface."
+-status: done
+-owner_role: REVIEWER
++id: ITEM-0003
++title: Build server-rendered tracker pages
++goal: "Deliver dashboard, project list, project detail with tasks, and tag detail pages using Django views, templates, and SQLite-backed aggregates."
++status: ready
++owner_role: DEV
+ related_files:
+-  - apps/project-tracker/tracker/models.py
+-  - apps/project-tracker/tracker/forms.py
+-  - apps/project-tracker/tracker/admin.py
+-  - apps/project-tracker/tracker/migrations/
++  - apps/project-tracker/tracker/views.py
++  - apps/project-tracker/tracker/urls.py
++  - apps/project-tracker/templates/tracker/
+   - apps/project-tracker/tracker/tests/
+ acceptance_criteria:
+-  - "`Project`, `Task`, and `Tag` models exist in `tracker/models.py` with the approved field set and Django ORM relationships."
+-  - "`Task` has a foreign key to `Project`, and tags can be assigned to both projects and tasks via many-to-many relationships."
+-  - "Model and form validation enforce the approved enumerated choices and basic required-field constraints without introducing service layers."
+-  - "Admin registration covers the domain models with practical list/display configuration for inspection."
+-  - "Initial migration files for the domain schema are present under `tracker/migrations/`."
++  - "Dashboard renders live tracker aggregates: total projects, task counts grouped by status, and overdue task count."
++  - "Projects list page renders all projects with their key metadata and navigation from the dashboard."
++  - "Project detail page renders the selected project, its tags, and its related tasks."
++  - "Tag detail page renders the selected tag with linked projects and tasks."
++  - "URLs, views, and templates stay inside the existing single-app Django structure with server-rendered HTML."
+ done_definition:
+-  - "Domain models, forms, admin wiring, and migrations are implemented inside the existing `tracker` app only."
+-  - "Field choices align with the locked statuses and priorities from `ai/goal.yaml`."
+-  - "No extra Django apps, third-party packages, or speculative service/repository layers are introduced."
+-  - "Tests cover the domain rules if the environment allows Django to run, or the handoff documents the blocking limitation."
++  - "Views use direct Django ORM queries and aggregates against the existing models without introducing service or repository layers."
++  - "Templates extend the shared base template and provide navigation across dashboard, project list, project detail, and tag detail pages."
++  - "Focused Django view tests cover the new routes and key rendered data if Django is available, or the handoff documents the blocking limitation."
++  - "The existing runtime caveat remains documented so Django migration and test execution can be retried once the environment has Django installed."
+diff --git a/ai/backlog.yaml b/ai/backlog.yaml
+index e7217ff9b16837e3ba6fe98df8f92adf72092d03..e17108259f1bf7f2030792411dc733980952a41a
+--- a/ai/backlog.yaml
++++ b/ai/backlog.yaml
+@@ -27,7 +27,7 @@
+     title: Build server-rendered tracker pages
+     goal: Deliver dashboard, project list, project detail with tasks, and tag detail pages using Django views, templates, and SQLite-backed aggregates.
+     type: feature
+-    status: todo
++    status: in_progress
+     priority: high
+     dependencies:
+       - ITEM-0002
+diff --git a/ai/iterations/ITER-0001.md b/ai/iterations/ITER-0001.md
+index 9c2af9b7f7d09777da8d13c24d12e5eee36b6c23..e062ee859400acfd2d26f65ed386537c6f6f1d40
+--- a/ai/iterations/ITER-0001.md
++++ b/ai/iterations/ITER-0001.md
+@@ -13,3 +13,4 @@
+ | 2026-03-12 | DEV | Implemented tracker domain models, forms, admin registration, a manual initial migration, and domain-focused tests for ITEM-0002 | The next slices depend on concrete project, task, and tag persistence plus validated form surfaces inside the existing Django app |
+ | 2026-03-12 | VALIDATOR | Accepted the domain model slice for ITEM-0002 and handed off to review with a documented Django-environment caveat | The implemented models, forms, admin wiring, and manual migration align with the locked requirements, and the remaining verification gap is limited to missing Django in the workspace |
+ | 2026-03-12 | REVIEWER | Marked ITEM-0002 done and returned the baton to planning for the next implementation slice | The domain models, forms, admin wiring, and initial migration satisfy the locked slice, and the blocked Django runtime checks remain an environment caveat rather than a delivered-code gap |
++| 2026-03-12 | PLANNER | Activated ITEM-0003 for server-rendered dashboard, project list/detail, and tag detail page implementation and handed off to DEV | The domain layer is accepted, so the next dependency-ready slice is the read-only page surface that prepares the app for later no-reload CRUD work |
+diff --git a/ai/next_agent.md b/ai/next_agent.md
+index 31d33be9ac835fa9bfb1722dffb2f27c0f53d7b7..308497e1aa01c5597e200344e88e6d5d7909b118
+--- a/ai/next_agent.md
++++ b/ai/next_agent.md
+@@ -1,22 +1,35 @@
+ # Next Agent
+ 
+-- Current role: `PLANNER`
+-- Prompt: `ai/prompts/03-planner.md`
++- Current role: `DEV`
++- Prompt: `ai/prompts/04-dev.md`
+ - Execution command for Codex sessions: **Follow `ai/next_agent.yaml` exactly.**
+ - If role mismatch with `ai/active_agent.txt`, print: `WAITING FOR BATON`
+ 
+ ## Handoff Notes
+ 
+-- `ITEM-0002` is accepted and marked done.
+-- Reviewer decision: DONE with an environment caveat, not a code gap.
+-- What was accepted:
+-  - `Project`, `Task`, and `Tag` models exist with the locked statuses, priorities, and relationships.
+-  - Forms and admin wiring stay inside the approved single-app Django shape.
+-  - `tracker/migrations/0001_initial.py` matches the implemented schema on static inspection.
+-  - No scope drift or speculative architecture was introduced.
+-- Validation evidence:
+-  - `python3 -m py_compile $(find apps/project-tracker -name '*.py' | sort)` passed.
+-  - `python3 apps/project-tracker/manage.py test tracker.tests.test_domain tracker.tests.test_views` failed with `ModuleNotFoundError: No module named 'django'`.
+-- Planning guidance:
+-  - Activate the next dependency-ready item, which should be `ITEM-0003` unless state files indicate a stronger reason to reorder.
+-  - Preserve the runtime caveat so later validation includes migration and focused Django test execution once the environment has Django available.
++- Active item: `ITEM-0003` and it is implementation-ready.
++- Goal: replace the scaffold-only tracker pages with real server-rendered read views for dashboard, projects, project detail, and tag detail.
++- Files expected to change:
++  - `apps/project-tracker/tracker/views.py`
++  - `apps/project-tracker/tracker/urls.py`
++  - `apps/project-tracker/templates/tracker/dashboard.html`
++  - `apps/project-tracker/templates/tracker/` for new list/detail templates
++  - `apps/project-tracker/tracker/tests/test_views.py`
++- Existing domain models are accepted and should be used directly:
++  - `Project` with status and tags
++  - `Task` with project, status, priority, due date, and tags
++  - `Tag` shared across projects and tasks
++- Implementation plan:
++  - Expand `dashboard` to compute total project count, task counts grouped by status, overdue task count, and a small recent-project or navigation context using direct ORM queries.
++  - Add server-rendered list/detail views and URL routes for projects and tags.
++  - Project detail should include the selected project, its tags, and its related tasks.
++  - Tag detail should include the selected tag plus associated projects and tasks.
++  - Keep templates extending `tracker/base.html`; no async CRUD work belongs in this slice.
++  - Add focused view tests that cover the new routes and key rendered content.
++- Constraints to preserve:
++  - Stay inside the single existing `tracker` app and current Django project.
++  - No REST endpoints, no service/repository layer, no extra packages, no speculative architecture.
++  - Prefer direct ORM aggregates and simple template composition.
++- Validation caveat to keep visible:
++  - `python3 -m py_compile $(find apps/project-tracker -name '*.py' | sort)` has been passing.
++  - Django runtime commands are still blocked in this workspace with `ModuleNotFoundError: No module named 'django'`, so if that remains true, document it rather than masking it.
+
+[35m[3mcodex[0m[0m
+HANDOFF TO DEV
+[3m[35mfile update:[0m[0m
+diff --git a/ai/active_agent.txt b/ai/active_agent.txt
+index b51ee722eae8ec12054c26b379735fcea599c2f6..a8b82c6896062c7b336ccc8bf7533a20fac54932
+--- a/ai/active_agent.txt
++++ b/ai/active_agent.txt
+@@ -1 +1 @@
+-PLANNER
++DEV
+diff --git a/ai/active_item.yaml b/ai/active_item.yaml
+index 06646081dea8573460e0da085a5ee0482fbb54d2..a0ddc58e1241cf4195bd0cb84a5fff3dfa849a43
+--- a/ai/active_item.yaml
++++ b/ai/active_item.yaml
+@@ -1,22 +1,21 @@
+-id: ITEM-0002
+-title: Implement tracker domain models and forms
+-goal: "Add Project, Task, and Tag models, related forms, admin registration, and database migrations that match the approved domain surface."
+-status: done
+-owner_role: REVIEWER
++id: ITEM-0003
++title: Build server-rendered tracker pages
++goal: "Deliver dashboard, project list, project detail with tasks, and tag detail pages using Django views, templates, and SQLite-backed aggregates."
++status: ready
++owner_role: DEV
+ related_files:
+-  - apps/project-tracker/tracker/models.py
+-  - apps/project-tracker/tracker/forms.py
+-  - apps/project-tracker/tracker/admin.py
+-  - apps/project-tracker/tracker/migrations/
++  - apps/project-tracker/tracker/views.py
++  - apps/project-tracker/tracker/urls.py
++  - apps/project-tracker/templates/tracker/
+   - apps/project-tracker/tracker/tests/
+ acceptance_criteria:
+-  - "`Project`, `Task`, and `Tag` models exist in `tracker/models.py` with the approved field set and Django ORM relationships."
+-  - "`Task` has a foreign key to `Project`, and tags can be assigned to both projects and tasks via many-to-many relationships."
+-  - "Model and form validation enforce the approved enumerated choices and basic required-field constraints without introducing service layers."
+-  - "Admin registration covers the domain models with practical list/display configuration for inspection."
+-  - "Initial migration files for the domain schema are present under `tracker/migrations/`."
++  - "Dashboard renders live tracker aggregates: total projects, task counts grouped by status, and overdue task count."
++  - "Projects list page renders all projects with their key metadata and navigation from the dashboard."
++  - "Project detail page renders the selected project, its tags, and its related tasks."
++  - "Tag detail page renders the selected tag with linked projects and tasks."
++  - "URLs, views, and templates stay inside the existing single-app Django structure with server-rendered HTML."
+ done_definition:
+-  - "Domain models, forms, admin wiring, and migrations are implemented inside the existing `tracker` app only."
+-  - "Field choices align with the locked statuses and priorities from `ai/goal.yaml`."
+-  - "No extra Django apps, third-party packages, or speculative service/repository layers are introduced."
+-  - "Tests cover the domain rules if the environment allows Django to run, or the handoff documents the blocking limitation."
++  - "Views use direct Django ORM queries and aggregates against the existing models without introducing service or repository layers."
++  - "Templates extend the shared base template and provide navigation across dashboard, project list, project detail, and tag detail pages."
++  - "Focused Django view tests cover the new routes and key rendered data if Django is available, or the handoff documents the blocking limitation."
++  - "The existing runtime caveat remains documented so Django migration and test execution can be retried once the environment has Django installed."
+diff --git a/ai/backlog.yaml b/ai/backlog.yaml
+index e7217ff9b16837e3ba6fe98df8f92adf72092d03..e17108259f1bf7f2030792411dc733980952a41a
+--- a/ai/backlog.yaml
++++ b/ai/backlog.yaml
+@@ -27,7 +27,7 @@
+     title: Build server-rendered tracker pages
+     goal: Deliver dashboard, project list, project detail with tasks, and tag detail pages using Django views, templates, and SQLite-backed aggregates.
+     type: feature
+-    status: todo
++    status: in_progress
+     priority: high
+     dependencies:
+       - ITEM-0002
+diff --git a/ai/iterations/ITER-0001.md b/ai/iterations/ITER-0001.md
+index 9c2af9b7f7d09777da8d13c24d12e5eee36b6c23..e062ee859400acfd2d26f65ed386537c6f6f1d40
+--- a/ai/iterations/ITER-0001.md
++++ b/ai/iterations/ITER-0001.md
+@@ -13,3 +13,4 @@
+ | 2026-03-12 | DEV | Implemented tracker domain models, forms, admin registration, a manual initial migration, and domain-focused tests for ITEM-0002 | The next slices depend on concrete project, task, and tag persistence plus validated form surfaces inside the existing Django app |
+ | 2026-03-12 | VALIDATOR | Accepted the domain model slice for ITEM-0002 and handed off to review with a documented Django-environment caveat | The implemented models, forms, admin wiring, and manual migration align with the locked requirements, and the remaining verification gap is limited to missing Django in the workspace |
+ | 2026-03-12 | REVIEWER | Marked ITEM-0002 done and returned the baton to planning for the next implementation slice | The domain models, forms, admin wiring, and initial migration satisfy the locked slice, and the blocked Django runtime checks remain an environment caveat rather than a delivered-code gap |
++| 2026-03-12 | PLANNER | Activated ITEM-0003 for server-rendered dashboard, project list/detail, and tag detail page implementation and handed off to DEV | The domain layer is accepted, so the next dependency-ready slice is the read-only page surface that prepares the app for later no-reload CRUD work |
+diff --git a/ai/next_agent.md b/ai/next_agent.md
+index 31d33be9ac835fa9bfb1722dffb2f27c0f53d7b7..308497e1aa01c5597e200344e88e6d5d7909b118
+--- a/ai/next_agent.md
++++ b/ai/next_agent.md
+@@ -1,22 +1,35 @@
+ # Next Agent
+ 
+-- Current role: `PLANNER`
+-- Prompt: `ai/prompts/03-planner.md`
++- Current role: `DEV`
++- Prompt: `ai/prompts/04-dev.md`
+ - Execution command for Codex sessions: **Follow `ai/next_agent.yaml` exactly.**
+ - If role mismatch with `ai/active_agent.txt`, print: `WAITING FOR BATON`
+ 
+ ## Handoff Notes
+ 
+-- `ITEM-0002` is accepted and marked done.
+-- Reviewer decision: DONE with an environment caveat, not a code gap.
+-- What was accepted:
+-  - `Project`, `Task`, and `Tag` models exist with the locked statuses, priorities, and relationships.
+-  - Forms and admin wiring stay inside the approved single-app Django shape.
+-  - `tracker/migrations/0001_initial.py` matches the implemented schema on static inspection.
+-  - No scope drift or speculative architecture was introduced.
+-- Validation evidence:
+-  - `python3 -m py_compile $(find apps/project-tracker -name '*.py' | sort)` passed.
+-  - `python3 apps/project-tracker/manage.py test tracker.tests.test_domain tracker.tests.test_views` failed with `ModuleNotFoundError: No module named 'django'`.
+-- Planning guidance:
+-  - Activate the next dependency-ready item, which should be `ITEM-0003` unless state files indicate a stronger reason to reorder.
+-  - Preserve the runtime caveat so later validation includes migration and focused Django test execution once the environment has Django available.
++- Active item: `ITEM-0003` and it is implementation-ready.
++- Goal: replace the scaffold-only tracker pages with real server-rendered read views for dashboard, projects, project detail, and tag detail.
++- Files expected to change:
++  - `apps/project-tracker/tracker/views.py`
++  - `apps/project-tracker/tracker/urls.py`
++  - `apps/project-tracker/templates/tracker/dashboard.html`
++  - `apps/project-tracker/templates/tracker/` for new list/detail templates
++  - `apps/project-tracker/tracker/tests/test_views.py`
++- Existing domain models are accepted and should be used directly:
++  - `Project` with status and tags
++  - `Task` with project, status, priority, due date, and tags
++  - `Tag` shared across projects and tasks
++- Implementation plan:
++  - Expand `dashboard` to compute total project count, task counts grouped by status, overdue task count, and a small recent-project or navigation context using direct ORM queries.
++  - Add server-rendered list/detail views and URL routes for projects and tags.
++  - Project detail should include the selected project, its tags, and its related tasks.
++  - Tag detail should include the selected tag plus associated projects and tasks.
++  - Keep templates extending `tracker/base.html`; no async CRUD work belongs in this slice.
++  - Add focused view tests that cover the new routes and key rendered content.
++- Constraints to preserve:
++  - Stay inside the single existing `tracker` app and current Django project.
++  - No REST endpoints, no service/repository layer, no extra packages, no speculative architecture.
++  - Prefer direct ORM aggregates and simple template composition.
++- Validation caveat to keep visible:
++  - `python3 -m py_compile $(find apps/project-tracker -name '*.py' | sort)` has been passing.
++  - Django runtime commands are still blocked in this workspace with `ModuleNotFoundError: No module named 'django'`, so if that remains true, document it rather than masking it.
+
+[3m[35mtokens used[0m[0m
+16,704
+
+Script done on 2026-03-11 22:13:06-05:00 [COMMAND_EXIT_CODE="0"]

@@ -1,0 +1,38 @@
+<section class="panel form-panel">
+  <div class="panel-heading">
+    <div>
+      <h2>{{ form_heading }}</h2>
+      <p class="section-copy">Tag changes save through this page without a full reload.</p>
+    </div>
+  </div>
+  <form
+    class="project-form"
+    action="{{ form_action }}"
+    method="post"
+    data-async-form
+  >
+    {% csrf_token %}
+    {% if form.non_field_errors %}
+      <div class="form-errors" role="alert">
+        {% for error in form.non_field_errors %}
+          <p>{{ error }}</p>
+        {% endfor %}
+      </div>
+    {% endif %}
+    <div class="form-grid">
+      <div class="field-group field-span-2">
+        <label for="{{ form.name.id_for_label }}">Name</label>
+        {{ form.name }}
+        {% for error in form.name.errors %}
+          <p class="field-error">{{ error }}</p>
+        {% endfor %}
+      </div>
+    </div>
+    <div class="form-actions">
+      <button class="button-primary" type="submit">{{ form_submit_label }}</button>
+      {% if cancel_url %}
+        <a class="button-secondary" href="{{ cancel_url }}" data-async-link>Cancel</a>
+      {% endif %}
+    </div>
+  </form>
+</section>

@@ -1,0 +1,28 @@
+<section class="panel">
+  <div class="panel-heading">
+    <div>
+      <h2>All tags</h2>
+      <p class="section-copy">Select a tag to inspect its related projects and tasks.</p>
+    </div>
+  </div>
+  {% if tags %}
+    <div class="stack">
+      {% for tag in tags %}
+        <article class="list-card {% if selected_tag_id == tag.id %}list-card-active{% endif %}">
+          <div class="list-card-main">
+            <h3>
+              <a class="inline-link" href="{% url 'tracker:tag_detail' tag.id %}" data-async-link>{{ tag.name }}</a>
+            </h3>
+            <p>{{ tag.project_count }} projects and {{ tag.task_count }} tasks use this tag.</p>
+          </div>
+          <div class="meta-cluster">
+            <span class="badge">{{ tag.project_count }} projects</span>
+            <span class="badge">{{ tag.task_count }} tasks</span>
+          </div>
+        </article>
+      {% endfor %}
+    </div>
+  {% else %}
+    <p class="empty-state">No tags exist yet.</p>
+  {% endif %}
+</section>

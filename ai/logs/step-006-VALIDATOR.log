@@ -1,0 +1,887 @@
+Script started on 2026-03-11 22:09:00-05:00 [COMMAND="codex exec --model gpt-5.4 --full-auto Follow\ ai/next_agent.yaml\ exactly. " TERM="xterm-256color" TTY="/dev/pts/0" COLUMNS="184" LINES="43"]
+OpenAI Codex v0.114.0 (research preview)
+--------
+[1mworkdir:[0m /home/sundaram/code/temp/test
+[1mmodel:[0m gpt-5.4
+[1mprovider:[0m openai
+[1mapproval:[0m never
+[1msandbox:[0m workspace-write [workdir, /tmp, $TMPDIR, /home/sundaram/.codex/memories]
+[1mreasoning effort:[0m medium
+[1mreasoning summaries:[0m none
+[1msession id:[0m 019ce004-d92c-73d3-b90a-74b234b438ca
+--------
+[36muser[0m
+Follow ai/next_agent.yaml exactly.
+[36mmcp startup:[0m no servers
+[35m[3mcodex[0m[0m
+I’m reading the repository instructions and the `ai/next_agent.yaml` file first so I can follow its workflow exactly before making any changes.
+[35m[3mexec[0m[0m
+[1m/bin/bash -lc "sed -n '1,220p' ai/next_agent.yaml"[0m in /home/sundaram/code/temp/test[32m succeeded in 0ms:[0m
+[2mnext_role: VALIDATOR
+prompt_file: ai/prompts/05-validator.md
+read:
+  - ai/active_item.yaml
+  - ai/review.md
+  - ai/decision-lock.yaml
+  - ai/goal.yaml
+  - ai/constitution.yaml
+  - ai/active_agent.txt
+  - ai/next_agent.md
+  - ai/user-questions.yaml
+allowed_edits:
+  - ai/review.md
+  - ai/decision-lock.yaml
+  - ai/user-questions.yaml
+  - ai/iterations/ITER-0001.md
+  - ai/active_agent.txt
+  - ai/next_agent.yaml
+  - ai/next_agent.md
+stop_conditions:[0m
+[35m[3mexec[0m[0m
+[1m/bin/bash -lc 'pwd && rg --files .'[0m in /home/sundaram/code/temp/test[32m succeeded in 0ms:[0m
+[2m/home/sundaram/code/temp/test
+./scripts/check-baton.sh
+./scripts/validate_baton.py
+./scripts/run-baton.sh
+./scripts/check-goal.sh
+./scripts/resume-baton.sh
+./scripts/generate-next-agent.sh
+./scripts/bootstrap.sh
+./ai/decision-lock.yaml
+./ai/user-questions.yaml
+./init.sh
+./ai/logs/step-003-ARCHITECT.log
+./ai/logs/step-002-VALIDATOR.log
+./ai/logs/step-001-DEV.log
+./ai/logs/step-002-SENIOR_JUDGMENTAL_ENGINEER.log
+./ai/logs/step-003-REVIEWER.log
+./ai/logs/baton.log
+./ai/logs/step-005-DEV.log
+./ai/logs/step-004-PLANNER.log
+./ai/logs/step-001-PRODUCT_OWNER.log[0m
+[35m[3mcodex[0m[0m
+I’ve confirmed this turn is the `VALIDATOR` step. Next I’m checking the baton state and the artifacts named in `ai/next_agent.yaml`, then I’ll validate the claimed changes against the current codebase.
+[35m[3mexec[0m[0m
+[1m/bin/bash -lc "sed -n '1,220p' ai/prompts/05-validator.md"[0m in /home/sundaram/code/temp/test[35m[3mexec[0m[0m
+[1m/bin/bash -lc "sed -n '1,220p' ai/active_agent.txt"[0m in /home/sundaram/code/temp/test[32m succeeded in 0ms:[0m
+[2mVALIDATOR[0m
+[32m succeeded in 0ms:[0m
+[2m# ROLE: VALIDATOR
+
+## 1) Baton check
+- Read `ai/active_agent.txt`.
+- If value is not exactly `VALIDATOR`, output exactly:
+`WAITING FOR BATON`
+- Stop.
+
+## 2) Required reads
+- `ai/goal.yaml`
+- `ai/active_item.yaml`
+- `ai/review.md`
+- `ai/decision-lock.yaml`
+- `ai/user-questions.yaml`
+- `ai/constitution.yaml`
+- `ai/next_agent.md`
+- changed files under `apps/` and `infra/`
+- test output / verification artifacts
+
+## 3) Allowed edits (only)[0m
+[35m[3mexec[0m[0m
+[1m/bin/bash -lc "sed -n '1,260p' ai/active_item.yaml"[0m in /home/sundaram/code/temp/test[32m succeeded in 0ms:[0m
+[2mid: ITEM-0002
+title: Implement tracker domain models and forms
+goal: "Add Project, Task, and Tag models, related forms, admin registration, and database migrations that match the approved domain surface."
+status: in_progress
+owner_role: DEV
+related_files:
+  - apps/project-tracker/tracker/models.py
+  - apps/project-tracker/tracker/forms.py
+  - apps/project-tracker/tracker/admin.py
+  - apps/project-tracker/tracker/migrations/
+  - apps/project-tracker/tracker/tests/
+acceptance_criteria:
+  - "`Project`, `Task`, and `Tag` models exist in `tracker/models.py` with the approved field set and Django ORM relationships."
+  - "`Task` has a foreign key to `Project`, and tags can be assigned to both projects and tasks via many-to-many relationships."
+  - "Model and form validation enforce the approved enumerated choices and basic required-field constraints without introducing service layers."
+  - "Admin registration covers the domain models with practical list/display configuration for inspection."
+  - "Initial migration files for the domain schema are present under `tracker/migrations/`."
+done_definition:
+  - "Domain models, forms, admin wiring, and migrations are implemented inside the existing `tracker` app only."
+  - "Field choices align with the locked statuses and priorities from `ai/goal.yaml`."[0m
+[35m[3mexec[0m[0m
+[1m/bin/bash -lc "sed -n '1,240p' ai/constitution.yaml"[0m in /home/sundaram/code/temp/test[35m[3mexec[0m[0m
+[1m/bin/bash -lc "sed -n '1,220p' ai/user-questions.yaml"[0m in /home/sundaram/code/temp/test[35m[3mexec[0m[0m
+[1m/bin/bash -lc "sed -n '1,220p' ai/goal.yaml"[0m in /home/sundaram/code/temp/test[35m[3mexec[0m[0m
+[1m/bin/bash -lc "sed -n '1,260p' ai/next_agent.md"[0m in /home/sundaram/code/temp/test[35m[3mexec[0m[0m
+[1m/bin/bash -lc "sed -n '1,260p' ai/decision-lock.yaml"[0m in /home/sundaram/code/temp/test[32m succeeded in 0ms:[0m
+[2mcore_rules:
+  - state lives in files, not chat memory
+  - baton ownership is authoritative
+  - roles must not edit outside allowed files
+baton_rules:
+  - if active agent mismatch, print exactly WAITING FOR BATON
+  - baton must be handed off explicitly
+edit_rules:
+  - only edit allowed files listed in the current role prompt
+stop_rules:
+  - if human clarification is needed, print exactly WAITING FOR USER
+  - always append an iteration log entry before handoff[0m
+[35m[3mexec[0m[0m
+[1m/bin/bash -lc "sed -n '1,260p' ai/review.md"[0m in /home/sundaram/code/temp/test[32m succeeded in 0ms:[0m
+[2mstatus: none
+return_to_role: null
+questions: [][0m
+[32m succeeded in 0ms:[0m
+[2mproject_goal: Build a personal project tracker web app using Django with a SQLite database and HTML/JS frontend
+success_criteria:
+  - Django REST endpoints for CRUD operations on projects, tasks, and tags
+  - Each project has a name, description, status (active/completed/archived), and created date
+  - Each task belongs to a project and has a title, status (todo/in_progress/done), priority (low/medium/high), and due date
+  - Tags can be assigned to both projects and tasks (many-to-many)
+  - Frontend has separate views for projects list, project detail (showing its tasks), and a tag filter view
+  - Adding/editing/deleting entities works without full page reload
+  - Dashboard view showing summary stats (total projects, tasks by status, overdue tasks)
+  - Data persists in SQLite database
+context_notes:
+  - Use Django with SQLite backend
+  - Frontend is plain HTML, CSS, and vanilla JS (no React/Vue/Angular)
+  - Django serves both the API and static/template files
+  - All code lives in apps/project-tracker/
+  - Use Django models with proper foreign key and many-to-many relationships
+constraints:
+  - Django and its built-in dependencies only, no additional pip packages (no DRF, no celery, etc.)
+  - No frontend JS frameworks
+  - Single Django project, no microservices[0m
+[32m succeeded in 0ms:[0m
+[2m# Next Agent
+
+- Current role: `VALIDATOR`
+- Prompt: `ai/prompts/05-validator.md`
+- Execution command for Codex sessions: **Follow `ai/next_agent.yaml` exactly.**
+- If role mismatch with `ai/active_agent.txt`, print: `WAITING FOR BATON`
+
+## Handoff Notes
+
+- Active item remains `ITEM-0002`.
+- Implemented the tracker domain layer in the existing app only:
+  - added `Project`, `Task`, and `Tag` models in `apps/project-tracker/tracker/models.py`
+  - added `ProjectForm`, `TaskForm`, and `TagForm` in `apps/project-tracker/tracker/forms.py`
+  - registered the models with practical admin configuration in `apps/project-tracker/tracker/admin.py`
+  - added a manual initial migration at `apps/project-tracker/tracker/migrations/0001_initial.py`
+  - added domain-focused tests in `apps/project-tracker/tracker/tests/test_domain.py`
+- Locked domain behavior implemented:
+  - `Project.status`: `active`, `completed`, `archived`
+  - `Task.status`: `todo`, `in_progress`, `done`
+  - `Task.priority`: `low`, `medium`, `high`[0m
+[32m succeeded in 0ms:[0m
+[2mconfirmed_by_user: false
+blocked_on_user: false
+last_user_decision: null
+approved_exceptions: []
+approved_decisions: [][0m
+[32m succeeded in 0ms:[0m
+[2m# Review Notes
+
+Use this file for reviewer outcomes:
+
+- **DONE**: item accepted and loop returns to PLANNER for next item.
+- **REVISE**: route back to specific role with explicit gap list.
+- **ESCALATE**: WAITING FOR USER only for approved escalation categories.
+
+## Judgment Warnings
+
+- Flag any introduction of React, Next.js, DRF, extra pip packages, or cloud/deployment scaffolding as scope drift unless requirements are updated.
+- Flag architecture that splits the app into speculative layers, services, or multiple Django apps without a demonstrated need.
+- Flag CRUD implementations that require full page reloads, since no-reload interactions are part of acceptance.
+
+## Architecture Decisions
+
+- Use a single Django project under `apps/project-tracker/` with one main product app for projects, tasks, and tags.
+- Treat server-rendered templates as the primary UI and use small async `fetch` flows for no-reload CRUD interactions.
+- Prefer HTML partial responses for mutations; allow narrow JSON responses only when HTML would be more awkward for the specific interaction.
+- Keep domain logic in models, forms, and views; reject speculative service, repository, command-bus, or multi-app splits.[0m
+[35m[3mcodex[0m[0m
+The baton is valid and there’s no pending user decision. I’m comparing the implemented domain files against the locked requirements now, with extra attention to whether the manual migration actually matches the models and forms.
+[35m[3mexec[0m[0m
+[1m/bin/bash -lc "sed -n '1,260p' apps/project-tracker/tracker/forms.py"[0m in /home/sundaram/code/temp/test[32m succeeded in 0ms:[0m
+[2mfrom django import forms
+
+from .models import Project, Tag, Task
+
+
+def _validate_choice(value: str, choices: list[tuple[str, str]], field_name: str) -> str:
+    valid_values = {choice for choice, _label in choices}
+    if value not in valid_values:
+        raise forms.ValidationError(f"Choose a valid {field_name}.")
+    return value
+
+
+class ProjectForm(forms.ModelForm):
+    class Meta:
+        model = Project
+        fields = ["name", "description", "status", "created_date", "tags"]
+        widgets = {
+            "created_date": forms.DateInput(attrs={"type": "date"}),
+        }
+[0m
+[35m[3mexec[0m[0m
+[1m/bin/bash -lc "sed -n '1,260p' apps/project-tracker/tracker/models.py"[0m in /home/sundaram/code/temp/test[32m succeeded in 0ms:[0m
+[2mfrom django.core.exceptions import ValidationError
+from django.db import models
+from django.utils import timezone
+
+
+class Tag(models.Model):
+    name = models.CharField(max_length=100, unique=True)
+
+    class Meta:
+        ordering = ["name"]
+
+    def __str__(self) -> str:
+        return self.name
+
+
+class Project(models.Model):
+    STATUS_ACTIVE = "active"
+    STATUS_COMPLETED = "completed"
+    STATUS_ARCHIVED = "archived"
+    STATUS_CHOICES = [[0m
+[35m[3mexec[0m[0m
+[1m/bin/bash -lc "sed -n '1,260p' apps/project-tracker/tracker/tests/test_domain.py"[0m in /home/sundaram/code/temp/test[35m[3mexec[0m[0m
+[1m/bin/bash -lc "sed -n '1,320p' apps/project-tracker/tracker/migrations/0001_initial.py"[0m in /home/sundaram/code/temp/test[32m succeeded in 0ms:[0m
+[2mimport django.db.models.deletion
+import django.utils.timezone
+from django.db import migrations, models
+
+
+class Migration(migrations.Migration):
+    initial = True
+
+    dependencies = []
+
+    operations = [
+        migrations.CreateModel(
+            name="Tag",
+            fields=[
+                ("id", models.BigAutoField(auto_created=True, primary_key=True, serialize=False, verbose_name="ID")),
+                ("name", models.CharField(max_length=100, unique=True)),
+            ],
+            options={
+                "ordering": ["name"],
+            },[0m
+[32m succeeded in 0ms:[0m
+[2mfrom datetime import date
+
+from django.core.exceptions import ValidationError
+from django.test import TestCase
+
+from tracker.forms import ProjectForm, TagForm, TaskForm
+from tracker.models import Project, Tag, Task
+
+
+class TrackerModelTests(TestCase):
+    def test_project_and_task_support_tag_assignment(self):
+        project = Project.objects.create(
+            name="Launch site",
+            description="Ship the marketing site.",
+            status=Project.STATUS_ACTIVE,
+        )
+        task = Task.objects.create(
+            project=project,
+            title="Write copy",
+            status=Task.STATUS_TODO,[0m
+[35m[3mexec[0m[0m
+[1m/bin/bash -lc "sed -n '1,260p' apps/project-tracker/tracker/admin.py"[0m in /home/sundaram/code/temp/test[32m succeeded in 0ms:[0m
+[2mfrom django.contrib import admin
+
+from .models import Project, Tag, Task
+
+
+@admin.register(Tag)
+class TagAdmin(admin.ModelAdmin):
+    list_display = ("name",)
+    search_fields = ("name",)
+
+
+@admin.register(Project)
+class ProjectAdmin(admin.ModelAdmin):
+    list_display = ("name", "status", "created_date")
+    list_filter = ("status", "created_date", "tags")
+    search_fields = ("name", "description")
+    filter_horizontal = ("tags",)
+
+
+@admin.register(Task)[0m
+[35m[3mexec[0m[0m
+[1m/bin/bash -lc "sed -n '1,220p' apps/project-tracker/tracker/tests/test_views.py"[0m in /home/sundaram/code/temp/test[32m succeeded in 0ms:[0m
+[2mfrom django.test import SimpleTestCase
+from django.urls import reverse
+
+
+class DashboardViewTests(SimpleTestCase):
+    def test_dashboard_route_renders(self):
+        response = self.client.get(reverse("tracker:dashboard"))
+
+        self.assertEqual(response.status_code, 200)
+        self.assertContains(response, "Project Tracker")
+        self.assertTemplateUsed(response, "tracker/dashboard.html")[0m
+[35m[3mcodex[0m[0m
+I’ve read the implementation and tests. I’m running lightweight verification that works without Django, and I’m checking the iteration log format so I can record the validator decision before handoff.
+[35m[3mexec[0m[0m
+[1m/bin/bash -lc "sed -n '1,260p' ai/iterations/ITER-0001.md"[0m in /home/sundaram/code/temp/test[32m succeeded in 0ms:[0m
+[2m# ITER-0001 Decision Log
+
+| Timestamp | Role | Decision | Why |
+|-----------|------|----------|-----|
+| 2026-03-11 | PRODUCT_OWNER | Defined the one-page product requirements from the project goal and handed off for engineering judgment review | The workflow needs a concrete scope and acceptance baseline before architecture and planning can proceed |
+| 2026-03-11 | SENIOR_JUDGMENTAL_ENGINEER | Locked simplification guardrails around a single Django + SQLite + vanilla JS modular monolith and warned against framework/platform drift | The architect needs explicit constraints so the design stays aligned with the product goal instead of inheriting conflicting default stack preferences |
+| 2026-03-11 | ARCHITECT | Defined a single-project Django architecture centered on one product app, server-rendered templates, and HTML-partial based no-reload CRUD flows | The planner and developer need concrete boundaries, file targets, and implementation tradeoffs before breaking work into execution items |
+| 2026-03-11 | PLANNER | Broke delivery into scaffold, domain, page, async CRUD, and test slices and activated the scaffold item for development | The developer needs a small implementation-ready first step with explicit file targets before starting code changes |
+| 2026-03-12 | DEV | Scaffolded the Django project baseline with one tracker app, routed a rendered dashboard page, and added a smoke test for the root view | ITEM-0001 required an end-to-end project skeleton before later slices can add models, pages, and async CRUD behavior |
+| 2026-03-12 | VALIDATOR | Accepted the scaffold baseline as meeting ITEM-0001 acceptance criteria and handed off to review with an environment caveat on Django-dependent tests | The slice is structurally correct and free of scope drift, but full runtime validation remains blocked until Django is installed in the workspace |
+| 2026-03-12 | REVIEWER | Marked ITEM-0001 done and returned the baton to planning for the next implementation slice | The scaffold meets the locked architecture and acceptance criteria, and the blocked Django test run is an environment limitation rather than a gap in the delivered slice |
+| 2026-03-12 | PLANNER | Activated ITEM-0002 for domain model, form, admin, and migration work and handed off implementation to DEV | The scaffold is complete, and the domain layer is the next dependency needed before server-rendered pages and no-reload CRUD flows can be built |
+| 2026-03-12 | DEV | Implemented tracker domain models, forms, admin registration, a manual initial migration, and domain-focused tests for ITEM-0002 | The next slices depend on concrete project, task, and tag persistence plus validated form surfaces inside the existing Django app |[0m
+[35m[3mexec[0m[0m
+[1m/bin/bash -lc 'python3 -m py_compile $(find apps/project-tracker -name '"'*.py' | sort)"[0m in /home/sundaram/code/temp/test[32m succeeded in 0ms:[0m
+[2m[0m
+[35m[3mexec[0m[0m
+[1m/bin/bash -lc 'python3 apps/project-tracker/manage.py test tracker.tests.test_domain tracker.tests.test_views'[0m in /home/sundaram/code/temp/test[31m exited 1 in 0ms:[0m
+[2mTraceback (most recent call last):
+  File "/home/sundaram/code/temp/test/apps/project-tracker/manage.py", line 14, in <module>
+    main()
+  File "/home/sundaram/code/temp/test/apps/project-tracker/manage.py", line 8, in main
+    from django.core.management import execute_from_command_line
+ModuleNotFoundError: No module named 'django'[0m
+[35m[3mcodex[0m[0m
+Validation is converging: the slice looks structurally consistent, and the only hard blocker is still the missing Django package for runtime execution. I’m updating the validator artifacts and preparing the required handoff to `REVIEWER`.
+[35m[3mexec[0m[0m
+[1m/bin/bash -lc "sed -n '1,220p' scripts/generate-next-agent.sh"[0m in /home/sundaram/code/temp/test[32m succeeded in 0ms:[0m
+[2m#!/usr/bin/env bash
+set -euo pipefail
+#
+# Usage: ./scripts/generate-next-agent.sh <ROLE> [--notes "context"] [--return-to "ROLE"]
+#
+# Generates ai/next_agent.yaml with the correct config for the given role.
+# Pass --notes to include handoff context (what was done, what to watch for).
+# Pass --return-to to specify which role the baton returns to (used with HUMAN).
+# Called by each role prompt at handoff time so agents don't hand-write YAML.
+
+ROOT="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)"
+cd "$ROOT"
+
+ROLE=""
+NOTES=""
+RETURN_TO=""
+
+# Parse args
+while [[ $# -gt 0 ]]; do
+  case "$1" in[0m
+[35m[3mexec[0m[0m
+[1m/bin/bash -lc "sed -n '1,220p' ai/templates/next-agent-template.yaml"[0m in /home/sundaram/code/temp/test[32m succeeded in 0ms:[0m
+[2mnext_role: <ROLE>
+prompt_file: ai/prompts/<prompt-file>.md
+read:
+  - ai/goal.yaml
+  - ai/judgment.yaml
+  - ai/constitution.yaml
+  - ai/backlog.yaml
+  - ai/active_item.yaml
+  - ai/decision-lock.yaml
+  - ai/active_agent.txt
+  - ai/next_agent.md
+allowed_edits:
+  - <list of files this role may edit>
+stop_conditions:
+  - WAITING FOR BATON when active agent mismatch
+  - WAITING FOR USER when clarification is required
+success_criteria:
+  - <what must be true for handoff>
+handoff_on_success:
+  print_exact: HANDOFF TO <NEXT_ROLE>[0m
+[35m[3mcodex[0m[0m
+I didn’t find a correctness mismatch in the domain slice itself, so I’m recording a passing validator result with the explicit environment caveat and handing the baton to `REVIEWER` as required by the workflow.
+[3m[35mfile update[0m[0m
+[35mM /home/sundaram/code/temp/test/ai/iterations/ITER-0001.md[0m
+@@ -13 +13,2 @@
+ | 2026-03-12 | DEV | Implemented tracker domain models, forms, admin registration, a manual initial migration, and domain-focused tests for ITEM-0002 | The next slices depend on concrete project, task, and tag persistence plus validated form surfaces inside the existing Django app |
+[32m+| 2026-03-12 | VALIDATOR | Accepted the domain model slice for ITEM-0002 and handed off to review with a documented Django-environment caveat | The implemented models, forms, admin wiring, and manual migration align with the locked requirements, and the remaining verification gap is limited to missing Django in the workspace |[0m
+[35mM /home/sundaram/code/temp/test/ai/review.md[0m
+@@ -64 +64,24 @@
+ - Follow-up note for later cleanup: committed `__pycache__` artifacts are repository hygiene noise and should be removed outside this acceptance decision.
+[32m+[0m
+[32m+## Validator Outcome[0m
+[32m+[0m
+[32m+- Result: PASS for `ITEM-0002`.[0m
+[32m+- Acceptance criteria check:[0m
+[32m+  - `Project`, `Task`, and `Tag` are implemented in `tracker/models.py` with the locked field sets, ORM relationships, and enumerated choices.[0m
+[32m+  - `Task` points to `Project`, and tags are modeled as many-to-many relationships on both `Project` and `Task`.[0m
+[32m+  - `ProjectForm`, `TaskForm`, and `TagForm` enforce the approved choice sets and required-field behavior without introducing extra abstraction layers.[0m
+[32m+  - Admin registration covers all three domain models with list views, filters, search, and tag editing support for inspection.[0m
+[32m+  - `tracker/migrations/0001_initial.py` matches the implemented model schema, including ordering, defaults, and relationships.[0m
+[32m+- Regression check:[0m
+[32m+  - No scope drift found: the slice stays inside the existing `tracker` app and does not add packages, apps, or speculative architecture layers.[0m
+[32m+  - Manual inspection found the migration definitions aligned with the current model fields and locked enumerations.[0m
+[32m+[0m
+[32m+## Validation Evidence[0m
+[32m+[0m
+[32m+- `python3 -m py_compile $(find apps/project-tracker -name '*.py' | sort)` passed.[0m
+[32m+- `python3 apps/project-tracker/manage.py test tracker.tests.test_domain tracker.tests.test_views` failed in the workspace with `ModuleNotFoundError: No module named 'django'`.[0m
+[32m+[0m
+[32m+## Known Risks[0m
+[32m+[0m
+[32m+- Runtime validation is still partial because Django is not installed in the workspace, so the migration and test suite could not be executed end to end.[0m
+[32m+- The initial migration was authored manually and appears consistent with the models on inspection, but it still needs runtime verification once Django is available.[0m
+[35mM /home/sundaram/code/temp/test/ai/next_agent.md[0m
+@@ -2,4 +2,4 @@
+ 
+[31m-- Current role: `VALIDATOR`[0m
+[31m-- Prompt: `ai/prompts/05-validator.md`[0m
+[32m+- Current role: `REVIEWER`[0m
+[32m+- Prompt: `ai/prompts/06-reviewer.md`[0m
+ - Execution command for Codex sessions: **Follow `ai/next_agent.yaml` exactly.**
+@@ -10,21 +10,14 @@
+ - Active item remains `ITEM-0002`.
+[31m-- Implemented the tracker domain layer in the existing app only:[0m
+[31m-  - added `Project`, `Task`, and `Tag` models in `apps/project-tracker/tracker/models.py`[0m
+[31m-  - added `ProjectForm`, `TaskForm`, and `TagForm` in `apps/project-tracker/tracker/forms.py`[0m
+[31m-  - registered the models with practical admin configuration in `apps/project-tracker/tracker/admin.py`[0m
+[31m-  - added a manual initial migration at `apps/project-tracker/tracker/migrations/0001_initial.py`[0m
+[31m-  - added domain-focused tests in `apps/project-tracker/tracker/tests/test_domain.py`[0m
+[31m-- Locked domain behavior implemented:[0m
+[31m-  - `Project.status`: `active`, `completed`, `archived`[0m
+[31m-  - `Task.status`: `todo`, `in_progress`, `done`[0m
+[31m-  - `Task.priority`: `low`, `medium`, `high`[0m
+[31m-  - tags are many-to-many on both `Project` and `Task`[0m
+[32m+- Validator result: PASS with an environment caveat.[0m
+[32m+- What was validated:[0m
+[32m+  - `Project`, `Task`, and `Tag` exist with the locked statuses, priorities, and relationships.[0m
+[32m+  - Forms and admin wiring stay within the approved single-app Django shape.[0m
+[32m+  - `tracker/migrations/0001_initial.py` matches the implemented schema on manual inspection.[0m
+[32m+  - No scope drift was introduced.[0m
+ - Validation evidence:
+[31m-  - `python3 -m py_compile $(find apps/project-tracker -name '*.py' | sort)` passed[0m
+[31m-  - Django import probe returned `None`[0m
+[31m-  - `python3 apps/project-tracker/manage.py test tracker.tests.test_domain tracker.tests.test_views` failed with `ModuleNotFoundError: No module named 'django'`[0m
+[31m-- Validator should focus on:[0m
+[31m-  - scope adherence for `ITEM-0002`[0m
+[31m-  - consistency between models, forms, admin, and migration definitions[0m
+[31m-  - whether the manual migration matches the implemented schema[0m
+[31m-  - whether the environment blockage is documented clearly enough for acceptance or revise[0m
+[32m+  - `python3 -m py_compile $(find apps/project-tracker -name '*.py' | sort)` passed.[0m
+[32m+  - `python3 apps/project-tracker/manage.py test tracker.tests.test_domain tracker.tests.test_views` failed with `ModuleNotFoundError: No module named 'django'`.[0m
+[32m+- Reviewer should decide whether to mark `ITEM-0002` done given:[0m
+[32m+  - acceptance criteria appear satisfied from static validation[0m
+[32m+  - runtime verification is still blocked by the workspace missing Django[0m
+[32m+  - the manual migration should be runtime-checked later once Django is available[0m
+[35mM /home/sundaram/code/temp/test/ai/active_agent.txt[0m
+@@ -1 +1 @@
+[31m-VALIDATOR[0m
+[32m+REVIEWER[0m
+[32mapply_patch(auto_approved=true) exited 0 in 7ms:[0m
+[2mSuccess. Updated the following files:[0m
+[2mM /home/sundaram/code/temp/test/ai/review.md[0m
+[2mM /home/sundaram/code/temp/test/ai/iterations/ITER-0001.md[0m
+[2mM /home/sundaram/code/temp/test/ai/next_agent.md[0m
+[2mM /home/sundaram/code/temp/test/ai/active_agent.txt[0m
+[3m[35mfile update:[0m[0m
+diff --git a/ai/active_agent.txt b/ai/active_agent.txt
+index 925a277add2e0889531e063e180e94c062e5dbb6..9b1cdc0e7e5ff55ba45e80b0786b46c37c9c32ac
+--- a/ai/active_agent.txt
++++ b/ai/active_agent.txt
+@@ -1 +1 @@
+-VALIDATOR
++REVIEWER
+diff --git a/ai/iterations/ITER-0001.md b/ai/iterations/ITER-0001.md
+index 139d258e6e3369102f3d06a45e84fd0e120ef61f..4b0df065f8072abb60445a6ca76597e02ae9ac20
+--- a/ai/iterations/ITER-0001.md
++++ b/ai/iterations/ITER-0001.md
+@@ -11,3 +11,4 @@
+ | 2026-03-12 | REVIEWER | Marked ITEM-0001 done and returned the baton to planning for the next implementation slice | The scaffold meets the locked architecture and acceptance criteria, and the blocked Django test run is an environment limitation rather than a gap in the delivered slice |
+ | 2026-03-12 | PLANNER | Activated ITEM-0002 for domain model, form, admin, and migration work and handed off implementation to DEV | The scaffold is complete, and the domain layer is the next dependency needed before server-rendered pages and no-reload CRUD flows can be built |
+ | 2026-03-12 | DEV | Implemented tracker domain models, forms, admin registration, a manual initial migration, and domain-focused tests for ITEM-0002 | The next slices depend on concrete project, task, and tag persistence plus validated form surfaces inside the existing Django app |
++| 2026-03-12 | VALIDATOR | Accepted the domain model slice for ITEM-0002 and handed off to review with a documented Django-environment caveat | The implemented models, forms, admin wiring, and manual migration align with the locked requirements, and the remaining verification gap is limited to missing Django in the workspace |
+diff --git a/ai/next_agent.md b/ai/next_agent.md
+index df32ca962e4d154d4478888f6435ad497fe34468..8c923d2f183e2b723fea12cd675943437127fa58
+--- a/ai/next_agent.md
++++ b/ai/next_agent.md
+@@ -1,30 +1,23 @@
+ # Next Agent
+ 
+-- Current role: `VALIDATOR`
+-- Prompt: `ai/prompts/05-validator.md`
++- Current role: `REVIEWER`
++- Prompt: `ai/prompts/06-reviewer.md`
+ - Execution command for Codex sessions: **Follow `ai/next_agent.yaml` exactly.**
+ - If role mismatch with `ai/active_agent.txt`, print: `WAITING FOR BATON`
+ 
+ ## Handoff Notes
+ 
+ - Active item remains `ITEM-0002`.
+-- Implemented the tracker domain layer in the existing app only:
+-  - added `Project`, `Task`, and `Tag` models in `apps/project-tracker/tracker/models.py`
+-  - added `ProjectForm`, `TaskForm`, and `TagForm` in `apps/project-tracker/tracker/forms.py`
+-  - registered the models with practical admin configuration in `apps/project-tracker/tracker/admin.py`
+-  - added a manual initial migration at `apps/project-tracker/tracker/migrations/0001_initial.py`
+-  - added domain-focused tests in `apps/project-tracker/tracker/tests/test_domain.py`
+-- Locked domain behavior implemented:
+-  - `Project.status`: `active`, `completed`, `archived`
+-  - `Task.status`: `todo`, `in_progress`, `done`
+-  - `Task.priority`: `low`, `medium`, `high`
+-  - tags are many-to-many on both `Project` and `Task`
++- Validator result: PASS with an environment caveat.
++- What was validated:
++  - `Project`, `Task`, and `Tag` exist with the locked statuses, priorities, and relationships.
++  - Forms and admin wiring stay within the approved single-app Django shape.
++  - `tracker/migrations/0001_initial.py` matches the implemented schema on manual inspection.
++  - No scope drift was introduced.
+ - Validation evidence:
+-  - `python3 -m py_compile $(find apps/project-tracker -name '*.py' | sort)` passed
+-  - Django import probe returned `None`
+-  - `python3 apps/project-tracker/manage.py test tracker.tests.test_domain tracker.tests.test_views` failed with `ModuleNotFoundError: No module named 'django'`
+-- Validator should focus on:
+-  - scope adherence for `ITEM-0002`
+-  - consistency between models, forms, admin, and migration definitions
+-  - whether the manual migration matches the implemented schema
+-  - whether the environment blockage is documented clearly enough for acceptance or revise
++  - `python3 -m py_compile $(find apps/project-tracker -name '*.py' | sort)` passed.
++  - `python3 apps/project-tracker/manage.py test tracker.tests.test_domain tracker.tests.test_views` failed with `ModuleNotFoundError: No module named 'django'`.
++- Reviewer should decide whether to mark `ITEM-0002` done given:
++  - acceptance criteria appear satisfied from static validation
++  - runtime verification is still blocked by the workspace missing Django
++  - the manual migration should be runtime-checked later once Django is available
+diff --git a/ai/review.md b/ai/review.md
+index e07cec8822d02457d6eaa8a63a7551899f5ac7c4..e231875c15b59752e60fdaa4531d05137735b37b
+--- a/ai/review.md
++++ b/ai/review.md
+@@ -62,3 +62,26 @@
+ - Accepted because the scaffold slice meets the locked single-project Django structure, wires the tracker app into settings and URLs, and proves template/static asset integration without scope drift.
+ - Accepted with environment caveat: `manage.py test` could not run in this workspace because Django is not installed, but the failure mode is external to the slice and was documented with passing Python compilation evidence.
+ - Follow-up note for later cleanup: committed `__pycache__` artifacts are repository hygiene noise and should be removed outside this acceptance decision.
++
++## Validator Outcome
++
++- Result: PASS for `ITEM-0002`.
++- Acceptance criteria check:
++  - `Project`, `Task`, and `Tag` are implemented in `tracker/models.py` with the locked field sets, ORM relationships, and enumerated choices.
++  - `Task` points to `Project`, and tags are modeled as many-to-many relationships on both `Project` and `Task`.
++  - `ProjectForm`, `TaskForm`, and `TagForm` enforce the approved choice sets and required-field behavior without introducing extra abstraction layers.
++  - Admin registration covers all three domain models with list views, filters, search, and tag editing support for inspection.
++  - `tracker/migrations/0001_initial.py` matches the implemented model schema, including ordering, defaults, and relationships.
++- Regression check:
++  - No scope drift found: the slice stays inside the existing `tracker` app and does not add packages, apps, or speculative architecture layers.
++  - Manual inspection found the migration definitions aligned with the current model fields and locked enumerations.
++
++## Validation Evidence
++
++- `python3 -m py_compile $(find apps/project-tracker -name '*.py' | sort)` passed.
++- `python3 apps/project-tracker/manage.py test tracker.tests.test_domain tracker.tests.test_views` failed in the workspace with `ModuleNotFoundError: No module named 'django'`.
++
++## Known Risks
++
++- Runtime validation is still partial because Django is not installed in the workspace, so the migration and test suite could not be executed end to end.
++- The initial migration was authored manually and appears consistent with the models on inspection, but it still needs runtime verification once Django is available.
+
+[3m[35mfile update:[0m[0m
+diff --git a/ai/active_agent.txt b/ai/active_agent.txt
+index 925a277add2e0889531e063e180e94c062e5dbb6..9b1cdc0e7e5ff55ba45e80b0786b46c37c9c32ac
+--- a/ai/active_agent.txt
++++ b/ai/active_agent.txt
+@@ -1 +1 @@
+-VALIDATOR
++REVIEWER
+diff --git a/ai/iterations/ITER-0001.md b/ai/iterations/ITER-0001.md
+index 139d258e6e3369102f3d06a45e84fd0e120ef61f..4b0df065f8072abb60445a6ca76597e02ae9ac20
+--- a/ai/iterations/ITER-0001.md
++++ b/ai/iterations/ITER-0001.md
+@@ -11,3 +11,4 @@
+ | 2026-03-12 | REVIEWER | Marked ITEM-0001 done and returned the baton to planning for the next implementation slice | The scaffold meets the locked architecture and acceptance criteria, and the blocked Django test run is an environment limitation rather than a gap in the delivered slice |
+ | 2026-03-12 | PLANNER | Activated ITEM-0002 for domain model, form, admin, and migration work and handed off implementation to DEV | The scaffold is complete, and the domain layer is the next dependency needed before server-rendered pages and no-reload CRUD flows can be built |
+ | 2026-03-12 | DEV | Implemented tracker domain models, forms, admin registration, a manual initial migration, and domain-focused tests for ITEM-0002 | The next slices depend on concrete project, task, and tag persistence plus validated form surfaces inside the existing Django app |
++| 2026-03-12 | VALIDATOR | Accepted the domain model slice for ITEM-0002 and handed off to review with a documented Django-environment caveat | The implemented models, forms, admin wiring, and manual migration align with the locked requirements, and the remaining verification gap is limited to missing Django in the workspace |
+diff --git a/ai/next_agent.md b/ai/next_agent.md
+index df32ca962e4d154d4478888f6435ad497fe34468..8c923d2f183e2b723fea12cd675943437127fa58
+--- a/ai/next_agent.md
++++ b/ai/next_agent.md
+@@ -1,30 +1,23 @@
+ # Next Agent
+ 
+-- Current role: `VALIDATOR`
+-- Prompt: `ai/prompts/05-validator.md`
++- Current role: `REVIEWER`
++- Prompt: `ai/prompts/06-reviewer.md`
+ - Execution command for Codex sessions: **Follow `ai/next_agent.yaml` exactly.**
+ - If role mismatch with `ai/active_agent.txt`, print: `WAITING FOR BATON`
+ 
+ ## Handoff Notes
+ 
+ - Active item remains `ITEM-0002`.
+-- Implemented the tracker domain layer in the existing app only:
+-  - added `Project`, `Task`, and `Tag` models in `apps/project-tracker/tracker/models.py`
+-  - added `ProjectForm`, `TaskForm`, and `TagForm` in `apps/project-tracker/tracker/forms.py`
+-  - registered the models with practical admin configuration in `apps/project-tracker/tracker/admin.py`
+-  - added a manual initial migration at `apps/project-tracker/tracker/migrations/0001_initial.py`
+-  - added domain-focused tests in `apps/project-tracker/tracker/tests/test_domain.py`
+-- Locked domain behavior implemented:
+-  - `Project.status`: `active`, `completed`, `archived`
+-  - `Task.status`: `todo`, `in_progress`, `done`
+-  - `Task.priority`: `low`, `medium`, `high`
+-  - tags are many-to-many on both `Project` and `Task`
++- Validator result: PASS with an environment caveat.
++- What was validated:
++  - `Project`, `Task`, and `Tag` exist with the locked statuses, priorities, and relationships.
++  - Forms and admin wiring stay within the approved single-app Django shape.
++  - `tracker/migrations/0001_initial.py` matches the implemented schema on manual inspection.
++  - No scope drift was introduced.
+ - Validation evidence:
+-  - `python3 -m py_compile $(find apps/project-tracker -name '*.py' | sort)` passed
+-  - Django import probe returned `None`
+-  - `python3 apps/project-tracker/manage.py test tracker.tests.test_domain tracker.tests.test_views` failed with `ModuleNotFoundError: No module named 'django'`
+-- Validator should focus on:
+-  - scope adherence for `ITEM-0002`
+-  - consistency between models, forms, admin, and migration definitions
+-  - whether the manual migration matches the implemented schema
+-  - whether the environment blockage is documented clearly enough for acceptance or revise
++  - `python3 -m py_compile $(find apps/project-tracker -name '*.py' | sort)` passed.
++  - `python3 apps/project-tracker/manage.py test tracker.tests.test_domain tracker.tests.test_views` failed with `ModuleNotFoundError: No module named 'django'`.
++- Reviewer should decide whether to mark `ITEM-0002` done given:
++  - acceptance criteria appear satisfied from static validation
++  - runtime verification is still blocked by the workspace missing Django
++  - the manual migration should be runtime-checked later once Django is available
+diff --git a/ai/review.md b/ai/review.md
+index e07cec8822d02457d6eaa8a63a7551899f5ac7c4..e231875c15b59752e60fdaa4531d05137735b37b
+--- a/ai/review.md
++++ b/ai/review.md
+@@ -62,3 +62,26 @@
+ - Accepted because the scaffold slice meets the locked single-project Django structure, wires the tracker app into settings and URLs, and proves template/static asset integration without scope drift.
+ - Accepted with environment caveat: `manage.py test` could not run in this workspace because Django is not installed, but the failure mode is external to the slice and was documented with passing Python compilation evidence.
+ - Follow-up note for later cleanup: committed `__pycache__` artifacts are repository hygiene noise and should be removed outside this acceptance decision.
++
++## Validator Outcome
++
++- Result: PASS for `ITEM-0002`.
++- Acceptance criteria check:
++  - `Project`, `Task`, and `Tag` are implemented in `tracker/models.py` with the locked field sets, ORM relationships, and enumerated choices.
++  - `Task` points to `Project`, and tags are modeled as many-to-many relationships on both `Project` and `Task`.
++  - `ProjectForm`, `TaskForm`, and `TagForm` enforce the approved choice sets and required-field behavior without introducing extra abstraction layers.
++  - Admin registration covers all three domain models with list views, filters, search, and tag editing support for inspection.
++  - `tracker/migrations/0001_initial.py` matches the implemented model schema, including ordering, defaults, and relationships.
++- Regression check:
++  - No scope drift found: the slice stays inside the existing `tracker` app and does not add packages, apps, or speculative architecture layers.
++  - Manual inspection found the migration definitions aligned with the current model fields and locked enumerations.
++
++## Validation Evidence
++
++- `python3 -m py_compile $(find apps/project-tracker -name '*.py' | sort)` passed.
++- `python3 apps/project-tracker/manage.py test tracker.tests.test_domain tracker.tests.test_views` failed in the workspace with `ModuleNotFoundError: No module named 'django'`.
++
++## Known Risks
++
++- Runtime validation is still partial because Django is not installed in the workspace, so the migration and test suite could not be executed end to end.
++- The initial migration was authored manually and appears consistent with the models on inspection, but it still needs runtime verification once Django is available.
+
+[35m[3mexec[0m[0m
+[1m/bin/bash -lc './scripts/generate-next-agent.sh REVIEWER --notes "validation results | pass for ITEM-0002 with static schema consistency checks | blocked runtime tests due to missing django"'[0m in /home/sundaram/code/temp/test[32m succeeded in 0ms:[0m
+[2mGenerated ai/next_agent.yaml for REVIEWER (next: PLANNER)[0m
+[3m[35mfile update:[0m[0m
+diff --git a/ai/active_agent.txt b/ai/active_agent.txt
+index 925a277add2e0889531e063e180e94c062e5dbb6..9b1cdc0e7e5ff55ba45e80b0786b46c37c9c32ac
+--- a/ai/active_agent.txt
++++ b/ai/active_agent.txt
+@@ -1 +1 @@
+-VALIDATOR
++REVIEWER
+diff --git a/ai/iterations/ITER-0001.md b/ai/iterations/ITER-0001.md
+index 139d258e6e3369102f3d06a45e84fd0e120ef61f..4b0df065f8072abb60445a6ca76597e02ae9ac20
+--- a/ai/iterations/ITER-0001.md
++++ b/ai/iterations/ITER-0001.md
+@@ -11,3 +11,4 @@
+ | 2026-03-12 | REVIEWER | Marked ITEM-0001 done and returned the baton to planning for the next implementation slice | The scaffold meets the locked architecture and acceptance criteria, and the blocked Django test run is an environment limitation rather than a gap in the delivered slice |
+ | 2026-03-12 | PLANNER | Activated ITEM-0002 for domain model, form, admin, and migration work and handed off implementation to DEV | The scaffold is complete, and the domain layer is the next dependency needed before server-rendered pages and no-reload CRUD flows can be built |
+ | 2026-03-12 | DEV | Implemented tracker domain models, forms, admin registration, a manual initial migration, and domain-focused tests for ITEM-0002 | The next slices depend on concrete project, task, and tag persistence plus validated form surfaces inside the existing Django app |
++| 2026-03-12 | VALIDATOR | Accepted the domain model slice for ITEM-0002 and handed off to review with a documented Django-environment caveat | The implemented models, forms, admin wiring, and manual migration align with the locked requirements, and the remaining verification gap is limited to missing Django in the workspace |
+diff --git a/ai/next_agent.md b/ai/next_agent.md
+index df32ca962e4d154d4478888f6435ad497fe34468..8c923d2f183e2b723fea12cd675943437127fa58
+--- a/ai/next_agent.md
++++ b/ai/next_agent.md
+@@ -1,30 +1,23 @@
+ # Next Agent
+ 
+-- Current role: `VALIDATOR`
+-- Prompt: `ai/prompts/05-validator.md`
++- Current role: `REVIEWER`
++- Prompt: `ai/prompts/06-reviewer.md`
+ - Execution command for Codex sessions: **Follow `ai/next_agent.yaml` exactly.**
+ - If role mismatch with `ai/active_agent.txt`, print: `WAITING FOR BATON`
+ 
+ ## Handoff Notes
+ 
+ - Active item remains `ITEM-0002`.
+-- Implemented the tracker domain layer in the existing app only:
+-  - added `Project`, `Task`, and `Tag` models in `apps/project-tracker/tracker/models.py`
+-  - added `ProjectForm`, `TaskForm`, and `TagForm` in `apps/project-tracker/tracker/forms.py`
+-  - registered the models with practical admin configuration in `apps/project-tracker/tracker/admin.py`
+-  - added a manual initial migration at `apps/project-tracker/tracker/migrations/0001_initial.py`
+-  - added domain-focused tests in `apps/project-tracker/tracker/tests/test_domain.py`
+-- Locked domain behavior implemented:
+-  - `Project.status`: `active`, `completed`, `archived`
+-  - `Task.status`: `todo`, `in_progress`, `done`
+-  - `Task.priority`: `low`, `medium`, `high`
+-  - tags are many-to-many on both `Project` and `Task`
++- Validator result: PASS with an environment caveat.
++- What was validated:
++  - `Project`, `Task`, and `Tag` exist with the locked statuses, priorities, and relationships.
++  - Forms and admin wiring stay within the approved single-app Django shape.
++  - `tracker/migrations/0001_initial.py` matches the implemented schema on manual inspection.
++  - No scope drift was introduced.
+ - Validation evidence:
+-  - `python3 -m py_compile $(find apps/project-tracker -name '*.py' | sort)` passed
+-  - Django import probe returned `None`
+-  - `python3 apps/project-tracker/manage.py test tracker.tests.test_domain tracker.tests.test_views` failed with `ModuleNotFoundError: No module named 'django'`
+-- Validator should focus on:
+-  - scope adherence for `ITEM-0002`
+-  - consistency between models, forms, admin, and migration definitions
+-  - whether the manual migration matches the implemented schema
+-  - whether the environment blockage is documented clearly enough for acceptance or revise
++  - `python3 -m py_compile $(find apps/project-tracker -name '*.py' | sort)` passed.
++  - `python3 apps/project-tracker/manage.py test tracker.tests.test_domain tracker.tests.test_views` failed with `ModuleNotFoundError: No module named 'django'`.
++- Reviewer should decide whether to mark `ITEM-0002` done given:
++  - acceptance criteria appear satisfied from static validation
++  - runtime verification is still blocked by the workspace missing Django
++  - the manual migration should be runtime-checked later once Django is available
+diff --git a/ai/review.md b/ai/review.md
+index e07cec8822d02457d6eaa8a63a7551899f5ac7c4..e231875c15b59752e60fdaa4531d05137735b37b
+--- a/ai/review.md
++++ b/ai/review.md
+@@ -62,3 +62,26 @@
+ - Accepted because the scaffold slice meets the locked single-project Django structure, wires the tracker app into settings and URLs, and proves template/static asset integration without scope drift.
+ - Accepted with environment caveat: `manage.py test` could not run in this workspace because Django is not installed, but the failure mode is external to the slice and was documented with passing Python compilation evidence.
+ - Follow-up note for later cleanup: committed `__pycache__` artifacts are repository hygiene noise and should be removed outside this acceptance decision.
++
++## Validator Outcome
++
++- Result: PASS for `ITEM-0002`.
++- Acceptance criteria check:
++  - `Project`, `Task`, and `Tag` are implemented in `tracker/models.py` with the locked field sets, ORM relationships, and enumerated choices.
++  - `Task` points to `Project`, and tags are modeled as many-to-many relationships on both `Project` and `Task`.
++  - `ProjectForm`, `TaskForm`, and `TagForm` enforce the approved choice sets and required-field behavior without introducing extra abstraction layers.
++  - Admin registration covers all three domain models with list views, filters, search, and tag editing support for inspection.
++  - `tracker/migrations/0001_initial.py` matches the implemented model schema, including ordering, defaults, and relationships.
++- Regression check:
++  - No scope drift found: the slice stays inside the existing `tracker` app and does not add packages, apps, or speculative architecture layers.
++  - Manual inspection found the migration definitions aligned with the current model fields and locked enumerations.
++
++## Validation Evidence
++
++- `python3 -m py_compile $(find apps/project-tracker -name '*.py' | sort)` passed.
++- `python3 apps/project-tracker/manage.py test tracker.tests.test_domain tracker.tests.test_views` failed in the workspace with `ModuleNotFoundError: No module named 'django'`.
++
++## Known Risks
++
++- Runtime validation is still partial because Django is not installed in the workspace, so the migration and test suite could not be executed end to end.
++- The initial migration was authored manually and appears consistent with the models on inspection, but it still needs runtime verification once Django is available.
+
+[35m[3mcodex[0m[0m
+HANDOFF TO REVIEWER
+[3m[35mfile update:[0m[0m
+diff --git a/ai/active_agent.txt b/ai/active_agent.txt
+index 925a277add2e0889531e063e180e94c062e5dbb6..9b1cdc0e7e5ff55ba45e80b0786b46c37c9c32ac
+--- a/ai/active_agent.txt
++++ b/ai/active_agent.txt
+@@ -1 +1 @@
+-VALIDATOR
++REVIEWER
+diff --git a/ai/iterations/ITER-0001.md b/ai/iterations/ITER-0001.md
+index 139d258e6e3369102f3d06a45e84fd0e120ef61f..4b0df065f8072abb60445a6ca76597e02ae9ac20
+--- a/ai/iterations/ITER-0001.md
++++ b/ai/iterations/ITER-0001.md
+@@ -11,3 +11,4 @@
+ | 2026-03-12 | REVIEWER | Marked ITEM-0001 done and returned the baton to planning for the next implementation slice | The scaffold meets the locked architecture and acceptance criteria, and the blocked Django test run is an environment limitation rather than a gap in the delivered slice |
+ | 2026-03-12 | PLANNER | Activated ITEM-0002 for domain model, form, admin, and migration work and handed off implementation to DEV | The scaffold is complete, and the domain layer is the next dependency needed before server-rendered pages and no-reload CRUD flows can be built |
+ | 2026-03-12 | DEV | Implemented tracker domain models, forms, admin registration, a manual initial migration, and domain-focused tests for ITEM-0002 | The next slices depend on concrete project, task, and tag persistence plus validated form surfaces inside the existing Django app |
++| 2026-03-12 | VALIDATOR | Accepted the domain model slice for ITEM-0002 and handed off to review with a documented Django-environment caveat | The implemented models, forms, admin wiring, and manual migration align with the locked requirements, and the remaining verification gap is limited to missing Django in the workspace |
+diff --git a/ai/next_agent.md b/ai/next_agent.md
+index df32ca962e4d154d4478888f6435ad497fe34468..8c923d2f183e2b723fea12cd675943437127fa58
+--- a/ai/next_agent.md
++++ b/ai/next_agent.md
+@@ -1,30 +1,23 @@
+ # Next Agent
+ 
+-- Current role: `VALIDATOR`
+-- Prompt: `ai/prompts/05-validator.md`
++- Current role: `REVIEWER`
++- Prompt: `ai/prompts/06-reviewer.md`
+ - Execution command for Codex sessions: **Follow `ai/next_agent.yaml` exactly.**
+ - If role mismatch with `ai/active_agent.txt`, print: `WAITING FOR BATON`
+ 
+ ## Handoff Notes
+ 
+ - Active item remains `ITEM-0002`.
+-- Implemented the tracker domain layer in the existing app only:
+-  - added `Project`, `Task`, and `Tag` models in `apps/project-tracker/tracker/models.py`
+-  - added `ProjectForm`, `TaskForm`, and `TagForm` in `apps/project-tracker/tracker/forms.py`
+-  - registered the models with practical admin configuration in `apps/project-tracker/tracker/admin.py`
+-  - added a manual initial migration at `apps/project-tracker/tracker/migrations/0001_initial.py`
+-  - added domain-focused tests in `apps/project-tracker/tracker/tests/test_domain.py`
+-- Locked domain behavior implemented:
+-  - `Project.status`: `active`, `completed`, `archived`
+-  - `Task.status`: `todo`, `in_progress`, `done`
+-  - `Task.priority`: `low`, `medium`, `high`
+-  - tags are many-to-many on both `Project` and `Task`
++- Validator result: PASS with an environment caveat.
++- What was validated:
++  - `Project`, `Task`, and `Tag` exist with the locked statuses, priorities, and relationships.
++  - Forms and admin wiring stay within the approved single-app Django shape.
++  - `tracker/migrations/0001_initial.py` matches the implemented schema on manual inspection.
++  - No scope drift was introduced.
+ - Validation evidence:
+-  - `python3 -m py_compile $(find apps/project-tracker -name '*.py' | sort)` passed
+-  - Django import probe returned `None`
+-  - `python3 apps/project-tracker/manage.py test tracker.tests.test_domain tracker.tests.test_views` failed with `ModuleNotFoundError: No module named 'django'`
+-- Validator should focus on:
+-  - scope adherence for `ITEM-0002`
+-  - consistency between models, forms, admin, and migration definitions
+-  - whether the manual migration matches the implemented schema
+-  - whether the environment blockage is documented clearly enough for acceptance or revise
++  - `python3 -m py_compile $(find apps/project-tracker -name '*.py' | sort)` passed.
++  - `python3 apps/project-tracker/manage.py test tracker.tests.test_domain tracker.tests.test_views` failed with `ModuleNotFoundError: No module named 'django'`.
++- Reviewer should decide whether to mark `ITEM-0002` done given:
++  - acceptance criteria appear satisfied from static validation
++  - runtime verification is still blocked by the workspace missing Django
++  - the manual migration should be runtime-checked later once Django is available
+diff --git a/ai/review.md b/ai/review.md
+index e07cec8822d02457d6eaa8a63a7551899f5ac7c4..e231875c15b59752e60fdaa4531d05137735b37b
+--- a/ai/review.md
++++ b/ai/review.md
+@@ -62,3 +62,26 @@
+ - Accepted because the scaffold slice meets the locked single-project Django structure, wires the tracker app into settings and URLs, and proves template/static asset integration without scope drift.
+ - Accepted with environment caveat: `manage.py test` could not run in this workspace because Django is not installed, but the failure mode is external to the slice and was documented with passing Python compilation evidence.
+ - Follow-up note for later cleanup: committed `__pycache__` artifacts are repository hygiene noise and should be removed outside this acceptance decision.
++
++## Validator Outcome
++
++- Result: PASS for `ITEM-0002`.
++- Acceptance criteria check:
++  - `Project`, `Task`, and `Tag` are implemented in `tracker/models.py` with the locked field sets, ORM relationships, and enumerated choices.
++  - `Task` points to `Project`, and tags are modeled as many-to-many relationships on both `Project` and `Task`.
++  - `ProjectForm`, `TaskForm`, and `TagForm` enforce the approved choice sets and required-field behavior without introducing extra abstraction layers.
++  - Admin registration covers all three domain models with list views, filters, search, and tag editing support for inspection.
++  - `tracker/migrations/0001_initial.py` matches the implemented model schema, including ordering, defaults, and relationships.
++- Regression check:
++  - No scope drift found: the slice stays inside the existing `tracker` app and does not add packages, apps, or speculative architecture layers.
++  - Manual inspection found the migration definitions aligned with the current model fields and locked enumerations.
++
++## Validation Evidence
++
++- `python3 -m py_compile $(find apps/project-tracker -name '*.py' | sort)` passed.
++- `python3 apps/project-tracker/manage.py test tracker.tests.test_domain tracker.tests.test_views` failed in the workspace with `ModuleNotFoundError: No module named 'django'`.
++
++## Known Risks
++
++- Runtime validation is still partial because Django is not installed in the workspace, so the migration and test suite could not be executed end to end.
++- The initial migration was authored manually and appears consistent with the models on inspection, but it still needs runtime verification once Django is available.
+
+[3m[35mtokens used[0m[0m
+36,560
+
+Script done on 2026-03-11 22:10:24-05:00 [COMMAND_EXIT_CODE="0"]

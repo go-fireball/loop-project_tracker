@@ -1,0 +1,4024 @@
+Script started on 2026-03-11 22:06:23-05:00 [COMMAND="codex exec --model gpt-5.4 --full-auto Follow\ ai/next_agent.yaml\ exactly. " TERM="xterm-256color" TTY="/dev/pts/0" COLUMNS="184" LINES="43"]
+OpenAI Codex v0.114.0 (research preview)
+--------
+[1mworkdir:[0m /home/sundaram/code/temp/test
+[1mmodel:[0m gpt-5.4
+[1mprovider:[0m openai
+[1mapproval:[0m never
+[1msandbox:[0m workspace-write [workdir, /tmp, $TMPDIR, /home/sundaram/.codex/memories]
+[1mreasoning effort:[0m medium
+[1mreasoning summaries:[0m none
+[1msession id:[0m 019ce002-774e-75a2-bc0d-b6da2d305c43
+--------
+[36muser[0m
+Follow ai/next_agent.yaml exactly.
+[36mmcp startup:[0m no servers
+[35m[3mcodex[0m[0m
+I’m locating `ai/next_agent.yaml` and any surrounding instructions in the workspace, then I’ll execute against that file exactly as requested.
+[35m[3mexec[0m[0m
+[1m/bin/bash -lc pwd[0m in /home/sundaram/code/temp/test[32m succeeded in 0ms:[0m
+[2m/home/sundaram/code/temp/test[0m
+[35m[3mexec[0m[0m
+[1m/bin/bash -lc "rg --files -g 'AGENTS.md' -g 'ai/next_agent.yaml' -g 'ai/**'"[0m in /home/sundaram/code/temp/test[32m succeeded in 0ms:[0m
+[2mai/decision-lock.yaml
+ai/logs/step-003-ARCHITECT.log
+ai/logs/step-002-VALIDATOR.log
+ai/logs/step-001-DEV.log
+ai/logs/step-002-SENIOR_JUDGMENTAL_ENGINEER.log
+ai/logs/step-003-REVIEWER.log
+ai/logs/baton.log
+ai/logs/step-004-PLANNER.log
+ai/logs/step-001-PRODUCT_OWNER.log
+ai/next_agent.md
+ai/active_agent.txt
+ai/defaults/logs/baton.log
+ai/defaults/backlog.yaml
+ai/defaults/goal.yaml
+ai/defaults/requirements.md
+ai/defaults/templates/active-item-template.yaml
+ai/defaults/templates/one-pager-requirements-template.md
+ai/defaults/templates/decision-lock-template.yaml
+ai/defaults/templates/next-agent-template.yaml
+ai/defaults/templates/backlog-item-template.yaml[0m
+[35m[3mcodex[0m[0m
+I found the workflow files. Next I’m reading `ai/next_agent.yaml` plus the linked state files it appears to govern so I can follow it literally rather than infer the process.
+[35m[3mexec[0m[0m
+[1m/bin/bash -lc "sed -n '1,220p' ai/next_agent.yaml"[0m in /home/sundaram/code/temp/test[32m succeeded in 0ms:[0m
+[2mnext_role: DEV
+prompt_file: ai/prompts/04-dev.md
+read:
+  - ai/active_item.yaml
+  - ai/requirements.md
+  - ai/judgment.yaml
+  - ai/simplification.md
+  - ai/decision-lock.yaml
+  - ai/goal.yaml
+  - ai/constitution.yaml
+  - ai/active_agent.txt
+  - ai/next_agent.md
+  - ai/user-questions.yaml
+allowed_edits:
+  - apps/
+  - infra/
+  - ai/review.md
+  - ai/decision-lock.yaml
+  - ai/user-questions.yaml
+  - ai/iterations/ITER-0001.md[0m
+[35m[3mexec[0m[0m
+[1m/bin/bash -lc "sed -n '1,220p' ai/next_agent.md"[0m in /home/sundaram/code/temp/test[32m succeeded in 0ms:[0m
+[2m# Next Agent
+
+- Current role: `DEV`
+- Prompt: `ai/prompts/04-dev.md`
+- Execution command for Codex sessions: **Follow `ai/next_agent.yaml` exactly.**
+- If role mismatch with `ai/active_agent.txt`, print: `WAITING FOR BATON`
+
+## Handoff Notes
+
+- Active item: `ITEM-0002` - implement the tracker domain layer.
+- Scope for this slice:
+  - add `Project`, `Task`, and `Tag` models in the existing `tracker` app only
+  - add Django forms for the domain entities with validation aligned to the locked field choices
+  - register the models in Django admin with useful list/display configuration
+  - create initial migrations for the schema under `tracker/migrations/`
+- Domain constraints from `ai/goal.yaml`:
+  - `Project`: name, description, status (`active`, `completed`, `archived`), created date
+  - `Task`: belongs to a project, title, status (`todo`, `in_progress`, `done`), priority (`low`, `medium`, `high`), due date
+  - `Tag`: many-to-many assignment support for both projects and tasks
+- Implementation guardrails:[0m
+[35m[3mexec[0m[0m
+[1m/bin/bash -lc "sed -n '1,220p' ai/active_agent.txt"[0m in /home/sundaram/code/temp/test[32m succeeded in 0ms:[0m
+[2mDEV[0m
+[35m[3mexec[0m[0m
+[1m/bin/bash -lc "sed -n '1,260p' ai/active_item.yaml"[0m in /home/sundaram/code/temp/test[32m succeeded in 0ms:[0m
+[2mid: ITEM-0002
+title: Implement tracker domain models and forms
+goal: "Add Project, Task, and Tag models, related forms, admin registration, and database migrations that match the approved domain surface."
+status: in_progress
+owner_role: DEV
+related_files:
+  - apps/project-tracker/tracker/models.py
+  - apps/project-tracker/tracker/forms.py
+  - apps/project-tracker/tracker/admin.py
+  - apps/project-tracker/tracker/migrations/
+  - apps/project-tracker/tracker/tests/
+acceptance_criteria:
+  - "`Project`, `Task`, and `Tag` models exist in `tracker/models.py` with the approved field set and Django ORM relationships."
+  - "`Task` has a foreign key to `Project`, and tags can be assigned to both projects and tasks via many-to-many relationships."
+  - "Model and form validation enforce the approved enumerated choices and basic required-field constraints without introducing service layers."
+  - "Admin registration covers the domain models with practical list/display configuration for inspection."
+  - "Initial migration files for the domain schema are present under `tracker/migrations/`."
+done_definition:
+  - "Domain models, forms, admin wiring, and migrations are implemented inside the existing `tracker` app only."
+  - "Field choices align with the locked statuses and priorities from `ai/goal.yaml`."[0m
+[35m[3mcodex[0m[0m
+I’ve confirmed the baton is assigned to `DEV`, so I can proceed. I’m loading the rest of the locked inputs now and then I’ll patch only within the allowed scope.
+[35m[3mexec[0m[0m
+[1m/bin/bash -lc "sed -n '1,260p' ai/judgment.yaml"[0m in /home/sundaram/code/temp/test[32m succeeded in 0ms:[0m
+[2mbackend_default: aspnet_core
+frontend_default: react_nextjs
+frontend_alternative: nuxt_if_explicitly_requested
+database_default: postgresql
+architecture_default: modular_monolith
+coding_style: functional_testable_pragmatic
+preserve_business_behavior: true
+avoid_unnecessary_microservices: true
+avoid_clever_abstractions: true
+cloud_default: aws
+iac_default: cdk
+container_default: fargate
+static_assets_default: s3_cloudfront
+auth_default: cognito
+python_only_for_data_workloads: true
+nosql_only_when_justified: true
+relational_bias: true
+human_for_high_level_decisions_only: true[0m
+[35m[3mexec[0m[0m
+[1m/bin/bash -lc "sed -n '1,260p' ai/requirements.md"[0m in /home/sundaram/code/temp/test[32m succeeded in 0ms:[0m
+[2m# Requirements (One Pager)
+
+## Objective
+
+Build a personal project tracker web app in Django that lets a single user manage projects, tasks, and tags through a server-rendered HTML/JavaScript frontend backed by a SQLite database. The product must support fast CRUD workflows without full page reloads and provide a dashboard summarizing project and task status.
+
+## In Scope
+
+- Django models for projects, tasks, and tags with the relationships defined in `ai/goal.yaml`
+- HTTP endpoints for create, read, update, and delete operations on projects, tasks, and tags
+- Project list view, project detail view with related tasks, tag filter view, and dashboard summary view
+- Plain HTML, CSS, and vanilla JavaScript frontend served by Django
+- Partial page updates or asynchronous requests so add/edit/delete flows do not require full page reloads
+- SQLite-backed persistence for all project data
+
+## Out of Scope
+
+- Governance loop internals (already bootstrapped)
+- Multi-user accounts, authentication, or permissions
+- External APIs, background jobs, or real-time collaboration[0m
+[35m[3mexec[0m[0m
+[1m/bin/bash -lc "sed -n '1,260p' ai/simplification.md"[0m in /home/sundaram/code/temp/test[32m succeeded in 0ms:[0m
+[2m# Simplification Guidance
+
+1. Keep the system as a single Django project under `apps/project-tracker/`, with a straightforward modular monolith structure.
+2. Prefer Django built-ins first: ORM models, forms where useful, template rendering, URL routing, migrations, and standard views before introducing custom infrastructure.
+3. Treat the HTML/vanilla-JS UI as the product surface. Use small asynchronous endpoints or partial-template responses only to avoid full page reloads.
+4. Do not introduce a separate SPA, frontend framework, public REST platform, or client-state architecture. The goal is fast CRUD, not a reusable API product.
+5. Use SQLite-specific pragmatism. Avoid designs that require database features, concurrency assumptions, or deployment topology beyond a local Django app with SQLite.
+6. Keep the domain model direct: projects, tasks, and tags only. Add helper services or abstraction layers only when duplication is concrete and repeated.
+7. Favor one Django app unless a second app is clearly required by code boundaries that already exist. Do not split by speculative future scale.
+8. Keep interfaces small and explicit. Prefer clear view/template/form boundaries over generic repositories, command buses, or plugin systems.
+9. Preserve required business behavior exactly, especially statuses, priorities, relationships, dashboard counts, and no-reload CRUD interactions.
+10. Record tradeoffs in design docs when choosing between template-partial updates and JSON responses, but default to the simpler implementation that satisfies the acceptance criteria.
+
+## Judgment Guardrails
+
+- Override conflicting defaults from `ai/judgment.yaml`: this project is Django, SQLite, plain HTML/CSS/JS, and a single deployable app, not ASP.NET, React/Next.js, PostgreSQL, or AWS-first infrastructure.
+- Avoid cloud, container, auth, queueing, CDN, object storage, and microservice concerns unless the requirements explicitly add them later.
+- Keep human escalation reserved for genuine product tradeoffs. Routine engineering choices should be resolved in favor of the simplest maintainable implementation.
+- Architecture should optimize for easy local development, readable server-rendered flows, and testable CRUD behavior, not for hypothetical multi-user or distributed futures.
+[0m
+[35m[3mexec[0m[0m
+[1m/bin/bash -lc "sed -n '1,260p' ai/user-questions.yaml"[0m in /home/sundaram/code/temp/test[35m[3mexec[0m[0m
+[1m/bin/bash -lc "sed -n '1,260p' ai/goal.yaml"[0m in /home/sundaram/code/temp/test[35m[3mexec[0m[0m
+[1m/bin/bash -lc "sed -n '1,260p' ai/prompts/04-dev.md"[0m in /home/sundaram/code/temp/test[35m[3mexec[0m[0m
+[1m/bin/bash -lc "sed -n '1,260p' ai/decision-lock.yaml"[0m in /home/sundaram/code/temp/test[32m succeeded in 0ms:[0m
+[2mstatus: none
+return_to_role: null
+questions: [][0m
+[32m succeeded in 0ms:[0m
+[2m# ROLE: DEV
+
+## 1) Baton check
+- Read `ai/active_agent.txt`.
+- If value is not exactly `DEV`, output exactly:
+`WAITING FOR BATON`
+- Stop.
+
+## 2) Required reads
+- `ai/goal.yaml`
+- `ai/active_item.yaml`
+- `ai/requirements.md`
+- `ai/judgment.yaml`
+- `ai/simplification.md`
+- `ai/decision-lock.yaml`
+- `ai/user-questions.yaml`
+- `ai/constitution.yaml`
+- `ai/next_agent.md`
+- Relevant files in `apps/`, `infra/`, `context/repo/`
+[0m
+[32m succeeded in 0ms:[0m
+[2mproject_goal: Build a personal project tracker web app using Django with a SQLite database and HTML/JS frontend
+success_criteria:
+  - Django REST endpoints for CRUD operations on projects, tasks, and tags
+  - Each project has a name, description, status (active/completed/archived), and created date
+  - Each task belongs to a project and has a title, status (todo/in_progress/done), priority (low/medium/high), and due date
+  - Tags can be assigned to both projects and tasks (many-to-many)
+  - Frontend has separate views for projects list, project detail (showing its tasks), and a tag filter view
+  - Adding/editing/deleting entities works without full page reload
+  - Dashboard view showing summary stats (total projects, tasks by status, overdue tasks)
+  - Data persists in SQLite database
+context_notes:
+  - Use Django with SQLite backend
+  - Frontend is plain HTML, CSS, and vanilla JS (no React/Vue/Angular)
+  - Django serves both the API and static/template files
+  - All code lives in apps/project-tracker/
+  - Use Django models with proper foreign key and many-to-many relationships
+constraints:
+  - Django and its built-in dependencies only, no additional pip packages (no DRF, no celery, etc.)
+  - No frontend JS frameworks
+  - Single Django project, no microservices[0m
+[32m succeeded in 0ms:[0m
+[2mconfirmed_by_user: false
+blocked_on_user: false
+last_user_decision: null
+approved_exceptions: []
+approved_decisions: [][0m
+[35m[3mexec[0m[0m
+[1m/bin/bash -lc "sed -n '1,260p' ai/constitution.yaml"[0m in /home/sundaram/code/temp/test[32m succeeded in 0ms:[0m
+[2mcore_rules:
+  - state lives in files, not chat memory
+  - baton ownership is authoritative
+  - roles must not edit outside allowed files
+baton_rules:
+  - if active agent mismatch, print exactly WAITING FOR BATON
+  - baton must be handed off explicitly
+edit_rules:
+  - only edit allowed files listed in the current role prompt
+stop_rules:
+  - if human clarification is needed, print exactly WAITING FOR USER
+  - always append an iteration log entry before handoff[0m
+[35m[3mcodex[0m[0m
+The remaining instructions are consistent: implement the active item, update the handoff files, and end by handing to `VALIDATOR`. I’m inspecting the `tracker` app and the handoff script now so I can make the minimal compliant changes.
+[35m[3mexec[0m[0m
+[1m/bin/bash -lc "sed -n '1,220p' ai/iterations/ITER-0001.md"[0m in /home/sundaram/code/temp/test[32m succeeded in 0ms:[0m
+[2m# ITER-0001 Decision Log
+
+| Timestamp | Role | Decision | Why |
+|-----------|------|----------|-----|
+| 2026-03-11 | PRODUCT_OWNER | Defined the one-page product requirements from the project goal and handed off for engineering judgment review | The workflow needs a concrete scope and acceptance baseline before architecture and planning can proceed |
+| 2026-03-11 | SENIOR_JUDGMENTAL_ENGINEER | Locked simplification guardrails around a single Django + SQLite + vanilla JS modular monolith and warned against framework/platform drift | The architect needs explicit constraints so the design stays aligned with the product goal instead of inheriting conflicting default stack preferences |
+| 2026-03-11 | ARCHITECT | Defined a single-project Django architecture centered on one product app, server-rendered templates, and HTML-partial based no-reload CRUD flows | The planner and developer need concrete boundaries, file targets, and implementation tradeoffs before breaking work into execution items |
+| 2026-03-11 | PLANNER | Broke delivery into scaffold, domain, page, async CRUD, and test slices and activated the scaffold item for development | The developer needs a small implementation-ready first step with explicit file targets before starting code changes |
+| 2026-03-12 | DEV | Scaffolded the Django project baseline with one tracker app, routed a rendered dashboard page, and added a smoke test for the root view | ITEM-0001 required an end-to-end project skeleton before later slices can add models, pages, and async CRUD behavior |
+| 2026-03-12 | VALIDATOR | Accepted the scaffold baseline as meeting ITEM-0001 acceptance criteria and handed off to review with an environment caveat on Django-dependent tests | The slice is structurally correct and free of scope drift, but full runtime validation remains blocked until Django is installed in the workspace |
+| 2026-03-12 | REVIEWER | Marked ITEM-0001 done and returned the baton to planning for the next implementation slice | The scaffold meets the locked architecture and acceptance criteria, and the blocked Django test run is an environment limitation rather than a gap in the delivered slice |
+| 2026-03-12 | PLANNER | Activated ITEM-0002 for domain model, form, admin, and migration work and handed off implementation to DEV | The scaffold is complete, and the domain layer is the next dependency needed before server-rendered pages and no-reload CRUD flows can be built |[0m
+[35m[3mexec[0m[0m
+[1m/bin/bash -lc "sed -n '1,220p' scripts/generate-next-agent.sh"[0m in /home/sundaram/code/temp/test[32m succeeded in 0ms:[0m
+[2m#!/usr/bin/env bash
+set -euo pipefail
+#
+# Usage: ./scripts/generate-next-agent.sh <ROLE> [--notes "context"] [--return-to "ROLE"]
+#
+# Generates ai/next_agent.yaml with the correct config for the given role.
+# Pass --notes to include handoff context (what was done, what to watch for).
+# Pass --return-to to specify which role the baton returns to (used with HUMAN).
+# Called by each role prompt at handoff time so agents don't hand-write YAML.
+
+ROOT="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)"
+cd "$ROOT"
+
+ROLE=""
+NOTES=""
+RETURN_TO=""
+
+# Parse args
+while [[ $# -gt 0 ]]; do
+  case "$1" in[0m
+[35m[3mexec[0m[0m
+[1m/bin/bash -lc "sed -n '1,220p' ai/review.md"[0m in /home/sundaram/code/temp/test[32m succeeded in 0ms:[0m
+[2m# Review Notes
+
+Use this file for reviewer outcomes:
+
+- **DONE**: item accepted and loop returns to PLANNER for next item.
+- **REVISE**: route back to specific role with explicit gap list.
+- **ESCALATE**: WAITING FOR USER only for approved escalation categories.
+
+## Judgment Warnings
+
+- Flag any introduction of React, Next.js, DRF, extra pip packages, or cloud/deployment scaffolding as scope drift unless requirements are updated.
+- Flag architecture that splits the app into speculative layers, services, or multiple Django apps without a demonstrated need.
+- Flag CRUD implementations that require full page reloads, since no-reload interactions are part of acceptance.
+
+## Architecture Decisions
+
+- Use a single Django project under `apps/project-tracker/` with one main product app for projects, tasks, and tags.
+- Treat server-rendered templates as the primary UI and use small async `fetch` flows for no-reload CRUD interactions.
+- Prefer HTML partial responses for mutations; allow narrow JSON responses only when HTML would be more awkward for the specific interaction.
+- Keep domain logic in models, forms, and views; reject speculative service, repository, command-bus, or multi-app splits.[0m
+[35m[3mexec[0m[0m
+[1m/bin/bash -lc 'rg --files apps/project-tracker/tracker apps/project-tracker | sort'[0m in /home/sundaram/code/temp/test[32m succeeded in 0ms:[0m
+[2mapps/project-tracker/__pycache__/manage.cpython-312.pyc
+apps/project-tracker/manage.py
+apps/project-tracker/project_tracker/__init__.py
+apps/project-tracker/project_tracker/__pycache__/__init__.cpython-312.pyc
+apps/project-tracker/project_tracker/__pycache__/asgi.cpython-312.pyc
+apps/project-tracker/project_tracker/__pycache__/settings.cpython-312.pyc
+apps/project-tracker/project_tracker/__pycache__/urls.cpython-312.pyc
+apps/project-tracker/project_tracker/__pycache__/wsgi.cpython-312.pyc
+apps/project-tracker/project_tracker/asgi.py
+apps/project-tracker/project_tracker/settings.py
+apps/project-tracker/project_tracker/urls.py
+apps/project-tracker/project_tracker/wsgi.py
+apps/project-tracker/static/tracker/app.css
+apps/project-tracker/static/tracker/app.js
+apps/project-tracker/templates/tracker/base.html
+apps/project-tracker/templates/tracker/dashboard.html
+apps/project-tracker/tracker/__init__.py
+apps/project-tracker/tracker/__init__.py
+apps/project-tracker/tracker/__pycache__/__init__.cpython-312.pyc
+apps/project-tracker/tracker/__pycache__/__init__.cpython-312.pyc[0m
+[35m[3mexec[0m[0m
+[1m/bin/bash -lc "sed -n '1,220p' apps/project-tracker/tracker/admin.py"[0m in /home/sundaram/code/temp/test[32m succeeded in 0ms:[0m
+[2mfrom django.contrib import admin
+[0m
+[35m[3mexec[0m[0m
+[1m/bin/bash -lc "sed -n '1,260p' apps/project-tracker/tracker/tests/test_views.py"[0m in /home/sundaram/code/temp/test[32m succeeded in 0ms:[0m
+[2mfrom django.test import SimpleTestCase
+from django.urls import reverse
+
+
+class DashboardViewTests(SimpleTestCase):
+    def test_dashboard_route_renders(self):
+        response = self.client.get(reverse("tracker:dashboard"))
+
+        self.assertEqual(response.status_code, 200)
+        self.assertContains(response, "Project Tracker")
+        self.assertTemplateUsed(response, "tracker/dashboard.html")[0m
+[35m[3mexec[0m[0m
+[1m/bin/bash -lc "sed -n '1,220p' apps/project-tracker/tracker/models.py"[0m in /home/sundaram/code/temp/test[32m succeeded in 0ms:[0m
+[2mfrom django.db import models
+[0m
+[35m[3mexec[0m[0m
+[1m/bin/bash -lc "sed -n '1,260p' apps/project-tracker/project_tracker/settings.py"[0m in /home/sundaram/code/temp/test[32m succeeded in 0ms:[0m
+[2mfrom pathlib import Path
+
+
+BASE_DIR = Path(__file__).resolve().parent.parent
+
+SECRET_KEY = "dev-only-project-tracker-secret-key"
+DEBUG = True
+ALLOWED_HOSTS: list[str] = []
+
+INSTALLED_APPS = [
+    "django.contrib.admin",
+    "django.contrib.auth",
+    "django.contrib.contenttypes",
+    "django.contrib.sessions",
+    "django.contrib.messages",
+    "django.contrib.staticfiles",
+    "tracker",
+]
+
+MIDDLEWARE = [[0m
+[35m[3mexec[0m[0m
+[1m/bin/bash -lc "sed -n '1,220p' apps/project-tracker/tracker/forms.py"[0m in /home/sundaram/code/temp/test[31m exited 2 in 0ms:[0m
+[2msed: can't read apps/project-tracker/tracker/forms.py: No such file or directory[0m
+[35m[3mcodex[0m[0m
+The `tracker` app is still mostly scaffold-only, and `forms.py` does not exist yet. I’m adding the domain layer, migrations, and targeted tests next, while keeping the existing single-app Django structure intact.
+[35m[3mexec[0m[0m
+[1m/bin/bash -lc 'ls -la apps/project-tracker/tracker/migrations'[0m in /home/sundaram/code/temp/test[35m[3mexec[0m[0m
+[1m/bin/bash -lc "sed -n '1,220p' apps/project-tracker/tracker/views.py"[0m in /home/sundaram/code/temp/test[32m succeeded in 0ms:[0m
+[2mtotal 16
+drwxrwxr-x 3 sundaram sundaram 4096 Mar 11 22:02 .
+drwxrwxr-x 5 sundaram sundaram 4096 Mar 11 22:02 ..
+-rw-rw-r-- 1 sundaram sundaram    1 Mar 11 22:01 __init__.py
+drwxrwxr-x 2 sundaram sundaram 4096 Mar 11 22:02 __pycache__[0m
+[32m succeeded in 0ms:[0m
+[2mfrom django.shortcuts import render
+
+
+def dashboard(request):
+    return render(
+        request,
+        "tracker/dashboard.html",
+        {
+            "page_title": "Project Tracker",
+            "app_ready": True,
+        },
+    )[0m
+[35m[3mexec[0m[0m
+[1m/bin/bash -lc "sed -n '1,220p' apps/project-tracker/tracker/urls.py"[0m in /home/sundaram/code/temp/test[32m succeeded in 0ms:[0m
+[2mfrom django.urls import path
+
+from .views import dashboard
+
+app_name = "tracker"
+
+urlpatterns = [
+    path("", dashboard, name="dashboard"),
+][0m
+[35m[3mcodex[0m[0m
+I have enough context to edit. I’m patching the tracker app with explicit models, model forms, admin registration, an initial migration, and tests that cover the locked enums and relationships without introducing extra layers.
+[3m[35mfile update[0m[0m
+[35mA /home/sundaram/code/temp/test/apps/project-tracker/tracker/forms.py[0m
+[32mfrom django import forms[0m
+[32m[0m
+[32mfrom .models import Project, Tag, Task[0m
+[32m[0m
+[32m[0m
+[32mdef _validate_choice(value: str, choices: list[tuple[str, str]], field_name: str) -> str:[0m
+[32m    valid_values = {choice for choice, _label in choices}[0m
+[32m    if value not in valid_values:[0m
+[32m        raise forms.ValidationError(f"Choose a valid {field_name}.")[0m
+[32m    return value[0m
+[32m[0m
+[32m[0m
+[32mclass ProjectForm(forms.ModelForm):[0m
+[32m    class Meta:[0m
+[32m        model = Project[0m
+[32m        fields = ["name", "description", "status", "created_date", "tags"][0m
+[32m        widgets = {[0m
+[32m            "created_date": forms.DateInput(attrs={"type": "date"}),[0m
+[32m        }[0m
+[32m[0m
+[32m    def clean_status(self) -> str:[0m
+[32m        return _validate_choice(self.cleaned_data["status"], Project.STATUS_CHOICES, "status")[0m
+[32m[0m
+[32m[0m
+[32mclass TaskForm(forms.ModelForm):[0m
+[32m    class Meta:[0m
+[32m        model = Task[0m
+[32m        fields = ["project", "title", "status", "priority", "due_date", "tags"][0m
+[32m        widgets = {[0m
+[32m            "due_date": forms.DateInput(attrs={"type": "date"}),[0m
+[32m        }[0m
+[32m[0m
+[32m    def clean_status(self) -> str:[0m
+[32m        return _validate_choice(self.cleaned_data["status"], Task.STATUS_CHOICES, "status")[0m
+[32m[0m
+[32m    def clean_priority(self) -> str:[0m
+[32m        return _validate_choice(self.cleaned_data["priority"], Task.PRIORITY_CHOICES, "priority")[0m
+[32m[0m
+[32m[0m
+[32mclass TagForm(forms.ModelForm):[0m
+[32m    class Meta:[0m
+[32m        model = Tag[0m
+[32m        fields = ["name"][0m
+[35mA /home/sundaram/code/temp/test/apps/project-tracker/tracker/migrations/0001_initial.py[0m
+[32mimport django.db.models.deletion[0m
+[32mimport django.utils.timezone[0m
+[32mfrom django.db import migrations, models[0m
+[32m[0m
+[32m[0m
+[32mclass Migration(migrations.Migration):[0m
+[32m    initial = True[0m
+[32m[0m
+[32m    dependencies = [][0m
+[32m[0m
+[32m    operations = [[0m
+[32m        migrations.CreateModel([0m
+[32m            name="Tag",[0m
+[32m            fields=[[0m
+[32m                ("id", models.BigAutoField(auto_created=True, primary_key=True, serialize=False, verbose_name="ID")),[0m
+[32m                ("name", models.CharField(max_length=100, unique=True)),[0m
+[32m            ],[0m
+[32m            options={[0m
+[32m                "ordering": ["name"],[0m
+[32m            },[0m
+[32m        ),[0m
+[32m        migrations.CreateModel([0m
+[32m            name="Project",[0m
+[32m            fields=[[0m
+[32m                ("id", models.BigAutoField(auto_created=True, primary_key=True, serialize=False, verbose_name="ID")),[0m
+[32m                ("name", models.CharField(max_length=200)),[0m
+[32m                ("description", models.TextField(blank=True)),[0m
+[32m                ("status", models.CharField(choices=[("active", "Active"), ("completed", "Completed"), ("archived", "Archived")], default="active", max_length=20)),[0m
+[32m                ("created_date", models.DateField(default=django.utils.timezone.localdate)),[0m
+[32m                ("tags", models.ManyToManyField(blank=True, related_name="projects", to="tracker.tag")),[0m
+[32m            ],[0m
+[32m            options={[0m
+[32m                "ordering": ["name", "-created_date"],[0m
+[32m            },[0m
+[32m        ),[0m
+[32m        migrations.CreateModel([0m
+[32m            name="Task",[0m
+[32m            fields=[[0m
+[32m                ("id", models.BigAutoField(auto_created=True, primary_key=True, serialize=False, verbose_name="ID")),[0m
+[32m                ("title", models.CharField(max_length=200)),[0m
+[32m                ("status", models.CharField(choices=[("todo", "To Do"), ("in_progress", "In Progress"), ("done", "Done")], default="todo", max_length=20)),[0m
+[32m                ("priority", models.CharField(choices=[("low", "Low"), ("medium", "Medium"), ("high", "High")], default="medium", max_length=20)),[0m
+[32m                ("due_date", models.DateField(blank=True, null=True)),[0m
+[32m                ("project", models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, related_name="tasks", to="tracker.project")),[0m
+[32m                ("tags", models.ManyToManyField(blank=True, related_name="tasks", to="tracker.tag")),[0m
+[32m            ],[0m
+[32m            options={[0m
+[32m                "ordering": ["due_date", "title"],[0m
+[32m            },[0m
+[32m        ),[0m
+[32m    ][0m
+[35mA /home/sundaram/code/temp/test/apps/project-tracker/tracker/tests/test_domain.py[0m
+[32mfrom datetime import date[0m
+[32m[0m
+[32mfrom django.core.exceptions import ValidationError[0m
+[32mfrom django.test import TestCase[0m
+[32m[0m
+[32mfrom tracker.forms import ProjectForm, TagForm, TaskForm[0m
+[32mfrom tracker.models import Project, Tag, Task[0m
+[32m[0m
+[32m[0m
+[32mclass TrackerModelTests(TestCase):[0m
+[32m    def test_project_and_task_support_tag_assignment(self):[0m
+[32m        project = Project.objects.create([0m
+[32m            name="Launch site",[0m
+[32m            description="Ship the marketing site.",[0m
+[32m            status=Project.STATUS_ACTIVE,[0m
+[32m        )[0m
+[32m        task = Task.objects.create([0m
+[32m            project=project,[0m
+[32m            title="Write copy",[0m
+[32m            status=Task.STATUS_TODO,[0m
+[32m            priority=Task.PRIORITY_HIGH,[0m
+[32m        )[0m
+[32m        tag = Tag.objects.create(name="marketing")[0m
+[32m[0m
+[32m        project.tags.add(tag)[0m
+[32m        task.tags.add(tag)[0m
+[32m[0m
+[32m        self.assertQuerySetEqual(project.tags.order_by("name"), [tag], transform=lambda item: item)[0m
+[32m        self.assertQuerySetEqual(task.tags.order_by("name"), [tag], transform=lambda item: item)[0m
+[32m[0m
+[32m    def test_model_clean_rejects_invalid_enumerated_values(self):[0m
+[32m        project = Project([0m
+[32m            name="Broken project",[0m
+[32m            description="",[0m
+[32m            status="invalid",[0m
+[32m            created_date=date(2026, 3, 12),[0m
+[32m        )[0m
+[32m        task = Task([0m
+[32m            project=Project.objects.create(name="Base", description=""),[0m
+[32m            title="Broken task",[0m
+[32m            status="invalid",[0m
+[32m            priority="urgent",[0m
+[32m        )[0m
+[32m[0m
+[32m        with self.assertRaises(ValidationError):[0m
+[32m            project.full_clean()[0m
+[32m[0m
+[32m        with self.assertRaises(ValidationError):[0m
+[32m            task.full_clean()[0m
+[32m[0m
+[32m[0m
+[32mclass TrackerFormTests(TestCase):[0m
+[32m    def test_project_form_accepts_locked_status_choices(self):[0m
+[32m        form = ProjectForm([0m
+[32m            data={[0m
+[32m                "name": "Roadmap",[0m
+[32m                "description": "Quarterly plan",[0m
+[32m                "status": Project.STATUS_COMPLETED,[0m
+[32m                "created_date": "2026-03-12",[0m
+[32m            }[0m
+[32m        )[0m
+[32m[0m
+[32m        self.assertTrue(form.is_valid(), form.errors)[0m
+[32m[0m
+[32m    def test_task_form_rejects_invalid_priority(self):[0m
+[32m        project = Project.objects.create(name="Roadmap", description="")[0m
+[32m        form = TaskForm([0m
+[32m            data={[0m
+[32m                "project": project.pk,[0m
+[32m                "title": "Rank backlog",[0m
+[32m                "status": Task.STATUS_TODO,[0m
+[32m                "priority": "urgent",[0m
+[32m                "due_date": "2026-03-20",[0m
+[32m            }[0m
+[32m        )[0m
+[32m[0m
+[32m        self.assertFalse(form.is_valid())[0m
+[32m        self.assertIn("priority", form.errors)[0m
+[32m[0m
+[32m    def test_tag_form_requires_name(self):[0m
+[32m        form = TagForm(data={"name": ""})[0m
+[32m[0m
+[32m        self.assertFalse(form.is_valid())[0m
+[32m        self.assertIn("name", form.errors)[0m
+[35mM /home/sundaram/code/temp/test/apps/project-tracker/tracker/models.py[0m
+@@ -1,2 +1,99 @@
+[32m+from django.core.exceptions import ValidationError[0m
+ from django.db import models
+[32m+from django.utils import timezone[0m
+[32m+[0m
+[32m+[0m
+[32m+class Tag(models.Model):[0m
+[32m+    name = models.CharField(max_length=100, unique=True)[0m
+[32m+[0m
+[32m+    class Meta:[0m
+[32m+        ordering = ["name"][0m
+[32m+[0m
+[32m+    def __str__(self) -> str:[0m
+[32m+        return self.name[0m
+[32m+[0m
+ 
+[32m+class Project(models.Model):[0m
+[32m+    STATUS_ACTIVE = "active"[0m
+[32m+    STATUS_COMPLETED = "completed"[0m
+[32m+    STATUS_ARCHIVED = "archived"[0m
+[32m+    STATUS_CHOICES = [[0m
+[32m+        (STATUS_ACTIVE, "Active"),[0m
+[32m+        (STATUS_COMPLETED, "Completed"),[0m
+[32m+        (STATUS_ARCHIVED, "Archived"),[0m
+[32m+    ][0m
+[32m+[0m
+[32m+    name = models.CharField(max_length=200)[0m
+[32m+    description = models.TextField(blank=True)[0m
+[32m+    status = models.CharField([0m
+[32m+        max_length=20,[0m
+[32m+        choices=STATUS_CHOICES,[0m
+[32m+        default=STATUS_ACTIVE,[0m
+[32m+    )[0m
+[32m+    created_date = models.DateField(default=timezone.localdate)[0m
+[32m+    tags = models.ManyToManyField(Tag, blank=True, related_name="projects")[0m
+[32m+[0m
+[32m+    class Meta:[0m
+[32m+        ordering = ["name", "-created_date"][0m
+[32m+[0m
+[32m+    def __str__(self) -> str:[0m
+[32m+        return self.name[0m
+[32m+[0m
+[32m+    def clean(self) -> None:[0m
+[32m+        super().clean()[0m
+[32m+        valid_statuses = {choice for choice, _label in self.STATUS_CHOICES}[0m
+[32m+        if self.status not in valid_statuses:[0m
+[32m+            raise ValidationError({"status": "Choose a valid status."})[0m
+[32m+[0m
+[32m+[0m
+[32m+class Task(models.Model):[0m
+[32m+    STATUS_TODO = "todo"[0m
+[32m+    STATUS_IN_PROGRESS = "in_progress"[0m
+[32m+    STATUS_DONE = "done"[0m
+[32m+    STATUS_CHOICES = [[0m
+[32m+        (STATUS_TODO, "To Do"),[0m
+[32m+        (STATUS_IN_PROGRESS, "In Progress"),[0m
+[32m+        (STATUS_DONE, "Done"),[0m
+[32m+    ][0m
+[32m+[0m
+[32m+    PRIORITY_LOW = "low"[0m
+[32m+    PRIORITY_MEDIUM = "medium"[0m
+[32m+    PRIORITY_HIGH = "high"[0m
+[32m+    PRIORITY_CHOICES = [[0m
+[32m+        (PRIORITY_LOW, "Low"),[0m
+[32m+        (PRIORITY_MEDIUM, "Medium"),[0m
+[32m+        (PRIORITY_HIGH, "High"),[0m
+[32m+    ][0m
+[32m+[0m
+[32m+    project = models.ForeignKey(Project, on_delete=models.CASCADE, related_name="tasks")[0m
+[32m+    title = models.CharField(max_length=200)[0m
+[32m+    status = models.CharField([0m
+[32m+        max_length=20,[0m
+[32m+        choices=STATUS_CHOICES,[0m
+[32m+        default=STATUS_TODO,[0m
+[32m+    )[0m
+[32m+    priority = models.CharField([0m
+[32m+        max_length=20,[0m
+[32m+        choices=PRIORITY_CHOICES,[0m
+[32m+        default=PRIORITY_MEDIUM,[0m
+[32m+    )[0m
+[32m+    due_date = models.DateField(blank=True, null=True)[0m
+[32m+    tags = models.ManyToManyField(Tag, blank=True, related_name="tasks")[0m
+[32m+[0m
+[32m+    class Meta:[0m
+[32m+        ordering = ["due_date", "title"][0m
+[32m+[0m
+[32m+    def __str__(self) -> str:[0m
+[32m+        return self.title[0m
+[32m+[0m
+[32m+    def clean(self) -> None:[0m
+[32m+        super().clean()[0m
+[32m+        valid_statuses = {choice for choice, _label in self.STATUS_CHOICES}[0m
+[32m+        valid_priorities = {choice for choice, _label in self.PRIORITY_CHOICES}[0m
+[32m+        errors = {}[0m
+[32m+        if self.status not in valid_statuses:[0m
+[32m+            errors["status"] = "Choose a valid status."[0m
+[32m+        if self.priority not in valid_priorities:[0m
+[32m+            errors["priority"] = "Choose a valid priority."[0m
+[32m+        if errors:[0m
+[32m+            raise ValidationError(errors)[0m
+[35mM /home/sundaram/code/temp/test/apps/project-tracker/tracker/admin.py[0m
+@@ -2 +2,25 @@
+ 
+[32m+from .models import Project, Tag, Task[0m
+[32m+[0m
+[32m+[0m
+[32m+@admin.register(Tag)[0m
+[32m+class TagAdmin(admin.ModelAdmin):[0m
+[32m+    list_display = ("name",)[0m
+[32m+    search_fields = ("name",)[0m
+[32m+[0m
+[32m+[0m
+[32m+@admin.register(Project)[0m
+[32m+class ProjectAdmin(admin.ModelAdmin):[0m
+[32m+    list_display = ("name", "status", "created_date")[0m
+[32m+    list_filter = ("status", "created_date", "tags")[0m
+[32m+    search_fields = ("name", "description")[0m
+[32m+    filter_horizontal = ("tags",)[0m
+[32m+[0m
+[32m+[0m
+[32m+@admin.register(Task)[0m
+[32m+class TaskAdmin(admin.ModelAdmin):[0m
+[32m+    list_display = ("title", "project", "status", "priority", "due_date")[0m
+[32m+    list_filter = ("status", "priority", "due_date", "project", "tags")[0m
+[32m+    search_fields = ("title", "project__name")[0m
+[32m+    autocomplete_fields = ("project",)[0m
+[32m+    filter_horizontal = ("tags",)[0m
+[32mapply_patch(auto_approved=true) exited 0 in 7ms:[0m
+[2mSuccess. Updated the following files:[0m
+[2mA /home/sundaram/code/temp/test/apps/project-tracker/tracker/forms.py[0m
+[2mA /home/sundaram/code/temp/test/apps/project-tracker/tracker/migrations/0001_initial.py[0m
+[2mA /home/sundaram/code/temp/test/apps/project-tracker/tracker/tests/test_domain.py[0m
+[2mM /home/sundaram/code/temp/test/apps/project-tracker/tracker/models.py[0m
+[2mM /home/sundaram/code/temp/test/apps/project-tracker/tracker/admin.py[0m
+[3m[35mfile update:[0m[0m
+diff --git a/apps/project-tracker/tracker/admin.py b/apps/project-tracker/tracker/admin.py
+index c6fe10879f27142d29808987edb47b7536a04594..1cb28c6e0f42995bdd76c2382d092b597f56035d
+--- a/apps/project-tracker/tracker/admin.py
++++ b/apps/project-tracker/tracker/admin.py
+@@ -1,2 +1,26 @@
+ from django.contrib import admin
+ 
++from .models import Project, Tag, Task
++
++
++@admin.register(Tag)
++class TagAdmin(admin.ModelAdmin):
++    list_display = ("name",)
++    search_fields = ("name",)
++
++
++@admin.register(Project)
++class ProjectAdmin(admin.ModelAdmin):
++    list_display = ("name", "status", "created_date")
++    list_filter = ("status", "created_date", "tags")
++    search_fields = ("name", "description")
++    filter_horizontal = ("tags",)
++
++
++@admin.register(Task)
++class TaskAdmin(admin.ModelAdmin):
++    list_display = ("title", "project", "status", "priority", "due_date")
++    list_filter = ("status", "priority", "due_date", "project", "tags")
++    search_fields = ("title", "project__name")
++    autocomplete_fields = ("project",)
++    filter_horizontal = ("tags",)
+diff --git a/apps/project-tracker/tracker/forms.py b/apps/project-tracker/tracker/forms.py
+new file mode 100644
+index 0000000000000000000000000000000000000000..a2eaeb9232bf5b15b79203821845d3026c1b05c0
+--- /dev/null
++++ b/apps/project-tracker/tracker/forms.py
+@@ -0,0 +1,43 @@
++from django import forms
++
++from .models import Project, Tag, Task
++
++
++def _validate_choice(value: str, choices: list[tuple[str, str]], field_name: str) -> str:
++    valid_values = {choice for choice, _label in choices}
++    if value not in valid_values:
++        raise forms.ValidationError(f"Choose a valid {field_name}.")
++    return value
++
++
++class ProjectForm(forms.ModelForm):
++    class Meta:
++        model = Project
++        fields = ["name", "description", "status", "created_date", "tags"]
++        widgets = {
++            "created_date": forms.DateInput(attrs={"type": "date"}),
++        }
++
++    def clean_status(self) -> str:
++        return _validate_choice(self.cleaned_data["status"], Project.STATUS_CHOICES, "status")
++
++
++class TaskForm(forms.ModelForm):
++    class Meta:
++        model = Task
++        fields = ["project", "title", "status", "priority", "due_date", "tags"]
++        widgets = {
++            "due_date": forms.DateInput(attrs={"type": "date"}),
++        }
++
++    def clean_status(self) -> str:
++        return _validate_choice(self.cleaned_data["status"], Task.STATUS_CHOICES, "status")
++
++    def clean_priority(self) -> str:
++        return _validate_choice(self.cleaned_data["priority"], Task.PRIORITY_CHOICES, "priority")
++
++
++class TagForm(forms.ModelForm):
++    class Meta:
++        model = Tag
++        fields = ["name"]
+diff --git a/apps/project-tracker/tracker/migrations/0001_initial.py b/apps/project-tracker/tracker/migrations/0001_initial.py
+new file mode 100644
+index 0000000000000000000000000000000000000000..48ddfc3fd4ef39f91434098f0b5445234392889e
+--- /dev/null
++++ b/apps/project-tracker/tracker/migrations/0001_initial.py
+@@ -0,0 +1,51 @@
++import django.db.models.deletion
++import django.utils.timezone
++from django.db import migrations, models
++
++
++class Migration(migrations.Migration):
++    initial = True
++
++    dependencies = []
++
++    operations = [
++        migrations.CreateModel(
++            name="Tag",
++            fields=[
++                ("id", models.BigAutoField(auto_created=True, primary_key=True, serialize=False, verbose_name="ID")),
++                ("name", models.CharField(max_length=100, unique=True)),
++            ],
++            options={
++                "ordering": ["name"],
++            },
++        ),
++        migrations.CreateModel(
++            name="Project",
++            fields=[
++                ("id", models.BigAutoField(auto_created=True, primary_key=True, serialize=False, verbose_name="ID")),
++                ("name", models.CharField(max_length=200)),
++                ("description", models.TextField(blank=True)),
++                ("status", models.CharField(choices=[("active", "Active"), ("completed", "Completed"), ("archived", "Archived")], default="active", max_length=20)),
++                ("created_date", models.DateField(default=django.utils.timezone.localdate)),
++                ("tags", models.ManyToManyField(blank=True, related_name="projects", to="tracker.tag")),
++            ],
++            options={
++                "ordering": ["name", "-created_date"],
++            },
++        ),
++        migrations.CreateModel(
++            name="Task",
++            fields=[
++                ("id", models.BigAutoField(auto_created=True, primary_key=True, serialize=False, verbose_name="ID")),
++                ("title", models.CharField(max_length=200)),
++                ("status", models.CharField(choices=[("todo", "To Do"), ("in_progress", "In Progress"), ("done", "Done")], default="todo", max_length=20)),
++                ("priority", models.CharField(choices=[("low", "Low"), ("medium", "Medium"), ("high", "High")], default="medium", max_length=20)),
++                ("due_date", models.DateField(blank=True, null=True)),
++                ("project", models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, related_name="tasks", to="tracker.project")),
++                ("tags", models.ManyToManyField(blank=True, related_name="tasks", to="tracker.tag")),
++            ],
++            options={
++                "ordering": ["due_date", "title"],
++            },
++        ),
++    ]
+diff --git a/apps/project-tracker/tracker/models.py b/apps/project-tracker/tracker/models.py
+index beeb30826593dcc86f7904d5da16715af5a61ab6..35f4e598c277ba5a78de87821bed4c7b00bb013e
+--- a/apps/project-tracker/tracker/models.py
++++ b/apps/project-tracker/tracker/models.py
+@@ -1,2 +1,99 @@
++from django.core.exceptions import ValidationError
+ from django.db import models
++from django.utils import timezone
++
++
++class Tag(models.Model):
++    name = models.CharField(max_length=100, unique=True)
++
++    class Meta:
++        ordering = ["name"]
++
++    def __str__(self) -> str:
++        return self.name
++
+ 
++class Project(models.Model):
++    STATUS_ACTIVE = "active"
++    STATUS_COMPLETED = "completed"
++    STATUS_ARCHIVED = "archived"
++    STATUS_CHOICES = [
++        (STATUS_ACTIVE, "Active"),
++        (STATUS_COMPLETED, "Completed"),
++        (STATUS_ARCHIVED, "Archived"),
++    ]
++
++    name = models.CharField(max_length=200)
++    description = models.TextField(blank=True)
++    status = models.CharField(
++        max_length=20,
++        choices=STATUS_CHOICES,
++        default=STATUS_ACTIVE,
++    )
++    created_date = models.DateField(default=timezone.localdate)
++    tags = models.ManyToManyField(Tag, blank=True, related_name="projects")
++
++    class Meta:
++        ordering = ["name", "-created_date"]
++
++    def __str__(self) -> str:
++        return self.name
++
++    def clean(self) -> None:
++        super().clean()
++        valid_statuses = {choice for choice, _label in self.STATUS_CHOICES}
++        if self.status not in valid_statuses:
++            raise ValidationError({"status": "Choose a valid status."})
++
++
++class Task(models.Model):
++    STATUS_TODO = "todo"
++    STATUS_IN_PROGRESS = "in_progress"
++    STATUS_DONE = "done"
++    STATUS_CHOICES = [
++        (STATUS_TODO, "To Do"),
++        (STATUS_IN_PROGRESS, "In Progress"),
++        (STATUS_DONE, "Done"),
++    ]
++
++    PRIORITY_LOW = "low"
++    PRIORITY_MEDIUM = "medium"
++    PRIORITY_HIGH = "high"
++    PRIORITY_CHOICES = [
++        (PRIORITY_LOW, "Low"),
++        (PRIORITY_MEDIUM, "Medium"),
++        (PRIORITY_HIGH, "High"),
++    ]
++
++    project = models.ForeignKey(Project, on_delete=models.CASCADE, related_name="tasks")
++    title = models.CharField(max_length=200)
++    status = models.CharField(
++        max_length=20,
++        choices=STATUS_CHOICES,
++        default=STATUS_TODO,
++    )
++    priority = models.CharField(
++        max_length=20,
++        choices=PRIORITY_CHOICES,
++        default=PRIORITY_MEDIUM,
++    )
++    due_date = models.DateField(blank=True, null=True)
++    tags = models.ManyToManyField(Tag, blank=True, related_name="tasks")
++
++    class Meta:
++        ordering = ["due_date", "title"]
++
++    def __str__(self) -> str:
++        return self.title
++
++    def clean(self) -> None:
++        super().clean()
++        valid_statuses = {choice for choice, _label in self.STATUS_CHOICES}
++        valid_priorities = {choice for choice, _label in self.PRIORITY_CHOICES}
++        errors = {}
++        if self.status not in valid_statuses:
++            errors["status"] = "Choose a valid status."
++        if self.priority not in valid_priorities:
++            errors["priority"] = "Choose a valid priority."
++        if errors:
++            raise ValidationError(errors)
+diff --git a/apps/project-tracker/tracker/tests/test_domain.py b/apps/project-tracker/tracker/tests/test_domain.py
+new file mode 100644
+index 0000000000000000000000000000000000000000..695755db0e3cf9fe9afefcd56974de2b4c9830c5
+--- /dev/null
++++ b/apps/project-tracker/tracker/tests/test_domain.py
+@@ -0,0 +1,84 @@
++from datetime import date
++
++from django.core.exceptions import ValidationError
++from django.test import TestCase
++
++from tracker.forms import ProjectForm, TagForm, TaskForm
++from tracker.models import Project, Tag, Task
++
++
++class TrackerModelTests(TestCase):
++    def test_project_and_task_support_tag_assignment(self):
++        project = Project.objects.create(
++            name="Launch site",
++            description="Ship the marketing site.",
++            status=Project.STATUS_ACTIVE,
++        )
++        task = Task.objects.create(
++            project=project,
++            title="Write copy",
++            status=Task.STATUS_TODO,
++            priority=Task.PRIORITY_HIGH,
++        )
++        tag = Tag.objects.create(name="marketing")
++
++        project.tags.add(tag)
++        task.tags.add(tag)
++
++        self.assertQuerySetEqual(project.tags.order_by("name"), [tag], transform=lambda item: item)
++        self.assertQuerySetEqual(task.tags.order_by("name"), [tag], transform=lambda item: item)
++
++    def test_model_clean_rejects_invalid_enumerated_values(self):
++        project = Project(
++            name="Broken project",
++            description="",
++            status="invalid",
++            created_date=date(2026, 3, 12),
++        )
++        task = Task(
++            project=Project.objects.create(name="Base", description=""),
++            title="Broken task",
++            status="invalid",
++            priority="urgent",
++        )
++
++        with self.assertRaises(ValidationError):
++            project.full_clean()
++
++        with self.assertRaises(ValidationError):
++            task.full_clean()
++
++
++class TrackerFormTests(TestCase):
++    def test_project_form_accepts_locked_status_choices(self):
++        form = ProjectForm(
++            data={
++                "name": "Roadmap",
++                "description": "Quarterly plan",
++                "status": Project.STATUS_COMPLETED,
++                "created_date": "2026-03-12",
++            }
++        )
++
++        self.assertTrue(form.is_valid(), form.errors)
++
++    def test_task_form_rejects_invalid_priority(self):
++        project = Project.objects.create(name="Roadmap", description="")
++        form = TaskForm(
++            data={
++                "project": project.pk,
++                "title": "Rank backlog",
++                "status": Task.STATUS_TODO,
++                "priority": "urgent",
++                "due_date": "2026-03-20",
++            }
++        )
++
++        self.assertFalse(form.is_valid())
++        self.assertIn("priority", form.errors)
++
++    def test_tag_form_requires_name(self):
++        form = TagForm(data={"name": ""})
++
++        self.assertFalse(form.is_valid())
++        self.assertIn("name", form.errors)
+
+[3m[35mfile update:[0m[0m
+diff --git a/apps/project-tracker/tracker/admin.py b/apps/project-tracker/tracker/admin.py
+index c6fe10879f27142d29808987edb47b7536a04594..1cb28c6e0f42995bdd76c2382d092b597f56035d
+--- a/apps/project-tracker/tracker/admin.py
++++ b/apps/project-tracker/tracker/admin.py
+@@ -1,2 +1,26 @@
+ from django.contrib import admin
+ 
++from .models import Project, Tag, Task
++
++
++@admin.register(Tag)
++class TagAdmin(admin.ModelAdmin):
++    list_display = ("name",)
++    search_fields = ("name",)
++
++
++@admin.register(Project)
++class ProjectAdmin(admin.ModelAdmin):
++    list_display = ("name", "status", "created_date")
++    list_filter = ("status", "created_date", "tags")
++    search_fields = ("name", "description")
++    filter_horizontal = ("tags",)
++
++
++@admin.register(Task)
++class TaskAdmin(admin.ModelAdmin):
++    list_display = ("title", "project", "status", "priority", "due_date")
++    list_filter = ("status", "priority", "due_date", "project", "tags")
++    search_fields = ("title", "project__name")
++    autocomplete_fields = ("project",)
++    filter_horizontal = ("tags",)
+diff --git a/apps/project-tracker/tracker/forms.py b/apps/project-tracker/tracker/forms.py
+new file mode 100644
+index 0000000000000000000000000000000000000000..a2eaeb9232bf5b15b79203821845d3026c1b05c0
+--- /dev/null
++++ b/apps/project-tracker/tracker/forms.py
+@@ -0,0 +1,43 @@
++from django import forms
++
++from .models import Project, Tag, Task
++
++
++def _validate_choice(value: str, choices: list[tuple[str, str]], field_name: str) -> str:
++    valid_values = {choice for choice, _label in choices}
++    if value not in valid_values:
++        raise forms.ValidationError(f"Choose a valid {field_name}.")
++    return value
++
++
++class ProjectForm(forms.ModelForm):
++    class Meta:
++        model = Project
++        fields = ["name", "description", "status", "created_date", "tags"]
++        widgets = {
++            "created_date": forms.DateInput(attrs={"type": "date"}),
++        }
++
++    def clean_status(self) -> str:
++        return _validate_choice(self.cleaned_data["status"], Project.STATUS_CHOICES, "status")
++
++
++class TaskForm(forms.ModelForm):
++    class Meta:
++        model = Task
++        fields = ["project", "title", "status", "priority", "due_date", "tags"]
++        widgets = {
++            "due_date": forms.DateInput(attrs={"type": "date"}),
++        }
++
++    def clean_status(self) -> str:
++        return _validate_choice(self.cleaned_data["status"], Task.STATUS_CHOICES, "status")
++
++    def clean_priority(self) -> str:
++        return _validate_choice(self.cleaned_data["priority"], Task.PRIORITY_CHOICES, "priority")
++
++
++class TagForm(forms.ModelForm):
++    class Meta:
++        model = Tag
++        fields = ["name"]
+diff --git a/apps/project-tracker/tracker/migrations/0001_initial.py b/apps/project-tracker/tracker/migrations/0001_initial.py
+new file mode 100644
+index 0000000000000000000000000000000000000000..48ddfc3fd4ef39f91434098f0b5445234392889e
+--- /dev/null
++++ b/apps/project-tracker/tracker/migrations/0001_initial.py
+@@ -0,0 +1,51 @@
++import django.db.models.deletion
++import django.utils.timezone
++from django.db import migrations, models
++
++
++class Migration(migrations.Migration):
++    initial = True
++
++    dependencies = []
++
++    operations = [
++        migrations.CreateModel(
++            name="Tag",
++            fields=[
++                ("id", models.BigAutoField(auto_created=True, primary_key=True, serialize=False, verbose_name="ID")),
++                ("name", models.CharField(max_length=100, unique=True)),
++            ],
++            options={
++                "ordering": ["name"],
++            },
++        ),
++        migrations.CreateModel(
++            name="Project",
++            fields=[
++                ("id", models.BigAutoField(auto_created=True, primary_key=True, serialize=False, verbose_name="ID")),
++                ("name", models.CharField(max_length=200)),
++                ("description", models.TextField(blank=True)),
++                ("status", models.CharField(choices=[("active", "Active"), ("completed", "Completed"), ("archived", "Archived")], default="active", max_length=20)),
++                ("created_date", models.DateField(default=django.utils.timezone.localdate)),
++                ("tags", models.ManyToManyField(blank=True, related_name="projects", to="tracker.tag")),
++            ],
++            options={
++                "ordering": ["name", "-created_date"],
++            },
++        ),
++        migrations.CreateModel(
++            name="Task",
++            fields=[
++                ("id", models.BigAutoField(auto_created=True, primary_key=True, serialize=False, verbose_name="ID")),
++                ("title", models.CharField(max_length=200)),
++                ("status", models.CharField(choices=[("todo", "To Do"), ("in_progress", "In Progress"), ("done", "Done")], default="todo", max_length=20)),
++                ("priority", models.CharField(choices=[("low", "Low"), ("medium", "Medium"), ("high", "High")], default="medium", max_length=20)),
++                ("due_date", models.DateField(blank=True, null=True)),
++                ("project", models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, related_name="tasks", to="tracker.project")),
++                ("tags", models.ManyToManyField(blank=True, related_name="tasks", to="tracker.tag")),
++            ],
++            options={
++                "ordering": ["due_date", "title"],
++            },
++        ),
++    ]
+diff --git a/apps/project-tracker/tracker/models.py b/apps/project-tracker/tracker/models.py
+index beeb30826593dcc86f7904d5da16715af5a61ab6..35f4e598c277ba5a78de87821bed4c7b00bb013e
+--- a/apps/project-tracker/tracker/models.py
++++ b/apps/project-tracker/tracker/models.py
+@@ -1,2 +1,99 @@
++from django.core.exceptions import ValidationError
+ from django.db import models
++from django.utils import timezone
++
++
++class Tag(models.Model):
++    name = models.CharField(max_length=100, unique=True)
++
++    class Meta:
++        ordering = ["name"]
++
++    def __str__(self) -> str:
++        return self.name
++
+ 
++class Project(models.Model):
++    STATUS_ACTIVE = "active"
++    STATUS_COMPLETED = "completed"
++    STATUS_ARCHIVED = "archived"
++    STATUS_CHOICES = [
++        (STATUS_ACTIVE, "Active"),
++        (STATUS_COMPLETED, "Completed"),
++        (STATUS_ARCHIVED, "Archived"),
++    ]
++
++    name = models.CharField(max_length=200)
++    description = models.TextField(blank=True)
++    status = models.CharField(
++        max_length=20,
++        choices=STATUS_CHOICES,
++        default=STATUS_ACTIVE,
++    )
++    created_date = models.DateField(default=timezone.localdate)
++    tags = models.ManyToManyField(Tag, blank=True, related_name="projects")
++
++    class Meta:
++        ordering = ["name", "-created_date"]
++
++    def __str__(self) -> str:
++        return self.name
++
++    def clean(self) -> None:
++        super().clean()
++        valid_statuses = {choice for choice, _label in self.STATUS_CHOICES}
++        if self.status not in valid_statuses:
++            raise ValidationError({"status": "Choose a valid status."})
++
++
++class Task(models.Model):
++    STATUS_TODO = "todo"
++    STATUS_IN_PROGRESS = "in_progress"
++    STATUS_DONE = "done"
++    STATUS_CHOICES = [
++        (STATUS_TODO, "To Do"),
++        (STATUS_IN_PROGRESS, "In Progress"),
++        (STATUS_DONE, "Done"),
++    ]
++
++    PRIORITY_LOW = "low"
++    PRIORITY_MEDIUM = "medium"
++    PRIORITY_HIGH = "high"
++    PRIORITY_CHOICES = [
++        (PRIORITY_LOW, "Low"),
++        (PRIORITY_MEDIUM, "Medium"),
++        (PRIORITY_HIGH, "High"),
++    ]
++
++    project = models.ForeignKey(Project, on_delete=models.CASCADE, related_name="tasks")
++    title = models.CharField(max_length=200)
++    status = models.CharField(
++        max_length=20,
++        choices=STATUS_CHOICES,
++        default=STATUS_TODO,
++    )
++    priority = models.CharField(
++        max_length=20,
++        choices=PRIORITY_CHOICES,
++        default=PRIORITY_MEDIUM,
++    )
++    due_date = models.DateField(blank=True, null=True)
++    tags = models.ManyToManyField(Tag, blank=True, related_name="tasks")
++
++    class Meta:
++        ordering = ["due_date", "title"]
++
++    def __str__(self) -> str:
++        return self.title
++
++    def clean(self) -> None:
++        super().clean()
++        valid_statuses = {choice for choice, _label in self.STATUS_CHOICES}
++        valid_priorities = {choice for choice, _label in self.PRIORITY_CHOICES}
++        errors = {}
++        if self.status not in valid_statuses:
++            errors["status"] = "Choose a valid status."
++        if self.priority not in valid_priorities:
++            errors["priority"] = "Choose a valid priority."
++        if errors:
++            raise ValidationError(errors)
+diff --git a/apps/project-tracker/tracker/tests/test_domain.py b/apps/project-tracker/tracker/tests/test_domain.py
+new file mode 100644
+index 0000000000000000000000000000000000000000..695755db0e3cf9fe9afefcd56974de2b4c9830c5
+--- /dev/null
++++ b/apps/project-tracker/tracker/tests/test_domain.py
+@@ -0,0 +1,84 @@
++from datetime import date
++
++from django.core.exceptions import ValidationError
++from django.test import TestCase
++
++from tracker.forms import ProjectForm, TagForm, TaskForm
++from tracker.models import Project, Tag, Task
++
++
++class TrackerModelTests(TestCase):
++    def test_project_and_task_support_tag_assignment(self):
++        project = Project.objects.create(
++            name="Launch site",
++            description="Ship the marketing site.",
++            status=Project.STATUS_ACTIVE,
++        )
++        task = Task.objects.create(
++            project=project,
++            title="Write copy",
++            status=Task.STATUS_TODO,
++            priority=Task.PRIORITY_HIGH,
++        )
++        tag = Tag.objects.create(name="marketing")
++
++        project.tags.add(tag)
++        task.tags.add(tag)
++
++        self.assertQuerySetEqual(project.tags.order_by("name"), [tag], transform=lambda item: item)
++        self.assertQuerySetEqual(task.tags.order_by("name"), [tag], transform=lambda item: item)
++
++    def test_model_clean_rejects_invalid_enumerated_values(self):
++        project = Project(
++            name="Broken project",
++            description="",
++            status="invalid",
++            created_date=date(2026, 3, 12),
++        )
++        task = Task(
++            project=Project.objects.create(name="Base", description=""),
++            title="Broken task",
++            status="invalid",
++            priority="urgent",
++        )
++
++        with self.assertRaises(ValidationError):
++            project.full_clean()
++
++        with self.assertRaises(ValidationError):
++            task.full_clean()
++
++
++class TrackerFormTests(TestCase):
++    def test_project_form_accepts_locked_status_choices(self):
++        form = ProjectForm(
++            data={
++                "name": "Roadmap",
++                "description": "Quarterly plan",
++                "status": Project.STATUS_COMPLETED,
++                "created_date": "2026-03-12",
++            }
++        )
++
++        self.assertTrue(form.is_valid(), form.errors)
++
++    def test_task_form_rejects_invalid_priority(self):
++        project = Project.objects.create(name="Roadmap", description="")
++        form = TaskForm(
++            data={
++                "project": project.pk,
++                "title": "Rank backlog",
++                "status": Task.STATUS_TODO,
++                "priority": "urgent",
++                "due_date": "2026-03-20",
++            }
++        )
++
++        self.assertFalse(form.is_valid())
++        self.assertIn("priority", form.errors)
++
++    def test_tag_form_requires_name(self):
++        form = TagForm(data={"name": ""})
++
++        self.assertFalse(form.is_valid())
++        self.assertIn("name", form.errors)
+
+[35m[3mcodex[0m[0m
+The code changes are in place. I’m running non-destructive verification now: syntax checks first, then a Django import/test probe so the handoff notes accurately reflect whether runtime validation is still blocked by the environment.
+[35m[3mexec[0m[0m
+[1m/bin/bash -lc "python3 - <<'PY'
+import importlib.util
+print(importlib.util.find_spec('django'))
+PY"[0m in /home/sundaram/code/temp/test[32m succeeded in 0ms:[0m
+[2mNone[0m
+[35m[3mexec[0m[0m
+[1m/bin/bash -lc 'python3 -m py_compile $(find apps/project-tracker -name '"'*.py' | sort)"[0m in /home/sundaram/code/temp/test[32m succeeded in 0ms:[0m
+[2m[0m
+[35m[3mexec[0m[0m
+[1m/bin/bash -lc 'python3 apps/project-tracker/manage.py test tracker.tests.test_domain tracker.tests.test_views'[0m in /home/sundaram/code/temp/test[31m exited 1 in 0ms:[0m
+[2mTraceback (most recent call last):
+  File "/home/sundaram/code/temp/test/apps/project-tracker/manage.py", line 14, in <module>
+    main()
+  File "/home/sundaram/code/temp/test/apps/project-tracker/manage.py", line 8, in main
+    from django.core.management import execute_from_command_line
+ModuleNotFoundError: No module named 'django'[0m
+[3m[35mfile update:[0m[0m
+diff --git a/apps/project-tracker/tracker/admin.py b/apps/project-tracker/tracker/admin.py
+index c6fe10879f27142d29808987edb47b7536a04594..1cb28c6e0f42995bdd76c2382d092b597f56035d
+--- a/apps/project-tracker/tracker/admin.py
++++ b/apps/project-tracker/tracker/admin.py
+@@ -1,2 +1,26 @@
+ from django.contrib import admin
+ 
++from .models import Project, Tag, Task
++
++
++@admin.register(Tag)
++class TagAdmin(admin.ModelAdmin):
++    list_display = ("name",)
++    search_fields = ("name",)
++
++
++@admin.register(Project)
++class ProjectAdmin(admin.ModelAdmin):
++    list_display = ("name", "status", "created_date")
++    list_filter = ("status", "created_date", "tags")
++    search_fields = ("name", "description")
++    filter_horizontal = ("tags",)
++
++
++@admin.register(Task)
++class TaskAdmin(admin.ModelAdmin):
++    list_display = ("title", "project", "status", "priority", "due_date")
++    list_filter = ("status", "priority", "due_date", "project", "tags")
++    search_fields = ("title", "project__name")
++    autocomplete_fields = ("project",)
++    filter_horizontal = ("tags",)
+diff --git a/apps/project-tracker/tracker/forms.py b/apps/project-tracker/tracker/forms.py
+new file mode 100644
+index 0000000000000000000000000000000000000000..a2eaeb9232bf5b15b79203821845d3026c1b05c0
+--- /dev/null
++++ b/apps/project-tracker/tracker/forms.py
+@@ -0,0 +1,43 @@
++from django import forms
++
++from .models import Project, Tag, Task
++
++
++def _validate_choice(value: str, choices: list[tuple[str, str]], field_name: str) -> str:
++    valid_values = {choice for choice, _label in choices}
++    if value not in valid_values:
++        raise forms.ValidationError(f"Choose a valid {field_name}.")
++    return value
++
++
++class ProjectForm(forms.ModelForm):
++    class Meta:
++        model = Project
++        fields = ["name", "description", "status", "created_date", "tags"]
++        widgets = {
++            "created_date": forms.DateInput(attrs={"type": "date"}),
++        }
++
++    def clean_status(self) -> str:
++        return _validate_choice(self.cleaned_data["status"], Project.STATUS_CHOICES, "status")
++
++
++class TaskForm(forms.ModelForm):
++    class Meta:
++        model = Task
++        fields = ["project", "title", "status", "priority", "due_date", "tags"]
++        widgets = {
++            "due_date": forms.DateInput(attrs={"type": "date"}),
++        }
++
++    def clean_status(self) -> str:
++        return _validate_choice(self.cleaned_data["status"], Task.STATUS_CHOICES, "status")
++
++    def clean_priority(self) -> str:
++        return _validate_choice(self.cleaned_data["priority"], Task.PRIORITY_CHOICES, "priority")
++
++
++class TagForm(forms.ModelForm):
++    class Meta:
++        model = Tag
++        fields = ["name"]
+diff --git a/apps/project-tracker/tracker/migrations/0001_initial.py b/apps/project-tracker/tracker/migrations/0001_initial.py
+new file mode 100644
+index 0000000000000000000000000000000000000000..48ddfc3fd4ef39f91434098f0b5445234392889e
+--- /dev/null
++++ b/apps/project-tracker/tracker/migrations/0001_initial.py
+@@ -0,0 +1,51 @@
++import django.db.models.deletion
++import django.utils.timezone
++from django.db import migrations, models
++
++
++class Migration(migrations.Migration):
++    initial = True
++
++    dependencies = []
++
++    operations = [
++        migrations.CreateModel(
++            name="Tag",
++            fields=[
++                ("id", models.BigAutoField(auto_created=True, primary_key=True, serialize=False, verbose_name="ID")),
++                ("name", models.CharField(max_length=100, unique=True)),
++            ],
++            options={
++                "ordering": ["name"],
++            },
++        ),
++        migrations.CreateModel(
++            name="Project",
++            fields=[
++                ("id", models.BigAutoField(auto_created=True, primary_key=True, serialize=False, verbose_name="ID")),
++                ("name", models.CharField(max_length=200)),
++                ("description", models.TextField(blank=True)),
++                ("status", models.CharField(choices=[("active", "Active"), ("completed", "Completed"), ("archived", "Archived")], default="active", max_length=20)),
++                ("created_date", models.DateField(default=django.utils.timezone.localdate)),
++                ("tags", models.ManyToManyField(blank=True, related_name="projects", to="tracker.tag")),
++            ],
++            options={
++                "ordering": ["name", "-created_date"],
++            },
++        ),
++        migrations.CreateModel(
++            name="Task",
++            fields=[
++                ("id", models.BigAutoField(auto_created=True, primary_key=True, serialize=False, verbose_name="ID")),
++                ("title", models.CharField(max_length=200)),
++                ("status", models.CharField(choices=[("todo", "To Do"), ("in_progress", "In Progress"), ("done", "Done")], default="todo", max_length=20)),
++                ("priority", models.CharField(choices=[("low", "Low"), ("medium", "Medium"), ("high", "High")], default="medium", max_length=20)),
++                ("due_date", models.DateField(blank=True, null=True)),
++                ("project", models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, related_name="tasks", to="tracker.project")),
++                ("tags", models.ManyToManyField(blank=True, related_name="tasks", to="tracker.tag")),
++            ],
++            options={
++                "ordering": ["due_date", "title"],
++            },
++        ),
++    ]
+diff --git a/apps/project-tracker/tracker/models.py b/apps/project-tracker/tracker/models.py
+index beeb30826593dcc86f7904d5da16715af5a61ab6..35f4e598c277ba5a78de87821bed4c7b00bb013e
+--- a/apps/project-tracker/tracker/models.py
++++ b/apps/project-tracker/tracker/models.py
+@@ -1,2 +1,99 @@
++from django.core.exceptions import ValidationError
+ from django.db import models
++from django.utils import timezone
++
++
++class Tag(models.Model):
++    name = models.CharField(max_length=100, unique=True)
++
++    class Meta:
++        ordering = ["name"]
++
++    def __str__(self) -> str:
++        return self.name
++
+ 
++class Project(models.Model):
++    STATUS_ACTIVE = "active"
++    STATUS_COMPLETED = "completed"
++    STATUS_ARCHIVED = "archived"
++    STATUS_CHOICES = [
++        (STATUS_ACTIVE, "Active"),
++        (STATUS_COMPLETED, "Completed"),
++        (STATUS_ARCHIVED, "Archived"),
++    ]
++
++    name = models.CharField(max_length=200)
++    description = models.TextField(blank=True)
++    status = models.CharField(
++        max_length=20,
++        choices=STATUS_CHOICES,
++        default=STATUS_ACTIVE,
++    )
++    created_date = models.DateField(default=timezone.localdate)
++    tags = models.ManyToManyField(Tag, blank=True, related_name="projects")
++
++    class Meta:
++        ordering = ["name", "-created_date"]
++
++    def __str__(self) -> str:
++        return self.name
++
++    def clean(self) -> None:
++        super().clean()
++        valid_statuses = {choice for choice, _label in self.STATUS_CHOICES}
++        if self.status not in valid_statuses:
++            raise ValidationError({"status": "Choose a valid status."})
++
++
++class Task(models.Model):
++    STATUS_TODO = "todo"
++    STATUS_IN_PROGRESS = "in_progress"
++    STATUS_DONE = "done"
++    STATUS_CHOICES = [
++        (STATUS_TODO, "To Do"),
++        (STATUS_IN_PROGRESS, "In Progress"),
++        (STATUS_DONE, "Done"),
++    ]
++
++    PRIORITY_LOW = "low"
++    PRIORITY_MEDIUM = "medium"
++    PRIORITY_HIGH = "high"
++    PRIORITY_CHOICES = [
++        (PRIORITY_LOW, "Low"),
++        (PRIORITY_MEDIUM, "Medium"),
++        (PRIORITY_HIGH, "High"),
++    ]
++
++    project = models.ForeignKey(Project, on_delete=models.CASCADE, related_name="tasks")
++    title = models.CharField(max_length=200)
++    status = models.CharField(
++        max_length=20,
++        choices=STATUS_CHOICES,
++        default=STATUS_TODO,
++    )
++    priority = models.CharField(
++        max_length=20,
++        choices=PRIORITY_CHOICES,
++        default=PRIORITY_MEDIUM,
++    )
++    due_date = models.DateField(blank=True, null=True)
++    tags = models.ManyToManyField(Tag, blank=True, related_name="tasks")
++
++    class Meta:
++        ordering = ["due_date", "title"]
++
++    def __str__(self) -> str:
++        return self.title
++
++    def clean(self) -> None:
++        super().clean()
++        valid_statuses = {choice for choice, _label in self.STATUS_CHOICES}
++        valid_priorities = {choice for choice, _label in self.PRIORITY_CHOICES}
++        errors = {}
++        if self.status not in valid_statuses:
++            errors["status"] = "Choose a valid status."
++        if self.priority not in valid_priorities:
++            errors["priority"] = "Choose a valid priority."
++        if errors:
++            raise ValidationError(errors)
+diff --git a/apps/project-tracker/tracker/tests/test_domain.py b/apps/project-tracker/tracker/tests/test_domain.py
+new file mode 100644
+index 0000000000000000000000000000000000000000..695755db0e3cf9fe9afefcd56974de2b4c9830c5
+--- /dev/null
++++ b/apps/project-tracker/tracker/tests/test_domain.py
+@@ -0,0 +1,84 @@
++from datetime import date
++
++from django.core.exceptions import ValidationError
++from django.test import TestCase
++
++from tracker.forms import ProjectForm, TagForm, TaskForm
++from tracker.models import Project, Tag, Task
++
++
++class TrackerModelTests(TestCase):
++    def test_project_and_task_support_tag_assignment(self):
++        project = Project.objects.create(
++            name="Launch site",
++            description="Ship the marketing site.",
++            status=Project.STATUS_ACTIVE,
++        )
++        task = Task.objects.create(
++            project=project,
++            title="Write copy",
++            status=Task.STATUS_TODO,
++            priority=Task.PRIORITY_HIGH,
++        )
++        tag = Tag.objects.create(name="marketing")
++
++        project.tags.add(tag)
++        task.tags.add(tag)
++
++        self.assertQuerySetEqual(project.tags.order_by("name"), [tag], transform=lambda item: item)
++        self.assertQuerySetEqual(task.tags.order_by("name"), [tag], transform=lambda item: item)
++
++    def test_model_clean_rejects_invalid_enumerated_values(self):
++        project = Project(
++            name="Broken project",
++            description="",
++            status="invalid",
++            created_date=date(2026, 3, 12),
++        )
++        task = Task(
++            project=Project.objects.create(name="Base", description=""),
++            title="Broken task",
++            status="invalid",
++            priority="urgent",
++        )
++
++        with self.assertRaises(ValidationError):
++            project.full_clean()
++
++        with self.assertRaises(ValidationError):
++            task.full_clean()
++
++
++class TrackerFormTests(TestCase):
++    def test_project_form_accepts_locked_status_choices(self):
++        form = ProjectForm(
++            data={
++                "name": "Roadmap",
++                "description": "Quarterly plan",
++                "status": Project.STATUS_COMPLETED,
++                "created_date": "2026-03-12",
++            }
++        )
++
++        self.assertTrue(form.is_valid(), form.errors)
++
++    def test_task_form_rejects_invalid_priority(self):
++        project = Project.objects.create(name="Roadmap", description="")
++        form = TaskForm(
++            data={
++                "project": project.pk,
++                "title": "Rank backlog",
++                "status": Task.STATUS_TODO,
++                "priority": "urgent",
++                "due_date": "2026-03-20",
++            }
++        )
++
++        self.assertFalse(form.is_valid())
++        self.assertIn("priority", form.errors)
++
++    def test_tag_form_requires_name(self):
++        form = TagForm(data={"name": ""})
++
++        self.assertFalse(form.is_valid())
++        self.assertIn("name", form.errors)
+
+[35m[3mcodex[0m[0m
+I’ve confirmed the environment still lacks Django, so runtime tests remain blocked exactly where the prior handoff warned they would be. I’m updating the workflow files now with the implementation notes, validation evidence, and baton handoff to `VALIDATOR`.
+[3m[35mfile update[0m[0m
+[35mM /home/sundaram/code/temp/test/ai/iterations/ITER-0001.md[0m
+@@ -12 +12,2 @@
+ | 2026-03-12 | PLANNER | Activated ITEM-0002 for domain model, form, admin, and migration work and handed off implementation to DEV | The scaffold is complete, and the domain layer is the next dependency needed before server-rendered pages and no-reload CRUD flows can be built |
+[32m+| 2026-03-12 | DEV | Implemented tracker domain models, forms, admin registration, a manual initial migration, and domain-focused tests for ITEM-0002 | The next slices depend on concrete project, task, and tag persistence plus validated form surfaces inside the existing Django app |[0m
+[35mM /home/sundaram/code/temp/test/ai/review.md[0m
+@@ -30,2 +30,7 @@
+ - Added a route smoke test in `tracker/tests/test_views.py`.
+[32m+- Added `Project`, `Task`, and `Tag` models in `tracker/models.py` with the locked status and priority choices, `Task -> Project` ownership, and tag many-to-many relationships on both projects and tasks.[0m
+[32m+- Added `ProjectForm`, `TaskForm`, and `TagForm` in `tracker/forms.py` with explicit validation aligned to the approved enumerated values and date widgets for date fields.[0m
+[32m+- Registered the tracker domain models in `tracker/admin.py` with practical list displays, filters, search fields, and tag management controls.[0m
+[32m+- Added `tracker/migrations/0001_initial.py` to create the initial domain schema inside the existing tracker app.[0m
+[32m+- Added `tracker/tests/test_domain.py` covering the domain relationships plus model and form validation for the locked enumerations.[0m
+ 
+@@ -51,2 +56,3 @@
+ - Current automated coverage is limited to a simple dashboard route smoke test, so later slices still need model, mutation, and no-reload interaction coverage.
+[32m+- The initial migration was authored manually because `manage.py makemigrations` cannot run without Django in the workspace, so schema validation should be rechecked once Django is available.[0m
+ 
+[35mM /home/sundaram/code/temp/test/ai/next_agent.md[0m
+@@ -2,4 +2,4 @@
+ 
+[31m-- Current role: `DEV`[0m
+[31m-- Prompt: `ai/prompts/04-dev.md`[0m
+[32m+- Current role: `VALIDATOR`[0m
+[32m+- Prompt: `ai/prompts/05-validator.md`[0m
+ - Execution command for Codex sessions: **Follow `ai/next_agent.yaml` exactly.**
+@@ -9,26 +9,22 @@
+ 
+[31m-- Active item: `ITEM-0002` - implement the tracker domain layer.[0m
+[31m-- Scope for this slice:[0m
+[31m-  - add `Project`, `Task`, and `Tag` models in the existing `tracker` app only[0m
+[31m-  - add Django forms for the domain entities with validation aligned to the locked field choices[0m
+[31m-  - register the models in Django admin with useful list/display configuration[0m
+[31m-  - create initial migrations for the schema under `tracker/migrations/`[0m
+[31m-- Domain constraints from `ai/goal.yaml`:[0m
+[31m-  - `Project`: name, description, status (`active`, `completed`, `archived`), created date[0m
+[31m-  - `Task`: belongs to a project, title, status (`todo`, `in_progress`, `done`), priority (`low`, `medium`, `high`), due date[0m
+[31m-  - `Tag`: many-to-many assignment support for both projects and tasks[0m
+[31m-- Implementation guardrails:[0m
+[31m-  - no extra Django apps, no third-party packages, no DRF, no service/repository layers[0m
+[31m-  - keep logic in models, forms, and standard Django admin structures[0m
+[31m-  - preserve the single-project Django architecture already accepted in `ITEM-0001`[0m
+[31m-- Suggested files to modify or create:[0m
+[31m-  - `apps/project-tracker/tracker/models.py`[0m
+[31m-  - `apps/project-tracker/tracker/forms.py`[0m
+[31m-  - `apps/project-tracker/tracker/admin.py`[0m
+[31m-  - `apps/project-tracker/tracker/migrations/`[0m
+[31m-  - `apps/project-tracker/tracker/tests/`[0m
+[31m-- Validation expectations:[0m
+[31m-  - add domain-focused tests if Django is available in the environment[0m
+[31m-  - if Django remains unavailable, document the exact blocked command and rely on non-Django validation where possible[0m
+[31m-- Existing caveat still applies:[0m
+[31m-  - prior `manage.py test` runs were blocked in this workspace by `ModuleNotFoundError: No module named 'django'`[0m
+[32m+- Active item remains `ITEM-0002`.[0m
+[32m+- Implemented the tracker domain layer in the existing app only:[0m
+[32m+  - added `Project`, `Task`, and `Tag` models in `apps/project-tracker/tracker/models.py`[0m
+[32m+  - added `ProjectForm`, `TaskForm`, and `TagForm` in `apps/project-tracker/tracker/forms.py`[0m
+[32m+  - registered the models with practical admin configuration in `apps/project-tracker/tracker/admin.py`[0m
+[32m+  - added a manual initial migration at `apps/project-tracker/tracker/migrations/0001_initial.py`[0m
+[32m+  - added domain-focused tests in `apps/project-tracker/tracker/tests/test_domain.py`[0m
+[32m+- Locked domain behavior implemented:[0m
+[32m+  - `Project.status`: `active`, `completed`, `archived`[0m
+[32m+  - `Task.status`: `todo`, `in_progress`, `done`[0m
+[32m+  - `Task.priority`: `low`, `medium`, `high`[0m
+[32m+  - tags are many-to-many on both `Project` and `Task`[0m
+[32m+- Validation evidence:[0m
+[32m+  - `python3 -m py_compile $(find apps/project-tracker -name '*.py' | sort)` passed[0m
+[32m+  - Django import probe returned `None`[0m
+[32m+  - `python3 apps/project-tracker/manage.py test tracker.tests.test_domain tracker.tests.test_views` failed with `ModuleNotFoundError: No module named 'django'`[0m
+[32m+- Validator should focus on:[0m
+[32m+  - scope adherence for `ITEM-0002`[0m
+[32m+  - consistency between models, forms, admin, and migration definitions[0m
+[32m+  - whether the manual migration matches the implemented schema[0m
+[32m+  - whether the environment blockage is documented clearly enough for acceptance or revise[0m
+[32mapply_patch(auto_approved=true) exited 0 in 8ms:[0m
+[2mSuccess. Updated the following files:[0m
+[2mM /home/sundaram/code/temp/test/ai/review.md[0m
+[2mM /home/sundaram/code/temp/test/ai/iterations/ITER-0001.md[0m
+[2mM /home/sundaram/code/temp/test/ai/next_agent.md[0m
+[3m[35mfile update:[0m[0m
+diff --git a/ai/iterations/ITER-0001.md b/ai/iterations/ITER-0001.md
+index f077b7f0d527a849c6bd5a38539e538fc4f8fde1..139d258e6e3369102f3d06a45e84fd0e120ef61f
+--- a/ai/iterations/ITER-0001.md
++++ b/ai/iterations/ITER-0001.md
+@@ -10,3 +10,4 @@
+ | 2026-03-12 | VALIDATOR | Accepted the scaffold baseline as meeting ITEM-0001 acceptance criteria and handed off to review with an environment caveat on Django-dependent tests | The slice is structurally correct and free of scope drift, but full runtime validation remains blocked until Django is installed in the workspace |
+ | 2026-03-12 | REVIEWER | Marked ITEM-0001 done and returned the baton to planning for the next implementation slice | The scaffold meets the locked architecture and acceptance criteria, and the blocked Django test run is an environment limitation rather than a gap in the delivered slice |
+ | 2026-03-12 | PLANNER | Activated ITEM-0002 for domain model, form, admin, and migration work and handed off implementation to DEV | The scaffold is complete, and the domain layer is the next dependency needed before server-rendered pages and no-reload CRUD flows can be built |
++| 2026-03-12 | DEV | Implemented tracker domain models, forms, admin registration, a manual initial migration, and domain-focused tests for ITEM-0002 | The next slices depend on concrete project, task, and tag persistence plus validated form surfaces inside the existing Django app |
+diff --git a/ai/next_agent.md b/ai/next_agent.md
+index 41a47f426a7cb9479eb30e4bb4ecb1b381a1cbc6..df32ca962e4d154d4478888f6435ad497fe34468
+--- a/ai/next_agent.md
++++ b/ai/next_agent.md
+@@ -1,34 +1,30 @@
+ # Next Agent
+ 
+-- Current role: `DEV`
+-- Prompt: `ai/prompts/04-dev.md`
++- Current role: `VALIDATOR`
++- Prompt: `ai/prompts/05-validator.md`
+ - Execution command for Codex sessions: **Follow `ai/next_agent.yaml` exactly.**
+ - If role mismatch with `ai/active_agent.txt`, print: `WAITING FOR BATON`
+ 
+ ## Handoff Notes
+ 
+-- Active item: `ITEM-0002` - implement the tracker domain layer.
+-- Scope for this slice:
+-  - add `Project`, `Task`, and `Tag` models in the existing `tracker` app only
+-  - add Django forms for the domain entities with validation aligned to the locked field choices
+-  - register the models in Django admin with useful list/display configuration
+-  - create initial migrations for the schema under `tracker/migrations/`
+-- Domain constraints from `ai/goal.yaml`:
+-  - `Project`: name, description, status (`active`, `completed`, `archived`), created date
+-  - `Task`: belongs to a project, title, status (`todo`, `in_progress`, `done`), priority (`low`, `medium`, `high`), due date
+-  - `Tag`: many-to-many assignment support for both projects and tasks
+-- Implementation guardrails:
+-  - no extra Django apps, no third-party packages, no DRF, no service/repository layers
+-  - keep logic in models, forms, and standard Django admin structures
+-  - preserve the single-project Django architecture already accepted in `ITEM-0001`
+-- Suggested files to modify or create:
+-  - `apps/project-tracker/tracker/models.py`
+-  - `apps/project-tracker/tracker/forms.py`
+-  - `apps/project-tracker/tracker/admin.py`
+-  - `apps/project-tracker/tracker/migrations/`
+-  - `apps/project-tracker/tracker/tests/`
+-- Validation expectations:
+-  - add domain-focused tests if Django is available in the environment
+-  - if Django remains unavailable, document the exact blocked command and rely on non-Django validation where possible
+-- Existing caveat still applies:
+-  - prior `manage.py test` runs were blocked in this workspace by `ModuleNotFoundError: No module named 'django'`
++- Active item remains `ITEM-0002`.
++- Implemented the tracker domain layer in the existing app only:
++  - added `Project`, `Task`, and `Tag` models in `apps/project-tracker/tracker/models.py`
++  - added `ProjectForm`, `TaskForm`, and `TagForm` in `apps/project-tracker/tracker/forms.py`
++  - registered the models with practical admin configuration in `apps/project-tracker/tracker/admin.py`
++  - added a manual initial migration at `apps/project-tracker/tracker/migrations/0001_initial.py`
++  - added domain-focused tests in `apps/project-tracker/tracker/tests/test_domain.py`
++- Locked domain behavior implemented:
++  - `Project.status`: `active`, `completed`, `archived`
++  - `Task.status`: `todo`, `in_progress`, `done`
++  - `Task.priority`: `low`, `medium`, `high`
++  - tags are many-to-many on both `Project` and `Task`
++- Validation evidence:
++  - `python3 -m py_compile $(find apps/project-tracker -name '*.py' | sort)` passed
++  - Django import probe returned `None`
++  - `python3 apps/project-tracker/manage.py test tracker.tests.test_domain tracker.tests.test_views` failed with `ModuleNotFoundError: No module named 'django'`
++- Validator should focus on:
++  - scope adherence for `ITEM-0002`
++  - consistency between models, forms, admin, and migration definitions
++  - whether the manual migration matches the implemented schema
++  - whether the environment blockage is documented clearly enough for acceptance or revise
+diff --git a/ai/review.md b/ai/review.md
+index e4b26dceab45afc8c7f28aac55e65bfd7c7944fb..e07cec8822d02457d6eaa8a63a7551899f5ac7c4
+--- a/ai/review.md
++++ b/ai/review.md
+@@ -28,6 +28,11 @@
+ - Added a baseline `dashboard` view and shared templates at `templates/tracker/base.html` and `templates/tracker/dashboard.html`.
+ - Added starter static assets at `static/tracker/app.css` and `static/tracker/app.js`.
+ - Added a route smoke test in `tracker/tests/test_views.py`.
++- Added `Project`, `Task`, and `Tag` models in `tracker/models.py` with the locked status and priority choices, `Task -> Project` ownership, and tag many-to-many relationships on both projects and tasks.
++- Added `ProjectForm`, `TaskForm`, and `TagForm` in `tracker/forms.py` with explicit validation aligned to the approved enumerated values and date widgets for date fields.
++- Registered the tracker domain models in `tracker/admin.py` with practical list displays, filters, search fields, and tag management controls.
++- Added `tracker/migrations/0001_initial.py` to create the initial domain schema inside the existing tracker app.
++- Added `tracker/tests/test_domain.py` covering the domain relationships plus model and form validation for the locked enumerations.
+ 
+ ## Validator Outcome
+ 
+@@ -49,6 +54,7 @@
+ 
+ - Runtime and test validation remain partial until Django is installed in the workspace.
+ - Current automated coverage is limited to a simple dashboard route smoke test, so later slices still need model, mutation, and no-reload interaction coverage.
++- The initial migration was authored manually because `manage.py makemigrations` cannot run without Django in the workspace, so schema validation should be rechecked once Django is available.
+ 
+ ## Reviewer Decision
+ 
+diff --git a/apps/project-tracker/tracker/admin.py b/apps/project-tracker/tracker/admin.py
+index c6fe10879f27142d29808987edb47b7536a04594..1cb28c6e0f42995bdd76c2382d092b597f56035d
+--- a/apps/project-tracker/tracker/admin.py
++++ b/apps/project-tracker/tracker/admin.py
+@@ -1,2 +1,26 @@
+ from django.contrib import admin
+ 
++from .models import Project, Tag, Task
++
++
++@admin.register(Tag)
++class TagAdmin(admin.ModelAdmin):
++    list_display = ("name",)
++    search_fields = ("name",)
++
++
++@admin.register(Project)
++class ProjectAdmin(admin.ModelAdmin):
++    list_display = ("name", "status", "created_date")
++    list_filter = ("status", "created_date", "tags")
++    search_fields = ("name", "description")
++    filter_horizontal = ("tags",)
++
++
++@admin.register(Task)
++class TaskAdmin(admin.ModelAdmin):
++    list_display = ("title", "project", "status", "priority", "due_date")
++    list_filter = ("status", "priority", "due_date", "project", "tags")
++    search_fields = ("title", "project__name")
++    autocomplete_fields = ("project",)
++    filter_horizontal = ("tags",)
+diff --git a/apps/project-tracker/tracker/forms.py b/apps/project-tracker/tracker/forms.py
+new file mode 100644
+index 0000000000000000000000000000000000000000..a2eaeb9232bf5b15b79203821845d3026c1b05c0
+--- /dev/null
++++ b/apps/project-tracker/tracker/forms.py
+@@ -0,0 +1,43 @@
++from django import forms
++
++from .models import Project, Tag, Task
++
++
++def _validate_choice(value: str, choices: list[tuple[str, str]], field_name: str) -> str:
++    valid_values = {choice for choice, _label in choices}
++    if value not in valid_values:
++        raise forms.ValidationError(f"Choose a valid {field_name}.")
++    return value
++
++
++class ProjectForm(forms.ModelForm):
++    class Meta:
++        model = Project
++        fields = ["name", "description", "status", "created_date", "tags"]
++        widgets = {
++            "created_date": forms.DateInput(attrs={"type": "date"}),
++        }
++
++    def clean_status(self) -> str:
++        return _validate_choice(self.cleaned_data["status"], Project.STATUS_CHOICES, "status")
++
++
++class TaskForm(forms.ModelForm):
++    class Meta:
++        model = Task
++        fields = ["project", "title", "status", "priority", "due_date", "tags"]
++        widgets = {
++            "due_date": forms.DateInput(attrs={"type": "date"}),
++        }
++
++    def clean_status(self) -> str:
++        return _validate_choice(self.cleaned_data["status"], Task.STATUS_CHOICES, "status")
++
++    def clean_priority(self) -> str:
++        return _validate_choice(self.cleaned_data["priority"], Task.PRIORITY_CHOICES, "priority")
++
++
++class TagForm(forms.ModelForm):
++    class Meta:
++        model = Tag
++        fields = ["name"]
+diff --git a/apps/project-tracker/tracker/migrations/0001_initial.py b/apps/project-tracker/tracker/migrations/0001_initial.py
+new file mode 100644
+index 0000000000000000000000000000000000000000..48ddfc3fd4ef39f91434098f0b5445234392889e
+--- /dev/null
++++ b/apps/project-tracker/tracker/migrations/0001_initial.py
+@@ -0,0 +1,51 @@
++import django.db.models.deletion
++import django.utils.timezone
++from django.db import migrations, models
++
++
++class Migration(migrations.Migration):
++    initial = True
++
++    dependencies = []
++
++    operations = [
++        migrations.CreateModel(
++            name="Tag",
++            fields=[
++                ("id", models.BigAutoField(auto_created=True, primary_key=True, serialize=False, verbose_name="ID")),
++                ("name", models.CharField(max_length=100, unique=True)),
++            ],
++            options={
++                "ordering": ["name"],
++            },
++        ),
++        migrations.CreateModel(
++            name="Project",
++            fields=[
++                ("id", models.BigAutoField(auto_created=True, primary_key=True, serialize=False, verbose_name="ID")),
++                ("name", models.CharField(max_length=200)),
++                ("description", models.TextField(blank=True)),
++                ("status", models.CharField(choices=[("active", "Active"), ("completed", "Completed"), ("archived", "Archived")], default="active", max_length=20)),
++                ("created_date", models.DateField(default=django.utils.timezone.localdate)),
++                ("tags", models.ManyToManyField(blank=True, related_name="projects", to="tracker.tag")),
++            ],
++            options={
++                "ordering": ["name", "-created_date"],
++            },
++        ),
++        migrations.CreateModel(
++            name="Task",
++            fields=[
++                ("id", models.BigAutoField(auto_created=True, primary_key=True, serialize=False, verbose_name="ID")),
++                ("title", models.CharField(max_length=200)),
++                ("status", models.CharField(choices=[("todo", "To Do"), ("in_progress", "In Progress"), ("done", "Done")], default="todo", max_length=20)),
++                ("priority", models.CharField(choices=[("low", "Low"), ("medium", "Medium"), ("high", "High")], default="medium", max_length=20)),
++                ("due_date", models.DateField(blank=True, null=True)),
++                ("project", models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, related_name="tasks", to="tracker.project")),
++                ("tags", models.ManyToManyField(blank=True, related_name="tasks", to="tracker.tag")),
++            ],
++            options={
++                "ordering": ["due_date", "title"],
++            },
++        ),
++    ]
+diff --git a/apps/project-tracker/tracker/models.py b/apps/project-tracker/tracker/models.py
+index beeb30826593dcc86f7904d5da16715af5a61ab6..35f4e598c277ba5a78de87821bed4c7b00bb013e
+--- a/apps/project-tracker/tracker/models.py
++++ b/apps/project-tracker/tracker/models.py
+@@ -1,2 +1,99 @@
++from django.core.exceptions import ValidationError
+ from django.db import models
++from django.utils import timezone
++
++
++class Tag(models.Model):
++    name = models.CharField(max_length=100, unique=True)
++
++    class Meta:
++        ordering = ["name"]
++
++    def __str__(self) -> str:
++        return self.name
++
+ 
++class Project(models.Model):
++    STATUS_ACTIVE = "active"
++    STATUS_COMPLETED = "completed"
++    STATUS_ARCHIVED = "archived"
++    STATUS_CHOICES = [
++        (STATUS_ACTIVE, "Active"),
++        (STATUS_COMPLETED, "Completed"),
++        (STATUS_ARCHIVED, "Archived"),
++    ]
++
++    name = models.CharField(max_length=200)
++    description = models.TextField(blank=True)
++    status = models.CharField(
++        max_length=20,
++        choices=STATUS_CHOICES,
++        default=STATUS_ACTIVE,
++    )
++    created_date = models.DateField(default=timezone.localdate)
++    tags = models.ManyToManyField(Tag, blank=True, related_name="projects")
++
++    class Meta:
++        ordering = ["name", "-created_date"]
++
++    def __str__(self) -> str:
++        return self.name
++
++    def clean(self) -> None:
++        super().clean()
++        valid_statuses = {choice for choice, _label in self.STATUS_CHOICES}
++        if self.status not in valid_statuses:
++            raise ValidationError({"status": "Choose a valid status."})
++
++
++class Task(models.Model):
++    STATUS_TODO = "todo"
++    STATUS_IN_PROGRESS = "in_progress"
++    STATUS_DONE = "done"
++    STATUS_CHOICES = [
++        (STATUS_TODO, "To Do"),
++        (STATUS_IN_PROGRESS, "In Progress"),
++        (STATUS_DONE, "Done"),
++    ]
++
++    PRIORITY_LOW = "low"
++    PRIORITY_MEDIUM = "medium"
++    PRIORITY_HIGH = "high"
++    PRIORITY_CHOICES = [
++        (PRIORITY_LOW, "Low"),
++        (PRIORITY_MEDIUM, "Medium"),
++        (PRIORITY_HIGH, "High"),
++    ]
++
++    project = models.ForeignKey(Project, on_delete=models.CASCADE, related_name="tasks")
++    title = models.CharField(max_length=200)
++    status = models.CharField(
++        max_length=20,
++        choices=STATUS_CHOICES,
++        default=STATUS_TODO,
++    )
++    priority = models.CharField(
++        max_length=20,
++        choices=PRIORITY_CHOICES,
++        default=PRIORITY_MEDIUM,
++    )
++    due_date = models.DateField(blank=True, null=True)
++    tags = models.ManyToManyField(Tag, blank=True, related_name="tasks")
++
++    class Meta:
++        ordering = ["due_date", "title"]
++
++    def __str__(self) -> str:
++        return self.title
++
++    def clean(self) -> None:
++        super().clean()
++        valid_statuses = {choice for choice, _label in self.STATUS_CHOICES}
++        valid_priorities = {choice for choice, _label in self.PRIORITY_CHOICES}
++        errors = {}
++        if self.status not in valid_statuses:
++            errors["status"] = "Choose a valid status."
++        if self.priority not in valid_priorities:
++            errors["priority"] = "Choose a valid priority."
++        if errors:
++            raise ValidationError(errors)
+diff --git a/apps/project-tracker/tracker/tests/test_domain.py b/apps/project-tracker/tracker/tests/test_domain.py
+new file mode 100644
+index 0000000000000000000000000000000000000000..695755db0e3cf9fe9afefcd56974de2b4c9830c5
+--- /dev/null
++++ b/apps/project-tracker/tracker/tests/test_domain.py
+@@ -0,0 +1,84 @@
++from datetime import date
++
++from django.core.exceptions import ValidationError
++from django.test import TestCase
++
++from tracker.forms import ProjectForm, TagForm, TaskForm
++from tracker.models import Project, Tag, Task
++
++
++class TrackerModelTests(TestCase):
++    def test_project_and_task_support_tag_assignment(self):
++        project = Project.objects.create(
++            name="Launch site",
++            description="Ship the marketing site.",
++            status=Project.STATUS_ACTIVE,
++        )
++        task = Task.objects.create(
++            project=project,
++            title="Write copy",
++            status=Task.STATUS_TODO,
++            priority=Task.PRIORITY_HIGH,
++        )
++        tag = Tag.objects.create(name="marketing")
++
++        project.tags.add(tag)
++        task.tags.add(tag)
++
++        self.assertQuerySetEqual(project.tags.order_by("name"), [tag], transform=lambda item: item)
++        self.assertQuerySetEqual(task.tags.order_by("name"), [tag], transform=lambda item: item)
++
++    def test_model_clean_rejects_invalid_enumerated_values(self):
++        project = Project(
++            name="Broken project",
++            description="",
++            status="invalid",
++            created_date=date(2026, 3, 12),
++        )
++        task = Task(
++            project=Project.objects.create(name="Base", description=""),
++            title="Broken task",
++            status="invalid",
++            priority="urgent",
++        )
++
++        with self.assertRaises(ValidationError):
++            project.full_clean()
++
++        with self.assertRaises(ValidationError):
++            task.full_clean()
++
++
++class TrackerFormTests(TestCase):
++    def test_project_form_accepts_locked_status_choices(self):
++        form = ProjectForm(
++            data={
++                "name": "Roadmap",
++                "description": "Quarterly plan",
++                "status": Project.STATUS_COMPLETED,
++                "created_date": "2026-03-12",
++            }
++        )
++
++        self.assertTrue(form.is_valid(), form.errors)
++
++    def test_task_form_rejects_invalid_priority(self):
++        project = Project.objects.create(name="Roadmap", description="")
++        form = TaskForm(
++            data={
++                "project": project.pk,
++                "title": "Rank backlog",
++                "status": Task.STATUS_TODO,
++                "priority": "urgent",
++                "due_date": "2026-03-20",
++            }
++        )
++
++        self.assertFalse(form.is_valid())
++        self.assertIn("priority", form.errors)
++
++    def test_tag_form_requires_name(self):
++        form = TagForm(data={"name": ""})
++
++        self.assertFalse(form.is_valid())
++        self.assertIn("name", form.errors)
+
+[3m[35mfile update:[0m[0m
+diff --git a/ai/iterations/ITER-0001.md b/ai/iterations/ITER-0001.md
+index f077b7f0d527a849c6bd5a38539e538fc4f8fde1..139d258e6e3369102f3d06a45e84fd0e120ef61f
+--- a/ai/iterations/ITER-0001.md
++++ b/ai/iterations/ITER-0001.md
+@@ -10,3 +10,4 @@
+ | 2026-03-12 | VALIDATOR | Accepted the scaffold baseline as meeting ITEM-0001 acceptance criteria and handed off to review with an environment caveat on Django-dependent tests | The slice is structurally correct and free of scope drift, but full runtime validation remains blocked until Django is installed in the workspace |
+ | 2026-03-12 | REVIEWER | Marked ITEM-0001 done and returned the baton to planning for the next implementation slice | The scaffold meets the locked architecture and acceptance criteria, and the blocked Django test run is an environment limitation rather than a gap in the delivered slice |
+ | 2026-03-12 | PLANNER | Activated ITEM-0002 for domain model, form, admin, and migration work and handed off implementation to DEV | The scaffold is complete, and the domain layer is the next dependency needed before server-rendered pages and no-reload CRUD flows can be built |
++| 2026-03-12 | DEV | Implemented tracker domain models, forms, admin registration, a manual initial migration, and domain-focused tests for ITEM-0002 | The next slices depend on concrete project, task, and tag persistence plus validated form surfaces inside the existing Django app |
+diff --git a/ai/next_agent.md b/ai/next_agent.md
+index 41a47f426a7cb9479eb30e4bb4ecb1b381a1cbc6..df32ca962e4d154d4478888f6435ad497fe34468
+--- a/ai/next_agent.md
++++ b/ai/next_agent.md
+@@ -1,34 +1,30 @@
+ # Next Agent
+ 
+-- Current role: `DEV`
+-- Prompt: `ai/prompts/04-dev.md`
++- Current role: `VALIDATOR`
++- Prompt: `ai/prompts/05-validator.md`
+ - Execution command for Codex sessions: **Follow `ai/next_agent.yaml` exactly.**
+ - If role mismatch with `ai/active_agent.txt`, print: `WAITING FOR BATON`
+ 
+ ## Handoff Notes
+ 
+-- Active item: `ITEM-0002` - implement the tracker domain layer.
+-- Scope for this slice:
+-  - add `Project`, `Task`, and `Tag` models in the existing `tracker` app only
+-  - add Django forms for the domain entities with validation aligned to the locked field choices
+-  - register the models in Django admin with useful list/display configuration
+-  - create initial migrations for the schema under `tracker/migrations/`
+-- Domain constraints from `ai/goal.yaml`:
+-  - `Project`: name, description, status (`active`, `completed`, `archived`), created date
+-  - `Task`: belongs to a project, title, status (`todo`, `in_progress`, `done`), priority (`low`, `medium`, `high`), due date
+-  - `Tag`: many-to-many assignment support for both projects and tasks
+-- Implementation guardrails:
+-  - no extra Django apps, no third-party packages, no DRF, no service/repository layers
+-  - keep logic in models, forms, and standard Django admin structures
+-  - preserve the single-project Django architecture already accepted in `ITEM-0001`
+-- Suggested files to modify or create:
+-  - `apps/project-tracker/tracker/models.py`
+-  - `apps/project-tracker/tracker/forms.py`
+-  - `apps/project-tracker/tracker/admin.py`
+-  - `apps/project-tracker/tracker/migrations/`
+-  - `apps/project-tracker/tracker/tests/`
+-- Validation expectations:
+-  - add domain-focused tests if Django is available in the environment
+-  - if Django remains unavailable, document the exact blocked command and rely on non-Django validation where possible
+-- Existing caveat still applies:
+-  - prior `manage.py test` runs were blocked in this workspace by `ModuleNotFoundError: No module named 'django'`
++- Active item remains `ITEM-0002`.
++- Implemented the tracker domain layer in the existing app only:
++  - added `Project`, `Task`, and `Tag` models in `apps/project-tracker/tracker/models.py`
++  - added `ProjectForm`, `TaskForm`, and `TagForm` in `apps/project-tracker/tracker/forms.py`
++  - registered the models with practical admin configuration in `apps/project-tracker/tracker/admin.py`
++  - added a manual initial migration at `apps/project-tracker/tracker/migrations/0001_initial.py`
++  - added domain-focused tests in `apps/project-tracker/tracker/tests/test_domain.py`
++- Locked domain behavior implemented:
++  - `Project.status`: `active`, `completed`, `archived`
++  - `Task.status`: `todo`, `in_progress`, `done`
++  - `Task.priority`: `low`, `medium`, `high`
++  - tags are many-to-many on both `Project` and `Task`
++- Validation evidence:
++  - `python3 -m py_compile $(find apps/project-tracker -name '*.py' | sort)` passed
++  - Django import probe returned `None`
++  - `python3 apps/project-tracker/manage.py test tracker.tests.test_domain tracker.tests.test_views` failed with `ModuleNotFoundError: No module named 'django'`
++- Validator should focus on:
++  - scope adherence for `ITEM-0002`
++  - consistency between models, forms, admin, and migration definitions
++  - whether the manual migration matches the implemented schema
++  - whether the environment blockage is documented clearly enough for acceptance or revise
+diff --git a/ai/review.md b/ai/review.md
+index e4b26dceab45afc8c7f28aac55e65bfd7c7944fb..e07cec8822d02457d6eaa8a63a7551899f5ac7c4
+--- a/ai/review.md
++++ b/ai/review.md
+@@ -28,6 +28,11 @@
+ - Added a baseline `dashboard` view and shared templates at `templates/tracker/base.html` and `templates/tracker/dashboard.html`.
+ - Added starter static assets at `static/tracker/app.css` and `static/tracker/app.js`.
+ - Added a route smoke test in `tracker/tests/test_views.py`.
++- Added `Project`, `Task`, and `Tag` models in `tracker/models.py` with the locked status and priority choices, `Task -> Project` ownership, and tag many-to-many relationships on both projects and tasks.
++- Added `ProjectForm`, `TaskForm`, and `TagForm` in `tracker/forms.py` with explicit validation aligned to the approved enumerated values and date widgets for date fields.
++- Registered the tracker domain models in `tracker/admin.py` with practical list displays, filters, search fields, and tag management controls.
++- Added `tracker/migrations/0001_initial.py` to create the initial domain schema inside the existing tracker app.
++- Added `tracker/tests/test_domain.py` covering the domain relationships plus model and form validation for the locked enumerations.
+ 
+ ## Validator Outcome
+ 
+@@ -49,6 +54,7 @@
+ 
+ - Runtime and test validation remain partial until Django is installed in the workspace.
+ - Current automated coverage is limited to a simple dashboard route smoke test, so later slices still need model, mutation, and no-reload interaction coverage.
++- The initial migration was authored manually because `manage.py makemigrations` cannot run without Django in the workspace, so schema validation should be rechecked once Django is available.
+ 
+ ## Reviewer Decision
+ 
+diff --git a/apps/project-tracker/tracker/admin.py b/apps/project-tracker/tracker/admin.py
+index c6fe10879f27142d29808987edb47b7536a04594..1cb28c6e0f42995bdd76c2382d092b597f56035d
+--- a/apps/project-tracker/tracker/admin.py
++++ b/apps/project-tracker/tracker/admin.py
+@@ -1,2 +1,26 @@
+ from django.contrib import admin
+ 
++from .models import Project, Tag, Task
++
++
++@admin.register(Tag)
++class TagAdmin(admin.ModelAdmin):
++    list_display = ("name",)
++    search_fields = ("name",)
++
++
++@admin.register(Project)
++class ProjectAdmin(admin.ModelAdmin):
++    list_display = ("name", "status", "created_date")
++    list_filter = ("status", "created_date", "tags")
++    search_fields = ("name", "description")
++    filter_horizontal = ("tags",)
++
++
++@admin.register(Task)
++class TaskAdmin(admin.ModelAdmin):
++    list_display = ("title", "project", "status", "priority", "due_date")
++    list_filter = ("status", "priority", "due_date", "project", "tags")
++    search_fields = ("title", "project__name")
++    autocomplete_fields = ("project",)
++    filter_horizontal = ("tags",)
+diff --git a/apps/project-tracker/tracker/forms.py b/apps/project-tracker/tracker/forms.py
+new file mode 100644
+index 0000000000000000000000000000000000000000..a2eaeb9232bf5b15b79203821845d3026c1b05c0
+--- /dev/null
++++ b/apps/project-tracker/tracker/forms.py
+@@ -0,0 +1,43 @@
++from django import forms
++
++from .models import Project, Tag, Task
++
++
++def _validate_choice(value: str, choices: list[tuple[str, str]], field_name: str) -> str:
++    valid_values = {choice for choice, _label in choices}
++    if value not in valid_values:
++        raise forms.ValidationError(f"Choose a valid {field_name}.")
++    return value
++
++
++class ProjectForm(forms.ModelForm):
++    class Meta:
++        model = Project
++        fields = ["name", "description", "status", "created_date", "tags"]
++        widgets = {
++            "created_date": forms.DateInput(attrs={"type": "date"}),
++        }
++
++    def clean_status(self) -> str:
++        return _validate_choice(self.cleaned_data["status"], Project.STATUS_CHOICES, "status")
++
++
++class TaskForm(forms.ModelForm):
++    class Meta:
++        model = Task
++        fields = ["project", "title", "status", "priority", "due_date", "tags"]
++        widgets = {
++            "due_date": forms.DateInput(attrs={"type": "date"}),
++        }
++
++    def clean_status(self) -> str:
++        return _validate_choice(self.cleaned_data["status"], Task.STATUS_CHOICES, "status")
++
++    def clean_priority(self) -> str:
++        return _validate_choice(self.cleaned_data["priority"], Task.PRIORITY_CHOICES, "priority")
++
++
++class TagForm(forms.ModelForm):
++    class Meta:
++        model = Tag
++        fields = ["name"]
+diff --git a/apps/project-tracker/tracker/migrations/0001_initial.py b/apps/project-tracker/tracker/migrations/0001_initial.py
+new file mode 100644
+index 0000000000000000000000000000000000000000..48ddfc3fd4ef39f91434098f0b5445234392889e
+--- /dev/null
++++ b/apps/project-tracker/tracker/migrations/0001_initial.py
+@@ -0,0 +1,51 @@
++import django.db.models.deletion
++import django.utils.timezone
++from django.db import migrations, models
++
++
++class Migration(migrations.Migration):
++    initial = True
++
++    dependencies = []
++
++    operations = [
++        migrations.CreateModel(
++            name="Tag",
++            fields=[
++                ("id", models.BigAutoField(auto_created=True, primary_key=True, serialize=False, verbose_name="ID")),
++                ("name", models.CharField(max_length=100, unique=True)),
++            ],
++            options={
++                "ordering": ["name"],
++            },
++        ),
++        migrations.CreateModel(
++            name="Project",
++            fields=[
++                ("id", models.BigAutoField(auto_created=True, primary_key=True, serialize=False, verbose_name="ID")),
++                ("name", models.CharField(max_length=200)),
++                ("description", models.TextField(blank=True)),
++                ("status", models.CharField(choices=[("active", "Active"), ("completed", "Completed"), ("archived", "Archived")], default="active", max_length=20)),
++                ("created_date", models.DateField(default=django.utils.timezone.localdate)),
++                ("tags", models.ManyToManyField(blank=True, related_name="projects", to="tracker.tag")),
++            ],
++            options={
++                "ordering": ["name", "-created_date"],
++            },
++        ),
++        migrations.CreateModel(
++            name="Task",
++            fields=[
++                ("id", models.BigAutoField(auto_created=True, primary_key=True, serialize=False, verbose_name="ID")),
++                ("title", models.CharField(max_length=200)),
++                ("status", models.CharField(choices=[("todo", "To Do"), ("in_progress", "In Progress"), ("done", "Done")], default="todo", max_length=20)),
++                ("priority", models.CharField(choices=[("low", "Low"), ("medium", "Medium"), ("high", "High")], default="medium", max_length=20)),
++                ("due_date", models.DateField(blank=True, null=True)),
++                ("project", models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, related_name="tasks", to="tracker.project")),
++                ("tags", models.ManyToManyField(blank=True, related_name="tasks", to="tracker.tag")),
++            ],
++            options={
++                "ordering": ["due_date", "title"],
++            },
++        ),
++    ]
+diff --git a/apps/project-tracker/tracker/models.py b/apps/project-tracker/tracker/models.py
+index beeb30826593dcc86f7904d5da16715af5a61ab6..35f4e598c277ba5a78de87821bed4c7b00bb013e
+--- a/apps/project-tracker/tracker/models.py
++++ b/apps/project-tracker/tracker/models.py
+@@ -1,2 +1,99 @@
++from django.core.exceptions import ValidationError
+ from django.db import models
++from django.utils import timezone
++
++
++class Tag(models.Model):
++    name = models.CharField(max_length=100, unique=True)
++
++    class Meta:
++        ordering = ["name"]
++
++    def __str__(self) -> str:
++        return self.name
++
+ 
++class Project(models.Model):
++    STATUS_ACTIVE = "active"
++    STATUS_COMPLETED = "completed"
++    STATUS_ARCHIVED = "archived"
++    STATUS_CHOICES = [
++        (STATUS_ACTIVE, "Active"),
++        (STATUS_COMPLETED, "Completed"),
++        (STATUS_ARCHIVED, "Archived"),
++    ]
++
++    name = models.CharField(max_length=200)
++    description = models.TextField(blank=True)
++    status = models.CharField(
++        max_length=20,
++        choices=STATUS_CHOICES,
++        default=STATUS_ACTIVE,
++    )
++    created_date = models.DateField(default=timezone.localdate)
++    tags = models.ManyToManyField(Tag, blank=True, related_name="projects")
++
++    class Meta:
++        ordering = ["name", "-created_date"]
++
++    def __str__(self) -> str:
++        return self.name
++
++    def clean(self) -> None:
++        super().clean()
++        valid_statuses = {choice for choice, _label in self.STATUS_CHOICES}
++        if self.status not in valid_statuses:
++            raise ValidationError({"status": "Choose a valid status."})
++
++
++class Task(models.Model):
++    STATUS_TODO = "todo"
++    STATUS_IN_PROGRESS = "in_progress"
++    STATUS_DONE = "done"
++    STATUS_CHOICES = [
++        (STATUS_TODO, "To Do"),
++        (STATUS_IN_PROGRESS, "In Progress"),
++        (STATUS_DONE, "Done"),
++    ]
++
++    PRIORITY_LOW = "low"
++    PRIORITY_MEDIUM = "medium"
++    PRIORITY_HIGH = "high"
++    PRIORITY_CHOICES = [
++        (PRIORITY_LOW, "Low"),
++        (PRIORITY_MEDIUM, "Medium"),
++        (PRIORITY_HIGH, "High"),
++    ]
++
++    project = models.ForeignKey(Project, on_delete=models.CASCADE, related_name="tasks")
++    title = models.CharField(max_length=200)
++    status = models.CharField(
++        max_length=20,
++        choices=STATUS_CHOICES,
++        default=STATUS_TODO,
++    )
++    priority = models.CharField(
++        max_length=20,
++        choices=PRIORITY_CHOICES,
++        default=PRIORITY_MEDIUM,
++    )
++    due_date = models.DateField(blank=True, null=True)
++    tags = models.ManyToManyField(Tag, blank=True, related_name="tasks")
++
++    class Meta:
++        ordering = ["due_date", "title"]
++
++    def __str__(self) -> str:
++        return self.title
++
++    def clean(self) -> None:
++        super().clean()
++        valid_statuses = {choice for choice, _label in self.STATUS_CHOICES}
++        valid_priorities = {choice for choice, _label in self.PRIORITY_CHOICES}
++        errors = {}
++        if self.status not in valid_statuses:
++            errors["status"] = "Choose a valid status."
++        if self.priority not in valid_priorities:
++            errors["priority"] = "Choose a valid priority."
++        if errors:
++            raise ValidationError(errors)
+diff --git a/apps/project-tracker/tracker/tests/test_domain.py b/apps/project-tracker/tracker/tests/test_domain.py
+new file mode 100644
+index 0000000000000000000000000000000000000000..695755db0e3cf9fe9afefcd56974de2b4c9830c5
+--- /dev/null
++++ b/apps/project-tracker/tracker/tests/test_domain.py
+@@ -0,0 +1,84 @@
++from datetime import date
++
++from django.core.exceptions import ValidationError
++from django.test import TestCase
++
++from tracker.forms import ProjectForm, TagForm, TaskForm
++from tracker.models import Project, Tag, Task
++
++
++class TrackerModelTests(TestCase):
++    def test_project_and_task_support_tag_assignment(self):
++        project = Project.objects.create(
++            name="Launch site",
++            description="Ship the marketing site.",
++            status=Project.STATUS_ACTIVE,
++        )
++        task = Task.objects.create(
++            project=project,
++            title="Write copy",
++            status=Task.STATUS_TODO,
++            priority=Task.PRIORITY_HIGH,
++        )
++        tag = Tag.objects.create(name="marketing")
++
++        project.tags.add(tag)
++        task.tags.add(tag)
++
++        self.assertQuerySetEqual(project.tags.order_by("name"), [tag], transform=lambda item: item)
++        self.assertQuerySetEqual(task.tags.order_by("name"), [tag], transform=lambda item: item)
++
++    def test_model_clean_rejects_invalid_enumerated_values(self):
++        project = Project(
++            name="Broken project",
++            description="",
++            status="invalid",
++            created_date=date(2026, 3, 12),
++        )
++        task = Task(
++            project=Project.objects.create(name="Base", description=""),
++            title="Broken task",
++            status="invalid",
++            priority="urgent",
++        )
++
++        with self.assertRaises(ValidationError):
++            project.full_clean()
++
++        with self.assertRaises(ValidationError):
++            task.full_clean()
++
++
++class TrackerFormTests(TestCase):
++    def test_project_form_accepts_locked_status_choices(self):
++        form = ProjectForm(
++            data={
++                "name": "Roadmap",
++                "description": "Quarterly plan",
++                "status": Project.STATUS_COMPLETED,
++                "created_date": "2026-03-12",
++            }
++        )
++
++        self.assertTrue(form.is_valid(), form.errors)
++
++    def test_task_form_rejects_invalid_priority(self):
++        project = Project.objects.create(name="Roadmap", description="")
++        form = TaskForm(
++            data={
++                "project": project.pk,
++                "title": "Rank backlog",
++                "status": Task.STATUS_TODO,
++                "priority": "urgent",
++                "due_date": "2026-03-20",
++            }
++        )
++
++        self.assertFalse(form.is_valid())
++        self.assertIn("priority", form.errors)
++
++    def test_tag_form_requires_name(self):
++        form = TagForm(data={"name": ""})
++
++        self.assertFalse(form.is_valid())
++        self.assertIn("name", form.errors)
+
+[35m[3mexec[0m[0m
+[1m/bin/bash -lc "printf 'VALIDATOR
+' > ai/active_agent.txt"[0m in /home/sundaram/code/temp/test[32m succeeded in 0ms:[0m
+[2m[0m
+[35m[3mexec[0m[0m
+[1m/bin/bash -lc './scripts/generate-next-agent.sh VALIDATOR --notes "implemented tracker domain models/forms/admin/manual initial migration and domain tests | files changed: tracker/models.py tracker/forms.py tracker/admin.py tracker/migrations/0001_initial.py tracker/tests/test_domain.py ai/review.md ai/iterations/ITER-0001.md ai/next_agent.md | tests: py_compile passed; manage.py test blocked by missing django | risk: manual migration not runtime-verified"'[0m in /home/sundaram/code/temp/test[32m succeeded in 0ms:[0m
+[2mGenerated ai/next_agent.yaml for VALIDATOR (next: REVIEWER)[0m
+[3m[35mfile update:[0m[0m
+diff --git a/ai/iterations/ITER-0001.md b/ai/iterations/ITER-0001.md
+index f077b7f0d527a849c6bd5a38539e538fc4f8fde1..139d258e6e3369102f3d06a45e84fd0e120ef61f
+--- a/ai/iterations/ITER-0001.md
++++ b/ai/iterations/ITER-0001.md
+@@ -10,3 +10,4 @@
+ | 2026-03-12 | VALIDATOR | Accepted the scaffold baseline as meeting ITEM-0001 acceptance criteria and handed off to review with an environment caveat on Django-dependent tests | The slice is structurally correct and free of scope drift, but full runtime validation remains blocked until Django is installed in the workspace |
+ | 2026-03-12 | REVIEWER | Marked ITEM-0001 done and returned the baton to planning for the next implementation slice | The scaffold meets the locked architecture and acceptance criteria, and the blocked Django test run is an environment limitation rather than a gap in the delivered slice |
+ | 2026-03-12 | PLANNER | Activated ITEM-0002 for domain model, form, admin, and migration work and handed off implementation to DEV | The scaffold is complete, and the domain layer is the next dependency needed before server-rendered pages and no-reload CRUD flows can be built |
++| 2026-03-12 | DEV | Implemented tracker domain models, forms, admin registration, a manual initial migration, and domain-focused tests for ITEM-0002 | The next slices depend on concrete project, task, and tag persistence plus validated form surfaces inside the existing Django app |
+diff --git a/ai/next_agent.md b/ai/next_agent.md
+index 41a47f426a7cb9479eb30e4bb4ecb1b381a1cbc6..df32ca962e4d154d4478888f6435ad497fe34468
+--- a/ai/next_agent.md
++++ b/ai/next_agent.md
+@@ -1,34 +1,30 @@
+ # Next Agent
+ 
+-- Current role: `DEV`
+-- Prompt: `ai/prompts/04-dev.md`
++- Current role: `VALIDATOR`
++- Prompt: `ai/prompts/05-validator.md`
+ - Execution command for Codex sessions: **Follow `ai/next_agent.yaml` exactly.**
+ - If role mismatch with `ai/active_agent.txt`, print: `WAITING FOR BATON`
+ 
+ ## Handoff Notes
+ 
+-- Active item: `ITEM-0002` - implement the tracker domain layer.
+-- Scope for this slice:
+-  - add `Project`, `Task`, and `Tag` models in the existing `tracker` app only
+-  - add Django forms for the domain entities with validation aligned to the locked field choices
+-  - register the models in Django admin with useful list/display configuration
+-  - create initial migrations for the schema under `tracker/migrations/`
+-- Domain constraints from `ai/goal.yaml`:
+-  - `Project`: name, description, status (`active`, `completed`, `archived`), created date
+-  - `Task`: belongs to a project, title, status (`todo`, `in_progress`, `done`), priority (`low`, `medium`, `high`), due date
+-  - `Tag`: many-to-many assignment support for both projects and tasks
+-- Implementation guardrails:
+-  - no extra Django apps, no third-party packages, no DRF, no service/repository layers
+-  - keep logic in models, forms, and standard Django admin structures
+-  - preserve the single-project Django architecture already accepted in `ITEM-0001`
+-- Suggested files to modify or create:
+-  - `apps/project-tracker/tracker/models.py`
+-  - `apps/project-tracker/tracker/forms.py`
+-  - `apps/project-tracker/tracker/admin.py`
+-  - `apps/project-tracker/tracker/migrations/`
+-  - `apps/project-tracker/tracker/tests/`
+-- Validation expectations:
+-  - add domain-focused tests if Django is available in the environment
+-  - if Django remains unavailable, document the exact blocked command and rely on non-Django validation where possible
+-- Existing caveat still applies:
+-  - prior `manage.py test` runs were blocked in this workspace by `ModuleNotFoundError: No module named 'django'`
++- Active item remains `ITEM-0002`.
++- Implemented the tracker domain layer in the existing app only:
++  - added `Project`, `Task`, and `Tag` models in `apps/project-tracker/tracker/models.py`
++  - added `ProjectForm`, `TaskForm`, and `TagForm` in `apps/project-tracker/tracker/forms.py`
++  - registered the models with practical admin configuration in `apps/project-tracker/tracker/admin.py`
++  - added a manual initial migration at `apps/project-tracker/tracker/migrations/0001_initial.py`
++  - added domain-focused tests in `apps/project-tracker/tracker/tests/test_domain.py`
++- Locked domain behavior implemented:
++  - `Project.status`: `active`, `completed`, `archived`
++  - `Task.status`: `todo`, `in_progress`, `done`
++  - `Task.priority`: `low`, `medium`, `high`
++  - tags are many-to-many on both `Project` and `Task`
++- Validation evidence:
++  - `python3 -m py_compile $(find apps/project-tracker -name '*.py' | sort)` passed
++  - Django import probe returned `None`
++  - `python3 apps/project-tracker/manage.py test tracker.tests.test_domain tracker.tests.test_views` failed with `ModuleNotFoundError: No module named 'django'`
++- Validator should focus on:
++  - scope adherence for `ITEM-0002`
++  - consistency between models, forms, admin, and migration definitions
++  - whether the manual migration matches the implemented schema
++  - whether the environment blockage is documented clearly enough for acceptance or revise
+diff --git a/ai/review.md b/ai/review.md
+index e4b26dceab45afc8c7f28aac55e65bfd7c7944fb..e07cec8822d02457d6eaa8a63a7551899f5ac7c4
+--- a/ai/review.md
++++ b/ai/review.md
+@@ -28,6 +28,11 @@
+ - Added a baseline `dashboard` view and shared templates at `templates/tracker/base.html` and `templates/tracker/dashboard.html`.
+ - Added starter static assets at `static/tracker/app.css` and `static/tracker/app.js`.
+ - Added a route smoke test in `tracker/tests/test_views.py`.
++- Added `Project`, `Task`, and `Tag` models in `tracker/models.py` with the locked status and priority choices, `Task -> Project` ownership, and tag many-to-many relationships on both projects and tasks.
++- Added `ProjectForm`, `TaskForm`, and `TagForm` in `tracker/forms.py` with explicit validation aligned to the approved enumerated values and date widgets for date fields.
++- Registered the tracker domain models in `tracker/admin.py` with practical list displays, filters, search fields, and tag management controls.
++- Added `tracker/migrations/0001_initial.py` to create the initial domain schema inside the existing tracker app.
++- Added `tracker/tests/test_domain.py` covering the domain relationships plus model and form validation for the locked enumerations.
+ 
+ ## Validator Outcome
+ 
+@@ -49,6 +54,7 @@
+ 
+ - Runtime and test validation remain partial until Django is installed in the workspace.
+ - Current automated coverage is limited to a simple dashboard route smoke test, so later slices still need model, mutation, and no-reload interaction coverage.
++- The initial migration was authored manually because `manage.py makemigrations` cannot run without Django in the workspace, so schema validation should be rechecked once Django is available.
+ 
+ ## Reviewer Decision
+ 
+diff --git a/apps/project-tracker/tracker/admin.py b/apps/project-tracker/tracker/admin.py
+index c6fe10879f27142d29808987edb47b7536a04594..1cb28c6e0f42995bdd76c2382d092b597f56035d
+--- a/apps/project-tracker/tracker/admin.py
++++ b/apps/project-tracker/tracker/admin.py
+@@ -1,2 +1,26 @@
+ from django.contrib import admin
+ 
++from .models import Project, Tag, Task
++
++
++@admin.register(Tag)
++class TagAdmin(admin.ModelAdmin):
++    list_display = ("name",)
++    search_fields = ("name",)
++
++
++@admin.register(Project)
++class ProjectAdmin(admin.ModelAdmin):
++    list_display = ("name", "status", "created_date")
++    list_filter = ("status", "created_date", "tags")
++    search_fields = ("name", "description")
++    filter_horizontal = ("tags",)
++
++
++@admin.register(Task)
++class TaskAdmin(admin.ModelAdmin):
++    list_display = ("title", "project", "status", "priority", "due_date")
++    list_filter = ("status", "priority", "due_date", "project", "tags")
++    search_fields = ("title", "project__name")
++    autocomplete_fields = ("project",)
++    filter_horizontal = ("tags",)
+diff --git a/apps/project-tracker/tracker/forms.py b/apps/project-tracker/tracker/forms.py
+new file mode 100644
+index 0000000000000000000000000000000000000000..a2eaeb9232bf5b15b79203821845d3026c1b05c0
+--- /dev/null
++++ b/apps/project-tracker/tracker/forms.py
+@@ -0,0 +1,43 @@
++from django import forms
++
++from .models import Project, Tag, Task
++
++
++def _validate_choice(value: str, choices: list[tuple[str, str]], field_name: str) -> str:
++    valid_values = {choice for choice, _label in choices}
++    if value not in valid_values:
++        raise forms.ValidationError(f"Choose a valid {field_name}.")
++    return value
++
++
++class ProjectForm(forms.ModelForm):
++    class Meta:
++        model = Project
++        fields = ["name", "description", "status", "created_date", "tags"]
++        widgets = {
++            "created_date": forms.DateInput(attrs={"type": "date"}),
++        }
++
++    def clean_status(self) -> str:
++        return _validate_choice(self.cleaned_data["status"], Project.STATUS_CHOICES, "status")
++
++
++class TaskForm(forms.ModelForm):
++    class Meta:
++        model = Task
++        fields = ["project", "title", "status", "priority", "due_date", "tags"]
++        widgets = {
++            "due_date": forms.DateInput(attrs={"type": "date"}),
++        }
++
++    def clean_status(self) -> str:
++        return _validate_choice(self.cleaned_data["status"], Task.STATUS_CHOICES, "status")
++
++    def clean_priority(self) -> str:
++        return _validate_choice(self.cleaned_data["priority"], Task.PRIORITY_CHOICES, "priority")
++
++
++class TagForm(forms.ModelForm):
++    class Meta:
++        model = Tag
++        fields = ["name"]
+diff --git a/apps/project-tracker/tracker/migrations/0001_initial.py b/apps/project-tracker/tracker/migrations/0001_initial.py
+new file mode 100644
+index 0000000000000000000000000000000000000000..48ddfc3fd4ef39f91434098f0b5445234392889e
+--- /dev/null
++++ b/apps/project-tracker/tracker/migrations/0001_initial.py
+@@ -0,0 +1,51 @@
++import django.db.models.deletion
++import django.utils.timezone
++from django.db import migrations, models
++
++
++class Migration(migrations.Migration):
++    initial = True
++
++    dependencies = []
++
++    operations = [
++        migrations.CreateModel(
++            name="Tag",
++            fields=[
++                ("id", models.BigAutoField(auto_created=True, primary_key=True, serialize=False, verbose_name="ID")),
++                ("name", models.CharField(max_length=100, unique=True)),
++            ],
++            options={
++                "ordering": ["name"],
++            },
++        ),
++        migrations.CreateModel(
++            name="Project",
++            fields=[
++                ("id", models.BigAutoField(auto_created=True, primary_key=True, serialize=False, verbose_name="ID")),
++                ("name", models.CharField(max_length=200)),
++                ("description", models.TextField(blank=True)),
++                ("status", models.CharField(choices=[("active", "Active"), ("completed", "Completed"), ("archived", "Archived")], default="active", max_length=20)),
++                ("created_date", models.DateField(default=django.utils.timezone.localdate)),
++                ("tags", models.ManyToManyField(blank=True, related_name="projects", to="tracker.tag")),
++            ],
++            options={
++                "ordering": ["name", "-created_date"],
++            },
++        ),
++        migrations.CreateModel(
++            name="Task",
++            fields=[
++                ("id", models.BigAutoField(auto_created=True, primary_key=True, serialize=False, verbose_name="ID")),
++                ("title", models.CharField(max_length=200)),
++                ("status", models.CharField(choices=[("todo", "To Do"), ("in_progress", "In Progress"), ("done", "Done")], default="todo", max_length=20)),
++                ("priority", models.CharField(choices=[("low", "Low"), ("medium", "Medium"), ("high", "High")], default="medium", max_length=20)),
++                ("due_date", models.DateField(blank=True, null=True)),
++                ("project", models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, related_name="tasks", to="tracker.project")),
++                ("tags", models.ManyToManyField(blank=True, related_name="tasks", to="tracker.tag")),
++            ],
++            options={
++                "ordering": ["due_date", "title"],
++            },
++        ),
++    ]
+diff --git a/apps/project-tracker/tracker/models.py b/apps/project-tracker/tracker/models.py
+index beeb30826593dcc86f7904d5da16715af5a61ab6..35f4e598c277ba5a78de87821bed4c7b00bb013e
+--- a/apps/project-tracker/tracker/models.py
++++ b/apps/project-tracker/tracker/models.py
+@@ -1,2 +1,99 @@
++from django.core.exceptions import ValidationError
+ from django.db import models
++from django.utils import timezone
++
++
++class Tag(models.Model):
++    name = models.CharField(max_length=100, unique=True)
++
++    class Meta:
++        ordering = ["name"]
++
++    def __str__(self) -> str:
++        return self.name
++
+ 
++class Project(models.Model):
++    STATUS_ACTIVE = "active"
++    STATUS_COMPLETED = "completed"
++    STATUS_ARCHIVED = "archived"
++    STATUS_CHOICES = [
++        (STATUS_ACTIVE, "Active"),
++        (STATUS_COMPLETED, "Completed"),
++        (STATUS_ARCHIVED, "Archived"),
++    ]
++
++    name = models.CharField(max_length=200)
++    description = models.TextField(blank=True)
++    status = models.CharField(
++        max_length=20,
++        choices=STATUS_CHOICES,
++        default=STATUS_ACTIVE,
++    )
++    created_date = models.DateField(default=timezone.localdate)
++    tags = models.ManyToManyField(Tag, blank=True, related_name="projects")
++
++    class Meta:
++        ordering = ["name", "-created_date"]
++
++    def __str__(self) -> str:
++        return self.name
++
++    def clean(self) -> None:
++        super().clean()
++        valid_statuses = {choice for choice, _label in self.STATUS_CHOICES}
++        if self.status not in valid_statuses:
++            raise ValidationError({"status": "Choose a valid status."})
++
++
++class Task(models.Model):
++    STATUS_TODO = "todo"
++    STATUS_IN_PROGRESS = "in_progress"
++    STATUS_DONE = "done"
++    STATUS_CHOICES = [
++        (STATUS_TODO, "To Do"),
++        (STATUS_IN_PROGRESS, "In Progress"),
++        (STATUS_DONE, "Done"),
++    ]
++
++    PRIORITY_LOW = "low"
++    PRIORITY_MEDIUM = "medium"
++    PRIORITY_HIGH = "high"
++    PRIORITY_CHOICES = [
++        (PRIORITY_LOW, "Low"),
++        (PRIORITY_MEDIUM, "Medium"),
++        (PRIORITY_HIGH, "High"),
++    ]
++
++    project = models.ForeignKey(Project, on_delete=models.CASCADE, related_name="tasks")
++    title = models.CharField(max_length=200)
++    status = models.CharField(
++        max_length=20,
++        choices=STATUS_CHOICES,
++        default=STATUS_TODO,
++    )
++    priority = models.CharField(
++        max_length=20,
++        choices=PRIORITY_CHOICES,
++        default=PRIORITY_MEDIUM,
++    )
++    due_date = models.DateField(blank=True, null=True)
++    tags = models.ManyToManyField(Tag, blank=True, related_name="tasks")
++
++    class Meta:
++        ordering = ["due_date", "title"]
++
++    def __str__(self) -> str:
++        return self.title
++
++    def clean(self) -> None:
++        super().clean()
++        valid_statuses = {choice for choice, _label in self.STATUS_CHOICES}
++        valid_priorities = {choice for choice, _label in self.PRIORITY_CHOICES}
++        errors = {}
++        if self.status not in valid_statuses:
++            errors["status"] = "Choose a valid status."
++        if self.priority not in valid_priorities:
++            errors["priority"] = "Choose a valid priority."
++        if errors:
++            raise ValidationError(errors)
+diff --git a/apps/project-tracker/tracker/tests/test_domain.py b/apps/project-tracker/tracker/tests/test_domain.py
+new file mode 100644
+index 0000000000000000000000000000000000000000..695755db0e3cf9fe9afefcd56974de2b4c9830c5
+--- /dev/null
++++ b/apps/project-tracker/tracker/tests/test_domain.py
+@@ -0,0 +1,84 @@
++from datetime import date
++
++from django.core.exceptions import ValidationError
++from django.test import TestCase
++
++from tracker.forms import ProjectForm, TagForm, TaskForm
++from tracker.models import Project, Tag, Task
++
++
++class TrackerModelTests(TestCase):
++    def test_project_and_task_support_tag_assignment(self):
++        project = Project.objects.create(
++            name="Launch site",
++            description="Ship the marketing site.",
++            status=Project.STATUS_ACTIVE,
++        )
++        task = Task.objects.create(
++            project=project,
++            title="Write copy",
++            status=Task.STATUS_TODO,
++            priority=Task.PRIORITY_HIGH,
++        )
++        tag = Tag.objects.create(name="marketing")
++
++        project.tags.add(tag)
++        task.tags.add(tag)
++
++        self.assertQuerySetEqual(project.tags.order_by("name"), [tag], transform=lambda item: item)
++        self.assertQuerySetEqual(task.tags.order_by("name"), [tag], transform=lambda item: item)
++
++    def test_model_clean_rejects_invalid_enumerated_values(self):
++        project = Project(
++            name="Broken project",
++            description="",
++            status="invalid",
++            created_date=date(2026, 3, 12),
++        )
++        task = Task(
++            project=Project.objects.create(name="Base", description=""),
++            title="Broken task",
++            status="invalid",
++            priority="urgent",
++        )
++
++        with self.assertRaises(ValidationError):
++            project.full_clean()
++
++        with self.assertRaises(ValidationError):
++            task.full_clean()
++
++
++class TrackerFormTests(TestCase):
++    def test_project_form_accepts_locked_status_choices(self):
++        form = ProjectForm(
++            data={
++                "name": "Roadmap",
++                "description": "Quarterly plan",
++                "status": Project.STATUS_COMPLETED,
++                "created_date": "2026-03-12",
++            }
++        )
++
++        self.assertTrue(form.is_valid(), form.errors)
++
++    def test_task_form_rejects_invalid_priority(self):
++        project = Project.objects.create(name="Roadmap", description="")
++        form = TaskForm(
++            data={
++                "project": project.pk,
++                "title": "Rank backlog",
++                "status": Task.STATUS_TODO,
++                "priority": "urgent",
++                "due_date": "2026-03-20",
++            }
++        )
++
++        self.assertFalse(form.is_valid())
++        self.assertIn("priority", form.errors)
++
++    def test_tag_form_requires_name(self):
++        form = TagForm(data={"name": ""})
++
++        self.assertFalse(form.is_valid())
++        self.assertIn("name", form.errors)
+
+[35m[3mcodex[0m[0m
+The baton files have been updated. I’m doing one final readback on the generated handoff state so the final output is exactly what the workflow requires.
+[35m[3mexec[0m[0m
+[1m/bin/bash -lc "sed -n '1,220p' ai/next_agent.yaml"[0m in /home/sundaram/code/temp/test[32m succeeded in 0ms:[0m
+[2mnext_role: VALIDATOR
+prompt_file: ai/prompts/05-validator.md
+read:
+  - ai/active_item.yaml
+  - ai/review.md
+  - ai/decision-lock.yaml
+  - ai/goal.yaml
+  - ai/constitution.yaml
+  - ai/active_agent.txt
+  - ai/next_agent.md
+  - ai/user-questions.yaml
+allowed_edits:
+  - ai/review.md
+  - ai/decision-lock.yaml
+  - ai/user-questions.yaml
+  - ai/iterations/ITER-0001.md
+  - ai/active_agent.txt
+  - ai/next_agent.yaml
+  - ai/next_agent.md
+stop_conditions:[0m
+[35m[3mexec[0m[0m
+[1m/bin/bash -lc 'git status --short'[0m in /home/sundaram/code/temp/test[32m succeeded in 0ms:[0m
+[2m M ai/active_agent.txt
+ M ai/active_item.yaml
+ M ai/backlog.yaml
+ M ai/iterations/ITER-0001.md
+ M ai/logs/baton.log
+ M ai/logs/step-004-PLANNER.log
+ M ai/next_agent.md
+ M ai/next_agent.yaml
+ M ai/review.md
+?? ai/logs/step-001-DEV.log
+?? ai/logs/step-002-VALIDATOR.log
+?? ai/logs/step-003-REVIEWER.log
+?? apps/[0m
+[35m[3mexec[0m[0m
+[1m/bin/bash -lc "sed -n '1,20p' ai/active_agent.txt"[0m in /home/sundaram/code/temp/test[32m succeeded in 0ms:[0m
+[2mVALIDATOR[0m
+[3m[35mfile update:[0m[0m
+diff --git a/ai/iterations/ITER-0001.md b/ai/iterations/ITER-0001.md
+index f077b7f0d527a849c6bd5a38539e538fc4f8fde1..139d258e6e3369102f3d06a45e84fd0e120ef61f
+--- a/ai/iterations/ITER-0001.md
++++ b/ai/iterations/ITER-0001.md
+@@ -10,3 +10,4 @@
+ | 2026-03-12 | VALIDATOR | Accepted the scaffold baseline as meeting ITEM-0001 acceptance criteria and handed off to review with an environment caveat on Django-dependent tests | The slice is structurally correct and free of scope drift, but full runtime validation remains blocked until Django is installed in the workspace |
+ | 2026-03-12 | REVIEWER | Marked ITEM-0001 done and returned the baton to planning for the next implementation slice | The scaffold meets the locked architecture and acceptance criteria, and the blocked Django test run is an environment limitation rather than a gap in the delivered slice |
+ | 2026-03-12 | PLANNER | Activated ITEM-0002 for domain model, form, admin, and migration work and handed off implementation to DEV | The scaffold is complete, and the domain layer is the next dependency needed before server-rendered pages and no-reload CRUD flows can be built |
++| 2026-03-12 | DEV | Implemented tracker domain models, forms, admin registration, a manual initial migration, and domain-focused tests for ITEM-0002 | The next slices depend on concrete project, task, and tag persistence plus validated form surfaces inside the existing Django app |
+diff --git a/ai/next_agent.md b/ai/next_agent.md
+index 41a47f426a7cb9479eb30e4bb4ecb1b381a1cbc6..df32ca962e4d154d4478888f6435ad497fe34468
+--- a/ai/next_agent.md
++++ b/ai/next_agent.md
+@@ -1,34 +1,30 @@
+ # Next Agent
+ 
+-- Current role: `DEV`
+-- Prompt: `ai/prompts/04-dev.md`
++- Current role: `VALIDATOR`
++- Prompt: `ai/prompts/05-validator.md`
+ - Execution command for Codex sessions: **Follow `ai/next_agent.yaml` exactly.**
+ - If role mismatch with `ai/active_agent.txt`, print: `WAITING FOR BATON`
+ 
+ ## Handoff Notes
+ 
+-- Active item: `ITEM-0002` - implement the tracker domain layer.
+-- Scope for this slice:
+-  - add `Project`, `Task`, and `Tag` models in the existing `tracker` app only
+-  - add Django forms for the domain entities with validation aligned to the locked field choices
+-  - register the models in Django admin with useful list/display configuration
+-  - create initial migrations for the schema under `tracker/migrations/`
+-- Domain constraints from `ai/goal.yaml`:
+-  - `Project`: name, description, status (`active`, `completed`, `archived`), created date
+-  - `Task`: belongs to a project, title, status (`todo`, `in_progress`, `done`), priority (`low`, `medium`, `high`), due date
+-  - `Tag`: many-to-many assignment support for both projects and tasks
+-- Implementation guardrails:
+-  - no extra Django apps, no third-party packages, no DRF, no service/repository layers
+-  - keep logic in models, forms, and standard Django admin structures
+-  - preserve the single-project Django architecture already accepted in `ITEM-0001`
+-- Suggested files to modify or create:
+-  - `apps/project-tracker/tracker/models.py`
+-  - `apps/project-tracker/tracker/forms.py`
+-  - `apps/project-tracker/tracker/admin.py`
+-  - `apps/project-tracker/tracker/migrations/`
+-  - `apps/project-tracker/tracker/tests/`
+-- Validation expectations:
+-  - add domain-focused tests if Django is available in the environment
+-  - if Django remains unavailable, document the exact blocked command and rely on non-Django validation where possible
+-- Existing caveat still applies:
+-  - prior `manage.py test` runs were blocked in this workspace by `ModuleNotFoundError: No module named 'django'`
++- Active item remains `ITEM-0002`.
++- Implemented the tracker domain layer in the existing app only:
++  - added `Project`, `Task`, and `Tag` models in `apps/project-tracker/tracker/models.py`
++  - added `ProjectForm`, `TaskForm`, and `TagForm` in `apps/project-tracker/tracker/forms.py`
++  - registered the models with practical admin configuration in `apps/project-tracker/tracker/admin.py`
++  - added a manual initial migration at `apps/project-tracker/tracker/migrations/0001_initial.py`
++  - added domain-focused tests in `apps/project-tracker/tracker/tests/test_domain.py`
++- Locked domain behavior implemented:
++  - `Project.status`: `active`, `completed`, `archived`
++  - `Task.status`: `todo`, `in_progress`, `done`
++  - `Task.priority`: `low`, `medium`, `high`
++  - tags are many-to-many on both `Project` and `Task`
++- Validation evidence:
++  - `python3 -m py_compile $(find apps/project-tracker -name '*.py' | sort)` passed
++  - Django import probe returned `None`
++  - `python3 apps/project-tracker/manage.py test tracker.tests.test_domain tracker.tests.test_views` failed with `ModuleNotFoundError: No module named 'django'`
++- Validator should focus on:
++  - scope adherence for `ITEM-0002`
++  - consistency between models, forms, admin, and migration definitions
++  - whether the manual migration matches the implemented schema
++  - whether the environment blockage is documented clearly enough for acceptance or revise
+diff --git a/ai/review.md b/ai/review.md
+index e4b26dceab45afc8c7f28aac55e65bfd7c7944fb..e07cec8822d02457d6eaa8a63a7551899f5ac7c4
+--- a/ai/review.md
++++ b/ai/review.md
+@@ -28,6 +28,11 @@
+ - Added a baseline `dashboard` view and shared templates at `templates/tracker/base.html` and `templates/tracker/dashboard.html`.
+ - Added starter static assets at `static/tracker/app.css` and `static/tracker/app.js`.
+ - Added a route smoke test in `tracker/tests/test_views.py`.
++- Added `Project`, `Task`, and `Tag` models in `tracker/models.py` with the locked status and priority choices, `Task -> Project` ownership, and tag many-to-many relationships on both projects and tasks.
++- Added `ProjectForm`, `TaskForm`, and `TagForm` in `tracker/forms.py` with explicit validation aligned to the approved enumerated values and date widgets for date fields.
++- Registered the tracker domain models in `tracker/admin.py` with practical list displays, filters, search fields, and tag management controls.
++- Added `tracker/migrations/0001_initial.py` to create the initial domain schema inside the existing tracker app.
++- Added `tracker/tests/test_domain.py` covering the domain relationships plus model and form validation for the locked enumerations.
+ 
+ ## Validator Outcome
+ 
+@@ -49,6 +54,7 @@
+ 
+ - Runtime and test validation remain partial until Django is installed in the workspace.
+ - Current automated coverage is limited to a simple dashboard route smoke test, so later slices still need model, mutation, and no-reload interaction coverage.
++- The initial migration was authored manually because `manage.py makemigrations` cannot run without Django in the workspace, so schema validation should be rechecked once Django is available.
+ 
+ ## Reviewer Decision
+ 
+diff --git a/apps/project-tracker/tracker/admin.py b/apps/project-tracker/tracker/admin.py
+index c6fe10879f27142d29808987edb47b7536a04594..1cb28c6e0f42995bdd76c2382d092b597f56035d
+--- a/apps/project-tracker/tracker/admin.py
++++ b/apps/project-tracker/tracker/admin.py
+@@ -1,2 +1,26 @@
+ from django.contrib import admin
+ 
++from .models import Project, Tag, Task
++
++
++@admin.register(Tag)
++class TagAdmin(admin.ModelAdmin):
++    list_display = ("name",)
++    search_fields = ("name",)
++
++
++@admin.register(Project)
++class ProjectAdmin(admin.ModelAdmin):
++    list_display = ("name", "status", "created_date")
++    list_filter = ("status", "created_date", "tags")
++    search_fields = ("name", "description")
++    filter_horizontal = ("tags",)
++
++
++@admin.register(Task)
++class TaskAdmin(admin.ModelAdmin):
++    list_display = ("title", "project", "status", "priority", "due_date")
++    list_filter = ("status", "priority", "due_date", "project", "tags")
++    search_fields = ("title", "project__name")
++    autocomplete_fields = ("project",)
++    filter_horizontal = ("tags",)
+diff --git a/apps/project-tracker/tracker/forms.py b/apps/project-tracker/tracker/forms.py
+new file mode 100644
+index 0000000000000000000000000000000000000000..a2eaeb9232bf5b15b79203821845d3026c1b05c0
+--- /dev/null
++++ b/apps/project-tracker/tracker/forms.py
+@@ -0,0 +1,43 @@
++from django import forms
++
++from .models import Project, Tag, Task
++
++
++def _validate_choice(value: str, choices: list[tuple[str, str]], field_name: str) -> str:
++    valid_values = {choice for choice, _label in choices}
++    if value not in valid_values:
++        raise forms.ValidationError(f"Choose a valid {field_name}.")
++    return value
++
++
++class ProjectForm(forms.ModelForm):
++    class Meta:
++        model = Project
++        fields = ["name", "description", "status", "created_date", "tags"]
++        widgets = {
++            "created_date": forms.DateInput(attrs={"type": "date"}),
++        }
++
++    def clean_status(self) -> str:
++        return _validate_choice(self.cleaned_data["status"], Project.STATUS_CHOICES, "status")
++
++
++class TaskForm(forms.ModelForm):
++    class Meta:
++        model = Task
++        fields = ["project", "title", "status", "priority", "due_date", "tags"]
++        widgets = {
++            "due_date": forms.DateInput(attrs={"type": "date"}),
++        }
++
++    def clean_status(self) -> str:
++        return _validate_choice(self.cleaned_data["status"], Task.STATUS_CHOICES, "status")
++
++    def clean_priority(self) -> str:
++        return _validate_choice(self.cleaned_data["priority"], Task.PRIORITY_CHOICES, "priority")
++
++
++class TagForm(forms.ModelForm):
++    class Meta:
++        model = Tag
++        fields = ["name"]
+diff --git a/apps/project-tracker/tracker/migrations/0001_initial.py b/apps/project-tracker/tracker/migrations/0001_initial.py
+new file mode 100644
+index 0000000000000000000000000000000000000000..48ddfc3fd4ef39f91434098f0b5445234392889e
+--- /dev/null
++++ b/apps/project-tracker/tracker/migrations/0001_initial.py
+@@ -0,0 +1,51 @@
++import django.db.models.deletion
++import django.utils.timezone
++from django.db import migrations, models
++
++
++class Migration(migrations.Migration):
++    initial = True
++
++    dependencies = []
++
++    operations = [
++        migrations.CreateModel(
++            name="Tag",
++            fields=[
++                ("id", models.BigAutoField(auto_created=True, primary_key=True, serialize=False, verbose_name="ID")),
++                ("name", models.CharField(max_length=100, unique=True)),
++            ],
++            options={
++                "ordering": ["name"],
++            },
++        ),
++        migrations.CreateModel(
++            name="Project",
++            fields=[
++                ("id", models.BigAutoField(auto_created=True, primary_key=True, serialize=False, verbose_name="ID")),
++                ("name", models.CharField(max_length=200)),
++                ("description", models.TextField(blank=True)),
++                ("status", models.CharField(choices=[("active", "Active"), ("completed", "Completed"), ("archived", "Archived")], default="active", max_length=20)),
++                ("created_date", models.DateField(default=django.utils.timezone.localdate)),
++                ("tags", models.ManyToManyField(blank=True, related_name="projects", to="tracker.tag")),
++            ],
++            options={
++                "ordering": ["name", "-created_date"],
++            },
++        ),
++        migrations.CreateModel(
++            name="Task",
++            fields=[
++                ("id", models.BigAutoField(auto_created=True, primary_key=True, serialize=False, verbose_name="ID")),
++                ("title", models.CharField(max_length=200)),
++                ("status", models.CharField(choices=[("todo", "To Do"), ("in_progress", "In Progress"), ("done", "Done")], default="todo", max_length=20)),
++                ("priority", models.CharField(choices=[("low", "Low"), ("medium", "Medium"), ("high", "High")], default="medium", max_length=20)),
++                ("due_date", models.DateField(blank=True, null=True)),
++                ("project", models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, related_name="tasks", to="tracker.project")),
++                ("tags", models.ManyToManyField(blank=True, related_name="tasks", to="tracker.tag")),
++            ],
++            options={
++                "ordering": ["due_date", "title"],
++            },
++        ),
++    ]
+diff --git a/apps/project-tracker/tracker/models.py b/apps/project-tracker/tracker/models.py
+index beeb30826593dcc86f7904d5da16715af5a61ab6..35f4e598c277ba5a78de87821bed4c7b00bb013e
+--- a/apps/project-tracker/tracker/models.py
++++ b/apps/project-tracker/tracker/models.py
+@@ -1,2 +1,99 @@
++from django.core.exceptions import ValidationError
+ from django.db import models
++from django.utils import timezone
++
++
++class Tag(models.Model):
++    name = models.CharField(max_length=100, unique=True)
++
++    class Meta:
++        ordering = ["name"]
++
++    def __str__(self) -> str:
++        return self.name
++
+ 
++class Project(models.Model):
++    STATUS_ACTIVE = "active"
++    STATUS_COMPLETED = "completed"
++    STATUS_ARCHIVED = "archived"
++    STATUS_CHOICES = [
++        (STATUS_ACTIVE, "Active"),
++        (STATUS_COMPLETED, "Completed"),
++        (STATUS_ARCHIVED, "Archived"),
++    ]
++
++    name = models.CharField(max_length=200)
++    description = models.TextField(blank=True)
++    status = models.CharField(
++        max_length=20,
++        choices=STATUS_CHOICES,
++        default=STATUS_ACTIVE,
++    )
++    created_date = models.DateField(default=timezone.localdate)
++    tags = models.ManyToManyField(Tag, blank=True, related_name="projects")
++
++    class Meta:
++        ordering = ["name", "-created_date"]
++
++    def __str__(self) -> str:
++        return self.name
++
++    def clean(self) -> None:
++        super().clean()
++        valid_statuses = {choice for choice, _label in self.STATUS_CHOICES}
++        if self.status not in valid_statuses:
++            raise ValidationError({"status": "Choose a valid status."})
++
++
++class Task(models.Model):
++    STATUS_TODO = "todo"
++    STATUS_IN_PROGRESS = "in_progress"
++    STATUS_DONE = "done"
++    STATUS_CHOICES = [
++        (STATUS_TODO, "To Do"),
++        (STATUS_IN_PROGRESS, "In Progress"),
++        (STATUS_DONE, "Done"),
++    ]
++
++    PRIORITY_LOW = "low"
++    PRIORITY_MEDIUM = "medium"
++    PRIORITY_HIGH = "high"
++    PRIORITY_CHOICES = [
++        (PRIORITY_LOW, "Low"),
++        (PRIORITY_MEDIUM, "Medium"),
++        (PRIORITY_HIGH, "High"),
++    ]
++
++    project = models.ForeignKey(Project, on_delete=models.CASCADE, related_name="tasks")
++    title = models.CharField(max_length=200)
++    status = models.CharField(
++        max_length=20,
++        choices=STATUS_CHOICES,
++        default=STATUS_TODO,
++    )
++    priority = models.CharField(
++        max_length=20,
++        choices=PRIORITY_CHOICES,
++        default=PRIORITY_MEDIUM,
++    )
++    due_date = models.DateField(blank=True, null=True)
++    tags = models.ManyToManyField(Tag, blank=True, related_name="tasks")
++
++    class Meta:
++        ordering = ["due_date", "title"]
++
++    def __str__(self) -> str:
++        return self.title
++
++    def clean(self) -> None:
++        super().clean()
++        valid_statuses = {choice for choice, _label in self.STATUS_CHOICES}
++        valid_priorities = {choice for choice, _label in self.PRIORITY_CHOICES}
++        errors = {}
++        if self.status not in valid_statuses:
++            errors["status"] = "Choose a valid status."
++        if self.priority not in valid_priorities:
++            errors["priority"] = "Choose a valid priority."
++        if errors:
++            raise ValidationError(errors)
+diff --git a/apps/project-tracker/tracker/tests/test_domain.py b/apps/project-tracker/tracker/tests/test_domain.py
+new file mode 100644
+index 0000000000000000000000000000000000000000..695755db0e3cf9fe9afefcd56974de2b4c9830c5
+--- /dev/null
++++ b/apps/project-tracker/tracker/tests/test_domain.py
+@@ -0,0 +1,84 @@
++from datetime import date
++
++from django.core.exceptions import ValidationError
++from django.test import TestCase
++
++from tracker.forms import ProjectForm, TagForm, TaskForm
++from tracker.models import Project, Tag, Task
++
++
++class TrackerModelTests(TestCase):
++    def test_project_and_task_support_tag_assignment(self):
++        project = Project.objects.create(
++            name="Launch site",
++            description="Ship the marketing site.",
++            status=Project.STATUS_ACTIVE,
++        )
++        task = Task.objects.create(
++            project=project,
++            title="Write copy",
++            status=Task.STATUS_TODO,
++            priority=Task.PRIORITY_HIGH,
++        )
++        tag = Tag.objects.create(name="marketing")
++
++        project.tags.add(tag)
++        task.tags.add(tag)
++
++        self.assertQuerySetEqual(project.tags.order_by("name"), [tag], transform=lambda item: item)
++        self.assertQuerySetEqual(task.tags.order_by("name"), [tag], transform=lambda item: item)
++
++    def test_model_clean_rejects_invalid_enumerated_values(self):
++        project = Project(
++            name="Broken project",
++            description="",
++            status="invalid",
++            created_date=date(2026, 3, 12),
++        )
++        task = Task(
++            project=Project.objects.create(name="Base", description=""),
++            title="Broken task",
++            status="invalid",
++            priority="urgent",
++        )
++
++        with self.assertRaises(ValidationError):
++            project.full_clean()
++
++        with self.assertRaises(ValidationError):
++            task.full_clean()
++
++
++class TrackerFormTests(TestCase):
++    def test_project_form_accepts_locked_status_choices(self):
++        form = ProjectForm(
++            data={
++                "name": "Roadmap",
++                "description": "Quarterly plan",
++                "status": Project.STATUS_COMPLETED,
++                "created_date": "2026-03-12",
++            }
++        )
++
++        self.assertTrue(form.is_valid(), form.errors)
++
++    def test_task_form_rejects_invalid_priority(self):
++        project = Project.objects.create(name="Roadmap", description="")
++        form = TaskForm(
++            data={
++                "project": project.pk,
++                "title": "Rank backlog",
++                "status": Task.STATUS_TODO,
++                "priority": "urgent",
++                "due_date": "2026-03-20",
++            }
++        )
++
++        self.assertFalse(form.is_valid())
++        self.assertIn("priority", form.errors)
++
++    def test_tag_form_requires_name(self):
++        form = TagForm(data={"name": ""})
++
++        self.assertFalse(form.is_valid())
++        self.assertIn("name", form.errors)
+
+[35m[3mcodex[0m[0m
+HANDOFF TO VALIDATOR
+[3m[35mfile update:[0m[0m
+diff --git a/ai/iterations/ITER-0001.md b/ai/iterations/ITER-0001.md
+index f077b7f0d527a849c6bd5a38539e538fc4f8fde1..139d258e6e3369102f3d06a45e84fd0e120ef61f
+--- a/ai/iterations/ITER-0001.md
++++ b/ai/iterations/ITER-0001.md
+@@ -10,3 +10,4 @@
+ | 2026-03-12 | VALIDATOR | Accepted the scaffold baseline as meeting ITEM-0001 acceptance criteria and handed off to review with an environment caveat on Django-dependent tests | The slice is structurally correct and free of scope drift, but full runtime validation remains blocked until Django is installed in the workspace |
+ | 2026-03-12 | REVIEWER | Marked ITEM-0001 done and returned the baton to planning for the next implementation slice | The scaffold meets the locked architecture and acceptance criteria, and the blocked Django test run is an environment limitation rather than a gap in the delivered slice |
+ | 2026-03-12 | PLANNER | Activated ITEM-0002 for domain model, form, admin, and migration work and handed off implementation to DEV | The scaffold is complete, and the domain layer is the next dependency needed before server-rendered pages and no-reload CRUD flows can be built |
++| 2026-03-12 | DEV | Implemented tracker domain models, forms, admin registration, a manual initial migration, and domain-focused tests for ITEM-0002 | The next slices depend on concrete project, task, and tag persistence plus validated form surfaces inside the existing Django app |
+diff --git a/ai/next_agent.md b/ai/next_agent.md
+index 41a47f426a7cb9479eb30e4bb4ecb1b381a1cbc6..df32ca962e4d154d4478888f6435ad497fe34468
+--- a/ai/next_agent.md
++++ b/ai/next_agent.md
+@@ -1,34 +1,30 @@
+ # Next Agent
+ 
+-- Current role: `DEV`
+-- Prompt: `ai/prompts/04-dev.md`
++- Current role: `VALIDATOR`
++- Prompt: `ai/prompts/05-validator.md`
+ - Execution command for Codex sessions: **Follow `ai/next_agent.yaml` exactly.**
+ - If role mismatch with `ai/active_agent.txt`, print: `WAITING FOR BATON`
+ 
+ ## Handoff Notes
+ 
+-- Active item: `ITEM-0002` - implement the tracker domain layer.
+-- Scope for this slice:
+-  - add `Project`, `Task`, and `Tag` models in the existing `tracker` app only
+-  - add Django forms for the domain entities with validation aligned to the locked field choices
+-  - register the models in Django admin with useful list/display configuration
+-  - create initial migrations for the schema under `tracker/migrations/`
+-- Domain constraints from `ai/goal.yaml`:
+-  - `Project`: name, description, status (`active`, `completed`, `archived`), created date
+-  - `Task`: belongs to a project, title, status (`todo`, `in_progress`, `done`), priority (`low`, `medium`, `high`), due date
+-  - `Tag`: many-to-many assignment support for both projects and tasks
+-- Implementation guardrails:
+-  - no extra Django apps, no third-party packages, no DRF, no service/repository layers
+-  - keep logic in models, forms, and standard Django admin structures
+-  - preserve the single-project Django architecture already accepted in `ITEM-0001`
+-- Suggested files to modify or create:
+-  - `apps/project-tracker/tracker/models.py`
+-  - `apps/project-tracker/tracker/forms.py`
+-  - `apps/project-tracker/tracker/admin.py`
+-  - `apps/project-tracker/tracker/migrations/`
+-  - `apps/project-tracker/tracker/tests/`
+-- Validation expectations:
+-  - add domain-focused tests if Django is available in the environment
+-  - if Django remains unavailable, document the exact blocked command and rely on non-Django validation where possible
+-- Existing caveat still applies:
+-  - prior `manage.py test` runs were blocked in this workspace by `ModuleNotFoundError: No module named 'django'`
++- Active item remains `ITEM-0002`.
++- Implemented the tracker domain layer in the existing app only:
++  - added `Project`, `Task`, and `Tag` models in `apps/project-tracker/tracker/models.py`
++  - added `ProjectForm`, `TaskForm`, and `TagForm` in `apps/project-tracker/tracker/forms.py`
++  - registered the models with practical admin configuration in `apps/project-tracker/tracker/admin.py`
++  - added a manual initial migration at `apps/project-tracker/tracker/migrations/0001_initial.py`
++  - added domain-focused tests in `apps/project-tracker/tracker/tests/test_domain.py`
++- Locked domain behavior implemented:
++  - `Project.status`: `active`, `completed`, `archived`
++  - `Task.status`: `todo`, `in_progress`, `done`
++  - `Task.priority`: `low`, `medium`, `high`
++  - tags are many-to-many on both `Project` and `Task`
++- Validation evidence:
++  - `python3 -m py_compile $(find apps/project-tracker -name '*.py' | sort)` passed
++  - Django import probe returned `None`
++  - `python3 apps/project-tracker/manage.py test tracker.tests.test_domain tracker.tests.test_views` failed with `ModuleNotFoundError: No module named 'django'`
++- Validator should focus on:
++  - scope adherence for `ITEM-0002`
++  - consistency between models, forms, admin, and migration definitions
++  - whether the manual migration matches the implemented schema
++  - whether the environment blockage is documented clearly enough for acceptance or revise
+diff --git a/ai/review.md b/ai/review.md
+index e4b26dceab45afc8c7f28aac55e65bfd7c7944fb..e07cec8822d02457d6eaa8a63a7551899f5ac7c4
+--- a/ai/review.md
++++ b/ai/review.md
+@@ -28,6 +28,11 @@
+ - Added a baseline `dashboard` view and shared templates at `templates/tracker/base.html` and `templates/tracker/dashboard.html`.
+ - Added starter static assets at `static/tracker/app.css` and `static/tracker/app.js`.
+ - Added a route smoke test in `tracker/tests/test_views.py`.
++- Added `Project`, `Task`, and `Tag` models in `tracker/models.py` with the locked status and priority choices, `Task -> Project` ownership, and tag many-to-many relationships on both projects and tasks.
++- Added `ProjectForm`, `TaskForm`, and `TagForm` in `tracker/forms.py` with explicit validation aligned to the approved enumerated values and date widgets for date fields.
++- Registered the tracker domain models in `tracker/admin.py` with practical list displays, filters, search fields, and tag management controls.
++- Added `tracker/migrations/0001_initial.py` to create the initial domain schema inside the existing tracker app.
++- Added `tracker/tests/test_domain.py` covering the domain relationships plus model and form validation for the locked enumerations.
+ 
+ ## Validator Outcome
+ 
+@@ -49,6 +54,7 @@
+ 
+ - Runtime and test validation remain partial until Django is installed in the workspace.
+ - Current automated coverage is limited to a simple dashboard route smoke test, so later slices still need model, mutation, and no-reload interaction coverage.
++- The initial migration was authored manually because `manage.py makemigrations` cannot run without Django in the workspace, so schema validation should be rechecked once Django is available.
+ 
+ ## Reviewer Decision
+ 
+diff --git a/apps/project-tracker/tracker/admin.py b/apps/project-tracker/tracker/admin.py
+index c6fe10879f27142d29808987edb47b7536a04594..1cb28c6e0f42995bdd76c2382d092b597f56035d
+--- a/apps/project-tracker/tracker/admin.py
++++ b/apps/project-tracker/tracker/admin.py
+@@ -1,2 +1,26 @@
+ from django.contrib import admin
+ 
++from .models import Project, Tag, Task
++
++
++@admin.register(Tag)
++class TagAdmin(admin.ModelAdmin):
++    list_display = ("name",)
++    search_fields = ("name",)
++
++
++@admin.register(Project)
++class ProjectAdmin(admin.ModelAdmin):
++    list_display = ("name", "status", "created_date")
++    list_filter = ("status", "created_date", "tags")
++    search_fields = ("name", "description")
++    filter_horizontal = ("tags",)
++
++
++@admin.register(Task)
++class TaskAdmin(admin.ModelAdmin):
++    list_display = ("title", "project", "status", "priority", "due_date")
++    list_filter = ("status", "priority", "due_date", "project", "tags")
++    search_fields = ("title", "project__name")
++    autocomplete_fields = ("project",)
++    filter_horizontal = ("tags",)
+diff --git a/apps/project-tracker/tracker/forms.py b/apps/project-tracker/tracker/forms.py
+new file mode 100644
+index 0000000000000000000000000000000000000000..a2eaeb9232bf5b15b79203821845d3026c1b05c0
+--- /dev/null
++++ b/apps/project-tracker/tracker/forms.py
+@@ -0,0 +1,43 @@
++from django import forms
++
++from .models import Project, Tag, Task
++
++
++def _validate_choice(value: str, choices: list[tuple[str, str]], field_name: str) -> str:
++    valid_values = {choice for choice, _label in choices}
++    if value not in valid_values:
++        raise forms.ValidationError(f"Choose a valid {field_name}.")
++    return value
++
++
++class ProjectForm(forms.ModelForm):
++    class Meta:
++        model = Project
++        fields = ["name", "description", "status", "created_date", "tags"]
++        widgets = {
++            "created_date": forms.DateInput(attrs={"type": "date"}),
++        }
++
++    def clean_status(self) -> str:
++        return _validate_choice(self.cleaned_data["status"], Project.STATUS_CHOICES, "status")
++
++
++class TaskForm(forms.ModelForm):
++    class Meta:
++        model = Task
++        fields = ["project", "title", "status", "priority", "due_date", "tags"]
++        widgets = {
++            "due_date": forms.DateInput(attrs={"type": "date"}),
++        }
++
++    def clean_status(self) -> str:
++        return _validate_choice(self.cleaned_data["status"], Task.STATUS_CHOICES, "status")
++
++    def clean_priority(self) -> str:
++        return _validate_choice(self.cleaned_data["priority"], Task.PRIORITY_CHOICES, "priority")
++
++
++class TagForm(forms.ModelForm):
++    class Meta:
++        model = Tag
++        fields = ["name"]
+diff --git a/apps/project-tracker/tracker/migrations/0001_initial.py b/apps/project-tracker/tracker/migrations/0001_initial.py
+new file mode 100644
+index 0000000000000000000000000000000000000000..48ddfc3fd4ef39f91434098f0b5445234392889e
+--- /dev/null
++++ b/apps/project-tracker/tracker/migrations/0001_initial.py
+@@ -0,0 +1,51 @@
++import django.db.models.deletion
++import django.utils.timezone
++from django.db import migrations, models
++
++
++class Migration(migrations.Migration):
++    initial = True
++
++    dependencies = []
++
++    operations = [
++        migrations.CreateModel(
++            name="Tag",
++            fields=[
++                ("id", models.BigAutoField(auto_created=True, primary_key=True, serialize=False, verbose_name="ID")),
++                ("name", models.CharField(max_length=100, unique=True)),
++            ],
++            options={
++                "ordering": ["name"],
++            },
++        ),
++        migrations.CreateModel(
++            name="Project",
++            fields=[
++                ("id", models.BigAutoField(auto_created=True, primary_key=True, serialize=False, verbose_name="ID")),
++                ("name", models.CharField(max_length=200)),
++                ("description", models.TextField(blank=True)),
++                ("status", models.CharField(choices=[("active", "Active"), ("completed", "Completed"), ("archived", "Archived")], default="active", max_length=20)),
++                ("created_date", models.DateField(default=django.utils.timezone.localdate)),
++                ("tags", models.ManyToManyField(blank=True, related_name="projects", to="tracker.tag")),
++            ],
++            options={
++                "ordering": ["name", "-created_date"],
++            },
++        ),
++        migrations.CreateModel(
++            name="Task",
++            fields=[
++                ("id", models.BigAutoField(auto_created=True, primary_key=True, serialize=False, verbose_name="ID")),
++                ("title", models.CharField(max_length=200)),
++                ("status", models.CharField(choices=[("todo", "To Do"), ("in_progress", "In Progress"), ("done", "Done")], default="todo", max_length=20)),
++                ("priority", models.CharField(choices=[("low", "Low"), ("medium", "Medium"), ("high", "High")], default="medium", max_length=20)),
++                ("due_date", models.DateField(blank=True, null=True)),
++                ("project", models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, related_name="tasks", to="tracker.project")),
++                ("tags", models.ManyToManyField(blank=True, related_name="tasks", to="tracker.tag")),
++            ],
++            options={
++                "ordering": ["due_date", "title"],
++            },
++        ),
++    ]
+diff --git a/apps/project-tracker/tracker/models.py b/apps/project-tracker/tracker/models.py
+index beeb30826593dcc86f7904d5da16715af5a61ab6..35f4e598c277ba5a78de87821bed4c7b00bb013e
+--- a/apps/project-tracker/tracker/models.py
++++ b/apps/project-tracker/tracker/models.py
+@@ -1,2 +1,99 @@
++from django.core.exceptions import ValidationError
+ from django.db import models
++from django.utils import timezone
++
++
++class Tag(models.Model):
++    name = models.CharField(max_length=100, unique=True)
++
++    class Meta:
++        ordering = ["name"]
++
++    def __str__(self) -> str:
++        return self.name
++
+ 
++class Project(models.Model):
++    STATUS_ACTIVE = "active"
++    STATUS_COMPLETED = "completed"
++    STATUS_ARCHIVED = "archived"
++    STATUS_CHOICES = [
++        (STATUS_ACTIVE, "Active"),
++        (STATUS_COMPLETED, "Completed"),
++        (STATUS_ARCHIVED, "Archived"),
++    ]
++
++    name = models.CharField(max_length=200)
++    description = models.TextField(blank=True)
++    status = models.CharField(
++        max_length=20,
++        choices=STATUS_CHOICES,
++        default=STATUS_ACTIVE,
++    )
++    created_date = models.DateField(default=timezone.localdate)
++    tags = models.ManyToManyField(Tag, blank=True, related_name="projects")
++
++    class Meta:
++        ordering = ["name", "-created_date"]
++
++    def __str__(self) -> str:
++        return self.name
++
++    def clean(self) -> None:
++        super().clean()
++        valid_statuses = {choice for choice, _label in self.STATUS_CHOICES}
++        if self.status not in valid_statuses:
++            raise ValidationError({"status": "Choose a valid status."})
++
++
++class Task(models.Model):
++    STATUS_TODO = "todo"
++    STATUS_IN_PROGRESS = "in_progress"
++    STATUS_DONE = "done"
++    STATUS_CHOICES = [
++        (STATUS_TODO, "To Do"),
++        (STATUS_IN_PROGRESS, "In Progress"),
++        (STATUS_DONE, "Done"),
++    ]
++
++    PRIORITY_LOW = "low"
++    PRIORITY_MEDIUM = "medium"
++    PRIORITY_HIGH = "high"
++    PRIORITY_CHOICES = [
++        (PRIORITY_LOW, "Low"),
++        (PRIORITY_MEDIUM, "Medium"),
++        (PRIORITY_HIGH, "High"),
++    ]
++
++    project = models.ForeignKey(Project, on_delete=models.CASCADE, related_name="tasks")
++    title = models.CharField(max_length=200)
++    status = models.CharField(
++        max_length=20,
++        choices=STATUS_CHOICES,
++        default=STATUS_TODO,
++    )
++    priority = models.CharField(
++        max_length=20,
++        choices=PRIORITY_CHOICES,
++        default=PRIORITY_MEDIUM,
++    )
++    due_date = models.DateField(blank=True, null=True)
++    tags = models.ManyToManyField(Tag, blank=True, related_name="tasks")
++
++    class Meta:
++        ordering = ["due_date", "title"]
++
++    def __str__(self) -> str:
++        return self.title
++
++    def clean(self) -> None:
++        super().clean()
++        valid_statuses = {choice for choice, _label in self.STATUS_CHOICES}
++        valid_priorities = {choice for choice, _label in self.PRIORITY_CHOICES}
++        errors = {}
++        if self.status not in valid_statuses:
++            errors["status"] = "Choose a valid status."
++        if self.priority not in valid_priorities:
++            errors["priority"] = "Choose a valid priority."
++        if errors:
++            raise ValidationError(errors)
+diff --git a/apps/project-tracker/tracker/tests/test_domain.py b/apps/project-tracker/tracker/tests/test_domain.py
+new file mode 100644
+index 0000000000000000000000000000000000000000..695755db0e3cf9fe9afefcd56974de2b4c9830c5
+--- /dev/null
++++ b/apps/project-tracker/tracker/tests/test_domain.py
+@@ -0,0 +1,84 @@
++from datetime import date
++
++from django.core.exceptions import ValidationError
++from django.test import TestCase
++
++from tracker.forms import ProjectForm, TagForm, TaskForm
++from tracker.models import Project, Tag, Task
++
++
++class TrackerModelTests(TestCase):
++    def test_project_and_task_support_tag_assignment(self):
++        project = Project.objects.create(
++            name="Launch site",
++            description="Ship the marketing site.",
++            status=Project.STATUS_ACTIVE,
++        )
++        task = Task.objects.create(
++            project=project,
++            title="Write copy",
++            status=Task.STATUS_TODO,
++            priority=Task.PRIORITY_HIGH,
++        )
++        tag = Tag.objects.create(name="marketing")
++
++        project.tags.add(tag)
++        task.tags.add(tag)
++
++        self.assertQuerySetEqual(project.tags.order_by("name"), [tag], transform=lambda item: item)
++        self.assertQuerySetEqual(task.tags.order_by("name"), [tag], transform=lambda item: item)
++
++    def test_model_clean_rejects_invalid_enumerated_values(self):
++        project = Project(
++            name="Broken project",
++            description="",
++            status="invalid",
++            created_date=date(2026, 3, 12),
++        )
++        task = Task(
++            project=Project.objects.create(name="Base", description=""),
++            title="Broken task",
++            status="invalid",
++            priority="urgent",
++        )
++
++        with self.assertRaises(ValidationError):
++            project.full_clean()
++
++        with self.assertRaises(ValidationError):
++            task.full_clean()
++
++
++class TrackerFormTests(TestCase):
++    def test_project_form_accepts_locked_status_choices(self):
++        form = ProjectForm(
++            data={
++                "name": "Roadmap",
++                "description": "Quarterly plan",
++                "status": Project.STATUS_COMPLETED,
++                "created_date": "2026-03-12",
++            }
++        )
++
++        self.assertTrue(form.is_valid(), form.errors)
++
++    def test_task_form_rejects_invalid_priority(self):
++        project = Project.objects.create(name="Roadmap", description="")
++        form = TaskForm(
++            data={
++                "project": project.pk,
++                "title": "Rank backlog",
++                "status": Task.STATUS_TODO,
++                "priority": "urgent",
++                "due_date": "2026-03-20",
++            }
++        )
++
++        self.assertFalse(form.is_valid())
++        self.assertIn("priority", form.errors)
++
++    def test_tag_form_requires_name(self):
++        form = TagForm(data={"name": ""})
++
++        self.assertFalse(form.is_valid())
++        self.assertIn("name", form.errors)
+
+[3m[35mtokens used[0m[0m
+26,963
+
+Script done on 2026-03-11 22:08:59-05:00 [COMMAND_EXIT_CODE="0"]

@@ -1,0 +1,108 @@
+items:
+  - id: ITEM-0001
+    title: Scaffold Django project tracker baseline
+    goal: Establish the single-project Django skeleton under `apps/project-tracker/` with the tracker app wired into settings, URLs, templates, and static assets.
+    type: feature
+    status: done
+    priority: high
+    dependencies: []
+    notes:
+      - Keep one Django project with one main `tracker` app.
+      - Create the baseline file structure for settings, root URLs, app URLs, templates, and static assets.
+      - Include a base template and shared asset wiring that later CRUD pages can extend.
+  - id: ITEM-0002
+    title: Implement tracker domain models and forms
+    goal: Add `Project`, `Task`, and `Tag` models, related forms, admin registration, and database migrations that match the approved domain surface.
+    type: feature
+    status: done
+    priority: high
+    dependencies:
+      - ITEM-0001
+    notes:
+      - Use direct Django ORM relationships, including tag many-to-many links for both projects and tasks.
+      - Keep validation in models and forms rather than introducing service layers.
+      - Keep the implementation inside the single existing `tracker` app with no extra packages or architecture layers.
+      - Include initial migration files for the domain schema in this slice.
+  - id: ITEM-0003
+    title: Build server-rendered tracker pages
+    goal: Deliver dashboard, project list, project detail with tasks, and tag detail pages using Django views, templates, and SQLite-backed aggregates.
+    type: feature
+    status: done
+    priority: high
+    dependencies:
+      - ITEM-0002
+    notes:
+      - Dashboard must show total projects, tasks by status, and overdue tasks.
+      - Prefer server-rendered templates and partial-ready template composition.
+  - id: ITEM-0004
+    title: Add no-reload project CRUD interactions
+    goal: Implement async create, update, and delete flows for projects using HTML partial responses and small vanilla JS fetch handlers.
+    type: feature
+    status: done
+    priority: high
+    dependencies:
+      - ITEM-0003
+    notes:
+      - Start with project mutations so the first async slice lands on existing dashboard and project list/detail pages.
+      - Default mutation responses to HTML partials and inline form-error rendering.
+      - Keep the JS small and framework-free, using fetch against Django views inside the existing tracker app.
+  - id: ITEM-0005
+    title: Add no-reload task CRUD interactions
+    goal: Implement async create, update, and delete flows for tasks from project detail pages using HTML partial responses and small vanilla JS fetch handlers.
+    type: feature
+    status: done
+    priority: high
+    dependencies:
+      - ITEM-0004
+    notes:
+      - Reuse the async interaction pattern established for project mutations instead of inventing a second approach.
+      - Support task mutations directly from project detail views.
+      - Keep responses partial-first and use JSON only when HTML is clearly awkward.
+      - Scope this slice to tasks only so the mutation surface stays small and validator can inspect one interaction family at a time.
+  - id: ITEM-0006
+    title: Add no-reload tag CRUD interactions
+    goal: Implement async create, update, and delete flows for tags using HTML partial responses and small vanilla JS fetch handlers on a server-rendered tag management surface.
+    type: feature
+    status: done
+    priority: high
+    dependencies:
+      - ITEM-0005
+    notes:
+      - Reuse the same partial swap contract used for project and task mutations.
+      - Add a small server-rendered management surface for tags rather than introducing a new UI architecture.
+      - Keep project and task tag assignment inside existing forms; this slice is about tag entity CRUD.
+  - id: ITEM-0007
+    title: Add automated coverage and final validation
+    goal: Cover the tracker with Django tests for models, views, and no-reload mutation behavior, then validate the full acceptance path.
+    type: feature
+    status: done
+    priority: medium
+    dependencies:
+      - ITEM-0006
+    notes:
+      - Focus tests on domain rules, page rendering, and async CRUD behavior.
+      - Keep tooling inside Django and the Python standard library only.
+  - id: ITEM-0008
+    title: Document local setup and verification workflow
+    goal: Add concise project-local documentation under `apps/project-tracker/` covering Django setup, test commands, and the known workspace limitation blocking runtime verification.
+    type: chore
+    status: done
+    priority: low
+    dependencies:
+      - ITEM-0007
+    notes:
+      - Keep the documentation close to the Django app so DEV can edit inside allowed paths.
+      - Capture the exact `manage.py` commands for running the server, migrations, and focused tests once Django is installed.
+      - Preserve the current `ModuleNotFoundError: No module named 'django'` caveat as an environment issue, not a product-code defect.
+  - id: ITEM-0009
+    title: Remove tracked Python bytecode artifacts
+    goal: Clean tracked `__pycache__` directories and `.pyc` files from `apps/project-tracker/` so the repository reflects source-controlled Django code only.
+    type: chore
+    status: done
+    priority: low
+    dependencies:
+      - ITEM-0008
+    notes:
+      - Limit the cleanup to tracked Python bytecode artifacts under `apps/project-tracker/`.
+      - Do not introduce new tooling or repository-root changes such as `.gitignore` updates in this slice.
+      - Re-run the accepted `py_compile` and focused Django test commands after cleanup to confirm no behavioral regression.

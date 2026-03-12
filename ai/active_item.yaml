@@ -1,0 +1,11 @@
+id: null
+title: Project complete; no remaining backlog work
+goal: "Preserve the completed tracker state and avoid further implementation until new backlog scope or user direction is provided."
+status: idle
+owner_role: DEV
+related_files: []
+acceptance_criteria:
+  - "All backlog items remain in `done` status with no unfinished implementation slice selected."
+  - "No additional product or cleanup changes are started without a new planned backlog item or explicit user request."
+done_definition:
+  - "The baton handoff explicitly states that the current project backlog is complete."

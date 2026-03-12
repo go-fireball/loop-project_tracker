@@ -1,0 +1,64 @@
+<section class="panel form-panel">
+  <div class="panel-heading">
+    <div>
+      <h2>{{ form_heading }}</h2>
+      <p class="section-copy">Project changes save through the current page without a full reload.</p>
+    </div>
+  </div>
+  <form
+    class="project-form"
+    action="{{ form_action }}"
+    method="post"
+    data-async-form
+  >
+    {% csrf_token %}
+    <input type="hidden" name="source_page" value="{{ source_page }}">
+    {% if form.non_field_errors %}
+      <div class="form-errors" role="alert">
+        {% for error in form.non_field_errors %}
+          <p>{{ error }}</p>
+        {% endfor %}
+      </div>
+    {% endif %}
+    <div class="form-grid">
+      <div class="field-group field-span-2">
+        <label for="{{ form.name.id_for_label }}">Name</label>
+        {{ form.name }}
+        {% for error in form.name.errors %}
+          <p class="field-error">{{ error }}</p>
+        {% endfor %}
+      </div>
+      <div class="field-group field-span-2">
+        <label for="{{ form.description.id_for_label }}">Description</label>
+        {{ form.description }}
+        {% for error in form.description.errors %}
+          <p class="field-error">{{ error }}</p>
+        {% endfor %}
+      </div>
+      <div class="field-group">
+        <label for="{{ form.status.id_for_label }}">Status</label>
+        {{ form.status }}
+        {% for error in form.status.errors %}
+          <p class="field-error">{{ error }}</p>
+        {% endfor %}
+      </div>
+      <div class="field-group">
+        <label for="{{ form.created_date.id_for_label }}">Created date</label>
+        {{ form.created_date }}
+        {% for error in form.created_date.errors %}
+          <p class="field-error">{{ error }}</p>
+        {% endfor %}
+      </div>
+      <div class="field-group field-span-2">
+        <label for="{{ form.tags.id_for_label }}">Tags</label>
+        {{ form.tags }}
+        {% for error in form.tags.errors %}
+          <p class="field-error">{{ error }}</p>
+        {% endfor %}
+      </div>
+    </div>
+    <div class="form-actions">
+      <button class="button-primary" type="submit">{{ form_submit_label }}</button>
+    </div>
+  </form>
+</section>

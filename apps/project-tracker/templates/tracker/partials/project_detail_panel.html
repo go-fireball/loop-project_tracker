@@ -1,0 +1,36 @@
+<section class="panel">
+  <div class="panel-heading">
+    <div>
+      <h2>{{ project.name }}</h2>
+      <p class="section-copy">{{ project.description|default:"No description provided yet." }}</p>
+    </div>
+    <a class="inline-link" href="{% url 'tracker:project_list' %}">All projects</a>
+  </div>
+  <div class="meta-cluster">
+    <span class="badge">{{ project.get_status_display }}</span>
+    <span class="meta-copy">Created {{ project.created_date }}</span>
+    <span class="meta-copy">{{ project.tasks.count }} tasks</span>
+    {% for tag in project.tags.all %}
+      <a class="chip" href="{% url 'tracker:tag_detail' tag.id %}">{{ tag.name }}</a>
+    {% empty %}
+      <span class="meta-copy">No tags</span>
+    {% endfor %}
+  </div>
+  <div class="action-row">
+    <a
+      class="button-secondary"
+      href="{% url 'tracker:project_update' project.id %}"
+      data-async-link
+    >Edit project</a>
+    <form
+      action="{% url 'tracker:project_delete' project.id %}"
+      method="post"
+      data-async-form
+      data-confirm="Delete {{ project.name }}?"
+    >
+      {% csrf_token %}
+      <input type="hidden" name="source_page" value="project_detail">
+      <button class="button-danger" type="submit">Delete project</button>
+    </form>
+  </div>
+</section>

@@ -1,0 +1,18 @@
+{% extends "tracker/base.html" %}
+
+{% block title %}{{ project.name }}{% endblock %}
+
+{% block content %}
+  <div id="project-detail-region">
+    {% include "tracker/partials/project_detail_panel.html" %}
+  </div>
+
+  {% include "tracker/partials/project_edit_placeholder.html" %}
+  <div id="task-create-form-region">
+    {% include "tracker/partials/task_form_panel.html" with form=task_form form_action=task_create_url form_heading="Add a task" form_submit_label="Create task" %}
+  </div>
+  <div id="task-edit-form-region"></div>
+  <div id="task-list-region">
+    {% include "tracker/partials/task_list_panel.html" %}
+  </div>
+{% endblock %}

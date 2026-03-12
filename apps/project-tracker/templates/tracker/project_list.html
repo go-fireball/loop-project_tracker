@@ -1,0 +1,12 @@
+{% extends "tracker/base.html" %}
+
+{% block title %}Projects{% endblock %}
+
+{% block content %}
+  <div id="project-create-form-region">
+    {% include "tracker/partials/project_form_panel.html" with form=project_form source_page="project_list" form_action=project_create_url form_heading="Add a project" form_submit_label="Create project" %}
+  </div>
+  <div id="project-list-region">
+    {% include "tracker/partials/project_list_panel.html" %}
+  </div>
+{% endblock %}

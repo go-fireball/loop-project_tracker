@@ -1,0 +1,28 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>{% block title %}{{ page_title|default:"Project Tracker" }}{% endblock %}</title>
+    <link rel="stylesheet" href="{% static 'tracker/app.css' %}">
+  </head>
+  <body>
+    <div class="app-shell">
+      <header class="app-header">
+        <p class="eyebrow">Personal tracker</p>
+        <h1>Project Tracker</h1>
+        <p class="lede">Server-rendered project, task, and tag views backed by the tracker domain models.</p>
+        <nav class="app-nav" aria-label="Primary">
+          <a href="{% url 'tracker:dashboard' %}">Dashboard</a>
+          <a href="{% url 'tracker:project_list' %}">Projects</a>
+          <a href="{% url 'tracker:tag_list' %}">Tags</a>
+        </nav>
+      </header>
+      <main>
+        {% block content %}{% endblock %}
+      </main>
+    </div>
+    <script src="{% static 'tracker/app.js' %}" defer></script>
+  </body>
+</html>

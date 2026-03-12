@@ -1,0 +1,32 @@
+{% extends "tracker/base.html" %}
+
+{% block title %}{{ page_title }}{% endblock %}
+
+{% block content %}
+  <section class="panel">
+    <div class="panel-heading">
+      <div>
+        <h2>Tag management</h2>
+        <p class="section-copy">Create, update, and delete shared tracker tags without leaving this page.</p>
+      </div>
+      <a class="inline-link" href="{% url 'tracker:project_list' %}">Browse projects</a>
+    </div>
+  </section>
+
+  <div class="management-layout">
+    <div class="management-main">
+      <div id="tag-create-form-region">
+        {% include "tracker/partials/tag_form_panel.html" with form=tag_form form_action=tag_create_url form_heading="Add a tag" form_submit_label="Create tag" %}
+      </div>
+      <div id="tag-detail-region">
+        {% include "tracker/partials/tag_detail_panel.html" %}
+      </div>
+      <div id="tag-edit-form-region"></div>
+    </div>
+    <aside class="management-sidebar">
+      <div id="tag-list-region">
+        {% include "tracker/partials/tag_list_panel.html" %}
+      </div>
+    </aside>
+  </div>
+{% endblock %}
