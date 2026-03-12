@@ -1,18 +1,18 @@
-next_role: SENIOR_JUDGMENTAL_ENGINEER
-prompt_file: ai/prompts/01-senior-judgmental-engineer.md
+next_role: ARCHITECT
+prompt_file: ai/prompts/02-architect.md
 read:
   - ai/requirements.md
-  - ai/simplification.md
-  - ai/judgment.yaml
   - ai/active_item.yaml
-  - ai/constitution.yaml
+  - ai/judgment.yaml
+  - ai/simplification.md
   - ai/decision-lock.yaml
   - ai/goal.yaml
+  - ai/constitution.yaml
   - ai/active_agent.txt
   - ai/next_agent.md
   - ai/user-questions.yaml
 allowed_edits:
-  - ai/simplification.md
+  - context/repo/
   - ai/review.md
   - ai/decision-lock.yaml
   - ai/user-questions.yaml
@@ -24,10 +24,10 @@ stop_conditions:
   - WAITING FOR BATON when active agent mismatch
   - WAITING FOR USER when clarification is required
 success_criteria:
-  - judgment guardrails applied and scope validated
+  - architecture defined with boundaries and tradeoffs
 handoff_on_success:
-  print_exact: HANDOFF TO ARCHITECT
+  print_exact: HANDOFF TO PLANNER
 notes:
-  - requirements one-pager updated from project goal
-  - review scope and enforce simplification
-  - watch for defaults in judgment.yaml that conflict with Django/SQLite/plain JS constraints
+  - judgment summary
+  - guardrails added
+  - risks flagged

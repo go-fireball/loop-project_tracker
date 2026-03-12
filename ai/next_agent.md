@@ -1,13 +1,14 @@
 # Next Agent
 
-- Current role: `SENIOR_JUDGMENTAL_ENGINEER`
-- Prompt: `ai/prompts/01-senior-judgmental-engineer.md`
+- Current role: `ARCHITECT`
+- Prompt: `ai/prompts/02-architect.md`
 - Execution command for Codex sessions: **Follow `ai/next_agent.yaml` exactly.**
 - If role mismatch with `ai/active_agent.txt`, print: `WAITING FOR BATON`
 
 ## Handoff Notes
 
-- Refined `ai/requirements.md` from the project goal into a concrete one-pager covering objective, scope, explicit non-goals, constraints, and testable acceptance criteria.
-- No user clarification was required. `ai/user-questions.yaml` remains `status: none`, and `ai/decision-lock.yaml` is unchanged because there were no answered questions to promote.
-- Focus judgment on keeping the implementation lean: single Django app flow, built-in Django capabilities only, vanilla JS for partial updates, and no speculative platform concerns.
-- Watch for default engineering preferences in `ai/judgment.yaml` that conflict with the explicit project goal; the goal already fixes Django, SQLite, and plain HTML/JS.
+- `ai/simplification.md` now contains explicit guardrails that override conflicting defaults in `ai/judgment.yaml`. Treat Django, SQLite, plain HTML/CSS/JS, and a modular monolith under `apps/project-tracker/` as fixed constraints.
+- Do not design a React/Next.js frontend, DRF-style API platform, PostgreSQL deployment, cloud infrastructure, microservices, or speculative multi-app split. Those would be scope drift relative to the product goal.
+- Prefer a simple server-rendered Django architecture with small async interactions for no-reload CRUD flows. JSON endpoints are acceptable only when they are the simplest path for a specific interaction, not as a platform layer.
+- Keep the domain model direct: projects, tasks, tags, dashboard queries, and the required views only. Avoid repository layers, command buses, plugin systems, or other abstractions unless repeated pain is already visible in the codebase.
+- No user clarification was required. `ai/user-questions.yaml` remains `status: none`, and `ai/decision-lock.yaml` is unchanged because there were no answered human decisions to promote.
