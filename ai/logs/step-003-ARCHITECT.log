@@ -1,0 +1,1314 @@
+Script started on 2026-03-11 21:52:54-05:00 [COMMAND="codex exec --model gpt-5.4 --full-auto Follow\ ai/next_agent.yaml\ exactly. " TERM="xterm-256color" TTY="/dev/pts/0" COLUMNS="184" LINES="43"]
+OpenAI Codex v0.114.0 (research preview)
+--------
+[1mworkdir:[0m /home/sundaram/code/temp/test
+[1mmodel:[0m gpt-5.4
+[1mprovider:[0m openai
+[1mapproval:[0m never
+[1msandbox:[0m workspace-write [workdir, /tmp, $TMPDIR, /home/sundaram/.codex/memories]
+[1mreasoning effort:[0m medium
+[1mreasoning summaries:[0m none
+[1msession id:[0m 019cdff6-1f33-7602-bdac-000220f559bf
+--------
+[36muser[0m
+Follow ai/next_agent.yaml exactly.
+[36mmcp startup:[0m no servers
+[35m[3mcodex[0m[0m
+I’m checking `ai/next_agent.yaml` and the surrounding repo instructions first, then I’ll execute its workflow as written.
+[35m[3mexec[0m[0m
+[1m/bin/bash -lc pwd[0m in /home/sundaram/code/temp/test[32m succeeded in 0ms:[0m
+[2m/home/sundaram/code/temp/test[0m
+[35m[3mexec[0m[0m
+[1m/bin/bash -lc "rg --files -g 'AGENTS.md' -g 'ai/next_agent.yaml' -g 'ai/**'"[0m in /home/sundaram/code/temp/test[32m succeeded in 0ms:[0m
+[2mai/constitution.yaml
+ai/active_item.yaml
+ai/judgment.yaml
+ai/user-questions.yaml
+ai/goal.yaml
+ai/requirements.md
+ai/logs/step-002-SENIOR_JUDGMENTAL_ENGINEER.log
+ai/logs/baton.log
+ai/logs/step-001-PRODUCT_OWNER.log
+ai/next_agent.md
+ai/active_agent.txt
+ai/templates/active-item-template.yaml
+ai/templates/one-pager-requirements-template.md
+ai/templates/decision-lock-template.yaml
+ai/templates/next-agent-template.yaml
+ai/templates/backlog-item-template.yaml
+ai/decision-lock.yaml
+ai/iterations/ITER-0001.md
+ai/simplification.md
+ai/review.md[0m
+[35m[3mcodex[0m[0m
+I found the agent handoff files. Next I’m reading `ai/next_agent.yaml` and any directly referenced context it depends on so I can follow the sequence without guessing.
+[35m[3mexec[0m[0m
+[1m/bin/bash -lc "sed -n '1,220p' ai/next_agent.yaml"[0m in /home/sundaram/code/temp/test[32m succeeded in 0ms:[0m
+[2mnext_role: ARCHITECT
+prompt_file: ai/prompts/02-architect.md
+read:
+  - ai/requirements.md
+  - ai/active_item.yaml
+  - ai/judgment.yaml
+  - ai/simplification.md
+  - ai/decision-lock.yaml
+  - ai/goal.yaml
+  - ai/constitution.yaml
+  - ai/active_agent.txt
+  - ai/next_agent.md
+  - ai/user-questions.yaml
+allowed_edits:
+  - context/repo/
+  - ai/review.md
+  - ai/decision-lock.yaml
+  - ai/user-questions.yaml
+  - ai/iterations/ITER-0001.md
+  - ai/active_agent.txt[0m
+[35m[3mexec[0m[0m
+[1m/bin/bash -lc "sed -n '1,220p' ai/active_agent.txt"[0m in /home/sundaram/code/temp/test[32m succeeded in 0ms:[0m
+[2mARCHITECT[0m
+[35m[3mexec[0m[0m
+[1m/bin/bash -lc "sed -n '1,220p' ai/next_agent.md"[0m in /home/sundaram/code/temp/test[32m succeeded in 0ms:[0m
+[2m# Next Agent
+
+- Current role: `ARCHITECT`
+- Prompt: `ai/prompts/02-architect.md`
+- Execution command for Codex sessions: **Follow `ai/next_agent.yaml` exactly.**
+- If role mismatch with `ai/active_agent.txt`, print: `WAITING FOR BATON`
+
+## Handoff Notes
+
+- `ai/simplification.md` now contains explicit guardrails that override conflicting defaults in `ai/judgment.yaml`. Treat Django, SQLite, plain HTML/CSS/JS, and a modular monolith under `apps/project-tracker/` as fixed constraints.
+- Do not design a React/Next.js frontend, DRF-style API platform, PostgreSQL deployment, cloud infrastructure, microservices, or speculative multi-app split. Those would be scope drift relative to the product goal.
+- Prefer a simple server-rendered Django architecture with small async interactions for no-reload CRUD flows. JSON endpoints are acceptable only when they are the simplest path for a specific interaction, not as a platform layer.
+- Keep the domain model direct: projects, tasks, tags, dashboard queries, and the required views only. Avoid repository layers, command buses, plugin systems, or other abstractions unless repeated pain is already visible in the codebase.
+- No user clarification was required. `ai/user-questions.yaml` remains `status: none`, and `ai/decision-lock.yaml` is unchanged because there were no answered human decisions to promote.[0m
+[35m[3mcodex[0m[0m
+`ai/active_agent.txt` matches `ARCHITECT`, so I’m proceeding with the architect pass. I’m loading the required context files now and will keep edits inside the allowed paths from `ai/next_agent.yaml`.
+[35m[3mexec[0m[0m
+[1m/bin/bash -lc "sed -n '1,260p' ai/prompts/02-architect.md"[0m in /home/sundaram/code/temp/test[32m succeeded in 0ms:[0m
+[2m# ROLE: ARCHITECT
+
+## 1) Baton check
+- Read `ai/active_agent.txt`.
+- If value is not exactly `ARCHITECT`, output exactly:
+`WAITING FOR BATON`
+- Stop.
+
+## 2) Required reads
+- `ai/goal.yaml`
+- `ai/requirements.md`
+- `ai/active_item.yaml`
+- `ai/judgment.yaml`
+- `ai/simplification.md`
+- `ai/decision-lock.yaml`
+- `ai/user-questions.yaml`
+- `ai/constitution.yaml`
+- `ai/next_agent.md`
+
+## 3) Allowed edits (only)[0m
+[35m[3mexec[0m[0m
+[1m/bin/bash -lc "sed -n '1,260p' ai/requirements.md"[0m in /home/sundaram/code/temp/test[32m succeeded in 0ms:[0m
+[2m# Requirements (One Pager)
+
+## Objective
+
+Build a personal project tracker web app in Django that lets a single user manage projects, tasks, and tags through a server-rendered HTML/JavaScript frontend backed by a SQLite database. The product must support fast CRUD workflows without full page reloads and provide a dashboard summarizing project and task status.
+
+## In Scope
+
+- Django models for projects, tasks, and tags with the relationships defined in `ai/goal.yaml`
+- HTTP endpoints for create, read, update, and delete operations on projects, tasks, and tags
+- Project list view, project detail view with related tasks, tag filter view, and dashboard summary view
+- Plain HTML, CSS, and vanilla JavaScript frontend served by Django
+- Partial page updates or asynchronous requests so add/edit/delete flows do not require full page reloads
+- SQLite-backed persistence for all project data
+
+## Out of Scope
+
+- Governance loop internals (already bootstrapped)
+- Multi-user accounts, authentication, or permissions
+- External APIs, background jobs, or real-time collaboration[0m
+[35m[3mexec[0m[0m
+[1m/bin/bash -lc "sed -n '1,260p' ai/simplification.md"[0m in /home/sundaram/code/temp/test[32m succeeded in 0ms:[0m
+[2m# Simplification Guidance
+
+1. Keep the system as a single Django project under `apps/project-tracker/`, with a straightforward modular monolith structure.
+2. Prefer Django built-ins first: ORM models, forms where useful, template rendering, URL routing, migrations, and standard views before introducing custom infrastructure.
+3. Treat the HTML/vanilla-JS UI as the product surface. Use small asynchronous endpoints or partial-template responses only to avoid full page reloads.
+4. Do not introduce a separate SPA, frontend framework, public REST platform, or client-state architecture. The goal is fast CRUD, not a reusable API product.
+5. Use SQLite-specific pragmatism. Avoid designs that require database features, concurrency assumptions, or deployment topology beyond a local Django app with SQLite.
+6. Keep the domain model direct: projects, tasks, and tags only. Add helper services or abstraction layers only when duplication is concrete and repeated.
+7. Favor one Django app unless a second app is clearly required by code boundaries that already exist. Do not split by speculative future scale.
+8. Keep interfaces small and explicit. Prefer clear view/template/form boundaries over generic repositories, command buses, or plugin systems.
+9. Preserve required business behavior exactly, especially statuses, priorities, relationships, dashboard counts, and no-reload CRUD interactions.
+10. Record tradeoffs in design docs when choosing between template-partial updates and JSON responses, but default to the simpler implementation that satisfies the acceptance criteria.
+
+## Judgment Guardrails
+
+- Override conflicting defaults from `ai/judgment.yaml`: this project is Django, SQLite, plain HTML/CSS/JS, and a single deployable app, not ASP.NET, React/Next.js, PostgreSQL, or AWS-first infrastructure.
+- Avoid cloud, container, auth, queueing, CDN, object storage, and microservice concerns unless the requirements explicitly add them later.
+- Keep human escalation reserved for genuine product tradeoffs. Routine engineering choices should be resolved in favor of the simplest maintainable implementation.
+- Architecture should optimize for easy local development, readable server-rendered flows, and testable CRUD behavior, not for hypothetical multi-user or distributed futures.
+[0m
+[35m[3mexec[0m[0m
+[1m/bin/bash -lc "sed -n '1,260p' ai/active_item.yaml"[0m in /home/sundaram/code/temp/test[35m[3mexec[0m[0m
+[1m/bin/bash -lc "sed -n '1,260p' ai/constitution.yaml"[0m in /home/sundaram/code/temp/test[35m[3mexec[0m[0m
+[1m/bin/bash -lc "sed -n '1,260p' ai/decision-lock.yaml"[0m in /home/sundaram/code/temp/test[32m succeeded in 0ms:[0m
+[2mid: null
+title: null
+goal: null
+status: idle
+owner_role: null
+related_files: []
+acceptance_criteria: []
+done_definition: [][0m
+[32m succeeded in 0ms:[0m
+[2mcore_rules:
+  - state lives in files, not chat memory
+  - baton ownership is authoritative
+  - roles must not edit outside allowed files
+baton_rules:
+  - if active agent mismatch, print exactly WAITING FOR BATON
+  - baton must be handed off explicitly
+edit_rules:
+  - only edit allowed files listed in the current role prompt
+stop_rules:
+  - if human clarification is needed, print exactly WAITING FOR USER
+  - always append an iteration log entry before handoff[0m
+[32m succeeded in 0ms:[0m
+[2mconfirmed_by_user: false
+blocked_on_user: false
+last_user_decision: null
+approved_exceptions: []
+approved_decisions: [][0m
+[35m[3mexec[0m[0m
+[1m/bin/bash -lc "sed -n '1,260p' ai/judgment.yaml"[0m in /home/sundaram/code/temp/test[32m succeeded in 0ms:[0m
+[2mbackend_default: aspnet_core
+frontend_default: react_nextjs
+frontend_alternative: nuxt_if_explicitly_requested
+database_default: postgresql
+architecture_default: modular_monolith
+coding_style: functional_testable_pragmatic
+preserve_business_behavior: true
+avoid_unnecessary_microservices: true
+avoid_clever_abstractions: true
+cloud_default: aws
+iac_default: cdk
+container_default: fargate
+static_assets_default: s3_cloudfront
+auth_default: cognito
+python_only_for_data_workloads: true
+nosql_only_when_justified: true
+relational_bias: true
+human_for_high_level_decisions_only: true[0m
+[35m[3mexec[0m[0m
+[1m/bin/bash -lc "sed -n '1,260p' ai/user-questions.yaml"[0m in /home/sundaram/code/temp/test[35m[3mexec[0m[0m
+[1m/bin/bash -lc "sed -n '1,260p' ai/goal.yaml"[0m in /home/sundaram/code/temp/test[32m succeeded in 0ms:[0m
+[2mstatus: none
+return_to_role: null
+questions: [][0m
+[32m succeeded in 0ms:[0m
+[2mproject_goal: Build a personal project tracker web app using Django with a SQLite database and HTML/JS frontend
+success_criteria:
+  - Django REST endpoints for CRUD operations on projects, tasks, and tags
+  - Each project has a name, description, status (active/completed/archived), and created date
+  - Each task belongs to a project and has a title, status (todo/in_progress/done), priority (low/medium/high), and due date
+  - Tags can be assigned to both projects and tasks (many-to-many)
+  - Frontend has separate views for projects list, project detail (showing its tasks), and a tag filter view
+  - Adding/editing/deleting entities works without full page reload
+  - Dashboard view showing summary stats (total projects, tasks by status, overdue tasks)
+  - Data persists in SQLite database
+context_notes:
+  - Use Django with SQLite backend
+  - Frontend is plain HTML, CSS, and vanilla JS (no React/Vue/Angular)
+  - Django serves both the API and static/template files
+  - All code lives in apps/project-tracker/
+  - Use Django models with proper foreign key and many-to-many relationships
+constraints:
+  - Django and its built-in dependencies only, no additional pip packages (no DRF, no celery, etc.)
+  - No frontend JS frameworks
+  - Single Django project, no microservices[0m
+[35m[3mcodex[0m[0m
+The constraints are consistent: simple Django, server-rendered UI, small async interactions only where needed. I’m checking the repository shape and the iteration log format so I can write the architecture notes in the right place and hand off cleanly.
+[35m[3mexec[0m[0m
+[1m/bin/bash -lc 'rg --files'[0m in /home/sundaram/code/temp/test[32m succeeded in 0ms:[0m
+[2mai/logs/step-002-SENIOR_JUDGMENTAL_ENGINEER.log
+ai/logs/baton.log
+ai/logs/step-001-PRODUCT_OWNER.log
+ai/next_agent.md
+ai/active_agent.txt
+init.sh
+ai/backlog.yaml
+ai/goal.yaml
+ai/requirements.md
+ai/defaults/logs/baton.log
+ai/defaults/backlog.yaml
+ai/defaults/goal.yaml
+ai/defaults/requirements.md
+ai/defaults/user-questions.yaml
+ai/defaults/templates/active-item-template.yaml
+ai/defaults/templates/one-pager-requirements-template.md
+ai/defaults/templates/decision-lock-template.yaml
+ai/defaults/templates/next-agent-template.yaml
+ai/defaults/templates/backlog-item-template.yaml
+ai/defaults/decision-lock.yaml[0m
+[35m[3mexec[0m[0m
+[1m/bin/bash -lc "sed -n '1,220p' ai/iterations/ITER-0001.md"[0m in /home/sundaram/code/temp/test[32m succeeded in 0ms:[0m
+[2m# ITER-0001 Decision Log
+
+| Timestamp | Role | Decision | Why |
+|-----------|------|----------|-----|
+| 2026-03-11 | PRODUCT_OWNER | Defined the one-page product requirements from the project goal and handed off for engineering judgment review | The workflow needs a concrete scope and acceptance baseline before architecture and planning can proceed |
+| 2026-03-11 | SENIOR_JUDGMENTAL_ENGINEER | Locked simplification guardrails around a single Django + SQLite + vanilla JS modular monolith and warned against framework/platform drift | The architect needs explicit constraints so the design stays aligned with the product goal instead of inheriting conflicting default stack preferences |[0m
+[35m[3mexec[0m[0m
+[1m/bin/bash -lc 'find context -maxdepth 3 -type f | sort'[0m in /home/sundaram/code/temp/test[32m succeeded in 0ms:[0m
+[2m[0m
+[35m[3mexec[0m[0m
+[1m/bin/bash -lc "find . -maxdepth 2 -type f -name 'generate-next-agent.sh' -o -path './scripts/*' | sort"[0m in /home/sundaram/code/temp/test[32m succeeded in 0ms:[0m
+[2m./scripts/bootstrap.sh
+./scripts/check-baton.sh
+./scripts/check-goal.sh
+./scripts/generate-next-agent.sh
+./scripts/resume-baton.sh
+./scripts/run-baton.sh
+./scripts/validate_baton.py[0m
+[35m[3mcodex[0m[0m
+There’s no implementation yet, so this pass is defining the initial architecture rather than fitting around existing code. I’m reading the handoff generator and current review note, then I’ll write the architecture artifacts and planner handoff.
+[35m[3mexec[0m[0m
+[1m/bin/bash -lc "sed -n '1,260p' scripts/generate-next-agent.sh"[0m in /home/sundaram/code/temp/test[35m[3mexec[0m[0m
+[1m/bin/bash -lc "sed -n '1,240p' ai/review.md"[0m in /home/sundaram/code/temp/test[32m succeeded in 0ms:[0m
+[2m# Review Notes
+
+Use this file for reviewer outcomes:
+
+- **DONE**: item accepted and loop returns to PLANNER for next item.
+- **REVISE**: route back to specific role with explicit gap list.
+- **ESCALATE**: WAITING FOR USER only for approved escalation categories.
+
+## Judgment Warnings
+
+- Flag any introduction of React, Next.js, DRF, extra pip packages, or cloud/deployment scaffolding as scope drift unless requirements are updated.
+- Flag architecture that splits the app into speculative layers, services, or multiple Django apps without a demonstrated need.
+- Flag CRUD implementations that require full page reloads, since no-reload interactions are part of acceptance.[0m
+[32m succeeded in 0ms:[0m
+[2m#!/usr/bin/env bash
+set -euo pipefail
+#
+# Usage: ./scripts/generate-next-agent.sh <ROLE> [--notes "context"] [--return-to "ROLE"]
+#
+# Generates ai/next_agent.yaml with the correct config for the given role.
+# Pass --notes to include handoff context (what was done, what to watch for).
+# Pass --return-to to specify which role the baton returns to (used with HUMAN).
+# Called by each role prompt at handoff time so agents don't hand-write YAML.
+
+ROOT="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)"
+cd "$ROOT"
+
+ROLE=""
+NOTES=""
+RETURN_TO=""
+
+# Parse args
+while [[ $# -gt 0 ]]; do
+  case "$1" in[0m
+[35m[3mexec[0m[0m
+[1m/bin/bash -lc 'ls -la context && find context -maxdepth 2 -type d | sort'[0m in /home/sundaram/code/temp/test[32m succeeded in 0ms:[0m
+[2mtotal 16
+drwxrwxr-x 4 sundaram sundaram 4096 Mar 11 21:30 .
+drwxrwxr-x 8 sundaram sundaram 4096 Mar 11 21:50 ..
+drwxrwxr-x 2 sundaram sundaram 4096 Mar 11 21:30 old
+drwxrwxr-x 2 sundaram sundaram 4096 Mar 11 21:30 repo
+context
+context/old
+context/repo[0m
+[35m[3mcodex[0m[0m
+I have enough context to write the architecture pass. I’m adding a concise design note under `context/repo/`, recording the key architecture decisions in `ai/review.md`, appending the iteration log, and then I’ll generate the planner baton files.
+[3m[35mfile update[0m[0m
+[35mM /home/sundaram/code/temp/test/ai/active_agent.txt[0m
+@@ -1 +1 @@
+[31m-ARCHITECT[0m
+[32m+PLANNER[0m
+[35mM /home/sundaram/code/temp/test/ai/iterations/ITER-0001.md[0m
+@@ -6 +6,2 @@
+ | 2026-03-11 | SENIOR_JUDGMENTAL_ENGINEER | Locked simplification guardrails around a single Django + SQLite + vanilla JS modular monolith and warned against framework/platform drift | The architect needs explicit constraints so the design stays aligned with the product goal instead of inheriting conflicting default stack preferences |
+[32m+| 2026-03-11 | ARCHITECT | Defined a single-project Django architecture centered on one product app, server-rendered templates, and HTML-partial based no-reload CRUD flows | The planner and developer need concrete boundaries, file targets, and implementation tradeoffs before breaking work into execution items |[0m
+[35mM /home/sundaram/code/temp/test/ai/next_agent.md[0m
+@@ -2,4 +2,4 @@
+ 
+[31m-- Current role: `ARCHITECT`[0m
+[31m-- Prompt: `ai/prompts/02-architect.md`[0m
+[32m+- Current role: `PLANNER`[0m
+[32m+- Prompt: `ai/prompts/03-planner.md`[0m
+ - Execution command for Codex sessions: **Follow `ai/next_agent.yaml` exactly.**
+@@ -9,6 +9,8 @@
+ 
+[31m-- `ai/simplification.md` now contains explicit guardrails that override conflicting defaults in `ai/judgment.yaml`. Treat Django, SQLite, plain HTML/CSS/JS, and a modular monolith under `apps/project-tracker/` as fixed constraints.[0m
+[31m-- Do not design a React/Next.js frontend, DRF-style API platform, PostgreSQL deployment, cloud infrastructure, microservices, or speculative multi-app split. Those would be scope drift relative to the product goal.[0m
+[31m-- Prefer a simple server-rendered Django architecture with small async interactions for no-reload CRUD flows. JSON endpoints are acceptable only when they are the simplest path for a specific interaction, not as a platform layer.[0m
+[31m-- Keep the domain model direct: projects, tasks, tags, dashboard queries, and the required views only. Avoid repository layers, command buses, plugin systems, or other abstractions unless repeated pain is already visible in the codebase.[0m
+[31m-- No user clarification was required. `ai/user-questions.yaml` remains `status: none`, and `ai/decision-lock.yaml` is unchanged because there were no answered human decisions to promote.[0m
+[32m+- The architecture baseline is documented in `context/repo/architecture.md`.[0m
+[32m+- Keep the implementation as one Django project under `apps/project-tracker/` with one main product app rather than splitting into multiple Django apps or platform layers.[0m
+[32m+- Plan around server-rendered pages plus small async CRUD interactions. Prefer HTML partial responses for create, update, and delete flows; use JSON only where a partial would be needlessly awkward.[0m
+[32m+- The planner should turn this into incremental items that establish project scaffolding first, then domain models/forms/admin, then page views/templates, then no-reload interaction wiring, then tests/validation.[0m
+[32m+- Required user-facing views are dashboard, project list, project detail with tasks, and tag filter/detail.[0m
+[32m+- Core model surface is intentionally small: `Project`, `Task`, and `Tag` with direct Django ORM relationships and SQLite-backed aggregates for dashboard counts.[0m
+[32m+- No clarification or exception was needed. `ai/user-questions.yaml` remains `status: none`, and `ai/decision-lock.yaml` remains unchanged.[0m
+[35mA /home/sundaram/code/temp/test/context/repo/architecture.md[0m
+[32m# Project Tracker Architecture[0m
+[32m[0m
+[32m## Chosen approach[0m
+[32m[0m
+[32mBuild a single Django project under `apps/project-tracker/` with one primary Django app for the product domain. Use server-rendered templates as the default UI surface and small asynchronous interactions for create, edit, and delete flows so the page does not fully reload.[0m
+[32m[0m
+[32m## Proposed structure[0m
+[32m[0m
+[32m- `apps/project-tracker/manage.py`[0m
+[32m- `apps/project-tracker/project_tracker/`[0m
+[32m  - `settings.py`, `urls.py`, `asgi.py`, `wsgi.py`[0m
+[32m- `apps/project-tracker/tracker/`[0m
+[32m  - `models.py`[0m
+[32m  - `forms.py`[0m
+[32m  - `views.py`[0m
+[32m  - `urls.py`[0m
+[32m  - `admin.py`[0m
+[32m  - `tests/`[0m
+[32m- `apps/project-tracker/templates/tracker/`[0m
+[32m  - `base.html`[0m
+[32m  - `dashboard.html`[0m
+[32m  - `project_list.html`[0m
+[32m  - `project_detail.html`[0m
+[32m  - `tag_detail.html`[0m
+[32m  - `partials/`[0m
+[32m- `apps/project-tracker/static/tracker/`[0m
+[32m  - `app.css`[0m
+[32m  - `app.js`[0m
+[32m[0m
+[32m## Domain boundaries[0m
+[32m[0m
+[32m- `Project`: name, description, status, created_date, tags.[0m
+[32m- `Task`: project, title, status, priority, due_date, tags.[0m
+[32m- `Tag`: label/name shared by projects and tasks through many-to-many relations.[0m
+[32m[0m
+[32mKeep business rules near models and forms. Avoid service layers unless repeated logic becomes concrete.[0m
+[32m[0m
+[32m## View and endpoint strategy[0m
+[32m[0m
+[32m- Full-page GET views:[0m
+[32m  - dashboard summary[0m
+[32m  - project list[0m
+[32m  - project detail with related tasks[0m
+[32m  - tag filter/detail view[0m
+[32m- Mutation endpoints:[0m
+[32m  - create, update, delete for projects[0m
+[32m  - create, update, delete for tasks[0m
+[32m  - create, update, delete for tags[0m
+[32m[0m
+[32mEach mutation should return either:[0m
+[32m[0m
+[32m- an HTML partial for the updated list/detail region, or[0m
+[32m- a small JSON envelope only when the client needs minimal status data to drive a targeted DOM update.[0m
+[32m[0m
+[32mDefault to HTML partial responses because they keep rendering rules on the server and reduce duplicated template logic in JavaScript.[0m
+[32m[0m
+[32m## Frontend interaction model[0m
+[32m[0m
+[32mUse vanilla JavaScript with event delegation and `fetch` for form submissions and destructive actions. Mark asynchronously enhanced forms and buttons with explicit data attributes. The server remains the source of truth for rendered markup; JavaScript only swaps returned fragments into the DOM and handles lightweight error display.[0m
+[32m[0m
+[32m## Data and querying[0m
+[32m[0m
+[32m- SQLite is the only persistence layer.[0m
+[32m- Use straightforward Django ORM queries.[0m
+[32m- Dashboard counts should be direct aggregate queries:[0m
+[32m  - total projects[0m
+[32m  - tasks by status[0m
+[32m  - overdue tasks where due_date is before today and status is not `done`[0m
+[32m[0m
+[32mDo not add caching, background jobs, or analytics infrastructure.[0m
+[32m[0m
+[32m## Tradeoffs[0m
+[32m[0m
+[32m- One Django app is preferred over multiple apps because the domain is small and tightly related.[0m
+[32m- HTML partials are preferred over a broad JSON API because the product is server-rendered and CRUD-focused.[0m
+[32m- Forms provide validation and error rendering with less custom code than handwritten request parsing.[0m
+[32m- Keep URLs explicit instead of introducing generic viewsets or abstraction-heavy CRUD helpers.[0m
+[32m[0m
+[32m## Risks to watch[0m
+[32m[0m
+[32m- No-reload CRUD can become inconsistent if some mutations return JSON and others return HTML without a clear rule. Keep partial HTML as the default.[0m
+[32m- Tag management touches both projects and tasks, so form handling and partial refresh boundaries should stay explicit.[0m
+[32m- SQLite is sufficient here, but tests and code should avoid assumptions about concurrent writes or advanced database features.[0m
+[35mM /home/sundaram/code/temp/test/ai/review.md[0m
+@@ -13 +13,9 @@
+ - Flag CRUD implementations that require full page reloads, since no-reload interactions are part of acceptance.
+[32m+[0m
+[32m+## Architecture Decisions[0m
+[32m+[0m
+[32m+- Use a single Django project under `apps/project-tracker/` with one main product app for projects, tasks, and tags.[0m
+[32m+- Treat server-rendered templates as the primary UI and use small async `fetch` flows for no-reload CRUD interactions.[0m
+[32m+- Prefer HTML partial responses for mutations; allow narrow JSON responses only when HTML would be more awkward for the specific interaction.[0m
+[32m+- Keep domain logic in models, forms, and views; reject speculative service, repository, command-bus, or multi-app splits.[0m
+[32m+- Compute dashboard metrics with direct ORM aggregates against SQLite and avoid extra infrastructure.[0m
+[32mapply_patch(auto_approved=true) exited 0 in 7ms:[0m
+[2mSuccess. Updated the following files:[0m
+[2mA /home/sundaram/code/temp/test/context/repo/architecture.md[0m
+[2mM /home/sundaram/code/temp/test/ai/review.md[0m
+[2mM /home/sundaram/code/temp/test/ai/iterations/ITER-0001.md[0m
+[2mM /home/sundaram/code/temp/test/ai/next_agent.md[0m
+[2mM /home/sundaram/code/temp/test/ai/active_agent.txt[0m
+[3m[35mfile update:[0m[0m
+diff --git a/ai/active_agent.txt b/ai/active_agent.txt
+index d8f7bc1fc12b97ceb3e2b1ff348120791503cd24..b51ee722eae8ec12054c26b379735fcea599c2f6
+--- a/ai/active_agent.txt
++++ b/ai/active_agent.txt
+@@ -1 +1 @@
+-ARCHITECT
++PLANNER
+diff --git a/ai/iterations/ITER-0001.md b/ai/iterations/ITER-0001.md
+index 20ea0678f4751af0f3e765c5c62f9467d239e94b..9e1fe3894887cb2bed8c77ddce81953af8e52536
+--- a/ai/iterations/ITER-0001.md
++++ b/ai/iterations/ITER-0001.md
+@@ -4,3 +4,4 @@
+ |-----------|------|----------|-----|
+ | 2026-03-11 | PRODUCT_OWNER | Defined the one-page product requirements from the project goal and handed off for engineering judgment review | The workflow needs a concrete scope and acceptance baseline before architecture and planning can proceed |
+ | 2026-03-11 | SENIOR_JUDGMENTAL_ENGINEER | Locked simplification guardrails around a single Django + SQLite + vanilla JS modular monolith and warned against framework/platform drift | The architect needs explicit constraints so the design stays aligned with the product goal instead of inheriting conflicting default stack preferences |
++| 2026-03-11 | ARCHITECT | Defined a single-project Django architecture centered on one product app, server-rendered templates, and HTML-partial based no-reload CRUD flows | The planner and developer need concrete boundaries, file targets, and implementation tradeoffs before breaking work into execution items |
+diff --git a/ai/next_agent.md b/ai/next_agent.md
+index f7db33964a9e87e4ea43673328940b8a219ccd8b..43dab4a0f26502346333e89135f9fc74f4ea1aeb
+--- a/ai/next_agent.md
++++ b/ai/next_agent.md
+@@ -1,14 +1,16 @@
+ # Next Agent
+ 
+-- Current role: `ARCHITECT`
+-- Prompt: `ai/prompts/02-architect.md`
++- Current role: `PLANNER`
++- Prompt: `ai/prompts/03-planner.md`
+ - Execution command for Codex sessions: **Follow `ai/next_agent.yaml` exactly.**
+ - If role mismatch with `ai/active_agent.txt`, print: `WAITING FOR BATON`
+ 
+ ## Handoff Notes
+ 
+-- `ai/simplification.md` now contains explicit guardrails that override conflicting defaults in `ai/judgment.yaml`. Treat Django, SQLite, plain HTML/CSS/JS, and a modular monolith under `apps/project-tracker/` as fixed constraints.
+-- Do not design a React/Next.js frontend, DRF-style API platform, PostgreSQL deployment, cloud infrastructure, microservices, or speculative multi-app split. Those would be scope drift relative to the product goal.
+-- Prefer a simple server-rendered Django architecture with small async interactions for no-reload CRUD flows. JSON endpoints are acceptable only when they are the simplest path for a specific interaction, not as a platform layer.
+-- Keep the domain model direct: projects, tasks, tags, dashboard queries, and the required views only. Avoid repository layers, command buses, plugin systems, or other abstractions unless repeated pain is already visible in the codebase.
+-- No user clarification was required. `ai/user-questions.yaml` remains `status: none`, and `ai/decision-lock.yaml` is unchanged because there were no answered human decisions to promote.
++- The architecture baseline is documented in `context/repo/architecture.md`.
++- Keep the implementation as one Django project under `apps/project-tracker/` with one main product app rather than splitting into multiple Django apps or platform layers.
++- Plan around server-rendered pages plus small async CRUD interactions. Prefer HTML partial responses for create, update, and delete flows; use JSON only where a partial would be needlessly awkward.
++- The planner should turn this into incremental items that establish project scaffolding first, then domain models/forms/admin, then page views/templates, then no-reload interaction wiring, then tests/validation.
++- Required user-facing views are dashboard, project list, project detail with tasks, and tag filter/detail.
++- Core model surface is intentionally small: `Project`, `Task`, and `Tag` with direct Django ORM relationships and SQLite-backed aggregates for dashboard counts.
++- No clarification or exception was needed. `ai/user-questions.yaml` remains `status: none`, and `ai/decision-lock.yaml` remains unchanged.
+diff --git a/ai/review.md b/ai/review.md
+index d9f73dc53a983b233eb89d31f408653d7f822ac1..199a3fdf28e33202e87c1f78e7fa3388c89bb4ac
+--- a/ai/review.md
++++ b/ai/review.md
+@@ -11,3 +11,11 @@
+ - Flag any introduction of React, Next.js, DRF, extra pip packages, or cloud/deployment scaffolding as scope drift unless requirements are updated.
+ - Flag architecture that splits the app into speculative layers, services, or multiple Django apps without a demonstrated need.
+ - Flag CRUD implementations that require full page reloads, since no-reload interactions are part of acceptance.
++
++## Architecture Decisions
++
++- Use a single Django project under `apps/project-tracker/` with one main product app for projects, tasks, and tags.
++- Treat server-rendered templates as the primary UI and use small async `fetch` flows for no-reload CRUD interactions.
++- Prefer HTML partial responses for mutations; allow narrow JSON responses only when HTML would be more awkward for the specific interaction.
++- Keep domain logic in models, forms, and views; reject speculative service, repository, command-bus, or multi-app splits.
++- Compute dashboard metrics with direct ORM aggregates against SQLite and avoid extra infrastructure.
+diff --git a/context/repo/architecture.md b/context/repo/architecture.md
+new file mode 100644
+index 0000000000000000000000000000000000000000..59b206347d43725712a9fc21878c50586a0f34ad
+--- /dev/null
++++ b/context/repo/architecture.md
+@@ -0,0 +1,83 @@
++# Project Tracker Architecture
++
++## Chosen approach
++
++Build a single Django project under `apps/project-tracker/` with one primary Django app for the product domain. Use server-rendered templates as the default UI surface and small asynchronous interactions for create, edit, and delete flows so the page does not fully reload.
++
++## Proposed structure
++
++- `apps/project-tracker/manage.py`
++- `apps/project-tracker/project_tracker/`
++  - `settings.py`, `urls.py`, `asgi.py`, `wsgi.py`
++- `apps/project-tracker/tracker/`
++  - `models.py`
++  - `forms.py`
++  - `views.py`
++  - `urls.py`
++  - `admin.py`
++  - `tests/`
++- `apps/project-tracker/templates/tracker/`
++  - `base.html`
++  - `dashboard.html`
++  - `project_list.html`
++  - `project_detail.html`
++  - `tag_detail.html`
++  - `partials/`
++- `apps/project-tracker/static/tracker/`
++  - `app.css`
++  - `app.js`
++
++## Domain boundaries
++
++- `Project`: name, description, status, created_date, tags.
++- `Task`: project, title, status, priority, due_date, tags.
++- `Tag`: label/name shared by projects and tasks through many-to-many relations.
++
++Keep business rules near models and forms. Avoid service layers unless repeated logic becomes concrete.
++
++## View and endpoint strategy
++
++- Full-page GET views:
++  - dashboard summary
++  - project list
++  - project detail with related tasks
++  - tag filter/detail view
++- Mutation endpoints:
++  - create, update, delete for projects
++  - create, update, delete for tasks
++  - create, update, delete for tags
++
++Each mutation should return either:
++
++- an HTML partial for the updated list/detail region, or
++- a small JSON envelope only when the client needs minimal status data to drive a targeted DOM update.
++
++Default to HTML partial responses because they keep rendering rules on the server and reduce duplicated template logic in JavaScript.
++
++## Frontend interaction model
++
++Use vanilla JavaScript with event delegation and `fetch` for form submissions and destructive actions. Mark asynchronously enhanced forms and buttons with explicit data attributes. The server remains the source of truth for rendered markup; JavaScript only swaps returned fragments into the DOM and handles lightweight error display.
++
++## Data and querying
++
++- SQLite is the only persistence layer.
++- Use straightforward Django ORM queries.
++- Dashboard counts should be direct aggregate queries:
++  - total projects
++  - tasks by status
++  - overdue tasks where due_date is before today and status is not `done`
++
++Do not add caching, background jobs, or analytics infrastructure.
++
++## Tradeoffs
++
++- One Django app is preferred over multiple apps because the domain is small and tightly related.
++- HTML partials are preferred over a broad JSON API because the product is server-rendered and CRUD-focused.
++- Forms provide validation and error rendering with less custom code than handwritten request parsing.
++- Keep URLs explicit instead of introducing generic viewsets or abstraction-heavy CRUD helpers.
++
++## Risks to watch
++
++- No-reload CRUD can become inconsistent if some mutations return JSON and others return HTML without a clear rule. Keep partial HTML as the default.
++- Tag management touches both projects and tasks, so form handling and partial refresh boundaries should stay explicit.
++- SQLite is sufficient here, but tests and code should avoid assumptions about concurrent writes or advanced database features.
+
+[3m[35mfile update:[0m[0m
+diff --git a/ai/active_agent.txt b/ai/active_agent.txt
+index d8f7bc1fc12b97ceb3e2b1ff348120791503cd24..b51ee722eae8ec12054c26b379735fcea599c2f6
+--- a/ai/active_agent.txt
++++ b/ai/active_agent.txt
+@@ -1 +1 @@
+-ARCHITECT
++PLANNER
+diff --git a/ai/iterations/ITER-0001.md b/ai/iterations/ITER-0001.md
+index 20ea0678f4751af0f3e765c5c62f9467d239e94b..9e1fe3894887cb2bed8c77ddce81953af8e52536
+--- a/ai/iterations/ITER-0001.md
++++ b/ai/iterations/ITER-0001.md
+@@ -4,3 +4,4 @@
+ |-----------|------|----------|-----|
+ | 2026-03-11 | PRODUCT_OWNER | Defined the one-page product requirements from the project goal and handed off for engineering judgment review | The workflow needs a concrete scope and acceptance baseline before architecture and planning can proceed |
+ | 2026-03-11 | SENIOR_JUDGMENTAL_ENGINEER | Locked simplification guardrails around a single Django + SQLite + vanilla JS modular monolith and warned against framework/platform drift | The architect needs explicit constraints so the design stays aligned with the product goal instead of inheriting conflicting default stack preferences |
++| 2026-03-11 | ARCHITECT | Defined a single-project Django architecture centered on one product app, server-rendered templates, and HTML-partial based no-reload CRUD flows | The planner and developer need concrete boundaries, file targets, and implementation tradeoffs before breaking work into execution items |
+diff --git a/ai/next_agent.md b/ai/next_agent.md
+index f7db33964a9e87e4ea43673328940b8a219ccd8b..43dab4a0f26502346333e89135f9fc74f4ea1aeb
+--- a/ai/next_agent.md
++++ b/ai/next_agent.md
+@@ -1,14 +1,16 @@
+ # Next Agent
+ 
+-- Current role: `ARCHITECT`
+-- Prompt: `ai/prompts/02-architect.md`
++- Current role: `PLANNER`
++- Prompt: `ai/prompts/03-planner.md`
+ - Execution command for Codex sessions: **Follow `ai/next_agent.yaml` exactly.**
+ - If role mismatch with `ai/active_agent.txt`, print: `WAITING FOR BATON`
+ 
+ ## Handoff Notes
+ 
+-- `ai/simplification.md` now contains explicit guardrails that override conflicting defaults in `ai/judgment.yaml`. Treat Django, SQLite, plain HTML/CSS/JS, and a modular monolith under `apps/project-tracker/` as fixed constraints.
+-- Do not design a React/Next.js frontend, DRF-style API platform, PostgreSQL deployment, cloud infrastructure, microservices, or speculative multi-app split. Those would be scope drift relative to the product goal.
+-- Prefer a simple server-rendered Django architecture with small async interactions for no-reload CRUD flows. JSON endpoints are acceptable only when they are the simplest path for a specific interaction, not as a platform layer.
+-- Keep the domain model direct: projects, tasks, tags, dashboard queries, and the required views only. Avoid repository layers, command buses, plugin systems, or other abstractions unless repeated pain is already visible in the codebase.
+-- No user clarification was required. `ai/user-questions.yaml` remains `status: none`, and `ai/decision-lock.yaml` is unchanged because there were no answered human decisions to promote.
++- The architecture baseline is documented in `context/repo/architecture.md`.
++- Keep the implementation as one Django project under `apps/project-tracker/` with one main product app rather than splitting into multiple Django apps or platform layers.
++- Plan around server-rendered pages plus small async CRUD interactions. Prefer HTML partial responses for create, update, and delete flows; use JSON only where a partial would be needlessly awkward.
++- The planner should turn this into incremental items that establish project scaffolding first, then domain models/forms/admin, then page views/templates, then no-reload interaction wiring, then tests/validation.
++- Required user-facing views are dashboard, project list, project detail with tasks, and tag filter/detail.
++- Core model surface is intentionally small: `Project`, `Task`, and `Tag` with direct Django ORM relationships and SQLite-backed aggregates for dashboard counts.
++- No clarification or exception was needed. `ai/user-questions.yaml` remains `status: none`, and `ai/decision-lock.yaml` remains unchanged.
+diff --git a/ai/review.md b/ai/review.md
+index d9f73dc53a983b233eb89d31f408653d7f822ac1..199a3fdf28e33202e87c1f78e7fa3388c89bb4ac
+--- a/ai/review.md
++++ b/ai/review.md
+@@ -11,3 +11,11 @@
+ - Flag any introduction of React, Next.js, DRF, extra pip packages, or cloud/deployment scaffolding as scope drift unless requirements are updated.
+ - Flag architecture that splits the app into speculative layers, services, or multiple Django apps without a demonstrated need.
+ - Flag CRUD implementations that require full page reloads, since no-reload interactions are part of acceptance.
++
++## Architecture Decisions
++
++- Use a single Django project under `apps/project-tracker/` with one main product app for projects, tasks, and tags.
++- Treat server-rendered templates as the primary UI and use small async `fetch` flows for no-reload CRUD interactions.
++- Prefer HTML partial responses for mutations; allow narrow JSON responses only when HTML would be more awkward for the specific interaction.
++- Keep domain logic in models, forms, and views; reject speculative service, repository, command-bus, or multi-app splits.
++- Compute dashboard metrics with direct ORM aggregates against SQLite and avoid extra infrastructure.
+diff --git a/context/repo/architecture.md b/context/repo/architecture.md
+new file mode 100644
+index 0000000000000000000000000000000000000000..59b206347d43725712a9fc21878c50586a0f34ad
+--- /dev/null
++++ b/context/repo/architecture.md
+@@ -0,0 +1,83 @@
++# Project Tracker Architecture
++
++## Chosen approach
++
++Build a single Django project under `apps/project-tracker/` with one primary Django app for the product domain. Use server-rendered templates as the default UI surface and small asynchronous interactions for create, edit, and delete flows so the page does not fully reload.
++
++## Proposed structure
++
++- `apps/project-tracker/manage.py`
++- `apps/project-tracker/project_tracker/`
++  - `settings.py`, `urls.py`, `asgi.py`, `wsgi.py`
++- `apps/project-tracker/tracker/`
++  - `models.py`
++  - `forms.py`
++  - `views.py`
++  - `urls.py`
++  - `admin.py`
++  - `tests/`
++- `apps/project-tracker/templates/tracker/`
++  - `base.html`
++  - `dashboard.html`
++  - `project_list.html`
++  - `project_detail.html`
++  - `tag_detail.html`
++  - `partials/`
++- `apps/project-tracker/static/tracker/`
++  - `app.css`
++  - `app.js`
++
++## Domain boundaries
++
++- `Project`: name, description, status, created_date, tags.
++- `Task`: project, title, status, priority, due_date, tags.
++- `Tag`: label/name shared by projects and tasks through many-to-many relations.
++
++Keep business rules near models and forms. Avoid service layers unless repeated logic becomes concrete.
++
++## View and endpoint strategy
++
++- Full-page GET views:
++  - dashboard summary
++  - project list
++  - project detail with related tasks
++  - tag filter/detail view
++- Mutation endpoints:
++  - create, update, delete for projects
++  - create, update, delete for tasks
++  - create, update, delete for tags
++
++Each mutation should return either:
++
++- an HTML partial for the updated list/detail region, or
++- a small JSON envelope only when the client needs minimal status data to drive a targeted DOM update.
++
++Default to HTML partial responses because they keep rendering rules on the server and reduce duplicated template logic in JavaScript.
++
++## Frontend interaction model
++
++Use vanilla JavaScript with event delegation and `fetch` for form submissions and destructive actions. Mark asynchronously enhanced forms and buttons with explicit data attributes. The server remains the source of truth for rendered markup; JavaScript only swaps returned fragments into the DOM and handles lightweight error display.
++
++## Data and querying
++
++- SQLite is the only persistence layer.
++- Use straightforward Django ORM queries.
++- Dashboard counts should be direct aggregate queries:
++  - total projects
++  - tasks by status
++  - overdue tasks where due_date is before today and status is not `done`
++
++Do not add caching, background jobs, or analytics infrastructure.
++
++## Tradeoffs
++
++- One Django app is preferred over multiple apps because the domain is small and tightly related.
++- HTML partials are preferred over a broad JSON API because the product is server-rendered and CRUD-focused.
++- Forms provide validation and error rendering with less custom code than handwritten request parsing.
++- Keep URLs explicit instead of introducing generic viewsets or abstraction-heavy CRUD helpers.
++
++## Risks to watch
++
++- No-reload CRUD can become inconsistent if some mutations return JSON and others return HTML without a clear rule. Keep partial HTML as the default.
++- Tag management touches both projects and tasks, so form handling and partial refresh boundaries should stay explicit.
++- SQLite is sufficient here, but tests and code should avoid assumptions about concurrent writes or advanced database features.
+
+[35m[3mcodex[0m[0m
+The architecture notes are in place. I’m generating the next baton file for `PLANNER` now and then I’ll verify the final state before handing off.
+[35m[3mexec[0m[0m
+[1m/bin/bash -lc "sed -n '1,220p' ai/next_agent.yaml"[0m in /home/sundaram/code/temp/test[32m succeeded in 0ms:[0m
+[2mnext_role: ARCHITECT
+prompt_file: ai/prompts/02-architect.md
+read:
+  - ai/requirements.md
+  - ai/active_item.yaml
+  - ai/judgment.yaml
+  - ai/simplification.md
+  - ai/decision-lock.yaml
+  - ai/goal.yaml
+  - ai/constitution.yaml
+  - ai/active_agent.txt
+  - ai/next_agent.md
+  - ai/user-questions.yaml
+allowed_edits:
+  - context/repo/
+  - ai/review.md
+  - ai/decision-lock.yaml
+  - ai/user-questions.yaml
+  - ai/iterations/ITER-0001.md
+  - ai/active_agent.txt[0m
+[35m[3mexec[0m[0m
+[1m/bin/bash -lc './scripts/generate-next-agent.sh PLANNER --notes "architecture approach | key boundaries | tradeoffs made"'[0m in /home/sundaram/code/temp/test[32m succeeded in 0ms:[0m
+[2mGenerated ai/next_agent.yaml for PLANNER (next: DEV)[0m
+[35m[3mexec[0m[0m
+[1m/bin/bash -lc "sed -n '1,220p' context/repo/architecture.md"[0m in /home/sundaram/code/temp/test[32m succeeded in 0ms:[0m
+[2m# Project Tracker Architecture
+
+## Chosen approach
+
+Build a single Django project under `apps/project-tracker/` with one primary Django app for the product domain. Use server-rendered templates as the default UI surface and small asynchronous interactions for create, edit, and delete flows so the page does not fully reload.
+
+## Proposed structure
+
+- `apps/project-tracker/manage.py`
+- `apps/project-tracker/project_tracker/`
+  - `settings.py`, `urls.py`, `asgi.py`, `wsgi.py`
+- `apps/project-tracker/tracker/`
+  - `models.py`
+  - `forms.py`
+  - `views.py`
+  - `urls.py`
+  - `admin.py`
+  - `tests/`
+- `apps/project-tracker/templates/tracker/`
+  - `base.html`[0m
+[3m[35mfile update:[0m[0m
+diff --git a/ai/active_agent.txt b/ai/active_agent.txt
+index d8f7bc1fc12b97ceb3e2b1ff348120791503cd24..b51ee722eae8ec12054c26b379735fcea599c2f6
+--- a/ai/active_agent.txt
++++ b/ai/active_agent.txt
+@@ -1 +1 @@
+-ARCHITECT
++PLANNER
+diff --git a/ai/iterations/ITER-0001.md b/ai/iterations/ITER-0001.md
+index 20ea0678f4751af0f3e765c5c62f9467d239e94b..9e1fe3894887cb2bed8c77ddce81953af8e52536
+--- a/ai/iterations/ITER-0001.md
++++ b/ai/iterations/ITER-0001.md
+@@ -4,3 +4,4 @@
+ |-----------|------|----------|-----|
+ | 2026-03-11 | PRODUCT_OWNER | Defined the one-page product requirements from the project goal and handed off for engineering judgment review | The workflow needs a concrete scope and acceptance baseline before architecture and planning can proceed |
+ | 2026-03-11 | SENIOR_JUDGMENTAL_ENGINEER | Locked simplification guardrails around a single Django + SQLite + vanilla JS modular monolith and warned against framework/platform drift | The architect needs explicit constraints so the design stays aligned with the product goal instead of inheriting conflicting default stack preferences |
++| 2026-03-11 | ARCHITECT | Defined a single-project Django architecture centered on one product app, server-rendered templates, and HTML-partial based no-reload CRUD flows | The planner and developer need concrete boundaries, file targets, and implementation tradeoffs before breaking work into execution items |
+diff --git a/ai/next_agent.md b/ai/next_agent.md
+index f7db33964a9e87e4ea43673328940b8a219ccd8b..43dab4a0f26502346333e89135f9fc74f4ea1aeb
+--- a/ai/next_agent.md
++++ b/ai/next_agent.md
+@@ -1,14 +1,16 @@
+ # Next Agent
+ 
+-- Current role: `ARCHITECT`
+-- Prompt: `ai/prompts/02-architect.md`
++- Current role: `PLANNER`
++- Prompt: `ai/prompts/03-planner.md`
+ - Execution command for Codex sessions: **Follow `ai/next_agent.yaml` exactly.**
+ - If role mismatch with `ai/active_agent.txt`, print: `WAITING FOR BATON`
+ 
+ ## Handoff Notes
+ 
+-- `ai/simplification.md` now contains explicit guardrails that override conflicting defaults in `ai/judgment.yaml`. Treat Django, SQLite, plain HTML/CSS/JS, and a modular monolith under `apps/project-tracker/` as fixed constraints.
+-- Do not design a React/Next.js frontend, DRF-style API platform, PostgreSQL deployment, cloud infrastructure, microservices, or speculative multi-app split. Those would be scope drift relative to the product goal.
+-- Prefer a simple server-rendered Django architecture with small async interactions for no-reload CRUD flows. JSON endpoints are acceptable only when they are the simplest path for a specific interaction, not as a platform layer.
+-- Keep the domain model direct: projects, tasks, tags, dashboard queries, and the required views only. Avoid repository layers, command buses, plugin systems, or other abstractions unless repeated pain is already visible in the codebase.
+-- No user clarification was required. `ai/user-questions.yaml` remains `status: none`, and `ai/decision-lock.yaml` is unchanged because there were no answered human decisions to promote.
++- The architecture baseline is documented in `context/repo/architecture.md`.
++- Keep the implementation as one Django project under `apps/project-tracker/` with one main product app rather than splitting into multiple Django apps or platform layers.
++- Plan around server-rendered pages plus small async CRUD interactions. Prefer HTML partial responses for create, update, and delete flows; use JSON only where a partial would be needlessly awkward.
++- The planner should turn this into incremental items that establish project scaffolding first, then domain models/forms/admin, then page views/templates, then no-reload interaction wiring, then tests/validation.
++- Required user-facing views are dashboard, project list, project detail with tasks, and tag filter/detail.
++- Core model surface is intentionally small: `Project`, `Task`, and `Tag` with direct Django ORM relationships and SQLite-backed aggregates for dashboard counts.
++- No clarification or exception was needed. `ai/user-questions.yaml` remains `status: none`, and `ai/decision-lock.yaml` remains unchanged.
+diff --git a/ai/review.md b/ai/review.md
+index d9f73dc53a983b233eb89d31f408653d7f822ac1..199a3fdf28e33202e87c1f78e7fa3388c89bb4ac
+--- a/ai/review.md
++++ b/ai/review.md
+@@ -11,3 +11,11 @@
+ - Flag any introduction of React, Next.js, DRF, extra pip packages, or cloud/deployment scaffolding as scope drift unless requirements are updated.
+ - Flag architecture that splits the app into speculative layers, services, or multiple Django apps without a demonstrated need.
+ - Flag CRUD implementations that require full page reloads, since no-reload interactions are part of acceptance.
++
++## Architecture Decisions
++
++- Use a single Django project under `apps/project-tracker/` with one main product app for projects, tasks, and tags.
++- Treat server-rendered templates as the primary UI and use small async `fetch` flows for no-reload CRUD interactions.
++- Prefer HTML partial responses for mutations; allow narrow JSON responses only when HTML would be more awkward for the specific interaction.
++- Keep domain logic in models, forms, and views; reject speculative service, repository, command-bus, or multi-app splits.
++- Compute dashboard metrics with direct ORM aggregates against SQLite and avoid extra infrastructure.
+diff --git a/context/repo/architecture.md b/context/repo/architecture.md
+new file mode 100644
+index 0000000000000000000000000000000000000000..59b206347d43725712a9fc21878c50586a0f34ad
+--- /dev/null
++++ b/context/repo/architecture.md
+@@ -0,0 +1,83 @@
++# Project Tracker Architecture
++
++## Chosen approach
++
++Build a single Django project under `apps/project-tracker/` with one primary Django app for the product domain. Use server-rendered templates as the default UI surface and small asynchronous interactions for create, edit, and delete flows so the page does not fully reload.
++
++## Proposed structure
++
++- `apps/project-tracker/manage.py`
++- `apps/project-tracker/project_tracker/`
++  - `settings.py`, `urls.py`, `asgi.py`, `wsgi.py`
++- `apps/project-tracker/tracker/`
++  - `models.py`
++  - `forms.py`
++  - `views.py`
++  - `urls.py`
++  - `admin.py`
++  - `tests/`
++- `apps/project-tracker/templates/tracker/`
++  - `base.html`
++  - `dashboard.html`
++  - `project_list.html`
++  - `project_detail.html`
++  - `tag_detail.html`
++  - `partials/`
++- `apps/project-tracker/static/tracker/`
++  - `app.css`
++  - `app.js`
++
++## Domain boundaries
++
++- `Project`: name, description, status, created_date, tags.
++- `Task`: project, title, status, priority, due_date, tags.
++- `Tag`: label/name shared by projects and tasks through many-to-many relations.
++
++Keep business rules near models and forms. Avoid service layers unless repeated logic becomes concrete.
++
++## View and endpoint strategy
++
++- Full-page GET views:
++  - dashboard summary
++  - project list
++  - project detail with related tasks
++  - tag filter/detail view
++- Mutation endpoints:
++  - create, update, delete for projects
++  - create, update, delete for tasks
++  - create, update, delete for tags
++
++Each mutation should return either:
++
++- an HTML partial for the updated list/detail region, or
++- a small JSON envelope only when the client needs minimal status data to drive a targeted DOM update.
++
++Default to HTML partial responses because they keep rendering rules on the server and reduce duplicated template logic in JavaScript.
++
++## Frontend interaction model
++
++Use vanilla JavaScript with event delegation and `fetch` for form submissions and destructive actions. Mark asynchronously enhanced forms and buttons with explicit data attributes. The server remains the source of truth for rendered markup; JavaScript only swaps returned fragments into the DOM and handles lightweight error display.
++
++## Data and querying
++
++- SQLite is the only persistence layer.
++- Use straightforward Django ORM queries.
++- Dashboard counts should be direct aggregate queries:
++  - total projects
++  - tasks by status
++  - overdue tasks where due_date is before today and status is not `done`
++
++Do not add caching, background jobs, or analytics infrastructure.
++
++## Tradeoffs
++
++- One Django app is preferred over multiple apps because the domain is small and tightly related.
++- HTML partials are preferred over a broad JSON API because the product is server-rendered and CRUD-focused.
++- Forms provide validation and error rendering with less custom code than handwritten request parsing.
++- Keep URLs explicit instead of introducing generic viewsets or abstraction-heavy CRUD helpers.
++
++## Risks to watch
++
++- No-reload CRUD can become inconsistent if some mutations return JSON and others return HTML without a clear rule. Keep partial HTML as the default.
++- Tag management touches both projects and tasks, so form handling and partial refresh boundaries should stay explicit.
++- SQLite is sufficient here, but tests and code should avoid assumptions about concurrent writes or advanced database features.
+
+[35m[3mcodex[0m[0m
+The generator ran, but the parallel read of `ai/next_agent.yaml` caught the pre-update file. I’m re-reading the baton files sequentially to confirm the final planner handoff state before I stop.
+[35m[3mexec[0m[0m
+[1m/bin/bash -lc "sed -n '1,240p' ai/next_agent.yaml"[0m in /home/sundaram/code/temp/test[32m succeeded in 0ms:[0m
+[2mnext_role: PLANNER
+prompt_file: ai/prompts/03-planner.md
+read:
+  - ai/backlog.yaml
+  - ai/active_item.yaml
+  - ai/goal.yaml
+  - ai/decision-lock.yaml
+  - ai/review.md
+  - ai/constitution.yaml
+  - ai/active_agent.txt
+  - ai/next_agent.md
+  - ai/user-questions.yaml
+allowed_edits:
+  - ai/backlog.yaml
+  - ai/active_item.yaml
+  - ai/decision-lock.yaml
+  - ai/user-questions.yaml
+  - ai/iterations/ITER-0001.md
+  - ai/active_agent.txt
+  - ai/next_agent.yaml[0m
+[35m[3mexec[0m[0m
+[1m/bin/bash -lc "sed -n '1,40p' ai/active_agent.txt"[0m in /home/sundaram/code/temp/test[32m succeeded in 0ms:[0m
+[2mPLANNER[0m
+[35m[3mexec[0m[0m
+[1m/bin/bash -lc "sed -n '1,220p' ai/next_agent.md"[0m in /home/sundaram/code/temp/test[32m succeeded in 0ms:[0m
+[2m# Next Agent
+
+- Current role: `PLANNER`
+- Prompt: `ai/prompts/03-planner.md`
+- Execution command for Codex sessions: **Follow `ai/next_agent.yaml` exactly.**
+- If role mismatch with `ai/active_agent.txt`, print: `WAITING FOR BATON`
+
+## Handoff Notes
+
+- The architecture baseline is documented in `context/repo/architecture.md`.
+- Keep the implementation as one Django project under `apps/project-tracker/` with one main product app rather than splitting into multiple Django apps or platform layers.
+- Plan around server-rendered pages plus small async CRUD interactions. Prefer HTML partial responses for create, update, and delete flows; use JSON only where a partial would be needlessly awkward.
+- The planner should turn this into incremental items that establish project scaffolding first, then domain models/forms/admin, then page views/templates, then no-reload interaction wiring, then tests/validation.
+- Required user-facing views are dashboard, project list, project detail with tasks, and tag filter/detail.
+- Core model surface is intentionally small: `Project`, `Task`, and `Tag` with direct Django ORM relationships and SQLite-backed aggregates for dashboard counts.
+- No clarification or exception was needed. `ai/user-questions.yaml` remains `status: none`, and `ai/decision-lock.yaml` remains unchanged.[0m
+[3m[35mfile update:[0m[0m
+diff --git a/ai/active_agent.txt b/ai/active_agent.txt
+index d8f7bc1fc12b97ceb3e2b1ff348120791503cd24..b51ee722eae8ec12054c26b379735fcea599c2f6
+--- a/ai/active_agent.txt
++++ b/ai/active_agent.txt
+@@ -1 +1 @@
+-ARCHITECT
++PLANNER
+diff --git a/ai/iterations/ITER-0001.md b/ai/iterations/ITER-0001.md
+index 20ea0678f4751af0f3e765c5c62f9467d239e94b..9e1fe3894887cb2bed8c77ddce81953af8e52536
+--- a/ai/iterations/ITER-0001.md
++++ b/ai/iterations/ITER-0001.md
+@@ -4,3 +4,4 @@
+ |-----------|------|----------|-----|
+ | 2026-03-11 | PRODUCT_OWNER | Defined the one-page product requirements from the project goal and handed off for engineering judgment review | The workflow needs a concrete scope and acceptance baseline before architecture and planning can proceed |
+ | 2026-03-11 | SENIOR_JUDGMENTAL_ENGINEER | Locked simplification guardrails around a single Django + SQLite + vanilla JS modular monolith and warned against framework/platform drift | The architect needs explicit constraints so the design stays aligned with the product goal instead of inheriting conflicting default stack preferences |
++| 2026-03-11 | ARCHITECT | Defined a single-project Django architecture centered on one product app, server-rendered templates, and HTML-partial based no-reload CRUD flows | The planner and developer need concrete boundaries, file targets, and implementation tradeoffs before breaking work into execution items |
+diff --git a/ai/next_agent.md b/ai/next_agent.md
+index f7db33964a9e87e4ea43673328940b8a219ccd8b..43dab4a0f26502346333e89135f9fc74f4ea1aeb
+--- a/ai/next_agent.md
++++ b/ai/next_agent.md
+@@ -1,14 +1,16 @@
+ # Next Agent
+ 
+-- Current role: `ARCHITECT`
+-- Prompt: `ai/prompts/02-architect.md`
++- Current role: `PLANNER`
++- Prompt: `ai/prompts/03-planner.md`
+ - Execution command for Codex sessions: **Follow `ai/next_agent.yaml` exactly.**
+ - If role mismatch with `ai/active_agent.txt`, print: `WAITING FOR BATON`
+ 
+ ## Handoff Notes
+ 
+-- `ai/simplification.md` now contains explicit guardrails that override conflicting defaults in `ai/judgment.yaml`. Treat Django, SQLite, plain HTML/CSS/JS, and a modular monolith under `apps/project-tracker/` as fixed constraints.
+-- Do not design a React/Next.js frontend, DRF-style API platform, PostgreSQL deployment, cloud infrastructure, microservices, or speculative multi-app split. Those would be scope drift relative to the product goal.
+-- Prefer a simple server-rendered Django architecture with small async interactions for no-reload CRUD flows. JSON endpoints are acceptable only when they are the simplest path for a specific interaction, not as a platform layer.
+-- Keep the domain model direct: projects, tasks, tags, dashboard queries, and the required views only. Avoid repository layers, command buses, plugin systems, or other abstractions unless repeated pain is already visible in the codebase.
+-- No user clarification was required. `ai/user-questions.yaml` remains `status: none`, and `ai/decision-lock.yaml` is unchanged because there were no answered human decisions to promote.
++- The architecture baseline is documented in `context/repo/architecture.md`.
++- Keep the implementation as one Django project under `apps/project-tracker/` with one main product app rather than splitting into multiple Django apps or platform layers.
++- Plan around server-rendered pages plus small async CRUD interactions. Prefer HTML partial responses for create, update, and delete flows; use JSON only where a partial would be needlessly awkward.
++- The planner should turn this into incremental items that establish project scaffolding first, then domain models/forms/admin, then page views/templates, then no-reload interaction wiring, then tests/validation.
++- Required user-facing views are dashboard, project list, project detail with tasks, and tag filter/detail.
++- Core model surface is intentionally small: `Project`, `Task`, and `Tag` with direct Django ORM relationships and SQLite-backed aggregates for dashboard counts.
++- No clarification or exception was needed. `ai/user-questions.yaml` remains `status: none`, and `ai/decision-lock.yaml` remains unchanged.
+diff --git a/ai/review.md b/ai/review.md
+index d9f73dc53a983b233eb89d31f408653d7f822ac1..199a3fdf28e33202e87c1f78e7fa3388c89bb4ac
+--- a/ai/review.md
++++ b/ai/review.md
+@@ -11,3 +11,11 @@
+ - Flag any introduction of React, Next.js, DRF, extra pip packages, or cloud/deployment scaffolding as scope drift unless requirements are updated.
+ - Flag architecture that splits the app into speculative layers, services, or multiple Django apps without a demonstrated need.
+ - Flag CRUD implementations that require full page reloads, since no-reload interactions are part of acceptance.
++
++## Architecture Decisions
++
++- Use a single Django project under `apps/project-tracker/` with one main product app for projects, tasks, and tags.
++- Treat server-rendered templates as the primary UI and use small async `fetch` flows for no-reload CRUD interactions.
++- Prefer HTML partial responses for mutations; allow narrow JSON responses only when HTML would be more awkward for the specific interaction.
++- Keep domain logic in models, forms, and views; reject speculative service, repository, command-bus, or multi-app splits.
++- Compute dashboard metrics with direct ORM aggregates against SQLite and avoid extra infrastructure.
+diff --git a/context/repo/architecture.md b/context/repo/architecture.md
+new file mode 100644
+index 0000000000000000000000000000000000000000..59b206347d43725712a9fc21878c50586a0f34ad
+--- /dev/null
++++ b/context/repo/architecture.md
+@@ -0,0 +1,83 @@
++# Project Tracker Architecture
++
++## Chosen approach
++
++Build a single Django project under `apps/project-tracker/` with one primary Django app for the product domain. Use server-rendered templates as the default UI surface and small asynchronous interactions for create, edit, and delete flows so the page does not fully reload.
++
++## Proposed structure
++
++- `apps/project-tracker/manage.py`
++- `apps/project-tracker/project_tracker/`
++  - `settings.py`, `urls.py`, `asgi.py`, `wsgi.py`
++- `apps/project-tracker/tracker/`
++  - `models.py`
++  - `forms.py`
++  - `views.py`
++  - `urls.py`
++  - `admin.py`
++  - `tests/`
++- `apps/project-tracker/templates/tracker/`
++  - `base.html`
++  - `dashboard.html`
++  - `project_list.html`
++  - `project_detail.html`
++  - `tag_detail.html`
++  - `partials/`
++- `apps/project-tracker/static/tracker/`
++  - `app.css`
++  - `app.js`
++
++## Domain boundaries
++
++- `Project`: name, description, status, created_date, tags.
++- `Task`: project, title, status, priority, due_date, tags.
++- `Tag`: label/name shared by projects and tasks through many-to-many relations.
++
++Keep business rules near models and forms. Avoid service layers unless repeated logic becomes concrete.
++
++## View and endpoint strategy
++
++- Full-page GET views:
++  - dashboard summary
++  - project list
++  - project detail with related tasks
++  - tag filter/detail view
++- Mutation endpoints:
++  - create, update, delete for projects
++  - create, update, delete for tasks
++  - create, update, delete for tags
++
++Each mutation should return either:
++
++- an HTML partial for the updated list/detail region, or
++- a small JSON envelope only when the client needs minimal status data to drive a targeted DOM update.
++
++Default to HTML partial responses because they keep rendering rules on the server and reduce duplicated template logic in JavaScript.
++
++## Frontend interaction model
++
++Use vanilla JavaScript with event delegation and `fetch` for form submissions and destructive actions. Mark asynchronously enhanced forms and buttons with explicit data attributes. The server remains the source of truth for rendered markup; JavaScript only swaps returned fragments into the DOM and handles lightweight error display.
++
++## Data and querying
++
++- SQLite is the only persistence layer.
++- Use straightforward Django ORM queries.
++- Dashboard counts should be direct aggregate queries:
++  - total projects
++  - tasks by status
++  - overdue tasks where due_date is before today and status is not `done`
++
++Do not add caching, background jobs, or analytics infrastructure.
++
++## Tradeoffs
++
++- One Django app is preferred over multiple apps because the domain is small and tightly related.
++- HTML partials are preferred over a broad JSON API because the product is server-rendered and CRUD-focused.
++- Forms provide validation and error rendering with less custom code than handwritten request parsing.
++- Keep URLs explicit instead of introducing generic viewsets or abstraction-heavy CRUD helpers.
++
++## Risks to watch
++
++- No-reload CRUD can become inconsistent if some mutations return JSON and others return HTML without a clear rule. Keep partial HTML as the default.
++- Tag management touches both projects and tasks, so form handling and partial refresh boundaries should stay explicit.
++- SQLite is sufficient here, but tests and code should avoid assumptions about concurrent writes or advanced database features.
+
+[35m[3mcodex[0m[0m
+HANDOFF TO PLANNER
+[3m[35mfile update:[0m[0m
+diff --git a/ai/active_agent.txt b/ai/active_agent.txt
+index d8f7bc1fc12b97ceb3e2b1ff348120791503cd24..b51ee722eae8ec12054c26b379735fcea599c2f6
+--- a/ai/active_agent.txt
++++ b/ai/active_agent.txt
+@@ -1 +1 @@
+-ARCHITECT
++PLANNER
+diff --git a/ai/iterations/ITER-0001.md b/ai/iterations/ITER-0001.md
+index 20ea0678f4751af0f3e765c5c62f9467d239e94b..9e1fe3894887cb2bed8c77ddce81953af8e52536
+--- a/ai/iterations/ITER-0001.md
++++ b/ai/iterations/ITER-0001.md
+@@ -4,3 +4,4 @@
+ |-----------|------|----------|-----|
+ | 2026-03-11 | PRODUCT_OWNER | Defined the one-page product requirements from the project goal and handed off for engineering judgment review | The workflow needs a concrete scope and acceptance baseline before architecture and planning can proceed |
+ | 2026-03-11 | SENIOR_JUDGMENTAL_ENGINEER | Locked simplification guardrails around a single Django + SQLite + vanilla JS modular monolith and warned against framework/platform drift | The architect needs explicit constraints so the design stays aligned with the product goal instead of inheriting conflicting default stack preferences |
++| 2026-03-11 | ARCHITECT | Defined a single-project Django architecture centered on one product app, server-rendered templates, and HTML-partial based no-reload CRUD flows | The planner and developer need concrete boundaries, file targets, and implementation tradeoffs before breaking work into execution items |
+diff --git a/ai/next_agent.md b/ai/next_agent.md
+index f7db33964a9e87e4ea43673328940b8a219ccd8b..43dab4a0f26502346333e89135f9fc74f4ea1aeb
+--- a/ai/next_agent.md
++++ b/ai/next_agent.md
+@@ -1,14 +1,16 @@
+ # Next Agent
+ 
+-- Current role: `ARCHITECT`
+-- Prompt: `ai/prompts/02-architect.md`
++- Current role: `PLANNER`
++- Prompt: `ai/prompts/03-planner.md`
+ - Execution command for Codex sessions: **Follow `ai/next_agent.yaml` exactly.**
+ - If role mismatch with `ai/active_agent.txt`, print: `WAITING FOR BATON`
+ 
+ ## Handoff Notes
+ 
+-- `ai/simplification.md` now contains explicit guardrails that override conflicting defaults in `ai/judgment.yaml`. Treat Django, SQLite, plain HTML/CSS/JS, and a modular monolith under `apps/project-tracker/` as fixed constraints.
+-- Do not design a React/Next.js frontend, DRF-style API platform, PostgreSQL deployment, cloud infrastructure, microservices, or speculative multi-app split. Those would be scope drift relative to the product goal.
+-- Prefer a simple server-rendered Django architecture with small async interactions for no-reload CRUD flows. JSON endpoints are acceptable only when they are the simplest path for a specific interaction, not as a platform layer.
+-- Keep the domain model direct: projects, tasks, tags, dashboard queries, and the required views only. Avoid repository layers, command buses, plugin systems, or other abstractions unless repeated pain is already visible in the codebase.
+-- No user clarification was required. `ai/user-questions.yaml` remains `status: none`, and `ai/decision-lock.yaml` is unchanged because there were no answered human decisions to promote.
++- The architecture baseline is documented in `context/repo/architecture.md`.
++- Keep the implementation as one Django project under `apps/project-tracker/` with one main product app rather than splitting into multiple Django apps or platform layers.
++- Plan around server-rendered pages plus small async CRUD interactions. Prefer HTML partial responses for create, update, and delete flows; use JSON only where a partial would be needlessly awkward.
++- The planner should turn this into incremental items that establish project scaffolding first, then domain models/forms/admin, then page views/templates, then no-reload interaction wiring, then tests/validation.
++- Required user-facing views are dashboard, project list, project detail with tasks, and tag filter/detail.
++- Core model surface is intentionally small: `Project`, `Task`, and `Tag` with direct Django ORM relationships and SQLite-backed aggregates for dashboard counts.
++- No clarification or exception was needed. `ai/user-questions.yaml` remains `status: none`, and `ai/decision-lock.yaml` remains unchanged.
+diff --git a/ai/review.md b/ai/review.md
+index d9f73dc53a983b233eb89d31f408653d7f822ac1..199a3fdf28e33202e87c1f78e7fa3388c89bb4ac
+--- a/ai/review.md
++++ b/ai/review.md
+@@ -11,3 +11,11 @@
+ - Flag any introduction of React, Next.js, DRF, extra pip packages, or cloud/deployment scaffolding as scope drift unless requirements are updated.
+ - Flag architecture that splits the app into speculative layers, services, or multiple Django apps without a demonstrated need.
+ - Flag CRUD implementations that require full page reloads, since no-reload interactions are part of acceptance.
++
++## Architecture Decisions
++
++- Use a single Django project under `apps/project-tracker/` with one main product app for projects, tasks, and tags.
++- Treat server-rendered templates as the primary UI and use small async `fetch` flows for no-reload CRUD interactions.
++- Prefer HTML partial responses for mutations; allow narrow JSON responses only when HTML would be more awkward for the specific interaction.
++- Keep domain logic in models, forms, and views; reject speculative service, repository, command-bus, or multi-app splits.
++- Compute dashboard metrics with direct ORM aggregates against SQLite and avoid extra infrastructure.
+diff --git a/context/repo/architecture.md b/context/repo/architecture.md
+new file mode 100644
+index 0000000000000000000000000000000000000000..59b206347d43725712a9fc21878c50586a0f34ad
+--- /dev/null
++++ b/context/repo/architecture.md
+@@ -0,0 +1,83 @@
++# Project Tracker Architecture
++
++## Chosen approach
++
++Build a single Django project under `apps/project-tracker/` with one primary Django app for the product domain. Use server-rendered templates as the default UI surface and small asynchronous interactions for create, edit, and delete flows so the page does not fully reload.
++
++## Proposed structure
++
++- `apps/project-tracker/manage.py`
++- `apps/project-tracker/project_tracker/`
++  - `settings.py`, `urls.py`, `asgi.py`, `wsgi.py`
++- `apps/project-tracker/tracker/`
++  - `models.py`
++  - `forms.py`
++  - `views.py`
++  - `urls.py`
++  - `admin.py`
++  - `tests/`
++- `apps/project-tracker/templates/tracker/`
++  - `base.html`
++  - `dashboard.html`
++  - `project_list.html`
++  - `project_detail.html`
++  - `tag_detail.html`
++  - `partials/`
++- `apps/project-tracker/static/tracker/`
++  - `app.css`
++  - `app.js`
++
++## Domain boundaries
++
++- `Project`: name, description, status, created_date, tags.
++- `Task`: project, title, status, priority, due_date, tags.
++- `Tag`: label/name shared by projects and tasks through many-to-many relations.
++
++Keep business rules near models and forms. Avoid service layers unless repeated logic becomes concrete.
++
++## View and endpoint strategy
++
++- Full-page GET views:
++  - dashboard summary
++  - project list
++  - project detail with related tasks
++  - tag filter/detail view
++- Mutation endpoints:
++  - create, update, delete for projects
++  - create, update, delete for tasks
++  - create, update, delete for tags
++
++Each mutation should return either:
++
++- an HTML partial for the updated list/detail region, or
++- a small JSON envelope only when the client needs minimal status data to drive a targeted DOM update.
++
++Default to HTML partial responses because they keep rendering rules on the server and reduce duplicated template logic in JavaScript.
++
++## Frontend interaction model
++
++Use vanilla JavaScript with event delegation and `fetch` for form submissions and destructive actions. Mark asynchronously enhanced forms and buttons with explicit data attributes. The server remains the source of truth for rendered markup; JavaScript only swaps returned fragments into the DOM and handles lightweight error display.
++
++## Data and querying
++
++- SQLite is the only persistence layer.
++- Use straightforward Django ORM queries.
++- Dashboard counts should be direct aggregate queries:
++  - total projects
++  - tasks by status
++  - overdue tasks where due_date is before today and status is not `done`
++
++Do not add caching, background jobs, or analytics infrastructure.
++
++## Tradeoffs
++
++- One Django app is preferred over multiple apps because the domain is small and tightly related.
++- HTML partials are preferred over a broad JSON API because the product is server-rendered and CRUD-focused.
++- Forms provide validation and error rendering with less custom code than handwritten request parsing.
++- Keep URLs explicit instead of introducing generic viewsets or abstraction-heavy CRUD helpers.
++
++## Risks to watch
++
++- No-reload CRUD can become inconsistent if some mutations return JSON and others return HTML without a clear rule. Keep partial HTML as the default.
++- Tag management touches both projects and tasks, so form handling and partial refresh boundaries should stay explicit.
++- SQLite is sufficient here, but tests and code should avoid assumptions about concurrent writes or advanced database features.
+
+[3m[35mtokens used[0m[0m
+21,384
+
+Script done on 2026-03-11 21:54:32-05:00 [COMMAND_EXIT_CODE="0"]

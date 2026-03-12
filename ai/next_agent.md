@@ -1,14 +1,16 @@
 # Next Agent
 
-- Current role: `ARCHITECT`
-- Prompt: `ai/prompts/02-architect.md`
+- Current role: `PLANNER`
+- Prompt: `ai/prompts/03-planner.md`
 - Execution command for Codex sessions: **Follow `ai/next_agent.yaml` exactly.**
 - If role mismatch with `ai/active_agent.txt`, print: `WAITING FOR BATON`
 
 ## Handoff Notes
 
-- `ai/simplification.md` now contains explicit guardrails that override conflicting defaults in `ai/judgment.yaml`. Treat Django, SQLite, plain HTML/CSS/JS, and a modular monolith under `apps/project-tracker/` as fixed constraints.
-- Do not design a React/Next.js frontend, DRF-style API platform, PostgreSQL deployment, cloud infrastructure, microservices, or speculative multi-app split. Those would be scope drift relative to the product goal.
-- Prefer a simple server-rendered Django architecture with small async interactions for no-reload CRUD flows. JSON endpoints are acceptable only when they are the simplest path for a specific interaction, not as a platform layer.
-- Keep the domain model direct: projects, tasks, tags, dashboard queries, and the required views only. Avoid repository layers, command buses, plugin systems, or other abstractions unless repeated pain is already visible in the codebase.
-- No user clarification was required. `ai/user-questions.yaml` remains `status: none`, and `ai/decision-lock.yaml` is unchanged because there were no answered human decisions to promote.
+- The architecture baseline is documented in `context/repo/architecture.md`.
+- Keep the implementation as one Django project under `apps/project-tracker/` with one main product app rather than splitting into multiple Django apps or platform layers.
+- Plan around server-rendered pages plus small async CRUD interactions. Prefer HTML partial responses for create, update, and delete flows; use JSON only where a partial would be needlessly awkward.
+- The planner should turn this into incremental items that establish project scaffolding first, then domain models/forms/admin, then page views/templates, then no-reload interaction wiring, then tests/validation.
+- Required user-facing views are dashboard, project list, project detail with tasks, and tag filter/detail.
+- Core model surface is intentionally small: `Project`, `Task`, and `Tag` with direct Django ORM relationships and SQLite-backed aggregates for dashboard counts.
+- No clarification or exception was needed. `ai/user-questions.yaml` remains `status: none`, and `ai/decision-lock.yaml` remains unchanged.

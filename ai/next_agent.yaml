@@ -1,19 +1,18 @@
-next_role: ARCHITECT
-prompt_file: ai/prompts/02-architect.md
+next_role: PLANNER
+prompt_file: ai/prompts/03-planner.md
 read:
-  - ai/requirements.md
+  - ai/backlog.yaml
   - ai/active_item.yaml
-  - ai/judgment.yaml
-  - ai/simplification.md
-  - ai/decision-lock.yaml
   - ai/goal.yaml
+  - ai/decision-lock.yaml
+  - ai/review.md
   - ai/constitution.yaml
   - ai/active_agent.txt
   - ai/next_agent.md
   - ai/user-questions.yaml
 allowed_edits:
-  - context/repo/
-  - ai/review.md
+  - ai/backlog.yaml
+  - ai/active_item.yaml
   - ai/decision-lock.yaml
   - ai/user-questions.yaml
   - ai/iterations/ITER-0001.md
@@ -24,10 +23,10 @@ stop_conditions:
   - WAITING FOR BATON when active agent mismatch
   - WAITING FOR USER when clarification is required
 success_criteria:
-  - architecture defined with boundaries and tradeoffs
+  - active item selected and implementation-ready
 handoff_on_success:
-  print_exact: HANDOFF TO PLANNER
+  print_exact: HANDOFF TO DEV
 notes:
-  - judgment summary
-  - guardrails added
-  - risks flagged
+  - architecture approach
+  - key boundaries
+  - tradeoffs made
