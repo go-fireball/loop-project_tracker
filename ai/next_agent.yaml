@@ -1,16 +1,18 @@
-next_role: PRODUCT_OWNER
-prompt_file: ai/prompts/00-product-owner.md
+next_role: ARCHITECT
+prompt_file: ai/prompts/02-architect.md
 read:
-  - ai/goal.yaml
-  - ai/judgment.yaml
-  - ai/constitution.yaml
-  - ai/backlog.yaml
-  - ai/active_item.yaml
-  - ai/decision-lock.yaml
-  - ai/active_agent.txt
-allowed_edits:
   - ai/requirements.md
+  - ai/active_item.yaml
+  - ai/judgment.yaml
+  - ai/simplification.md
   - ai/decision-lock.yaml
+  - ai/goal.yaml
+  - ai/constitution.yaml
+  - ai/active_agent.txt
+  - ai/next_agent.md
+allowed_edits:
+  - context/repo/
+  - ai/review.md
   - ai/iterations/ITER-0001.md
   - ai/active_agent.txt
   - ai/next_agent.yaml
@@ -19,7 +21,10 @@ stop_conditions:
   - WAITING FOR BATON when active agent mismatch
   - WAITING FOR USER when clarification is required
 success_criteria:
-  - requirements updated
-  - baton handed to next role
+  - architecture defined with boundaries and tradeoffs
 handoff_on_success:
-  print_exact: HANDOFF TO SENIOR_JUDGMENTAL_ENGINEER
+  print_exact: HANDOFF TO PLANNER
+notes:
+  - judgment summary complete
+  - guardrails added for single-app Django + plain JSON views + vanilla JS
+  - non-blocking risk flagged: async mutations and dashboard/tag-filter must stay in scope

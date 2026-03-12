@@ -1,2 +1,904 @@
 # Baton run log
 # Timestamped entries from scripts/run-baton.sh are appended here.
+Created iteration branch: iter/run-20260311-235650 (from main)
+[2026-03-11T23:56:50Z] Step 1 [claude model=claude-sonnet-4-6]
+Script started on 2026-03-11 18:56:50-05:00 [COMMAND="claude --model claude-sonnet-4-6 -p Follow\ ai/next_agent.yaml\ exactly. " TERM="xterm-256color" TTY="/dev/pts/1" COLUMNS="184" LINES="43"]
+I need your help to proceed. The PRODUCT_OWNER role requires writing to several files (`ai/requirements.md`, `ai/backlog.yaml`, `ai/active_item.yaml`, `ai/iterations/ITER-0001.md`, `ai/next_agent.yaml`, `ai/next_agent.md`, `ai/active_agent.txt`), but file write permissions aren't being granted.
+
+To fix this, you can either:
+
+1. **Run `/permissions`** or change your permission mode to allow file edits (e.g., set to "auto-approve" or "allow edits")
+2. **Or** — in your Claude Code settings, enable auto-approve for file writes in this directory
+
+Once write permissions are available, I'll complete the PRODUCT_OWNER turn by:
+- Populating `ai/requirements.md` with requirements from `goal.yaml`
+- Populating `ai/backlog.yaml` with 4 backlog items (models, API, frontend views, dashboard)
+- Setting `ai/active_item.yaml` to ITEM-0001 (Django setup + models)
+- Appending a decision log entry to `ai/iterations/ITER-0001.md`
+- Running `./scripts/generate-next-agent.sh SENIOR_JUDGMENTAL_ENGINEER`
+- Writing `ai/next_agent.md` with handoff notes
+- Setting `ai/active_agent.txt` to `SENIOR_JUDGMENTAL_ENGINEER`
+- Printing `HANDOFF TO SENIOR_JUDGMENTAL_ENGINEER`
+[<u[?1004l[?2004l[?25h]9;4;0;]0;[?25h
+Script done on 2026-03-11 19:00:20-05:00 [COMMAND_EXIT_CODE="0"]
+[1] Committed changes for role: PRODUCT_OWNER
+[2026-03-12T00:00:20Z] Step 2 [claude model=claude-sonnet-4-6]
+Warning: uncommitted changes detected; disabling branch-per-iteration.
+Commit or stash your changes first to enable git tracking.
+[2026-03-12T00:09:56Z] Step 1 [claude model=claude-sonnet-4-6]
+Script started on 2026-03-11 19:09:57-05:00 [COMMAND="claude --model claude-sonnet-4-6 --dangerously-skip-permissions -p Follow\ ai/next_agent.yaml\ exactly. " TERM="xterm-256color" TTY="/dev/pts/4" COLUMNS="184" LINES="43"]
+HANDOFF TO SENIOR_JUDGMENTAL_ENGINEER
+[<u[?1004l[?2004l[?25h]9;4;0;]0;[?25h
+Script done on 2026-03-11 19:11:38-05:00 [COMMAND_EXIT_CODE="0"]
+[2026-03-12T00:11:39Z] Step 2 [claude model=claude-sonnet-4-6]
+Created iteration branch: iter/run-20260312-001838 (from iter/run-20260311-235650)
+[2026-03-12T00:18:38Z] Step 1 [codex model=gpt-5.4]
+Script started on 2026-03-11 19:18:38-05:00 [COMMAND="codex exec --model gpt-5.4 --full-auto Follow\ ai/next_agent.yaml\ exactly. " TERM="xterm-256color" TTY="/dev/pts/2" COLUMNS="184" LINES="43"]
+OpenAI Codex v0.114.0 (research preview)
+--------
+[1mworkdir:[0m /home/sundaram/code/temp/test
+[1mmodel:[0m gpt-5.4
+[1mprovider:[0m openai
+[1mapproval:[0m never
+[1msandbox:[0m workspace-write [workdir, /tmp, $TMPDIR, /home/sundaram/.codex/memories]
+[1mreasoning effort:[0m medium
+[1mreasoning summaries:[0m none
+[1msession id:[0m 019cdf68-e699-7023-85ac-b4d8746d5869
+--------
+[36muser[0m
+Follow ai/next_agent.yaml exactly.
+[36mmcp startup:[0m no servers
+[35m[3mcodex[0m[0m
+I’m checking the repository instructions and opening `ai/next_agent.yaml` first so I can follow it exactly before making any changes.
+[35m[3mexec[0m[0m
+[1m/bin/bash -lc pwd[0m in /home/sundaram/code/temp/test[32m succeeded in 0ms:[0m
+[2m/home/sundaram/code/temp/test[0m
+[35m[3mexec[0m[0m
+[1m/bin/bash -lc 'rg --files'[0m in /home/sundaram/code/temp/test[32m succeeded in 0ms:[0m
+[2minit.sh
+ai/logs/baton.log
+ai/next_agent.md
+ai/active_agent.txt
+ai/constitution.yaml
+ai/active_item.yaml
+ai/judgment.yaml
+ai/defaults/logs/baton.log
+ai/defaults/backlog.yaml
+ai/defaults/goal.yaml
+ai/defaults/requirements.md
+ai/defaults/templates/active-item-template.yaml
+ai/defaults/templates/one-pager-requirements-template.md
+ai/defaults/templates/decision-lock-template.yaml
+ai/defaults/templates/next-agent-template.yaml
+ai/defaults/templates/backlog-item-template.yaml
+ai/defaults/decision-lock.yaml
+scripts/check-baton.sh
+scripts/validate_baton.py
+scripts/run-baton.sh[0m
+[35m[3mcodex[0m[0m
+I’ve confirmed the workspace layout. Next I’m reading `ai/next_agent.yaml` and any directly related baton files it references so I can execute the prescribed workflow rather than guessing.
+[35m[3mexec[0m[0m
+[1m/bin/bash -lc "sed -n '1,240p' ai/next_agent.yaml"[0m in /home/sundaram/code/temp/test[35m[3mexec[0m[0m
+[1m/bin/bash -lc "sed -n '1,240p' ai/next_agent.md"[0m in /home/sundaram/code/temp/test[32m succeeded in 0ms:[0m
+[2m# Handoff Notes — PRODUCT_OWNER → SENIOR_JUDGMENTAL_ENGINEER
+
+- Current role: `SENIOR_JUDGMENTAL_ENGINEER`
+- Prompt: `ai/prompts/01-senior-judgmental-engineer.md`
+- Execution command for Codex sessions: **Follow `ai/next_agent.yaml` exactly.**
+- If role mismatch with `ai/active_agent.txt`, print: `WAITING FOR BATON`
+
+## What was done
+
+`ai/requirements.md` has been fully written from `ai/goal.yaml`. The goal was unambiguous and complete — no open questions were raised and no user clarification was needed.
+
+## What to focus on
+
+1. **Stack divergence from judgment.yaml defaults** — `judgment.yaml` defaults to `aspnet_core` backend and `react_nextjs` frontend, but the goal explicitly mandates Django + vanilla JS. This is a goal-level override; no exception entry is needed in `decision-lock.yaml` unless you disagree.
+2. **Constraint strictness** — "no additional pip packages" rules out DRF. The implementation must use plain Django views for the JSON API. Confirm this is achievable and flag if any hidden complexity makes it risky.
+3. **Scope tightness** — no auth, no file uploads, no email. The scope is deliberately narrow. Validate nothing important has been omitted that would make the tracker unusable for the stated personal-use goal.
+4. **Async mutation requirement** — add/edit/delete without full page reload using vanilla JS fetch. This is a firm UX requirement, not optional.
+
+## Concerns / risks
+[0m
+[32m succeeded in 0ms:[0m
+[2mnext_role: SENIOR_JUDGMENTAL_ENGINEER
+prompt_file: ai/prompts/01-senior-judgmental-engineer.md
+read:
+  - ai/requirements.md
+  - ai/simplification.md
+  - ai/judgment.yaml
+  - ai/active_item.yaml
+  - ai/constitution.yaml
+  - ai/goal.yaml
+  - ai/active_agent.txt
+  - ai/next_agent.md
+allowed_edits:
+  - ai/simplification.md
+  - ai/review.md
+  - ai/iterations/ITER-0001.md
+  - ai/active_agent.txt
+  - ai/next_agent.yaml
+  - ai/next_agent.md
+stop_conditions:
+  - WAITING FOR BATON when active agent mismatch[0m
+[35m[3mexec[0m[0m
+[1m/bin/bash -lc "sed -n '1,240p' ai/active_agent.txt"[0m in /home/sundaram/code/temp/test[32m succeeded in 0ms:[0m
+[2mSENIOR_JUDGMENTAL_ENGINEER[0m
+[35m[3mcodex[0m[0m
+I’ve got the baton and the role matches. I’m reading the required context and the senior-engineer prompt now, then I’ll validate scope against the guardrails and prepare the handoff files if it checks out.
+[35m[3mexec[0m[0m
+[1m/bin/bash -lc "sed -n '1,240p' ai/prompts/01-senior-judgmental-engineer.md"[0m in /home/sundaram/code/temp/test[32m succeeded in 0ms:[0m
+[2m# ROLE: SENIOR_JUDGMENTAL_ENGINEER
+
+## 1) Baton check
+- Read `ai/active_agent.txt`.
+- If value is not exactly `SENIOR_JUDGMENTAL_ENGINEER`, output exactly:
+`WAITING FOR BATON`
+- Stop.
+
+## 2) Required reads
+- `ai/goal.yaml`
+- `ai/requirements.md`
+- `ai/simplification.md`
+- `ai/judgment.yaml`
+- `ai/active_item.yaml`
+- `ai/constitution.yaml`
+- `ai/next_agent.md`
+
+## 3) Allowed edits (only)
+- `ai/simplification.md`
+- `ai/review.md` (only if adding judgment warnings)[0m
+[35m[3mexec[0m[0m
+[1m/bin/bash -lc "sed -n '1,260p' ai/simplification.md"[0m in /home/sundaram/code/temp/test[35m[3mexec[0m[0m
+[1m/bin/bash -lc "sed -n '1,260p' ai/active_item.yaml"[0m in /home/sundaram/code/temp/test[32m succeeded in 0ms:[0m
+[2mid: null
+title: null
+goal: null
+status: idle
+owner_role: null
+related_files: []
+acceptance_criteria: []
+open_questions: []
+done_definition: [][0m
+[32m succeeded in 0ms:[0m
+[2m# Simplification Guidance
+
+1. Prefer straightforward modular monolith structures.
+2. Keep interfaces small and explicit.
+3. Add abstractions only when repeated pain is proven.
+4. Preserve existing business behavior unless requirements say otherwise.
+5. Bias toward maintainability over novelty.
+
+## Project-Tracker Guardrails (added by SENIOR_JUDGMENTAL_ENGINEER)
+
+6. **No generic CRUD base class** — write views directly. Three similar view sets (projects, tasks, tags) do not justify a shared abstraction.
+7. **Function-based views preferred** — simpler, easier to read, no class hierarchy to follow for a small CRUD surface.
+8. **Manual dict serialization** — convert ORM objects to plain dicts inline in each view. Do not create a serializer class; the fields are small and stable.
+9. **Plain ManyToManyField** — no `through` table needed for tags since the relationship carries no extra fields. Use `.add()` / `.remove()` / `.set()` directly.
+10. **ORM aggregation for dashboard** — use `.count()` and `.filter()` on QuerySets. No raw SQL.
+11. **Vanilla JS: no build step** — one shared static JS file (`static/tracker/app.js`) or per-template `<script>` blocks. No bundler, no transpiler.
+12. **CSRF for fetch calls** — vanilla JS must read the `csrftoken` cookie and send `X-CSRFToken` header on POST/PUT/DELETE. Use Django's `{% csrf_token %}` in templates and read it client-side. Do NOT use `@csrf_exempt` in production-bound code.
+13. **Timezone-aware overdue check** — use `django.utils.timezone.now().date()` when filtering overdue tasks; do not use `datetime.date.today()` if `USE_TZ=True`.
+14. **Flat URL structure** — no URL namespaces needed for a single-app project. Keep `urls.py` flat and readable.
+15. **Stack override in effect** — `judgment.yaml` defaults (aspnet_core, react_nextjs, postgresql) are superseded by the goal. No exception entry required.[0m
+[35m[3mexec[0m[0m
+[1m/bin/bash -lc "sed -n '1,260p' ai/judgment.yaml"[0m in /home/sundaram/code/temp/test[35m[3mexec[0m[0m
+[1m/bin/bash -lc "sed -n '1,260p' ai/constitution.yaml"[0m in /home/sundaram/code/temp/test[32m succeeded in 0ms:[0m
+[2mbackend_default: aspnet_core
+frontend_default: react_nextjs
+frontend_alternative: nuxt_if_explicitly_requested
+database_default: postgresql
+architecture_default: modular_monolith
+coding_style: functional_testable_pragmatic
+preserve_business_behavior: true
+avoid_unnecessary_microservices: true
+avoid_clever_abstractions: true
+cloud_default: aws
+iac_default: cdk
+container_default: fargate
+static_assets_default: s3_cloudfront
+auth_default: cognito
+python_only_for_data_workloads: true
+nosql_only_when_justified: true
+relational_bias: true
+human_for_high_level_decisions_only: true[0m
+[32m succeeded in 0ms:[0m
+[2mcore_rules:
+  - state lives in files, not chat memory
+  - baton ownership is authoritative
+  - roles must not edit outside allowed files
+baton_rules:
+  - if active agent mismatch, print exactly WAITING FOR BATON
+  - baton must be handed off explicitly
+edit_rules:
+  - only edit allowed files listed in the current role prompt
+stop_rules:
+  - if human clarification is needed, print exactly WAITING FOR USER
+  - always append an iteration log entry before handoff[0m
+[35m[3mexec[0m[0m
+[1m/bin/bash -lc "sed -n '1,260p' ai/goal.yaml"[0m in /home/sundaram/code/temp/test[35m[3mexec[0m[0m
+[1m/bin/bash -lc "sed -n '1,260p' ai/requirements.md"[0m in /home/sundaram/code/temp/test[32m succeeded in 0ms:[0m
+[2mproject_goal: Build a personal project tracker web app using Django with a SQLite database and HTML/JS frontend
+success_criteria:
+  - Django REST endpoints for CRUD operations on projects, tasks, and tags
+  - Each project has a name, description, status (active/completed/archived), and created date
+  - Each task belongs to a project and has a title, status (todo/in_progress/done), priority (low/medium/high), and due date
+  - Tags can be assigned to both projects and tasks (many-to-many)
+  - Frontend has separate views for projects list, project detail (showing its tasks), and a tag filter view
+  - Adding/editing/deleting entities works without full page reload
+  - Dashboard view showing summary stats (total projects, tasks by status, overdue tasks)
+  - Data persists in SQLite database
+context_notes:
+  - Use Django with SQLite backend
+  - Frontend is plain HTML, CSS, and vanilla JS (no React/Vue/Angular)
+  - Django serves both the API and static/template files
+  - All code lives in apps/project-tracker/
+  - Use Django models with proper foreign key and many-to-many relationships
+constraints:
+  - Django and its built-in dependencies only, no additional pip packages (no DRF, no celery, etc.)
+  - No frontend JS frameworks
+  - Single Django project, no microservices[0m
+[32m succeeded in 0ms:[0m
+[2m# Requirements (One Pager)
+
+## Objective
+
+Build a personal project tracker web app: a Django-based application backed by SQLite that lets a user manage projects, tasks, and tags through a plain HTML/CSS/JS frontend. Django serves both the JSON API and HTML templates from a single project under `apps/project-tracker/`.
+
+## In Scope
+
+- **Projects** — create, read, update, delete. Each project has: name, description, status (`active` / `completed` / `archived`), and created date.
+- **Tasks** — create, read, update, delete. Each task belongs to exactly one project and has: title, status (`todo` / `in_progress` / `done`), priority (`low` / `medium` / `high`), and due date.
+- **Tags** — create, read, update, delete. Tags are assignable to both projects and tasks (many-to-many).
+- **API** — Django views (no DRF) returning JSON for all CRUD operations on the three entities.
+- **Frontend views** (served as Django templates):
+  - Projects list view
+  - Project detail view (shows the project and its tasks)
+  - Tag filter view (filter projects/tasks by tag)
+  - Dashboard view (summary stats: total projects, tasks by status, overdue tasks)
+- **Async interactions** — add, edit, and delete operations must work without a full page reload (vanilla JS fetch calls to the JSON API).
+- **Persistence** — all data stored in SQLite via Django ORM.
+[0m
+[35m[3mcodex[0m[0m
+The requirements are consistent with the goal, and the existing simplification notes are mostly on target. I’m checking the iteration log format and then I’ll make the baton updates, with a couple of extra guardrails where the current notes are still too loose.
+[35m[3mexec[0m[0m
+[1m/bin/bash -lc "sed -n '1,240p' ai/iterations/ITER-0001.md"[0m in /home/sundaram/code/temp/test[32m succeeded in 0ms:[0m
+[2m# ITER-0001 Decision Log
+
+| Timestamp | Role | Decision | Why |
+|-----------|------|----------|-----|
+| 2026-03-11 | PRODUCT_OWNER | Wrote full requirements.md from goal.yaml: projects/tasks/tags CRUD, dashboard, tag-filter view, vanilla JS async mutations, Django+SQLite only | Goal was fully specified; no ambiguity found; translated success criteria into testable acceptance criteria |[0m
+[35m[3mexec[0m[0m
+[1m/bin/bash -lc "sed -n '1,240p' ai/review.md"[0m in /home/sundaram/code/temp/test[35m[3mexec[0m[0m
+[1m/bin/bash -lc "sed -n '1,240p' scripts/generate-next-agent.sh"[0m in /home/sundaram/code/temp/test[32m succeeded in 0ms:[0m
+[2m# Review Notes
+
+Use this file for reviewer outcomes:
+
+- **DONE**: item accepted and loop returns to PLANNER for next item.
+- **REVISE**: route back to specific role with explicit gap list.
+- **ESCALATE**: WAITING FOR USER only for approved escalation categories.[0m
+[32m succeeded in 0ms:[0m
+[2m#!/usr/bin/env bash
+set -euo pipefail
+#
+# Usage: ./scripts/generate-next-agent.sh <ROLE> [--notes "context for next role"]
+#
+# Generates ai/next_agent.yaml with the correct config for the given role.
+# Pass --notes to include handoff context (what was done, what to watch for).
+# Called by each role prompt at handoff time so agents don't hand-write YAML.
+
+ROOT="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)"
+cd "$ROOT"
+
+ROLE=""
+NOTES=""
+
+# Parse args
+while [[ $# -gt 0 ]]; do
+  case "$1" in
+    --notes) NOTES="$2"; shift 2 ;;
+    --help|-h)[0m
+[35m[3mexec[0m[0m
+[1m/bin/bash -lc "sed -n '1,240p' ai/templates/next-agent-template.yaml"[0m in /home/sundaram/code/temp/test[32m succeeded in 0ms:[0m
+[2mnext_role: <ROLE>
+prompt_file: ai/prompts/<prompt-file>.md
+read:
+  - ai/goal.yaml
+  - ai/judgment.yaml
+  - ai/constitution.yaml
+  - ai/backlog.yaml
+  - ai/active_item.yaml
+  - ai/decision-lock.yaml
+  - ai/active_agent.txt
+  - ai/next_agent.md
+allowed_edits:
+  - <list of files this role may edit>
+stop_conditions:
+  - WAITING FOR BATON when active agent mismatch
+  - WAITING FOR USER when clarification is required
+success_criteria:
+  - <what must be true for handoff>
+handoff_on_success:
+  print_exact: HANDOFF TO <NEXT_ROLE>[0m
+[35m[3mexec[0m[0m
+[1m/bin/bash -lc "sed -n '241,340p' scripts/generate-next-agent.sh"[0m in /home/sundaram/code/temp/test[32m succeeded in 0ms:[0m
+[2m        echo "  - $trimmed"
+      fi
+    done
+  fi
+} > ai/next_agent.yaml
+
+echo "Generated ai/next_agent.yaml for $ROLE (next: $NEXT_ROLE)"[0m
+[35m[3mcodex[0m[0m
+I’ve reached the edit stage. I’m tightening the simplification guidance around app structure and API boundaries, then I’ll write the architect handoff notes, append the decision log, regenerate `ai/next_agent.yaml`, and pass the baton.
+[3m[35mfile update[0m[0m
+[35mM /home/sundaram/code/temp/test/ai/active_agent.txt[0m
+@@ -1 +1 @@
+[31m-SENIOR_JUDGMENTAL_ENGINEER[0m
+[32m+ARCHITECT[0m
+[35mM /home/sundaram/code/temp/test/ai/simplification.md[0m
+@@ -20 +20,6 @@
+ 15. **Stack override in effect** — `judgment.yaml` defaults (aspnet_core, react_nextjs, postgresql) are superseded by the goal. No exception entry required.
+[32m+16. **Single Django app bias** — unless forced by an implementation constraint, keep the tracker in one Django app with models, views, URLs, templates, and static assets together. Do not split into multiple apps for "clean architecture".[0m
+[32m+17. **No service/repository layer** — views should call Django ORM directly. The domain is simple CRUD plus a small dashboard aggregate; extra indirection would be ceremony.[0m
+[32m+18. **Separate HTML pages from JSON endpoints** — templates render pages, JSON views handle async mutations/data fetches. Do not build a content-negotiation layer or hybrid "sometimes HTML, sometimes JSON" endpoints unless required.[0m
+[32m+19. **Use Django `TextChoices` for enums** — status and priority fields should be defined once on the models, not duplicated across forms, views, and JS constants.[0m
+[32m+20. **Simple tag filtering** — support filtering by a single selected tag to satisfy scope. Do not design a multi-filter search system unless the user explicitly expands scope.[0m
+[35mM /home/sundaram/code/temp/test/ai/iterations/ITER-0001.md[0m
+@@ -5 +5,2 @@
+ | 2026-03-11 | PRODUCT_OWNER | Wrote full requirements.md from goal.yaml: projects/tasks/tags CRUD, dashboard, tag-filter view, vanilla JS async mutations, Django+SQLite only | Goal was fully specified; no ambiguity found; translated success criteria into testable acceptance criteria |
+[32m+| 2026-03-11 | SENIOR_JUDGMENTAL_ENGINEER | Confirmed Django + vanilla JS + SQLite scope, added anti-overengineering guardrails, and cleared handoff to architecture | Goal explicitly overrides judgment defaults; plain Django JSON views, one app, direct ORM usage, and simple async UI are sufficient for the required CRUD and dashboard behavior |[0m
+[35mM /home/sundaram/code/temp/test/ai/next_agent.md[0m
+@@ -1,5 +1,5 @@
+[31m-# Handoff Notes — PRODUCT_OWNER → SENIOR_JUDGMENTAL_ENGINEER[0m
+[32m+# Handoff Notes — SENIOR_JUDGMENTAL_ENGINEER → ARCHITECT[0m
+ 
+[31m-- Current role: `SENIOR_JUDGMENTAL_ENGINEER`[0m
+[31m-- Prompt: `ai/prompts/01-senior-judgmental-engineer.md`[0m
+[32m+- Current role: `ARCHITECT`[0m
+[32m+- Prompt: `ai/prompts/02-architect.md`[0m
+ - Execution command for Codex sessions: **Follow `ai/next_agent.yaml` exactly.**
+@@ -7,20 +7,31 @@
+ 
+[31m-## What was done[0m
+[32m+## Judgment outcome[0m
+ 
+[31m-`ai/requirements.md` has been fully written from `ai/goal.yaml`. The goal was unambiguous and complete — no open questions were raised and no user clarification was needed.[0m
+[32m+The scope is valid as written. Nothing needs escalation and nothing important is missing for the stated personal-use tracker. The goal-level stack requirement overrides `judgment.yaml` defaults: use Django, SQLite, and vanilla JS only.[0m
+ 
+[31m-## What to focus on[0m
+[32m+## Guardrails now in force[0m
+ 
+[31m-1. **Stack divergence from judgment.yaml defaults** — `judgment.yaml` defaults to `aspnet_core` backend and `react_nextjs` frontend, but the goal explicitly mandates Django + vanilla JS. This is a goal-level override; no exception entry is needed in `decision-lock.yaml` unless you disagree.[0m
+[31m-2. **Constraint strictness** — "no additional pip packages" rules out DRF. The implementation must use plain Django views for the JSON API. Confirm this is achievable and flag if any hidden complexity makes it risky.[0m
+[31m-3. **Scope tightness** — no auth, no file uploads, no email. The scope is deliberately narrow. Validate nothing important has been omitted that would make the tracker unusable for the stated personal-use goal.[0m
+[31m-4. **Async mutation requirement** — add/edit/delete without full page reload using vanilla JS fetch. This is a firm UX requirement, not optional.[0m
+[32m+1. Keep this as a small modular monolith inside `apps/project-tracker/`; do not split into multiple Django apps or invent services/repositories.[0m
+[32m+2. Use plain Django views for JSON CRUD. No DRF, no class-heavy abstraction, no generic CRUD framework.[0m
+[32m+3. Keep page-rendering views and JSON endpoints separate. Templates serve pages; fetch hits JSON routes.[0m
+[32m+4. Use direct ORM queries plus simple aggregation for dashboard stats. No raw SQL unless architecture uncovers a real blocker.[0m
+[32m+5. Tag filtering only needs a single selected tag to satisfy scope. Do not broaden to advanced search.[0m
+[32m+6. Status/priority enums should be centralized with Django `TextChoices`.[0m
+ 
+[31m-## Concerns / risks[0m
+[32m+## What architecture needs to pin down[0m
+ 
+[31m-- None blocking. The goal is explicit and the requirements are a direct translation.[0m
+[31m-- Watch for scope creep: the dashboard and tag-filter view are included in scope — both must be covered.[0m
+[32m+1. Django project/app layout under `apps/project-tracker/`, including where templates, static files, and URL modules live.[0m
+[32m+2. Model design for `Project`, `Task`, and `Tag`, including the two many-to-many relationships for tags.[0m
+[32m+3. URL boundary between HTML views and JSON endpoints, keeping the route map flat and readable.[0m
+[32m+4. The minimum frontend data flow needed for async create/update/delete without full page reload.[0m
+[32m+5. Dashboard query approach for total projects, task counts by status, and overdue tasks using timezone-aware date logic.[0m
+[32m+[0m
+[32m+## Risks to watch[0m
+ 
+[32m+- The async mutation requirement is firm. Architecture should make the JS/API contract explicit enough that DEV does not fall back to form-post/full-refresh behavior.[0m
+[32m+- The no-third-party-packages constraint means any admin-style convenience abstractions are out. Keep the design intentionally simple.[0m
+[32m+- `ai/active_item.yaml` is still idle/null, so architecture should stay at whole-system design level and avoid pretending a narrower implementation slice has already been chosen.[0m
+[32m+[0m
+ ## Next role after you
+ 
+[31m-ARCHITECT — who will design the Django project structure, model layout, URL routing, and view/API boundary.[0m
+[32m+PLANNER — after the architecture and boundaries are defined.[0m
+[32mapply_patch(auto_approved=true) exited 0 in 7ms:[0m
+[2mSuccess. Updated the following files:[0m
+[2mM /home/sundaram/code/temp/test/ai/simplification.md[0m
+[2mM /home/sundaram/code/temp/test/ai/iterations/ITER-0001.md[0m
+[2mM /home/sundaram/code/temp/test/ai/next_agent.md[0m
+[2mM /home/sundaram/code/temp/test/ai/active_agent.txt[0m
+[3m[35mfile update:[0m[0m
+diff --git a/ai/active_agent.txt b/ai/active_agent.txt
+index 2b3f0a790a548c58322c577ec6d5177bf4080cd3..d8f7bc1fc12b97ceb3e2b1ff348120791503cd24
+--- a/ai/active_agent.txt
++++ b/ai/active_agent.txt
+@@ -1 +1 @@
+-SENIOR_JUDGMENTAL_ENGINEER
++ARCHITECT
+diff --git a/ai/iterations/ITER-0001.md b/ai/iterations/ITER-0001.md
+index c9f090be3b917693b1eeddab85e47480f03f822d..492b52784bb6ccf495ebfc74ad3ba9f9c3eca1c9
+--- a/ai/iterations/ITER-0001.md
++++ b/ai/iterations/ITER-0001.md
+@@ -3,3 +3,4 @@
+ | Timestamp | Role | Decision | Why |
+ |-----------|------|----------|-----|
+ | 2026-03-11 | PRODUCT_OWNER | Wrote full requirements.md from goal.yaml: projects/tasks/tags CRUD, dashboard, tag-filter view, vanilla JS async mutations, Django+SQLite only | Goal was fully specified; no ambiguity found; translated success criteria into testable acceptance criteria |
++| 2026-03-11 | SENIOR_JUDGMENTAL_ENGINEER | Confirmed Django + vanilla JS + SQLite scope, added anti-overengineering guardrails, and cleared handoff to architecture | Goal explicitly overrides judgment defaults; plain Django JSON views, one app, direct ORM usage, and simple async UI are sufficient for the required CRUD and dashboard behavior |
+diff --git a/ai/next_agent.md b/ai/next_agent.md
+index ce3f33a08862386c773c4df41213aca021b63235..0583cb2977e314a3dc1ff9be0acc6cf3574f877d
+--- a/ai/next_agent.md
++++ b/ai/next_agent.md
+@@ -1,26 +1,37 @@
+-# Handoff Notes — PRODUCT_OWNER → SENIOR_JUDGMENTAL_ENGINEER
++# Handoff Notes — SENIOR_JUDGMENTAL_ENGINEER → ARCHITECT
+ 
+-- Current role: `SENIOR_JUDGMENTAL_ENGINEER`
+-- Prompt: `ai/prompts/01-senior-judgmental-engineer.md`
++- Current role: `ARCHITECT`
++- Prompt: `ai/prompts/02-architect.md`
+ - Execution command for Codex sessions: **Follow `ai/next_agent.yaml` exactly.**
+ - If role mismatch with `ai/active_agent.txt`, print: `WAITING FOR BATON`
+ 
+-## What was done
++## Judgment outcome
+ 
+-`ai/requirements.md` has been fully written from `ai/goal.yaml`. The goal was unambiguous and complete — no open questions were raised and no user clarification was needed.
++The scope is valid as written. Nothing needs escalation and nothing important is missing for the stated personal-use tracker. The goal-level stack requirement overrides `judgment.yaml` defaults: use Django, SQLite, and vanilla JS only.
+ 
+-## What to focus on
++## Guardrails now in force
+ 
+-1. **Stack divergence from judgment.yaml defaults** — `judgment.yaml` defaults to `aspnet_core` backend and `react_nextjs` frontend, but the goal explicitly mandates Django + vanilla JS. This is a goal-level override; no exception entry is needed in `decision-lock.yaml` unless you disagree.
+-2. **Constraint strictness** — "no additional pip packages" rules out DRF. The implementation must use plain Django views for the JSON API. Confirm this is achievable and flag if any hidden complexity makes it risky.
+-3. **Scope tightness** — no auth, no file uploads, no email. The scope is deliberately narrow. Validate nothing important has been omitted that would make the tracker unusable for the stated personal-use goal.
+-4. **Async mutation requirement** — add/edit/delete without full page reload using vanilla JS fetch. This is a firm UX requirement, not optional.
++1. Keep this as a small modular monolith inside `apps/project-tracker/`; do not split into multiple Django apps or invent services/repositories.
++2. Use plain Django views for JSON CRUD. No DRF, no class-heavy abstraction, no generic CRUD framework.
++3. Keep page-rendering views and JSON endpoints separate. Templates serve pages; fetch hits JSON routes.
++4. Use direct ORM queries plus simple aggregation for dashboard stats. No raw SQL unless architecture uncovers a real blocker.
++5. Tag filtering only needs a single selected tag to satisfy scope. Do not broaden to advanced search.
++6. Status/priority enums should be centralized with Django `TextChoices`.
+ 
+-## Concerns / risks
++## What architecture needs to pin down
+ 
+-- None blocking. The goal is explicit and the requirements are a direct translation.
+-- Watch for scope creep: the dashboard and tag-filter view are included in scope — both must be covered.
++1. Django project/app layout under `apps/project-tracker/`, including where templates, static files, and URL modules live.
++2. Model design for `Project`, `Task`, and `Tag`, including the two many-to-many relationships for tags.
++3. URL boundary between HTML views and JSON endpoints, keeping the route map flat and readable.
++4. The minimum frontend data flow needed for async create/update/delete without full page reload.
++5. Dashboard query approach for total projects, task counts by status, and overdue tasks using timezone-aware date logic.
++
++## Risks to watch
+ 
++- The async mutation requirement is firm. Architecture should make the JS/API contract explicit enough that DEV does not fall back to form-post/full-refresh behavior.
++- The no-third-party-packages constraint means any admin-style convenience abstractions are out. Keep the design intentionally simple.
++- `ai/active_item.yaml` is still idle/null, so architecture should stay at whole-system design level and avoid pretending a narrower implementation slice has already been chosen.
++
+ ## Next role after you
+ 
+-ARCHITECT — who will design the Django project structure, model layout, URL routing, and view/API boundary.
++PLANNER — after the architecture and boundaries are defined.
+diff --git a/ai/simplification.md b/ai/simplification.md
+index 351da74b506c70ea149c5264ee278e509922925c..3dbdfc87e31bb6dc62762ba9fe8fec30f138f99c
+--- a/ai/simplification.md
++++ b/ai/simplification.md
+@@ -18,3 +18,8 @@
+ 13. **Timezone-aware overdue check** — use `django.utils.timezone.now().date()` when filtering overdue tasks; do not use `datetime.date.today()` if `USE_TZ=True`.
+ 14. **Flat URL structure** — no URL namespaces needed for a single-app project. Keep `urls.py` flat and readable.
+ 15. **Stack override in effect** — `judgment.yaml` defaults (aspnet_core, react_nextjs, postgresql) are superseded by the goal. No exception entry required.
++16. **Single Django app bias** — unless forced by an implementation constraint, keep the tracker in one Django app with models, views, URLs, templates, and static assets together. Do not split into multiple apps for "clean architecture".
++17. **No service/repository layer** — views should call Django ORM directly. The domain is simple CRUD plus a small dashboard aggregate; extra indirection would be ceremony.
++18. **Separate HTML pages from JSON endpoints** — templates render pages, JSON views handle async mutations/data fetches. Do not build a content-negotiation layer or hybrid "sometimes HTML, sometimes JSON" endpoints unless required.
++19. **Use Django `TextChoices` for enums** — status and priority fields should be defined once on the models, not duplicated across forms, views, and JS constants.
++20. **Simple tag filtering** — support filtering by a single selected tag to satisfy scope. Do not design a multi-filter search system unless the user explicitly expands scope.
+
+[3m[35mfile update:[0m[0m
+diff --git a/ai/active_agent.txt b/ai/active_agent.txt
+index 2b3f0a790a548c58322c577ec6d5177bf4080cd3..d8f7bc1fc12b97ceb3e2b1ff348120791503cd24
+--- a/ai/active_agent.txt
++++ b/ai/active_agent.txt
+@@ -1 +1 @@
+-SENIOR_JUDGMENTAL_ENGINEER
++ARCHITECT
+diff --git a/ai/iterations/ITER-0001.md b/ai/iterations/ITER-0001.md
+index c9f090be3b917693b1eeddab85e47480f03f822d..492b52784bb6ccf495ebfc74ad3ba9f9c3eca1c9
+--- a/ai/iterations/ITER-0001.md
++++ b/ai/iterations/ITER-0001.md
+@@ -3,3 +3,4 @@
+ | Timestamp | Role | Decision | Why |
+ |-----------|------|----------|-----|
+ | 2026-03-11 | PRODUCT_OWNER | Wrote full requirements.md from goal.yaml: projects/tasks/tags CRUD, dashboard, tag-filter view, vanilla JS async mutations, Django+SQLite only | Goal was fully specified; no ambiguity found; translated success criteria into testable acceptance criteria |
++| 2026-03-11 | SENIOR_JUDGMENTAL_ENGINEER | Confirmed Django + vanilla JS + SQLite scope, added anti-overengineering guardrails, and cleared handoff to architecture | Goal explicitly overrides judgment defaults; plain Django JSON views, one app, direct ORM usage, and simple async UI are sufficient for the required CRUD and dashboard behavior |
+diff --git a/ai/next_agent.md b/ai/next_agent.md
+index ce3f33a08862386c773c4df41213aca021b63235..0583cb2977e314a3dc1ff9be0acc6cf3574f877d
+--- a/ai/next_agent.md
++++ b/ai/next_agent.md
+@@ -1,26 +1,37 @@
+-# Handoff Notes — PRODUCT_OWNER → SENIOR_JUDGMENTAL_ENGINEER
++# Handoff Notes — SENIOR_JUDGMENTAL_ENGINEER → ARCHITECT
+ 
+-- Current role: `SENIOR_JUDGMENTAL_ENGINEER`
+-- Prompt: `ai/prompts/01-senior-judgmental-engineer.md`
++- Current role: `ARCHITECT`
++- Prompt: `ai/prompts/02-architect.md`
+ - Execution command for Codex sessions: **Follow `ai/next_agent.yaml` exactly.**
+ - If role mismatch with `ai/active_agent.txt`, print: `WAITING FOR BATON`
+ 
+-## What was done
++## Judgment outcome
+ 
+-`ai/requirements.md` has been fully written from `ai/goal.yaml`. The goal was unambiguous and complete — no open questions were raised and no user clarification was needed.
++The scope is valid as written. Nothing needs escalation and nothing important is missing for the stated personal-use tracker. The goal-level stack requirement overrides `judgment.yaml` defaults: use Django, SQLite, and vanilla JS only.
+ 
+-## What to focus on
++## Guardrails now in force
+ 
+-1. **Stack divergence from judgment.yaml defaults** — `judgment.yaml` defaults to `aspnet_core` backend and `react_nextjs` frontend, but the goal explicitly mandates Django + vanilla JS. This is a goal-level override; no exception entry is needed in `decision-lock.yaml` unless you disagree.
+-2. **Constraint strictness** — "no additional pip packages" rules out DRF. The implementation must use plain Django views for the JSON API. Confirm this is achievable and flag if any hidden complexity makes it risky.
+-3. **Scope tightness** — no auth, no file uploads, no email. The scope is deliberately narrow. Validate nothing important has been omitted that would make the tracker unusable for the stated personal-use goal.
+-4. **Async mutation requirement** — add/edit/delete without full page reload using vanilla JS fetch. This is a firm UX requirement, not optional.
++1. Keep this as a small modular monolith inside `apps/project-tracker/`; do not split into multiple Django apps or invent services/repositories.
++2. Use plain Django views for JSON CRUD. No DRF, no class-heavy abstraction, no generic CRUD framework.
++3. Keep page-rendering views and JSON endpoints separate. Templates serve pages; fetch hits JSON routes.
++4. Use direct ORM queries plus simple aggregation for dashboard stats. No raw SQL unless architecture uncovers a real blocker.
++5. Tag filtering only needs a single selected tag to satisfy scope. Do not broaden to advanced search.
++6. Status/priority enums should be centralized with Django `TextChoices`.
+ 
+-## Concerns / risks
++## What architecture needs to pin down
+ 
+-- None blocking. The goal is explicit and the requirements are a direct translation.
+-- Watch for scope creep: the dashboard and tag-filter view are included in scope — both must be covered.
++1. Django project/app layout under `apps/project-tracker/`, including where templates, static files, and URL modules live.
++2. Model design for `Project`, `Task`, and `Tag`, including the two many-to-many relationships for tags.
++3. URL boundary between HTML views and JSON endpoints, keeping the route map flat and readable.
++4. The minimum frontend data flow needed for async create/update/delete without full page reload.
++5. Dashboard query approach for total projects, task counts by status, and overdue tasks using timezone-aware date logic.
++
++## Risks to watch
+ 
++- The async mutation requirement is firm. Architecture should make the JS/API contract explicit enough that DEV does not fall back to form-post/full-refresh behavior.
++- The no-third-party-packages constraint means any admin-style convenience abstractions are out. Keep the design intentionally simple.
++- `ai/active_item.yaml` is still idle/null, so architecture should stay at whole-system design level and avoid pretending a narrower implementation slice has already been chosen.
++
+ ## Next role after you
+ 
+-ARCHITECT — who will design the Django project structure, model layout, URL routing, and view/API boundary.
++PLANNER — after the architecture and boundaries are defined.
+diff --git a/ai/simplification.md b/ai/simplification.md
+index 351da74b506c70ea149c5264ee278e509922925c..3dbdfc87e31bb6dc62762ba9fe8fec30f138f99c
+--- a/ai/simplification.md
++++ b/ai/simplification.md
+@@ -18,3 +18,8 @@
+ 13. **Timezone-aware overdue check** — use `django.utils.timezone.now().date()` when filtering overdue tasks; do not use `datetime.date.today()` if `USE_TZ=True`.
+ 14. **Flat URL structure** — no URL namespaces needed for a single-app project. Keep `urls.py` flat and readable.
+ 15. **Stack override in effect** — `judgment.yaml` defaults (aspnet_core, react_nextjs, postgresql) are superseded by the goal. No exception entry required.
++16. **Single Django app bias** — unless forced by an implementation constraint, keep the tracker in one Django app with models, views, URLs, templates, and static assets together. Do not split into multiple apps for "clean architecture".
++17. **No service/repository layer** — views should call Django ORM directly. The domain is simple CRUD plus a small dashboard aggregate; extra indirection would be ceremony.
++18. **Separate HTML pages from JSON endpoints** — templates render pages, JSON views handle async mutations/data fetches. Do not build a content-negotiation layer or hybrid "sometimes HTML, sometimes JSON" endpoints unless required.
++19. **Use Django `TextChoices` for enums** — status and priority fields should be defined once on the models, not duplicated across forms, views, and JS constants.
++20. **Simple tag filtering** — support filtering by a single selected tag to satisfy scope. Do not design a multi-filter search system unless the user explicitly expands scope.
+
+[35m[3mexec[0m[0m
+[1m/bin/bash -lc './scripts/generate-next-agent.sh ARCHITECT --notes "judgment summary complete | guardrails added for single-app Django + plain JSON views + vanilla JS | non-blocking risk flagged: async mutations and dashboard/tag-filter must stay in scope"'[0m in /home/sundaram/code/temp/test[32m succeeded in 0ms:[0m
+[2mGenerated ai/next_agent.yaml for ARCHITECT (next: PLANNER)[0m
+[3m[35mfile update:[0m[0m
+diff --git a/ai/active_agent.txt b/ai/active_agent.txt
+index 2b3f0a790a548c58322c577ec6d5177bf4080cd3..d8f7bc1fc12b97ceb3e2b1ff348120791503cd24
+--- a/ai/active_agent.txt
++++ b/ai/active_agent.txt
+@@ -1 +1 @@
+-SENIOR_JUDGMENTAL_ENGINEER
++ARCHITECT
+diff --git a/ai/iterations/ITER-0001.md b/ai/iterations/ITER-0001.md
+index c9f090be3b917693b1eeddab85e47480f03f822d..492b52784bb6ccf495ebfc74ad3ba9f9c3eca1c9
+--- a/ai/iterations/ITER-0001.md
++++ b/ai/iterations/ITER-0001.md
+@@ -3,3 +3,4 @@
+ | Timestamp | Role | Decision | Why |
+ |-----------|------|----------|-----|
+ | 2026-03-11 | PRODUCT_OWNER | Wrote full requirements.md from goal.yaml: projects/tasks/tags CRUD, dashboard, tag-filter view, vanilla JS async mutations, Django+SQLite only | Goal was fully specified; no ambiguity found; translated success criteria into testable acceptance criteria |
++| 2026-03-11 | SENIOR_JUDGMENTAL_ENGINEER | Confirmed Django + vanilla JS + SQLite scope, added anti-overengineering guardrails, and cleared handoff to architecture | Goal explicitly overrides judgment defaults; plain Django JSON views, one app, direct ORM usage, and simple async UI are sufficient for the required CRUD and dashboard behavior |
+diff --git a/ai/next_agent.md b/ai/next_agent.md
+index ce3f33a08862386c773c4df41213aca021b63235..0583cb2977e314a3dc1ff9be0acc6cf3574f877d
+--- a/ai/next_agent.md
++++ b/ai/next_agent.md
+@@ -1,26 +1,37 @@
+-# Handoff Notes — PRODUCT_OWNER → SENIOR_JUDGMENTAL_ENGINEER
++# Handoff Notes — SENIOR_JUDGMENTAL_ENGINEER → ARCHITECT
+ 
+-- Current role: `SENIOR_JUDGMENTAL_ENGINEER`
+-- Prompt: `ai/prompts/01-senior-judgmental-engineer.md`
++- Current role: `ARCHITECT`
++- Prompt: `ai/prompts/02-architect.md`
+ - Execution command for Codex sessions: **Follow `ai/next_agent.yaml` exactly.**
+ - If role mismatch with `ai/active_agent.txt`, print: `WAITING FOR BATON`
+ 
+-## What was done
++## Judgment outcome
+ 
+-`ai/requirements.md` has been fully written from `ai/goal.yaml`. The goal was unambiguous and complete — no open questions were raised and no user clarification was needed.
++The scope is valid as written. Nothing needs escalation and nothing important is missing for the stated personal-use tracker. The goal-level stack requirement overrides `judgment.yaml` defaults: use Django, SQLite, and vanilla JS only.
+ 
+-## What to focus on
++## Guardrails now in force
+ 
+-1. **Stack divergence from judgment.yaml defaults** — `judgment.yaml` defaults to `aspnet_core` backend and `react_nextjs` frontend, but the goal explicitly mandates Django + vanilla JS. This is a goal-level override; no exception entry is needed in `decision-lock.yaml` unless you disagree.
+-2. **Constraint strictness** — "no additional pip packages" rules out DRF. The implementation must use plain Django views for the JSON API. Confirm this is achievable and flag if any hidden complexity makes it risky.
+-3. **Scope tightness** — no auth, no file uploads, no email. The scope is deliberately narrow. Validate nothing important has been omitted that would make the tracker unusable for the stated personal-use goal.
+-4. **Async mutation requirement** — add/edit/delete without full page reload using vanilla JS fetch. This is a firm UX requirement, not optional.
++1. Keep this as a small modular monolith inside `apps/project-tracker/`; do not split into multiple Django apps or invent services/repositories.
++2. Use plain Django views for JSON CRUD. No DRF, no class-heavy abstraction, no generic CRUD framework.
++3. Keep page-rendering views and JSON endpoints separate. Templates serve pages; fetch hits JSON routes.
++4. Use direct ORM queries plus simple aggregation for dashboard stats. No raw SQL unless architecture uncovers a real blocker.
++5. Tag filtering only needs a single selected tag to satisfy scope. Do not broaden to advanced search.
++6. Status/priority enums should be centralized with Django `TextChoices`.
+ 
+-## Concerns / risks
++## What architecture needs to pin down
+ 
+-- None blocking. The goal is explicit and the requirements are a direct translation.
+-- Watch for scope creep: the dashboard and tag-filter view are included in scope — both must be covered.
++1. Django project/app layout under `apps/project-tracker/`, including where templates, static files, and URL modules live.
++2. Model design for `Project`, `Task`, and `Tag`, including the two many-to-many relationships for tags.
++3. URL boundary between HTML views and JSON endpoints, keeping the route map flat and readable.
++4. The minimum frontend data flow needed for async create/update/delete without full page reload.
++5. Dashboard query approach for total projects, task counts by status, and overdue tasks using timezone-aware date logic.
++
++## Risks to watch
+ 
++- The async mutation requirement is firm. Architecture should make the JS/API contract explicit enough that DEV does not fall back to form-post/full-refresh behavior.
++- The no-third-party-packages constraint means any admin-style convenience abstractions are out. Keep the design intentionally simple.
++- `ai/active_item.yaml` is still idle/null, so architecture should stay at whole-system design level and avoid pretending a narrower implementation slice has already been chosen.
++
+ ## Next role after you
+ 
+-ARCHITECT — who will design the Django project structure, model layout, URL routing, and view/API boundary.
++PLANNER — after the architecture and boundaries are defined.
+diff --git a/ai/simplification.md b/ai/simplification.md
+index 351da74b506c70ea149c5264ee278e509922925c..3dbdfc87e31bb6dc62762ba9fe8fec30f138f99c
+--- a/ai/simplification.md
++++ b/ai/simplification.md
+@@ -18,3 +18,8 @@
+ 13. **Timezone-aware overdue check** — use `django.utils.timezone.now().date()` when filtering overdue tasks; do not use `datetime.date.today()` if `USE_TZ=True`.
+ 14. **Flat URL structure** — no URL namespaces needed for a single-app project. Keep `urls.py` flat and readable.
+ 15. **Stack override in effect** — `judgment.yaml` defaults (aspnet_core, react_nextjs, postgresql) are superseded by the goal. No exception entry required.
++16. **Single Django app bias** — unless forced by an implementation constraint, keep the tracker in one Django app with models, views, URLs, templates, and static assets together. Do not split into multiple apps for "clean architecture".
++17. **No service/repository layer** — views should call Django ORM directly. The domain is simple CRUD plus a small dashboard aggregate; extra indirection would be ceremony.
++18. **Separate HTML pages from JSON endpoints** — templates render pages, JSON views handle async mutations/data fetches. Do not build a content-negotiation layer or hybrid "sometimes HTML, sometimes JSON" endpoints unless required.
++19. **Use Django `TextChoices` for enums** — status and priority fields should be defined once on the models, not duplicated across forms, views, and JS constants.
++20. **Simple tag filtering** — support filtering by a single selected tag to satisfy scope. Do not design a multi-filter search system unless the user explicitly expands scope.
+
+[35m[3mcodex[0m[0m
+The baton files are written. I’m doing one final verification pass on the generated `ai/next_agent.yaml` and the role switch so I can hand off cleanly without leaving an inconsistent state.
+[35m[3mexec[0m[0m
+[1m/bin/bash -lc "sed -n '1,240p' ai/next_agent.yaml"[0m in /home/sundaram/code/temp/test[32m succeeded in 0ms:[0m
+[2mnext_role: ARCHITECT
+prompt_file: ai/prompts/02-architect.md
+read:
+  - ai/requirements.md
+  - ai/active_item.yaml
+  - ai/judgment.yaml
+  - ai/simplification.md
+  - ai/decision-lock.yaml
+  - ai/goal.yaml
+  - ai/constitution.yaml
+  - ai/active_agent.txt
+  - ai/next_agent.md
+allowed_edits:
+  - context/repo/
+  - ai/review.md
+  - ai/iterations/ITER-0001.md
+  - ai/active_agent.txt
+  - ai/next_agent.yaml
+  - ai/next_agent.md
+stop_conditions:[0m
+[35m[3mexec[0m[0m
+[1m/bin/bash -lc 'cat ai/active_agent.txt'[0m in /home/sundaram/code/temp/test[35m[3mexec[0m[0m
+[1m/bin/bash -lc "sed -n '1,260p' ai/next_agent.md"[0m in /home/sundaram/code/temp/test[32m succeeded in 0ms:[0m
+[2mARCHITECT[0m
+[32m succeeded in 0ms:[0m
+[2m# Handoff Notes — SENIOR_JUDGMENTAL_ENGINEER → ARCHITECT
+
+- Current role: `ARCHITECT`
+- Prompt: `ai/prompts/02-architect.md`
+- Execution command for Codex sessions: **Follow `ai/next_agent.yaml` exactly.**
+- If role mismatch with `ai/active_agent.txt`, print: `WAITING FOR BATON`
+
+## Judgment outcome
+
+The scope is valid as written. Nothing needs escalation and nothing important is missing for the stated personal-use tracker. The goal-level stack requirement overrides `judgment.yaml` defaults: use Django, SQLite, and vanilla JS only.
+
+## Guardrails now in force
+
+1. Keep this as a small modular monolith inside `apps/project-tracker/`; do not split into multiple Django apps or invent services/repositories.
+2. Use plain Django views for JSON CRUD. No DRF, no class-heavy abstraction, no generic CRUD framework.
+3. Keep page-rendering views and JSON endpoints separate. Templates serve pages; fetch hits JSON routes.
+4. Use direct ORM queries plus simple aggregation for dashboard stats. No raw SQL unless architecture uncovers a real blocker.
+5. Tag filtering only needs a single selected tag to satisfy scope. Do not broaden to advanced search.
+6. Status/priority enums should be centralized with Django `TextChoices`.
+[0m
+[3m[35mfile update:[0m[0m
+diff --git a/ai/active_agent.txt b/ai/active_agent.txt
+index 2b3f0a790a548c58322c577ec6d5177bf4080cd3..d8f7bc1fc12b97ceb3e2b1ff348120791503cd24
+--- a/ai/active_agent.txt
++++ b/ai/active_agent.txt
+@@ -1 +1 @@
+-SENIOR_JUDGMENTAL_ENGINEER
++ARCHITECT
+diff --git a/ai/iterations/ITER-0001.md b/ai/iterations/ITER-0001.md
+index c9f090be3b917693b1eeddab85e47480f03f822d..492b52784bb6ccf495ebfc74ad3ba9f9c3eca1c9
+--- a/ai/iterations/ITER-0001.md
++++ b/ai/iterations/ITER-0001.md
+@@ -3,3 +3,4 @@
+ | Timestamp | Role | Decision | Why |
+ |-----------|------|----------|-----|
+ | 2026-03-11 | PRODUCT_OWNER | Wrote full requirements.md from goal.yaml: projects/tasks/tags CRUD, dashboard, tag-filter view, vanilla JS async mutations, Django+SQLite only | Goal was fully specified; no ambiguity found; translated success criteria into testable acceptance criteria |
++| 2026-03-11 | SENIOR_JUDGMENTAL_ENGINEER | Confirmed Django + vanilla JS + SQLite scope, added anti-overengineering guardrails, and cleared handoff to architecture | Goal explicitly overrides judgment defaults; plain Django JSON views, one app, direct ORM usage, and simple async UI are sufficient for the required CRUD and dashboard behavior |
+diff --git a/ai/next_agent.md b/ai/next_agent.md
+index ce3f33a08862386c773c4df41213aca021b63235..0583cb2977e314a3dc1ff9be0acc6cf3574f877d
+--- a/ai/next_agent.md
++++ b/ai/next_agent.md
+@@ -1,26 +1,37 @@
+-# Handoff Notes — PRODUCT_OWNER → SENIOR_JUDGMENTAL_ENGINEER
++# Handoff Notes — SENIOR_JUDGMENTAL_ENGINEER → ARCHITECT
+ 
+-- Current role: `SENIOR_JUDGMENTAL_ENGINEER`
+-- Prompt: `ai/prompts/01-senior-judgmental-engineer.md`
++- Current role: `ARCHITECT`
++- Prompt: `ai/prompts/02-architect.md`
+ - Execution command for Codex sessions: **Follow `ai/next_agent.yaml` exactly.**
+ - If role mismatch with `ai/active_agent.txt`, print: `WAITING FOR BATON`
+ 
+-## What was done
++## Judgment outcome
+ 
+-`ai/requirements.md` has been fully written from `ai/goal.yaml`. The goal was unambiguous and complete — no open questions were raised and no user clarification was needed.
++The scope is valid as written. Nothing needs escalation and nothing important is missing for the stated personal-use tracker. The goal-level stack requirement overrides `judgment.yaml` defaults: use Django, SQLite, and vanilla JS only.
+ 
+-## What to focus on
++## Guardrails now in force
+ 
+-1. **Stack divergence from judgment.yaml defaults** — `judgment.yaml` defaults to `aspnet_core` backend and `react_nextjs` frontend, but the goal explicitly mandates Django + vanilla JS. This is a goal-level override; no exception entry is needed in `decision-lock.yaml` unless you disagree.
+-2. **Constraint strictness** — "no additional pip packages" rules out DRF. The implementation must use plain Django views for the JSON API. Confirm this is achievable and flag if any hidden complexity makes it risky.
+-3. **Scope tightness** — no auth, no file uploads, no email. The scope is deliberately narrow. Validate nothing important has been omitted that would make the tracker unusable for the stated personal-use goal.
+-4. **Async mutation requirement** — add/edit/delete without full page reload using vanilla JS fetch. This is a firm UX requirement, not optional.
++1. Keep this as a small modular monolith inside `apps/project-tracker/`; do not split into multiple Django apps or invent services/repositories.
++2. Use plain Django views for JSON CRUD. No DRF, no class-heavy abstraction, no generic CRUD framework.
++3. Keep page-rendering views and JSON endpoints separate. Templates serve pages; fetch hits JSON routes.
++4. Use direct ORM queries plus simple aggregation for dashboard stats. No raw SQL unless architecture uncovers a real blocker.
++5. Tag filtering only needs a single selected tag to satisfy scope. Do not broaden to advanced search.
++6. Status/priority enums should be centralized with Django `TextChoices`.
+ 
+-## Concerns / risks
++## What architecture needs to pin down
+ 
+-- None blocking. The goal is explicit and the requirements are a direct translation.
+-- Watch for scope creep: the dashboard and tag-filter view are included in scope — both must be covered.
++1. Django project/app layout under `apps/project-tracker/`, including where templates, static files, and URL modules live.
++2. Model design for `Project`, `Task`, and `Tag`, including the two many-to-many relationships for tags.
++3. URL boundary between HTML views and JSON endpoints, keeping the route map flat and readable.
++4. The minimum frontend data flow needed for async create/update/delete without full page reload.
++5. Dashboard query approach for total projects, task counts by status, and overdue tasks using timezone-aware date logic.
++
++## Risks to watch
+ 
++- The async mutation requirement is firm. Architecture should make the JS/API contract explicit enough that DEV does not fall back to form-post/full-refresh behavior.
++- The no-third-party-packages constraint means any admin-style convenience abstractions are out. Keep the design intentionally simple.
++- `ai/active_item.yaml` is still idle/null, so architecture should stay at whole-system design level and avoid pretending a narrower implementation slice has already been chosen.
++
+ ## Next role after you
+ 
+-ARCHITECT — who will design the Django project structure, model layout, URL routing, and view/API boundary.
++PLANNER — after the architecture and boundaries are defined.
+diff --git a/ai/simplification.md b/ai/simplification.md
+index 351da74b506c70ea149c5264ee278e509922925c..3dbdfc87e31bb6dc62762ba9fe8fec30f138f99c
+--- a/ai/simplification.md
++++ b/ai/simplification.md
+@@ -18,3 +18,8 @@
+ 13. **Timezone-aware overdue check** — use `django.utils.timezone.now().date()` when filtering overdue tasks; do not use `datetime.date.today()` if `USE_TZ=True`.
+ 14. **Flat URL structure** — no URL namespaces needed for a single-app project. Keep `urls.py` flat and readable.
+ 15. **Stack override in effect** — `judgment.yaml` defaults (aspnet_core, react_nextjs, postgresql) are superseded by the goal. No exception entry required.
++16. **Single Django app bias** — unless forced by an implementation constraint, keep the tracker in one Django app with models, views, URLs, templates, and static assets together. Do not split into multiple apps for "clean architecture".
++17. **No service/repository layer** — views should call Django ORM directly. The domain is simple CRUD plus a small dashboard aggregate; extra indirection would be ceremony.
++18. **Separate HTML pages from JSON endpoints** — templates render pages, JSON views handle async mutations/data fetches. Do not build a content-negotiation layer or hybrid "sometimes HTML, sometimes JSON" endpoints unless required.
++19. **Use Django `TextChoices` for enums** — status and priority fields should be defined once on the models, not duplicated across forms, views, and JS constants.
++20. **Simple tag filtering** — support filtering by a single selected tag to satisfy scope. Do not design a multi-filter search system unless the user explicitly expands scope.
+
+[35m[3mcodex[0m[0m
+HANDOFF TO ARCHITECT
+[3m[35mfile update:[0m[0m
+diff --git a/ai/active_agent.txt b/ai/active_agent.txt
+index 2b3f0a790a548c58322c577ec6d5177bf4080cd3..d8f7bc1fc12b97ceb3e2b1ff348120791503cd24
+--- a/ai/active_agent.txt
++++ b/ai/active_agent.txt
+@@ -1 +1 @@
+-SENIOR_JUDGMENTAL_ENGINEER
++ARCHITECT
+diff --git a/ai/iterations/ITER-0001.md b/ai/iterations/ITER-0001.md
+index c9f090be3b917693b1eeddab85e47480f03f822d..492b52784bb6ccf495ebfc74ad3ba9f9c3eca1c9
+--- a/ai/iterations/ITER-0001.md
++++ b/ai/iterations/ITER-0001.md
+@@ -3,3 +3,4 @@
+ | Timestamp | Role | Decision | Why |
+ |-----------|------|----------|-----|
+ | 2026-03-11 | PRODUCT_OWNER | Wrote full requirements.md from goal.yaml: projects/tasks/tags CRUD, dashboard, tag-filter view, vanilla JS async mutations, Django+SQLite only | Goal was fully specified; no ambiguity found; translated success criteria into testable acceptance criteria |
++| 2026-03-11 | SENIOR_JUDGMENTAL_ENGINEER | Confirmed Django + vanilla JS + SQLite scope, added anti-overengineering guardrails, and cleared handoff to architecture | Goal explicitly overrides judgment defaults; plain Django JSON views, one app, direct ORM usage, and simple async UI are sufficient for the required CRUD and dashboard behavior |
+diff --git a/ai/next_agent.md b/ai/next_agent.md
+index ce3f33a08862386c773c4df41213aca021b63235..0583cb2977e314a3dc1ff9be0acc6cf3574f877d
+--- a/ai/next_agent.md
++++ b/ai/next_agent.md
+@@ -1,26 +1,37 @@
+-# Handoff Notes — PRODUCT_OWNER → SENIOR_JUDGMENTAL_ENGINEER
++# Handoff Notes — SENIOR_JUDGMENTAL_ENGINEER → ARCHITECT
+ 
+-- Current role: `SENIOR_JUDGMENTAL_ENGINEER`
+-- Prompt: `ai/prompts/01-senior-judgmental-engineer.md`
++- Current role: `ARCHITECT`
++- Prompt: `ai/prompts/02-architect.md`
+ - Execution command for Codex sessions: **Follow `ai/next_agent.yaml` exactly.**
+ - If role mismatch with `ai/active_agent.txt`, print: `WAITING FOR BATON`
+ 
+-## What was done
++## Judgment outcome
+ 
+-`ai/requirements.md` has been fully written from `ai/goal.yaml`. The goal was unambiguous and complete — no open questions were raised and no user clarification was needed.
++The scope is valid as written. Nothing needs escalation and nothing important is missing for the stated personal-use tracker. The goal-level stack requirement overrides `judgment.yaml` defaults: use Django, SQLite, and vanilla JS only.
+ 
+-## What to focus on
++## Guardrails now in force
+ 
+-1. **Stack divergence from judgment.yaml defaults** — `judgment.yaml` defaults to `aspnet_core` backend and `react_nextjs` frontend, but the goal explicitly mandates Django + vanilla JS. This is a goal-level override; no exception entry is needed in `decision-lock.yaml` unless you disagree.
+-2. **Constraint strictness** — "no additional pip packages" rules out DRF. The implementation must use plain Django views for the JSON API. Confirm this is achievable and flag if any hidden complexity makes it risky.
+-3. **Scope tightness** — no auth, no file uploads, no email. The scope is deliberately narrow. Validate nothing important has been omitted that would make the tracker unusable for the stated personal-use goal.
+-4. **Async mutation requirement** — add/edit/delete without full page reload using vanilla JS fetch. This is a firm UX requirement, not optional.
++1. Keep this as a small modular monolith inside `apps/project-tracker/`; do not split into multiple Django apps or invent services/repositories.
++2. Use plain Django views for JSON CRUD. No DRF, no class-heavy abstraction, no generic CRUD framework.
++3. Keep page-rendering views and JSON endpoints separate. Templates serve pages; fetch hits JSON routes.
++4. Use direct ORM queries plus simple aggregation for dashboard stats. No raw SQL unless architecture uncovers a real blocker.
++5. Tag filtering only needs a single selected tag to satisfy scope. Do not broaden to advanced search.
++6. Status/priority enums should be centralized with Django `TextChoices`.
+ 
+-## Concerns / risks
++## What architecture needs to pin down
+ 
+-- None blocking. The goal is explicit and the requirements are a direct translation.
+-- Watch for scope creep: the dashboard and tag-filter view are included in scope — both must be covered.
++1. Django project/app layout under `apps/project-tracker/`, including where templates, static files, and URL modules live.
++2. Model design for `Project`, `Task`, and `Tag`, including the two many-to-many relationships for tags.
++3. URL boundary between HTML views and JSON endpoints, keeping the route map flat and readable.
++4. The minimum frontend data flow needed for async create/update/delete without full page reload.
++5. Dashboard query approach for total projects, task counts by status, and overdue tasks using timezone-aware date logic.
++
++## Risks to watch
+ 
++- The async mutation requirement is firm. Architecture should make the JS/API contract explicit enough that DEV does not fall back to form-post/full-refresh behavior.
++- The no-third-party-packages constraint means any admin-style convenience abstractions are out. Keep the design intentionally simple.
++- `ai/active_item.yaml` is still idle/null, so architecture should stay at whole-system design level and avoid pretending a narrower implementation slice has already been chosen.
++
+ ## Next role after you
+ 
+-ARCHITECT — who will design the Django project structure, model layout, URL routing, and view/API boundary.
++PLANNER — after the architecture and boundaries are defined.
+diff --git a/ai/simplification.md b/ai/simplification.md
+index 351da74b506c70ea149c5264ee278e509922925c..3dbdfc87e31bb6dc62762ba9fe8fec30f138f99c
+--- a/ai/simplification.md
++++ b/ai/simplification.md
+@@ -18,3 +18,8 @@
+ 13. **Timezone-aware overdue check** — use `django.utils.timezone.now().date()` when filtering overdue tasks; do not use `datetime.date.today()` if `USE_TZ=True`.
+ 14. **Flat URL structure** — no URL namespaces needed for a single-app project. Keep `urls.py` flat and readable.
+ 15. **Stack override in effect** — `judgment.yaml` defaults (aspnet_core, react_nextjs, postgresql) are superseded by the goal. No exception entry required.
++16. **Single Django app bias** — unless forced by an implementation constraint, keep the tracker in one Django app with models, views, URLs, templates, and static assets together. Do not split into multiple apps for "clean architecture".
++17. **No service/repository layer** — views should call Django ORM directly. The domain is simple CRUD plus a small dashboard aggregate; extra indirection would be ceremony.
++18. **Separate HTML pages from JSON endpoints** — templates render pages, JSON views handle async mutations/data fetches. Do not build a content-negotiation layer or hybrid "sometimes HTML, sometimes JSON" endpoints unless required.
++19. **Use Django `TextChoices` for enums** — status and priority fields should be defined once on the models, not duplicated across forms, views, and JS constants.
++20. **Simple tag filtering** — support filtering by a single selected tag to satisfy scope. Do not design a multi-filter search system unless the user explicitly expands scope.
+
+[3m[35mtokens used[0m[0m
+17,983
+
+Script done on 2026-03-11 19:19:56-05:00 [COMMAND_EXIT_CODE="0"]
+Stopped: WAITING FOR USER
