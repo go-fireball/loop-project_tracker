@@ -1,70 +1,70 @@
 # Project Tracker
 
-A personal project tracker web app built with Django, SQLite, and vanilla HTML/CSS/JS.
+Personal project tracker built with Django, SQLite, server-rendered templates, and vanilla JavaScript.
 
-## Features
+## Local setup
 
-- CRUD operations on **projects**, **tasks**, and **tags**
-- Dashboard with summary stats (total projects, tasks by status, overdue tasks)
-- Project detail view showing associated tasks
-- Tag management surface with many-to-many relationships to projects and tasks
-- All create/edit/delete operations work without full page reloads (HTML partial swap pattern)
+Run everything from the repository root unless a command says otherwise.
 
-## Prerequisites
+### 1. Install the locked Python version with pyenv
 
-- Python 3.12+
-- [Poetry](https://python-poetry.org/)
+```bash
+pyenv install 3.12
+pyenv local 3.12
+```
 
-## Setup
+The repository is locked to Python 3.12+ in `pyproject.toml`. If your local `pyenv` already has a compatible 3.12.x version installed, reuse that version instead of reinstalling it.
 
-From the **repository root**:
+### 2. Install dependencies with Poetry
 
 ```bash
 poetry install
 ```
 
-This installs Django and all dependencies into an isolated virtual environment managed by Poetry.
+This project is locked to Django plus built-in dependencies only. The repository root `pyproject.toml` currently declares Python `^3.12` and Django `^5.1`.
 
-## Apply migrations
+### 3. Apply migrations
 
 ```bash
-cd apps/project-tracker
-poetry run python manage.py migrate
+poetry run python apps/project-tracker/manage.py migrate
 ```
 
-The database is SQLite at `apps/project-tracker/db.sqlite3`.
+This uses the SQLite database at `apps/project-tracker/db.sqlite3`.
 
-## Run the development server
+### 4. Run the development server
 
 ```bash
-cd apps/project-tracker
-poetry run python manage.py runserver
+poetry run python apps/project-tracker/manage.py runserver
 ```
 
 Open `http://127.0.0.1:8000/`.
 
-## Run tests
+## Focused verification
 
-```bash
-cd apps/project-tracker
-poetry run python manage.py test tracker
-```
-
-For verbose output:
-
-```bash
-poetry run python manage.py test tracker --verbosity=2
-```
-
-## Static syntax check
+### Python compile check
 
 ```bash
 python3 -m py_compile $(find apps/project-tracker -name '*.py' | sort)
 ```
 
+### Focused Django tests
+
+```bash
+poetry run python apps/project-tracker/manage.py test tracker.tests.test_domain tracker.tests.test_views
+```
+
+## Environment caveat
+
+If Django is not yet installed in the active Poetry environment, Django runtime commands fail with:
+
+```text
+ModuleNotFoundError: No module named 'django'
+```
+
+Treat that as a local setup problem, not as a defect in the tracker application. Once `poetry install` has completed successfully, the migration, `runserver`, and focused test commands above are the expected verification path.
+
 ## Stack
 
-- **Backend:** Django (no DRF, no extra packages)
-- **Database:** SQLite
-- **Frontend:** Server-rendered Django templates, vanilla JS
-- **Package manager:** Poetry
+- Backend: Django only
+- Database: SQLite
+- Frontend: server-rendered HTML, CSS, and vanilla JS

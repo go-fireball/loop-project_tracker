@@ -220,8 +220,46 @@ Use this file for reviewer outcomes:
 
 ## DEV Implementation Notes
 
+- Completed `ITEM-0008` by rewriting [apps/project-tracker/README.md](/home/sundaram/code/temp/test/apps/project-tracker/README.md) into a project-local setup and verification guide aligned to the current Django app entrypoint.
+- Documented explicit local environment creation, Django installation, SQLite migration, development server startup, `py_compile`, and focused `tracker.tests.test_domain` plus `tracker.tests.test_views` commands.
+- Preserved the known workspace runtime caveat as an environment/setup issue by calling out the exact failure: `ModuleNotFoundError: No module named 'django'`.
+
+## Validation Evidence
+
+- `python3 -m py_compile $(find apps/project-tracker -name '*.py' | sort)` passed.
+- `python3 apps/project-tracker/manage.py test tracker.tests.test_domain tracker.tests.test_views` failed in the workspace with `ModuleNotFoundError: No module named 'django'`.
+
+## Known Risks
+
+- Validator still cannot execute Django runtime checks in this workspace until Django is installed in an active Python environment.
+- The README now documents the recovery path for that environment issue, but the commands remain unverified end to end inside this sandbox for the same missing-Django reason.
+
+## DEV Implementation Notes
+
 - Implemented `ITEM-0006` as a dedicated server-rendered tag management surface in `tracker/tag_detail.html` with stable async swap regions for tag create, selected-tag detail, edit form, and tag list.
 - Added `tag_list`, `tag_create`, `tag_update`, and `tag_delete` flows in `tracker/views.py` and `tracker/urls.py`, reusing the existing HTML partial mutation-response contract instead of introducing JSON or a new frontend layer.
+
+## Validator Outcome
+
+- Result: PASS for `ITEM-0008`.
+- Acceptance criteria check:
+  - `apps/project-tracker/README.md` now documents the repository-approved `pyenv` plus Poetry setup path rather than an ad hoc `venv` plus `pip` flow.
+  - The documented command surface stays scoped to `apps/project-tracker/` and matches the current Django entrypoint at `apps/project-tracker/manage.py` for migrations, `runserver`, and focused test execution.
+  - The environment caveat still preserves the exact `ModuleNotFoundError: No module named 'django'` failure mode as a local setup issue rather than a tracker application defect.
+  - The README remains aligned with the locked stack: Django, SQLite, and vanilla HTML/CSS/JS only.
+- Regression check:
+  - No scope drift found in the documentation update: no extra tooling, packages, runtime entrypoints, or stack changes were introduced.
+  - The previously blocked runtime validation is no longer reproducible in the current Poetry environment; the documented focused Django test command now passes end to end.
+
+## Validation Evidence
+
+- `python3 -m py_compile $(find apps/project-tracker -name '*.py' | sort)` passed.
+- `poetry run python apps/project-tracker/manage.py test tracker.tests.test_domain tracker.tests.test_views` passed with 36 tests green.
+
+## Known Risks
+
+- The README assumes local availability of `pyenv` and Poetry; if either tool is missing, setup still depends on machine-level installation outside this repository.
+- The environment caveat remains historically accurate for an uninitialized Poetry environment, but validator confirmed it is not the current workspace state after dependency installation.
 - Added reusable tag partials for the create/edit form, tag list, selected-tag detail, and edit placeholder under `templates/tracker/partials/`.
 - Extended `static/tracker/app.js` so region wrappers keep their DOM IDs across repeated async swaps, which the new tag CRUD surface needs and which also hardens the existing project/task mutation behavior.
 - Extended `static/tracker/app.css` and `templates/tracker/base.html` to support the tag management layout and primary navigation entry without changing the established visual language.
@@ -242,6 +280,31 @@ Use this file for reviewer outcomes:
 ## DEV Implementation Notes
 
 - Extended `apps/project-tracker/tracker/tests/test_domain.py` to cover locked default values on `Project` and `Task`, confirm `TaskForm` does not expose project reassignment, and add representative invalid status assertions for the project and task forms.
+
+## Validator Outcome
+
+- Result: FAIL for `ITEM-0008`.
+- Acceptance criteria check:
+  - `apps/project-tracker/README.md` exists under the required project-local path and documents migrations, `runserver`, `py_compile`, and the focused Django test modules against the current `apps/project-tracker/manage.py` entrypoint.
+  - The README preserves the exact workspace caveat `ModuleNotFoundError: No module named 'django'` and correctly frames it as an environment/setup problem rather than a tracker application defect.
+  - The documentation remains aligned on application stack choice: Django, SQLite, and server-rendered HTML/CSS/JS only.
+- Regression check:
+  - Regression found: the setup instructions no longer follow the locked repository tooling constraints in `ai/goal.yaml`, which require Poetry for dependency management and pyenv for Python version management.
+  - `apps/project-tracker/README.md` now instructs `python3 -m venv`, `source .venv/bin/activate`, and `python -m pip install "django>=5.1,<6"` instead of a Poetry- and pyenv-based workflow, and no approved exception exists in `ai/decision-lock.yaml`.
+
+## Validation Evidence
+
+- `python3 -m py_compile $(find apps/project-tracker -name '*.py' | sort)` passed.
+- `python3 apps/project-tracker/manage.py test tracker.tests.test_domain tracker.tests.test_views` failed in the workspace with `ModuleNotFoundError: No module named 'django'`.
+- Tooling mismatch confirmed by inspection:
+  - `ai/goal.yaml` locks `Use Poetry for dependency management` and `Use pyenv for Python version management`.
+  - `pyproject.toml` still declares Django under `[tool.poetry.dependencies]`.
+  - `apps/project-tracker/README.md` documents `venv` plus `pip` commands instead of the locked Poetry/pyenv workflow.
+
+## Known Risks
+
+- Runtime validation of Django commands remains blocked in this workspace until Django is available in an active environment.
+- If the README ships as written, a fresh checkout will be guided onto tooling that conflicts with the repository's locked execution model, which can cause drift between documented setup and expected team workflow.
 - Extended `apps/project-tracker/tracker/tests/test_views.py` to cover the remaining meaningful server-rendered and no-reload branches: AJAX tag-detail swaps, invalid project/task/tag edit submissions, project-list delete refreshes, and representative 405 method guards on mutation routes.
 - Kept the final coverage pass inside the existing Django test modules and did not change product code because the expanded assertions did not expose a product defect beyond the already fixed selector-contract work.
 
@@ -361,3 +424,25 @@ Use this file for reviewer outcomes:
 - Accepted because the final coverage pass now exercises the locked domain rules, server-rendered read pages, and the accepted no-reload mutation contract across projects, tasks, and tags without exposing a new product regression.
 - Accepted with the existing environment caveat unchanged: `python3 apps/project-tracker/manage.py test tracker.tests.test_domain tracker.tests.test_views` is still blocked in this workspace by `ModuleNotFoundError: No module named 'django'`, so the decision rests on code inspection plus passing `py_compile` validation rather than executed Django runtime tests.
 - No scope drift found: the slice stays inside the existing Django tracker app and current Django test modules, with no new packages, services, or frontend architecture changes.
+
+## Reviewer Decision
+
+- Decision: REVISE for `ITEM-0008`.
+- Rejected because [README.md](/home/sundaram/code/temp/test/apps/project-tracker/README.md) now instructs `python3 -m venv`, manual activation, and `pip install` for Django, which conflicts with the locked repository workflow in [goal.yaml](/home/sundaram/code/temp/test/ai/goal.yaml) requiring `pyenv` for Python version management and `Poetry` for dependency management.
+- Accepted parts of the slice should remain intact: the documentation is project-local under `apps/project-tracker/`, uses the current `apps/project-tracker/manage.py` entrypoint, preserves the focused verification commands, and keeps the exact runtime caveat `ModuleNotFoundError: No module named 'django'` framed as an environment issue.
+- Required fix for the next pass: replace the ad hoc `venv` and `pip` setup path with repository-approved `pyenv` plus `Poetry` setup and command examples, or record an explicit approved exception before keeping alternate tooling instructions.
+
+## DEV Implementation Notes
+
+- Updated [README.md](/home/sundaram/code/temp/test/apps/project-tracker/README.md) so the local setup flow now uses the locked repository tooling from the repo root: `pyenv` for Python selection and `Poetry` for dependency installation and Django command execution.
+- Kept the documentation project-local under `apps/project-tracker/`, preserved the existing `apps/project-tracker/manage.py` entrypoint, and retained the focused verification commands for `py_compile` plus the domain/view test modules.
+- Tightened the caveat wording so it still documents the exact `ModuleNotFoundError: No module named 'django'` failure mode as an environment/setup issue without incorrectly claiming the current workspace is still in that broken state.
+
+## Validation Evidence
+
+- `python3 -m py_compile $(find apps/project-tracker -name '*.py' | sort)` passed.
+- `poetry run python apps/project-tracker/manage.py test tracker.tests.test_domain tracker.tests.test_views` passed with 36 tests.
+
+## Known Risks
+
+- The README now assumes `pyenv` and `Poetry` are installed on the local machine; it intentionally does not document alternate package-management flows because no exception is approved in [decision-lock.yaml](/home/sundaram/code/temp/test/ai/decision-lock.yaml).

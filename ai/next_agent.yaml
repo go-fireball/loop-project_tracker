@@ -1,20 +1,19 @@
-next_role: DEV
-prompt_file: ai/prompts/04-dev.md
+next_role: REVIEWER
+prompt_file: ai/prompts/06-reviewer.md
 read:
   - ai/active_item.yaml
-  - ai/requirements.md
-  - ai/judgment.yaml
-  - ai/simplification.md
+  - ai/backlog.yaml
+  - ai/review.md
   - ai/decision-lock.yaml
-  - ai/goal.yaml
   - ai/constitution.yaml
+  - ai/goal.yaml
   - ai/active_agent.txt
   - ai/next_agent.md
   - ai/user-questions.yaml
 allowed_edits:
-  - apps/
-  - infra/
   - ai/review.md
+  - ai/backlog.yaml
+  - ai/active_item.yaml
   - ai/decision-lock.yaml
   - ai/user-questions.yaml
   - ai/iterations/ITER-0001.md
@@ -25,10 +24,10 @@ stop_conditions:
   - WAITING FOR BATON when active agent mismatch
   - WAITING FOR USER when clarification is required
 success_criteria:
-  - active item implemented with tests
+  - review decision made (DONE/REVISE/ESCALATE)
 handoff_on_success:
-  print_exact: HANDOFF TO VALIDATOR
+  print_exact: HANDOFF TO PLANNER
 notes:
-  - ITEM-0008 active
-  - add apps/project-tracker/README.md with local Django setup, migration, runserver, py_compile, and focused test commands
-  - preserve the missing-Django environment caveat and avoid product-code changes unless needed for documentation accuracy
+  - validation results
+  - ITEM-0008 pass
+  - README now matches locked pyenv plus Poetry workflow and focused compile plus Django tests passed (36 tests)

@@ -1,33 +1,26 @@
 # Next Agent
 
-- Current role: `DEV`
-- Prompt: `ai/prompts/04-dev.md`
+- Current role: `REVIEWER`
+- Prompt: `ai/prompts/06-reviewer.md`
 - Execution command for Codex sessions: **Follow `ai/next_agent.yaml` exactly.**
-- If role mismatch with `ai/active_agent.txt`, print: `WAITING FOR BATON`
 
 ## Active Item
 
 - `ITEM-0008`: document local setup and verification workflow under `apps/project-tracker/`.
-- Keep the slice implementation-only and lightweight: this is a documentation closeout task, not new feature work.
 
-## Implementation Notes
+## Validator Result
 
-- Add `apps/project-tracker/README.md` with concrete local setup steps for creating a Python environment, installing Django, applying migrations, running the dev server, and executing the accepted focused test commands.
-- Keep the commands aligned with the current project entrypoint and test surface:
-  - `python3 -m py_compile $(find apps/project-tracker -name '*.py' | sort)`
-  - `python3 apps/project-tracker/manage.py migrate`
-  - `python3 apps/project-tracker/manage.py runserver`
-  - `python3 apps/project-tracker/manage.py test tracker.tests.test_domain tracker.tests.test_views`
-- Preserve the known runtime caveat explicitly: the current workspace still fails Django commands with `ModuleNotFoundError: No module named 'django'`.
-- Frame that caveat as an environment/setup limitation rather than a tracker application defect.
+- Validation passed for the revised documentation slice.
+- [README.md](/home/sundaram/code/temp/test/apps/project-tracker/README.md) now uses the locked `pyenv` plus Poetry workflow, keeps commands scoped to `apps/project-tracker/`, and preserves the exact `ModuleNotFoundError: No module named 'django'` caveat as an environment/setup issue.
+- The current workspace no longer reproduces the earlier missing-Django runtime block: the documented focused Django test command now succeeds in the Poetry environment.
 
-## Guardrails
+## Validation Evidence
 
-- Stay inside `apps/project-tracker/` unless a small supporting adjustment is required for documentation accuracy.
-- Do not introduce new packages beyond Django or expand scope into more product code unless the docs are inaccurate without a minimal correction.
-- Keep the documented stack consistent with the locked architecture: Django, SQLite, server-rendered templates, and vanilla JS.
+- Passed: `python3 -m py_compile $(find apps/project-tracker -name '*.py' | sort)`
+- Passed: `poetry run python apps/project-tracker/manage.py test tracker.tests.test_domain tracker.tests.test_views` with 36 tests green
 
-## Verification Expectation
+## Reviewer Focus
 
-- Re-run `py_compile` after the documentation change if practical.
-- Attempt the Django test command only if the environment permits it; if it still fails because Django is absent, keep that evidence in the handoff to validator.
+- Confirm the revised README stays within the locked tooling and stack constraints from [goal.yaml](/home/sundaram/code/temp/test/ai/goal.yaml).
+- Confirm the documentation remains project-local and accurately reflects the live verification path under [manage.py](/home/sundaram/code/temp/test/apps/project-tracker/manage.py).
+- Decide whether the residual assumption about local `pyenv` and Poetry installation is acceptable for closing `ITEM-0008`.
