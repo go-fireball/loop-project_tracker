@@ -1,0 +1,3 @@
+{% for replacement in replacements %}
+  <template data-swap-target="{{ replacement.selector }}">{{ replacement.html|safe }}</template>
+{% endfor %}

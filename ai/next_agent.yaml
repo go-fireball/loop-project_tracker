@@ -29,8 +29,7 @@ success_criteria:
 handoff_on_success:
   print_exact: HANDOFF TO VALIDATOR
 notes:
-  - ITEM-0001 active scaffold under apps/project-tracker
-  - create single Django project plus one tracker app
-  - wire SQLite settings, root URLs, templates, and static assets
-  - add a baseline rendered route and shared base template
-  - avoid DRF, extra packages, multiple apps, and service-layer abstractions
+  - ITEM-0004 active: no-reload project CRUD only
+  - add project mutation routes/views/templates/partials and minimal fetch handlers
+  - update focused view tests
+  - preserve missing Django runtime caveat

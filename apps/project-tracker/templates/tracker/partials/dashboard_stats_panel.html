@@ -1,0 +1,25 @@
+<section class="panel">
+  <div class="panel-heading">
+    <div>
+      <h2>Dashboard</h2>
+      <p class="section-copy">Live tracker aggregates from the current SQLite-backed project and task data.</p>
+    </div>
+    <a class="inline-link" href="{% url 'tracker:project_list' %}">Browse all projects</a>
+  </div>
+  <div class="stats-grid">
+    <article class="stat-card">
+      <p class="stat-label">Total projects</p>
+      <p class="stat-value">{{ total_projects }}</p>
+    </article>
+    {% for task_count in task_counts %}
+      <article class="stat-card">
+        <p class="stat-label">{{ task_count.label }} tasks</p>
+        <p class="stat-value">{{ task_count.value }}</p>
+      </article>
+    {% endfor %}
+    <article class="stat-card">
+      <p class="stat-label">Overdue tasks</p>
+      <p class="stat-value">{{ overdue_task_count }}</p>
+    </article>
+  </div>
+</section>

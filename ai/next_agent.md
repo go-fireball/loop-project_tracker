@@ -7,10 +7,21 @@
 
 ## Handoff Notes
 
-- Active item is `ITEM-0001`: scaffold the Django project baseline under `apps/project-tracker/`.
-- Create one Django project and one main `tracker` app only. Do not introduce DRF, extra pip packages, multiple Django apps, or speculative service layers.
-- Start with the skeleton in the architecture doc: `manage.py`, `project_tracker/` settings and URLs, `tracker/` app config and URLs, plus `templates/tracker/base.html` and `static/tracker/app.css` / `app.js`.
-- Wire SQLite, templates, and static assets in standard Django configuration so later pages can extend the base without rework.
-- Provide at least one baseline route and template render so the scaffold is visibly connected end to end.
-- Keep future work in mind: later items will add domain models/forms/admin, then dashboard/list/detail/tag pages, then async partial-based CRUD, then tests and validation.
-- No clarification or exception was needed. Leave `ai/user-questions.yaml` at `status: none` unless execution uncovers a real blocker.
+- `ITEM-0003` is accepted and marked done. The next active slice is `ITEM-0004`, narrowed to project-only no-reload CRUD so the async work lands as one coherent vertical cut.
+- Backlog change:
+  - `ITEM-0004` now covers only project create/update/delete with partial HTML responses and small vanilla JS fetch handlers.
+  - `ITEM-0005` now covers task and tag no-reload CRUD after the project interaction pattern exists.
+  - `ITEM-0006` remains the automated coverage and final validation slice.
+- Implementation target for this turn:
+  - Add project mutation routes and views in `apps/project-tracker/tracker/views.py` and `apps/project-tracker/tracker/urls.py`.
+  - Reuse `ProjectForm` in `apps/project-tracker/tracker/forms.py`; extend only if the async UX needs form-specific hooks.
+  - Introduce reusable project partial templates under `apps/project-tracker/templates/tracker/` for form rendering and replaceable list/detail content.
+  - Update existing server-rendered pages, especially `dashboard.html`, `project_list.html`, and `project_detail.html`, to expose create/edit/delete affordances.
+  - Expand `apps/project-tracker/static/tracker/app.js` from the current placeholder into minimal fetch-based form handling for partial swaps; keep it framework-free.
+  - Adjust `apps/project-tracker/static/tracker/app.css` only as needed to support the new form and inline error states.
+  - Add focused mutation coverage in `apps/project-tracker/tracker/tests/test_views.py` for success and invalid-form cases if Django can run; otherwise preserve the missing-Django caveat explicitly.
+- Guardrails:
+  - Keep everything inside the existing single `tracker` app.
+  - Prefer HTML partial responses over JSON.
+  - Do not introduce DRF, extra packages, or service/repository layers.
+  - Preserve the documented runtime caveat: `manage.py test` is still expected to fail in this workspace until Django is installed.

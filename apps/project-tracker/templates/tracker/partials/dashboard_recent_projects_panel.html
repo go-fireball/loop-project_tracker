@@ -1,0 +1,17 @@
+<section class="panel">
+  <div class="panel-heading">
+    <div>
+      <h2>Recent projects</h2>
+      <p class="section-copy">Quick links into the projects currently tracked by the app.</p>
+    </div>
+  </div>
+  {% if recent_projects %}
+    <div class="stack">
+      {% for project in recent_projects %}
+        {% include "tracker/partials/project_card.html" with source_page="dashboard" %}
+      {% endfor %}
+    </div>
+  {% else %}
+    <p class="empty-state">No projects exist yet.</p>
+  {% endif %}
+</section>

@@ -1,24 +1,28 @@
-id: ITEM-0001
-title: Scaffold Django project tracker baseline
-goal: Establish the single-project Django skeleton under `apps/project-tracker/` with the tracker app wired into settings, URLs, templates, and static assets.
+id: ITEM-0004
+title: Add no-reload project CRUD interactions
+goal: "Implement async create, update, and delete flows for projects using HTML partial responses and small vanilla JS fetch handlers."
 status: in_progress
 owner_role: DEV
 related_files:
-  - apps/project-tracker/manage.py
-  - apps/project-tracker/project_tracker/settings.py
-  - apps/project-tracker/project_tracker/urls.py
-  - apps/project-tracker/tracker/apps.py
+  - apps/project-tracker/tracker/views.py
   - apps/project-tracker/tracker/urls.py
-  - apps/project-tracker/templates/tracker/base.html
-  - apps/project-tracker/static/tracker/app.css
+  - apps/project-tracker/tracker/forms.py
+  - apps/project-tracker/templates/tracker/dashboard.html
+  - apps/project-tracker/templates/tracker/project_list.html
+  - apps/project-tracker/templates/tracker/project_detail.html
+  - apps/project-tracker/templates/tracker/
   - apps/project-tracker/static/tracker/app.js
+  - apps/project-tracker/static/tracker/app.css
+  - apps/project-tracker/tracker/tests/test_views.py
 acceptance_criteria:
-  - Django project files exist under `apps/project-tracker/` and run as a single project with one main `tracker` app.
-  - Settings are configured for SQLite, templates, and static files within the approved project structure.
-  - Root URLconf includes the tracker app URLconf and a baseline route that can render a tracker template.
-  - Shared base template and static assets are wired so later views can extend them without restructuring.
+  - "Users can create a project from a server-rendered page and see the relevant UI update without a full page reload."
+  - "Users can edit an existing project from a server-rendered page and see the updated project content render via returned HTML partials."
+  - "Users can delete an existing project from a server-rendered page and the affected list/detail UI updates without a full page reload."
+  - "Invalid project submissions render inline form errors through partial HTML responses rather than forcing a full-page workflow."
+  - "The implementation stays inside the existing Django tracker app with plain HTML, CSS, and vanilla JS fetch handlers only."
 done_definition:
-  - Project skeleton is committed in code with no extra packages or speculative app splits.
-  - `tracker` app is installed and reachable through the project URL configuration.
-  - Baseline template and static files load through Django's standard configuration.
-  - Any tests added for the scaffold pass locally, or the dev handoff notes state why tests were deferred for this slice.
+  - "Django views and URLs handle project create, update, and delete flows without introducing DRF, extra apps, or service/repository layers."
+  - "Templates include reusable project form or list/detail partials so async mutations can replace targeted DOM regions cleanly."
+  - "Client-side JS remains small and framework-free, intercepting mutation forms with fetch and swapping returned HTML into the current page."
+  - "Focused Django tests cover successful and invalid project mutation responses if Django is available, or the handoff documents the blocking limitation."
+  - "The existing Django-missing runtime caveat remains documented until the workspace can execute manage.py commands."

@@ -1,4 +1,4 @@
-Script started on 2026-03-11 21:54:33-05:00 [COMMAND="codex exec --model gpt-5.4 --full-auto Follow\ ai/next_agent.yaml\ exactly. " TERM="xterm-256color" TTY="/dev/pts/0" COLUMNS="184" LINES="43"]
+Script started on 2026-03-11 22:04:53-05:00 [COMMAND="codex exec --model gpt-5.4 --full-auto Follow\ ai/next_agent.yaml\ exactly. " TERM="xterm-256color" TTY="/dev/pts/0" COLUMNS="184" LINES="43"]
 OpenAI Codex v0.114.0 (research preview)
 --------
 [1mworkdir:[0m /home/sundaram/code/temp/test
@@ -8,40 +8,38 @@ OpenAI Codex v0.114.0 (research preview)
 [1msandbox:[0m workspace-write [workdir, /tmp, $TMPDIR, /home/sundaram/.codex/memories]
 [1mreasoning effort:[0m medium
 [1mreasoning summaries:[0m none
-[1msession id:[0m 019cdff7-9f5f-7621-8722-bc6ce3f5ef95
+[1msession id:[0m 019ce001-17f5-7e61-8ec4-90046f715d1f
 --------
 [36muser[0m
 Follow ai/next_agent.yaml exactly.
 [36mmcp startup:[0m no servers
 [35m[3mcodex[0m[0m
-I’m checking the repository instructions and the `ai/next_agent.yaml` file first so I can follow it exactly before making any changes.
+I’m treating this as an execution task against the repo instructions, and the first step is to inspect `ai/next_agent.yaml` plus any local guidance it depends on before making changes or taking further action.
 [35m[3mexec[0m[0m
 [1m/bin/bash -lc pwd[0m in /home/sundaram/code/temp/test[32m succeeded in 0ms:[0m
 [2m/home/sundaram/code/temp/test[0m
 [35m[3mexec[0m[0m
 [1m/bin/bash -lc 'rg --files'[0m in /home/sundaram/code/temp/test[32m succeeded in 0ms:[0m
-[2mai/constitution.yaml
-ai/active_item.yaml
-ai/judgment.yaml
-ai/user-questions.yaml
-ai/logs/step-003-ARCHITECT.log
+[2mai/logs/step-003-ARCHITECT.log
+ai/logs/step-002-VALIDATOR.log
+ai/logs/step-001-DEV.log
 ai/logs/step-002-SENIOR_JUDGMENTAL_ENGINEER.log
+ai/logs/step-003-REVIEWER.log
 ai/logs/baton.log
+ai/logs/step-004-PLANNER.log
 ai/logs/step-001-PRODUCT_OWNER.log
 ai/next_agent.md
 ai/active_agent.txt
-ai/requirements.md
+ai/constitution.yaml
+ai/active_item.yaml
+ai/judgment.yaml
+ai/user-questions.yaml
+ai/review.md
+init.sh
 ai/defaults/logs/baton.log
 ai/defaults/backlog.yaml
 ai/defaults/goal.yaml
-ai/defaults/requirements.md
-ai/defaults/templates/active-item-template.yaml
-ai/defaults/templates/one-pager-requirements-template.md
-ai/defaults/templates/decision-lock-template.yaml
-ai/defaults/templates/next-agent-template.yaml
-ai/defaults/templates/backlog-item-template.yaml[0m
-[35m[3mcodex[0m[0m
-I’ve got the repo layout. Next I’m reading `ai/next_agent.yaml` and the surrounding baton files to determine the exact required action rather than guessing.
+ai/defaults/requirements.md[0m
 [35m[3mexec[0m[0m
 [1m/bin/bash -lc "sed -n '1,220p' ai/next_agent.yaml"[0m in /home/sundaram/code/temp/test[32m succeeded in 0ms:[0m
 [2mnext_role: PLANNER
@@ -64,41 +62,10 @@ allowed_edits:
   - ai/iterations/ITER-0001.md
   - ai/active_agent.txt
   - ai/next_agent.yaml[0m
-[35m[3mexec[0m[0m
-[1m/bin/bash -lc "sed -n '1,220p' ai/active_agent.txt"[0m in /home/sundaram/code/temp/test[35m[3mexec[0m[0m
-[1m/bin/bash -lc "sed -n '1,260p' ai/active_item.yaml"[0m in /home/sundaram/code/temp/test[35m[3mexec[0m[0m
-[1m/bin/bash -lc "sed -n '1,220p' ai/next_agent.md"[0m in /home/sundaram/code/temp/test[32m succeeded in 0ms:[0m
-[2mid: null
-title: null
-goal: null
-status: idle
-owner_role: null
-related_files: []
-acceptance_criteria: []
-done_definition: [][0m
-[32m succeeded in 0ms:[0m
-[2mPLANNER[0m
-[32m succeeded in 0ms:[0m
-[2m# Next Agent
-
-- Current role: `PLANNER`
-- Prompt: `ai/prompts/03-planner.md`
-- Execution command for Codex sessions: **Follow `ai/next_agent.yaml` exactly.**
-- If role mismatch with `ai/active_agent.txt`, print: `WAITING FOR BATON`
-
-## Handoff Notes
-
-- The architecture baseline is documented in `context/repo/architecture.md`.
-- Keep the implementation as one Django project under `apps/project-tracker/` with one main product app rather than splitting into multiple Django apps or platform layers.
-- Plan around server-rendered pages plus small async CRUD interactions. Prefer HTML partial responses for create, update, and delete flows; use JSON only where a partial would be needlessly awkward.
-- The planner should turn this into incremental items that establish project scaffolding first, then domain models/forms/admin, then page views/templates, then no-reload interaction wiring, then tests/validation.
-- Required user-facing views are dashboard, project list, project detail with tasks, and tag filter/detail.
-- Core model surface is intentionally small: `Project`, `Task`, and `Tag` with direct Django ORM relationships and SQLite-backed aggregates for dashboard counts.
-- No clarification or exception was needed. `ai/user-questions.yaml` remains `status: none`, and `ai/decision-lock.yaml` remains unchanged.[0m
 [35m[3mcodex[0m[0m
-`ai/next_agent.yaml` points to the planner role and the baton currently matches, so I’m reading the required planning inputs and then I’ll update the planning artifacts within the allowed files only.
+I’ve confirmed `ai/next_agent.yaml` is a baton instruction for the `PLANNER` role. Next I’m loading only the files it explicitly requires so I can either perform that planning handoff or stop on one of its listed conditions.
 [35m[3mexec[0m[0m
-[1m/bin/bash -lc "sed -n '1,260p' ai/prompts/03-planner.md"[0m in /home/sundaram/code/temp/test[32m succeeded in 0ms:[0m
+[1m/bin/bash -lc "sed -n '1,240p' ai/prompts/03-planner.md"[0m in /home/sundaram/code/temp/test[32m succeeded in 0ms:[0m
 [2m# ROLE: PLANNER
 
 ## 1) Baton check
@@ -120,20 +87,30 @@ done_definition: [][0m
 ## 3) Allowed edits (only)
 - `ai/backlog.yaml`[0m
 [35m[3mexec[0m[0m
-[1m/bin/bash -lc "sed -n '1,260p' ai/backlog.yaml"[0m in /home/sundaram/code/temp/test[35m[3mexec[0m[0m
-[1m/bin/bash -lc "sed -n '1,260p' ai/goal.yaml"[0m in /home/sundaram/code/temp/test[32m succeeded in 0ms:[0m
-[2mitems: []
-# Example format — PRODUCT_OWNER creates real items from ai/goal.yaml:
-#  - id: ITEM-0001
-#    title: Build user authentication
-#    goal: Allow users to sign in with email and password
-#    type: feature
-#    status: todo
-#    priority: high
-#    dependencies: []
-#    notes:
-#      - Python 3 only, no external dependencies[0m
-[32m succeeded in 0ms:[0m
+[1m/bin/bash -lc "sed -n '1,240p' ai/backlog.yaml"[0m in /home/sundaram/code/temp/test[32m succeeded in 0ms:[0m
+[2mitems:
+  - id: ITEM-0001
+    title: Scaffold Django project tracker baseline
+    goal: Establish the single-project Django skeleton under `apps/project-tracker/` with the tracker app wired into settings, URLs, templates, and static assets.
+    type: feature
+    status: done
+    priority: high
+    dependencies: []
+    notes:
+      - Keep one Django project with one main `tracker` app.
+      - Create the baseline file structure for settings, root URLs, app URLs, templates, and static assets.
+      - Include a base template and shared asset wiring that later CRUD pages can extend.
+  - id: ITEM-0002
+    title: Implement tracker domain models and forms
+    goal: Add `Project`, `Task`, and `Tag` models, related forms, admin registration, and database migrations that match the approved domain surface.
+    type: feature
+    status: todo
+    priority: high
+    dependencies:
+      - ITEM-0001[0m
+[35m[3mexec[0m[0m
+[1m/bin/bash -lc "sed -n '1,240p' ai/goal.yaml"[0m in /home/sundaram/code/temp/test[35m[3mexec[0m[0m
+[1m/bin/bash -lc "sed -n '1,240p' ai/active_item.yaml"[0m in /home/sundaram/code/temp/test[32m succeeded in 0ms:[0m
 [2mproject_goal: Build a personal project tracker web app using Django with a SQLite database and HTML/JS frontend
 success_criteria:
   - Django REST endpoints for CRUD operations on projects, tasks, and tags
@@ -154,14 +131,43 @@ constraints:
   - Django and its built-in dependencies only, no additional pip packages (no DRF, no celery, etc.)
   - No frontend JS frameworks
   - Single Django project, no microservices[0m
+[32m succeeded in 0ms:[0m
+[2mid: ITEM-0001
+title: Scaffold Django project tracker baseline
+goal: "Establish the single-project Django skeleton under apps/project-tracker/ with the tracker app wired into settings, URLs, templates, and static assets."
+status: done
+owner_role: REVIEWER
+related_files:
+  - apps/project-tracker/manage.py
+  - apps/project-tracker/project_tracker/settings.py
+  - apps/project-tracker/project_tracker/urls.py
+  - apps/project-tracker/tracker/apps.py
+  - apps/project-tracker/tracker/urls.py
+  - apps/project-tracker/templates/tracker/base.html
+  - apps/project-tracker/static/tracker/app.css
+  - apps/project-tracker/static/tracker/app.js
+acceptance_criteria:
+  - "Django project files exist under apps/project-tracker/ and run as a single project with one main tracker app."
+  - Settings are configured for SQLite, templates, and static files within the approved project structure.
+  - Root URLconf includes the tracker app URLconf and a baseline route that can render a tracker template.
+  - Shared base template and static assets are wired so later views can extend them without restructuring.
+done_definition:[0m
 [35m[3mexec[0m[0m
-[1m/bin/bash -lc "sed -n '1,260p' ai/decision-lock.yaml"[0m in /home/sundaram/code/temp/test[35m[3mexec[0m[0m
-[1m/bin/bash -lc "sed -n '1,260p' ai/review.md"[0m in /home/sundaram/code/temp/test[32m succeeded in 0ms:[0m
-[2mconfirmed_by_user: false
-blocked_on_user: false
-last_user_decision: null
-approved_exceptions: []
-approved_decisions: [][0m
+[1m/bin/bash -lc "sed -n '1,240p' ai/constitution.yaml"[0m in /home/sundaram/code/temp/test[35m[3mexec[0m[0m
+[1m/bin/bash -lc "sed -n '1,260p' ai/review.md"[0m in /home/sundaram/code/temp/test[35m[3mexec[0m[0m
+[1m/bin/bash -lc "sed -n '1,240p' ai/decision-lock.yaml"[0m in /home/sundaram/code/temp/test[32m succeeded in 0ms:[0m
+[2mcore_rules:
+  - state lives in files, not chat memory
+  - baton ownership is authoritative
+  - roles must not edit outside allowed files
+baton_rules:
+  - if active agent mismatch, print exactly WAITING FOR BATON
+  - baton must be handed off explicitly
+edit_rules:
+  - only edit allowed files listed in the current role prompt
+stop_rules:
+  - if human clarification is needed, print exactly WAITING FOR USER
+  - always append an iteration log entry before handoff[0m
 [32m succeeded in 0ms:[0m
 [2m# Review Notes
 
@@ -183,70 +189,59 @@ Use this file for reviewer outcomes:
 - Treat server-rendered templates as the primary UI and use small async `fetch` flows for no-reload CRUD interactions.
 - Prefer HTML partial responses for mutations; allow narrow JSON responses only when HTML would be more awkward for the specific interaction.
 - Keep domain logic in models, forms, and views; reject speculative service, repository, command-bus, or multi-app splits.[0m
+[32m succeeded in 0ms:[0m
+[2mconfirmed_by_user: false
+blocked_on_user: false
+last_user_decision: null
+approved_exceptions: []
+approved_decisions: [][0m
 [35m[3mexec[0m[0m
-[1m/bin/bash -lc "sed -n '1,260p' ai/user-questions.yaml"[0m in /home/sundaram/code/temp/test[32m succeeded in 0ms:[0m
+[1m/bin/bash -lc "sed -n '1,240p' ai/user-questions.yaml"[0m in /home/sundaram/code/temp/test[35m[3mexec[0m[0m
+[1m/bin/bash -lc "sed -n '1,260p' ai/next_agent.md"[0m in /home/sundaram/code/temp/test[32m succeeded in 0ms:[0m
 [2mstatus: none
 return_to_role: null
 questions: [][0m
 [35m[3mexec[0m[0m
-[1m/bin/bash -lc "sed -n '1,260p' ai/constitution.yaml"[0m in /home/sundaram/code/temp/test[35m[3mexec[0m[0m
-[1m/bin/bash -lc "sed -n '1,260p' context/repo/architecture.md"[0m in /home/sundaram/code/temp/test[32m succeeded in 0ms:[0m
-[2m# Project Tracker Architecture
+[1m/bin/bash -lc "sed -n '1,80p' ai/active_agent.txt"[0m in /home/sundaram/code/temp/test[32m succeeded in 0ms:[0m
+[2m# Next Agent
 
-## Chosen approach
+- Current role: `PLANNER`
+- Prompt: `ai/prompts/03-planner.md`
+- Execution command for Codex sessions: **Follow `ai/next_agent.yaml` exactly.**
+- If role mismatch with `ai/active_agent.txt`, print: `WAITING FOR BATON`
 
-Build a single Django project under `apps/project-tracker/` with one primary Django app for the product domain. Use server-rendered templates as the default UI surface and small asynchronous interactions for create, edit, and delete flows so the page does not fully reload.
+## Handoff Notes
 
-## Proposed structure
-
-- `apps/project-tracker/manage.py`
-- `apps/project-tracker/project_tracker/`
-  - `settings.py`, `urls.py`, `asgi.py`, `wsgi.py`
-- `apps/project-tracker/tracker/`
-  - `models.py`
-  - `forms.py`
-  - `views.py`
-  - `urls.py`
-  - `admin.py`
-  - `tests/`
-- `apps/project-tracker/templates/tracker/`
-  - `base.html`[0m
+- Review decision for `ITEM-0001`: DONE.
+- Accepted outcome:
+  - single Django project scaffold exists under `apps/project-tracker/`
+  - one `tracker` app is wired into settings and root URLs
+  - baseline dashboard route renders shared templates
+  - static CSS and JS are connected through Django static files
+- Environment caveat kept on record:
+  - `python3 -m py_compile $(find apps/project-tracker -name '*.py' | sort)` passed
+  - `python3 apps/project-tracker/manage.py test` is still blocked in this workspace by `ModuleNotFoundError: No module named 'django'`
+- Planning focus:
+  - choose the next slice after scaffold completion[0m
 [32m succeeded in 0ms:[0m
-[2mcore_rules:
-  - state lives in files, not chat memory
-  - baton ownership is authoritative
-  - roles must not edit outside allowed files
-baton_rules:
-  - if active agent mismatch, print exactly WAITING FOR BATON
-  - baton must be handed off explicitly
-edit_rules:
-  - only edit allowed files listed in the current role prompt
-stop_rules:
-  - if human clarification is needed, print exactly WAITING FOR USER
-  - always append an iteration log entry before handoff[0m
+[2mPLANNER[0m
 [35m[3mcodex[0m[0m
-The planning inputs are consistent and there’s no ambiguity to escalate. I’m converting that architecture into an implementation-ready backlog, selecting the first executable item, then I’ll regenerate the baton for `DEV`.
+The baton is valid for `PLANNER`, and the backlog is straightforward: the next implementation slice is the domain layer. I’m checking the iteration log format and the handoff generator so I can update the planning state cleanly and keep the baton files consistent.
 [35m[3mexec[0m[0m
-[1m/bin/bash -lc "sed -n '1,260p' ai/iterations/ITER-0001.md"[0m in /home/sundaram/code/temp/test[35m[3mexec[0m[0m
-[1m/bin/bash -lc "sed -n '1,260p' ai/defaults/templates/active-item-template.yaml"[0m in /home/sundaram/code/temp/test[32m succeeded in 0ms:[0m
+[1m/bin/bash -lc "sed -n '1,220p' ai/iterations/ITER-0001.md"[0m in /home/sundaram/code/temp/test[32m succeeded in 0ms:[0m
 [2m# ITER-0001 Decision Log
 
 | Timestamp | Role | Decision | Why |
 |-----------|------|----------|-----|
 | 2026-03-11 | PRODUCT_OWNER | Defined the one-page product requirements from the project goal and handed off for engineering judgment review | The workflow needs a concrete scope and acceptance baseline before architecture and planning can proceed |
 | 2026-03-11 | SENIOR_JUDGMENTAL_ENGINEER | Locked simplification guardrails around a single Django + SQLite + vanilla JS modular monolith and warned against framework/platform drift | The architect needs explicit constraints so the design stays aligned with the product goal instead of inheriting conflicting default stack preferences |
-| 2026-03-11 | ARCHITECT | Defined a single-project Django architecture centered on one product app, server-rendered templates, and HTML-partial based no-reload CRUD flows | The planner and developer need concrete boundaries, file targets, and implementation tradeoffs before breaking work into execution items |[0m
-[32m succeeded in 0ms:[0m
-[2mid: null
-title: null
-goal: null
-status: idle
-owner_role: null
-related_files: []
-acceptance_criteria: []
-done_definition: [][0m
+| 2026-03-11 | ARCHITECT | Defined a single-project Django architecture centered on one product app, server-rendered templates, and HTML-partial based no-reload CRUD flows | The planner and developer need concrete boundaries, file targets, and implementation tradeoffs before breaking work into execution items |
+| 2026-03-11 | PLANNER | Broke delivery into scaffold, domain, page, async CRUD, and test slices and activated the scaffold item for development | The developer needs a small implementation-ready first step with explicit file targets before starting code changes |
+| 2026-03-12 | DEV | Scaffolded the Django project baseline with one tracker app, routed a rendered dashboard page, and added a smoke test for the root view | ITEM-0001 required an end-to-end project skeleton before later slices can add models, pages, and async CRUD behavior |
+| 2026-03-12 | VALIDATOR | Accepted the scaffold baseline as meeting ITEM-0001 acceptance criteria and handed off to review with an environment caveat on Django-dependent tests | The slice is structurally correct and free of scope drift, but full runtime validation remains blocked until Django is installed in the workspace |
+| 2026-03-12 | REVIEWER | Marked ITEM-0001 done and returned the baton to planning for the next implementation slice | The scaffold meets the locked architecture and acceptance criteria, and the blocked Django test run is an environment limitation rather than a gap in the delivered slice |[0m
 [35m[3mexec[0m[0m
-[1m/bin/bash -lc "sed -n '1,260p' scripts/generate-next-agent.sh"[0m in /home/sundaram/code/temp/test[32m succeeded in 0ms:[0m
+[1m/bin/bash -lc "sed -n '1,220p' scripts/generate-next-agent.sh"[0m in /home/sundaram/code/temp/test[32m succeeded in 0ms:[0m
 [2m#!/usr/bin/env bash
 set -euo pipefail
 #
@@ -268,17 +263,17 @@ RETURN_TO=""
 while [[ $# -gt 0 ]]; do
   case "$1" in[0m
 [35m[3mexec[0m[0m
-[1m/bin/bash -lc "sed -n '1,260p' ai/defaults/templates/backlog-item-template.yaml"[0m in /home/sundaram/code/temp/test[32m succeeded in 0ms:[0m
-[2mid: ITEM-XXXX
-title: <short title>
-goal: <single-sentence outcome>
-type: feature   # migration | feature | bugfix | refactor | docs
-status: todo    # todo | in_progress | blocked | done
-priority: high  # high | medium | low
-dependencies: []
-notes: [][0m
+[1m/bin/bash -lc "sed -n '1,220p' ai/defaults/templates/active-item-template.yaml"[0m in /home/sundaram/code/temp/test[32m succeeded in 0ms:[0m
+[2mid: null
+title: null
+goal: null
+status: idle
+owner_role: null
+related_files: []
+acceptance_criteria: []
+done_definition: [][0m
 [35m[3mexec[0m[0m
-[1m/bin/bash -lc "sed -n '1,260p' ai/templates/next-agent-template.yaml"[0m in /home/sundaram/code/temp/test[32m succeeded in 0ms:[0m
+[1m/bin/bash -lc "sed -n '1,220p' ai/defaults/templates/next-agent-template.yaml"[0m in /home/sundaram/code/temp/test[32m succeeded in 0ms:[0m
 [2mnext_role: <ROLE>
 prompt_file: ai/prompts/<prompt-file>.md
 read:
@@ -299,134 +294,261 @@ success_criteria:
   - <what must be true for handoff>
 handoff_on_success:
   print_exact: HANDOFF TO <NEXT_ROLE>[0m
-[35m[3mexec[0m[0m
-[1m/bin/bash -lc "sed -n '261,420p' scripts/generate-next-agent.sh"[0m in /home/sundaram/code/temp/test[32m succeeded in 0ms:[0m
-[2m  echo "allowed_edits:"
-  for f in "${ALLOWED_EDITS[@]}"; do
-    echo "  - $f"
-  done
-  echo "stop_conditions:"
-  echo "  - WAITING FOR BATON when active agent mismatch"
-  echo "  - WAITING FOR USER when clarification is required"
-  echo "success_criteria:"
-  echo "  - $SUCCESS"
-  echo "handoff_on_success:"
-  echo "  print_exact: HANDOFF TO $NEXT_ROLE"
-  # Include return_to_role for HUMAN handoffs
-  if [[ "$ROLE" == "HUMAN" ]]; then
-    echo "return_to_role: $NEXT_ROLE"
-  fi
-  # Append handoff notes if provided
-  if [[ -n "$NOTES" ]]; then
-    echo "notes:"
-    # Split notes on '|' to allow multiple bullet points
-    IFS='|' read -ra NOTE_ITEMS <<< "$NOTES"[0m
 [35m[3mcodex[0m[0m
-I have the plan shape. I’m updating the backlog, the active item, and the handoff notes now so the `DEV` role gets a concrete first slice with file targets and acceptance criteria.
+I have enough context to update the planning artifacts. I’m now switching the active item from the completed scaffold to the next domain-model slice, recording that decision in the iteration log, then regenerating the baton for `DEV` with implementation-specific notes.
+[35m[3mexec[0m[0m
+[1m/bin/bash -lc "sed -n '220,420p' scripts/generate-next-agent.sh"[0m in /home/sundaram/code/temp/test[32m succeeded in 0ms:[0m
+[2m    fi
+    ;;
+  *)
+    echo "Error: unknown role '$ROLE'" >&2
+    echo "Valid roles: PRODUCT_OWNER SENIOR_JUDGMENTAL_ENGINEER ARCHITECT PLANNER DEV VALIDATOR REVIEWER HUMAN" >&2
+    exit 1
+    ;;
+esac
+
+# ── Common read files prepended to all roles ──
+COMMON_READS=(
+  "ai/goal.yaml"
+  "ai/constitution.yaml"
+  "ai/active_agent.txt"
+  "ai/next_agent.md"
+  "ai/user-questions.yaml"
+)
+
+# Merge common reads (deduplicate)
+ALL_READS=()[0m
+[35m[3mcodex[0m[0m
+I’m applying the planning edits now: activating `ITEM-0002`, tightening its execution targets and acceptance criteria, and adding a concrete dev handoff that keeps the architecture locked to one Django app with models/forms/admin/migrations only.
 [3m[35mfile update[0m[0m
+[35mM /home/sundaram/code/temp/test/ai/iterations/ITER-0001.md[0m
+@@ -11 +11,2 @@
+ | 2026-03-12 | REVIEWER | Marked ITEM-0001 done and returned the baton to planning for the next implementation slice | The scaffold meets the locked architecture and acceptance criteria, and the blocked Django test run is an environment limitation rather than a gap in the delivered slice |
+[32m+| 2026-03-12 | PLANNER | Activated ITEM-0002 for domain model, form, admin, and migration work and handed off implementation to DEV | The scaffold is complete, and the domain layer is the next dependency needed before server-rendered pages and no-reload CRUD flows can be built |[0m
 [35mM /home/sundaram/code/temp/test/ai/backlog.yaml[0m
-@@ -1,11 +1,56 @@
-[31m-items: [][0m
-[31m-# Example format — PRODUCT_OWNER creates real items from ai/goal.yaml:[0m
-[31m-#  - id: ITEM-0001[0m
-[31m-#    title: Build user authentication[0m
-[31m-#    goal: Allow users to sign in with email and password[0m
-[31m-#    type: feature[0m
-[31m-#    status: todo[0m
-[31m-#    priority: high[0m
-[31m-#    dependencies: [][0m
-[31m-#    notes:[0m
-[31m-#      - Python 3 only, no external dependencies[0m
-[32m+items:[0m
-[32m+  - id: ITEM-0001[0m
-[32m+    title: Scaffold Django project tracker baseline[0m
-[32m+    goal: Establish the single-project Django skeleton under `apps/project-tracker/` with the tracker app wired into settings, URLs, templates, and static assets.[0m
-[32m+    type: feature[0m
+@@ -16,3 +16,3 @@
+     type: feature
+[31m-    status: todo[0m
 [32m+    status: in_progress[0m
-[32m+    priority: high[0m
-[32m+    dependencies: [][0m
-[32m+    notes:[0m
-[32m+      - Keep one Django project with one main `tracker` app.[0m
-[32m+      - Create the baseline file structure for settings, root URLs, app URLs, templates, and static assets.[0m
-[32m+      - Include a base template and shared asset wiring that later CRUD pages can extend.[0m
-[32m+  - id: ITEM-0002[0m
-[32m+    title: Implement tracker domain models and forms[0m
-[32m+    goal: Add `Project`, `Task`, and `Tag` models, related forms, admin registration, and database migrations that match the approved domain surface.[0m
-[32m+    type: feature[0m
-[32m+    status: todo[0m
-[32m+    priority: high[0m
-[32m+    dependencies:[0m
-[32m+      - ITEM-0001[0m
-[32m+    notes:[0m
-[32m+      - Use direct Django ORM relationships, including tag many-to-many links for both projects and tasks.[0m
-[32m+      - Keep validation in models and forms rather than introducing service layers.[0m
-[32m+  - id: ITEM-0003[0m
-[32m+    title: Build server-rendered tracker pages[0m
-[32m+    goal: Deliver dashboard, project list, project detail with tasks, and tag detail pages using Django views, templates, and SQLite-backed aggregates.[0m
-[32m+    type: feature[0m
-[32m+    status: todo[0m
-[32m+    priority: high[0m
-[32m+    dependencies:[0m
-[32m+      - ITEM-0002[0m
-[32m+    notes:[0m
-[32m+      - Dashboard must show total projects, tasks by status, and overdue tasks.[0m
-[32m+      - Prefer server-rendered templates and partial-ready template composition.[0m
-[32m+  - id: ITEM-0004[0m
-[32m+    title: Add no-reload CRUD interactions[0m
-[32m+    goal: Implement async create, update, and delete flows for projects, tasks, and tags using HTML partial responses and small vanilla JS fetch handlers.[0m
-[32m+    type: feature[0m
-[32m+    status: todo[0m
-[32m+    priority: high[0m
-[32m+    dependencies:[0m
-[32m+      - ITEM-0003[0m
-[32m+    notes:[0m
-[32m+      - Default mutation responses to HTML partials.[0m
-[32m+      - Use JSON only for narrow cases where partial HTML is awkward.[0m
-[32m+  - id: ITEM-0005[0m
-[32m+    title: Add automated coverage and final validation[0m
-[32m+    goal: Cover the tracker with Django tests for models, views, and no-reload mutation behavior, then validate the full acceptance path.[0m
-[32m+    type: feature[0m
-[32m+    status: todo[0m
-[32m+    priority: medium[0m
-[32m+    dependencies:[0m
-[32m+      - ITEM-0004[0m
-[32m+    notes:[0m
-[32m+      - Focus tests on domain rules, page rendering, and async CRUD behavior.[0m
-[32m+      - Keep tooling inside Django and the Python standard library only.[0m
+     priority: high
+@@ -23,2 +23,4 @@
+       - Keep validation in models and forms rather than introducing service layers.
+[32m+      - Keep the implementation inside the single existing `tracker` app with no extra packages or architecture layers.[0m
+[32m+      - Include initial migration files for the domain schema in this slice.[0m
+   - id: ITEM-0003
 [35mM /home/sundaram/code/temp/test/ai/active_item.yaml[0m
-@@ -1,8 +1,24 @@
-[31m-id: null[0m
-[31m-title: null[0m
-[31m-goal: null[0m
-[31m-status: idle[0m
-[31m-owner_role: null[0m
-[31m-related_files: [][0m
-[31m-acceptance_criteria: [][0m
-[31m-done_definition: [][0m
-[32m+id: ITEM-0001[0m
-[32m+title: Scaffold Django project tracker baseline[0m
-[32m+goal: Establish the single-project Django skeleton under `apps/project-tracker/` with the tracker app wired into settings, URLs, templates, and static assets.[0m
+@@ -1,24 +1,22 @@
+[31m-id: ITEM-0001[0m
+[31m-title: Scaffold Django project tracker baseline[0m
+[31m-goal: "Establish the single-project Django skeleton under apps/project-tracker/ with the tracker app wired into settings, URLs, templates, and static assets."[0m
+[31m-status: done[0m
+[31m-owner_role: REVIEWER[0m
+[32m+id: ITEM-0002[0m
+[32m+title: Implement tracker domain models and forms[0m
+[32m+goal: "Add Project, Task, and Tag models, related forms, admin registration, and database migrations that match the approved domain surface."[0m
 [32m+status: in_progress[0m
 [32m+owner_role: DEV[0m
-[32m+related_files:[0m
-[32m+  - apps/project-tracker/manage.py[0m
-[32m+  - apps/project-tracker/project_tracker/settings.py[0m
-[32m+  - apps/project-tracker/project_tracker/urls.py[0m
-[32m+  - apps/project-tracker/tracker/apps.py[0m
-[32m+  - apps/project-tracker/tracker/urls.py[0m
-[32m+  - apps/project-tracker/templates/tracker/base.html[0m
-[32m+  - apps/project-tracker/static/tracker/app.css[0m
-[32m+  - apps/project-tracker/static/tracker/app.js[0m
-[32m+acceptance_criteria:[0m
-[32m+  - Django project files exist under `apps/project-tracker/` and run as a single project with one main `tracker` app.[0m
-[32m+  - Settings are configured for SQLite, templates, and static files within the approved project structure.[0m
-[32m+  - Root URLconf includes the tracker app URLconf and a baseline route that can render a tracker template.[0m
-[32m+  - Shared base template and static assets are wired so later views can extend them without restructuring.[0m
-[32m+done_definition:[0m
-[32m+  - Project skeleton is committed in code with no extra packages or speculative app splits.[0m
-[32m+  - `tracker` app is installed and reachable through the project URL configuration.[0m
-[32m+  - Baseline template and static files load through Django's standard configuration.[0m
-[32m+  - Any tests added for the scaffold pass locally, or the dev handoff notes state why tests were deferred for this slice.[0m
+ related_files:
+[31m-  - apps/project-tracker/manage.py[0m
+[31m-  - apps/project-tracker/project_tracker/settings.py[0m
+[31m-  - apps/project-tracker/project_tracker/urls.py[0m
+[31m-  - apps/project-tracker/tracker/apps.py[0m
+[31m-  - apps/project-tracker/tracker/urls.py[0m
+[31m-  - apps/project-tracker/templates/tracker/base.html[0m
+[31m-  - apps/project-tracker/static/tracker/app.css[0m
+[31m-  - apps/project-tracker/static/tracker/app.js[0m
+[32m+  - apps/project-tracker/tracker/models.py[0m
+[32m+  - apps/project-tracker/tracker/forms.py[0m
+[32m+  - apps/project-tracker/tracker/admin.py[0m
+[32m+  - apps/project-tracker/tracker/migrations/[0m
+[32m+  - apps/project-tracker/tracker/tests/[0m
+ acceptance_criteria:
+[31m-  - "Django project files exist under apps/project-tracker/ and run as a single project with one main tracker app."[0m
+[31m-  - Settings are configured for SQLite, templates, and static files within the approved project structure.[0m
+[31m-  - Root URLconf includes the tracker app URLconf and a baseline route that can render a tracker template.[0m
+[31m-  - Shared base template and static assets are wired so later views can extend them without restructuring.[0m
+[32m+  - "`Project`, `Task`, and `Tag` models exist in `tracker/models.py` with the approved field set and Django ORM relationships."[0m
+[32m+  - "`Task` has a foreign key to `Project`, and tags can be assigned to both projects and tasks via many-to-many relationships."[0m
+[32m+  - "Model and form validation enforce the approved enumerated choices and basic required-field constraints without introducing service layers."[0m
+[32m+  - "Admin registration covers the domain models with practical list/display configuration for inspection."[0m
+[32m+  - "Initial migration files for the domain schema are present under `tracker/migrations/`."[0m
+ done_definition:
+[31m-  - Project skeleton is committed in code with no extra packages or speculative app splits.[0m
+[31m-  - "tracker app is installed and reachable through the project URL configuration."[0m
+[31m-  - Baseline template and static files load through Django's standard configuration.[0m
+[31m-  - Any tests added for the scaffold pass locally, or the dev handoff notes state why tests were deferred for this slice.[0m
+[32m+  - "Domain models, forms, admin wiring, and migrations are implemented inside the existing `tracker` app only."[0m
+[32m+  - "Field choices align with the locked statuses and priorities from `ai/goal.yaml`."[0m
+[32m+  - "No extra Django apps, third-party packages, or speculative service/repository layers are introduced."[0m
+[32m+  - "Tests cover the domain rules if the environment allows Django to run, or the handoff documents the blocking limitation."[0m
+[32mapply_patch(auto_approved=true) exited 0 in 5ms:[0m
+[2mSuccess. Updated the following files:[0m
+[2mM /home/sundaram/code/temp/test/ai/backlog.yaml[0m
+[2mM /home/sundaram/code/temp/test/ai/active_item.yaml[0m
+[2mM /home/sundaram/code/temp/test/ai/iterations/ITER-0001.md[0m
+[3m[35mfile update:[0m[0m
+diff --git a/ai/active_item.yaml b/ai/active_item.yaml
+index 9cc57b5e365721179fdd9769d990c4f007252680..990990a1550623df8ff2ccdb3bd1fa472d3843c8
+--- a/ai/active_item.yaml
++++ b/ai/active_item.yaml
+@@ -1,24 +1,22 @@
+-id: ITEM-0001
+-title: Scaffold Django project tracker baseline
+-goal: "Establish the single-project Django skeleton under apps/project-tracker/ with the tracker app wired into settings, URLs, templates, and static assets."
+-status: done
+-owner_role: REVIEWER
++id: ITEM-0002
++title: Implement tracker domain models and forms
++goal: "Add Project, Task, and Tag models, related forms, admin registration, and database migrations that match the approved domain surface."
++status: in_progress
++owner_role: DEV
+ related_files:
+-  - apps/project-tracker/manage.py
+-  - apps/project-tracker/project_tracker/settings.py
+-  - apps/project-tracker/project_tracker/urls.py
+-  - apps/project-tracker/tracker/apps.py
+-  - apps/project-tracker/tracker/urls.py
+-  - apps/project-tracker/templates/tracker/base.html
+-  - apps/project-tracker/static/tracker/app.css
+-  - apps/project-tracker/static/tracker/app.js
++  - apps/project-tracker/tracker/models.py
++  - apps/project-tracker/tracker/forms.py
++  - apps/project-tracker/tracker/admin.py
++  - apps/project-tracker/tracker/migrations/
++  - apps/project-tracker/tracker/tests/
+ acceptance_criteria:
+-  - "Django project files exist under apps/project-tracker/ and run as a single project with one main tracker app."
+-  - Settings are configured for SQLite, templates, and static files within the approved project structure.
+-  - Root URLconf includes the tracker app URLconf and a baseline route that can render a tracker template.
+-  - Shared base template and static assets are wired so later views can extend them without restructuring.
++  - "`Project`, `Task`, and `Tag` models exist in `tracker/models.py` with the approved field set and Django ORM relationships."
++  - "`Task` has a foreign key to `Project`, and tags can be assigned to both projects and tasks via many-to-many relationships."
++  - "Model and form validation enforce the approved enumerated choices and basic required-field constraints without introducing service layers."
++  - "Admin registration covers the domain models with practical list/display configuration for inspection."
++  - "Initial migration files for the domain schema are present under `tracker/migrations/`."
+ done_definition:
+-  - Project skeleton is committed in code with no extra packages or speculative app splits.
+-  - "tracker app is installed and reachable through the project URL configuration."
+-  - Baseline template and static files load through Django's standard configuration.
+-  - Any tests added for the scaffold pass locally, or the dev handoff notes state why tests were deferred for this slice.
++  - "Domain models, forms, admin wiring, and migrations are implemented inside the existing `tracker` app only."
++  - "Field choices align with the locked statuses and priorities from `ai/goal.yaml`."
++  - "No extra Django apps, third-party packages, or speculative service/repository layers are introduced."
++  - "Tests cover the domain rules if the environment allows Django to run, or the handoff documents the blocking limitation."
+diff --git a/ai/backlog.yaml b/ai/backlog.yaml
+index 1dbf6d158e38c08113c9dd4034bf134d3cbe1d87..615119ce8ba8118a2155ea1ad4d3df3361595bbc
+--- a/ai/backlog.yaml
++++ b/ai/backlog.yaml
+@@ -14,13 +14,15 @@
+     title: Implement tracker domain models and forms
+     goal: Add `Project`, `Task`, and `Tag` models, related forms, admin registration, and database migrations that match the approved domain surface.
+     type: feature
+-    status: todo
++    status: in_progress
+     priority: high
+     dependencies:
+       - ITEM-0001
+     notes:
+       - Use direct Django ORM relationships, including tag many-to-many links for both projects and tasks.
+       - Keep validation in models and forms rather than introducing service layers.
++      - Keep the implementation inside the single existing `tracker` app with no extra packages or architecture layers.
++      - Include initial migration files for the domain schema in this slice.
+   - id: ITEM-0003
+     title: Build server-rendered tracker pages
+     goal: Deliver dashboard, project list, project detail with tasks, and tag detail pages using Django views, templates, and SQLite-backed aggregates.
+diff --git a/ai/iterations/ITER-0001.md b/ai/iterations/ITER-0001.md
+index 146391d71f8642354541ae088f1acf8db2db33ff..f077b7f0d527a849c6bd5a38539e538fc4f8fde1
+--- a/ai/iterations/ITER-0001.md
++++ b/ai/iterations/ITER-0001.md
+@@ -9,3 +9,4 @@
+ | 2026-03-12 | DEV | Scaffolded the Django project baseline with one tracker app, routed a rendered dashboard page, and added a smoke test for the root view | ITEM-0001 required an end-to-end project skeleton before later slices can add models, pages, and async CRUD behavior |
+ | 2026-03-12 | VALIDATOR | Accepted the scaffold baseline as meeting ITEM-0001 acceptance criteria and handed off to review with an environment caveat on Django-dependent tests | The slice is structurally correct and free of scope drift, but full runtime validation remains blocked until Django is installed in the workspace |
+ | 2026-03-12 | REVIEWER | Marked ITEM-0001 done and returned the baton to planning for the next implementation slice | The scaffold meets the locked architecture and acceptance criteria, and the blocked Django test run is an environment limitation rather than a gap in the delivered slice |
++| 2026-03-12 | PLANNER | Activated ITEM-0002 for domain model, form, admin, and migration work and handed off implementation to DEV | The scaffold is complete, and the domain layer is the next dependency needed before server-rendered pages and no-reload CRUD flows can be built |
+
+[3m[35mfile update:[0m[0m
+diff --git a/ai/active_item.yaml b/ai/active_item.yaml
+index 9cc57b5e365721179fdd9769d990c4f007252680..990990a1550623df8ff2ccdb3bd1fa472d3843c8
+--- a/ai/active_item.yaml
++++ b/ai/active_item.yaml
+@@ -1,24 +1,22 @@
+-id: ITEM-0001
+-title: Scaffold Django project tracker baseline
+-goal: "Establish the single-project Django skeleton under apps/project-tracker/ with the tracker app wired into settings, URLs, templates, and static assets."
+-status: done
+-owner_role: REVIEWER
++id: ITEM-0002
++title: Implement tracker domain models and forms
++goal: "Add Project, Task, and Tag models, related forms, admin registration, and database migrations that match the approved domain surface."
++status: in_progress
++owner_role: DEV
+ related_files:
+-  - apps/project-tracker/manage.py
+-  - apps/project-tracker/project_tracker/settings.py
+-  - apps/project-tracker/project_tracker/urls.py
+-  - apps/project-tracker/tracker/apps.py
+-  - apps/project-tracker/tracker/urls.py
+-  - apps/project-tracker/templates/tracker/base.html
+-  - apps/project-tracker/static/tracker/app.css
+-  - apps/project-tracker/static/tracker/app.js
++  - apps/project-tracker/tracker/models.py
++  - apps/project-tracker/tracker/forms.py
++  - apps/project-tracker/tracker/admin.py
++  - apps/project-tracker/tracker/migrations/
++  - apps/project-tracker/tracker/tests/
+ acceptance_criteria:
+-  - "Django project files exist under apps/project-tracker/ and run as a single project with one main tracker app."
+-  - Settings are configured for SQLite, templates, and static files within the approved project structure.
+-  - Root URLconf includes the tracker app URLconf and a baseline route that can render a tracker template.
+-  - Shared base template and static assets are wired so later views can extend them without restructuring.
++  - "`Project`, `Task`, and `Tag` models exist in `tracker/models.py` with the approved field set and Django ORM relationships."
++  - "`Task` has a foreign key to `Project`, and tags can be assigned to both projects and tasks via many-to-many relationships."
++  - "Model and form validation enforce the approved enumerated choices and basic required-field constraints without introducing service layers."
++  - "Admin registration covers the domain models with practical list/display configuration for inspection."
++  - "Initial migration files for the domain schema are present under `tracker/migrations/`."
+ done_definition:
+-  - Project skeleton is committed in code with no extra packages or speculative app splits.
+-  - "tracker app is installed and reachable through the project URL configuration."
+-  - Baseline template and static files load through Django's standard configuration.
+-  - Any tests added for the scaffold pass locally, or the dev handoff notes state why tests were deferred for this slice.
++  - "Domain models, forms, admin wiring, and migrations are implemented inside the existing `tracker` app only."
++  - "Field choices align with the locked statuses and priorities from `ai/goal.yaml`."
++  - "No extra Django apps, third-party packages, or speculative service/repository layers are introduced."
++  - "Tests cover the domain rules if the environment allows Django to run, or the handoff documents the blocking limitation."
+diff --git a/ai/backlog.yaml b/ai/backlog.yaml
+index 1dbf6d158e38c08113c9dd4034bf134d3cbe1d87..615119ce8ba8118a2155ea1ad4d3df3361595bbc
+--- a/ai/backlog.yaml
++++ b/ai/backlog.yaml
+@@ -14,13 +14,15 @@
+     title: Implement tracker domain models and forms
+     goal: Add `Project`, `Task`, and `Tag` models, related forms, admin registration, and database migrations that match the approved domain surface.
+     type: feature
+-    status: todo
++    status: in_progress
+     priority: high
+     dependencies:
+       - ITEM-0001
+     notes:
+       - Use direct Django ORM relationships, including tag many-to-many links for both projects and tasks.
+       - Keep validation in models and forms rather than introducing service layers.
++      - Keep the implementation inside the single existing `tracker` app with no extra packages or architecture layers.
++      - Include initial migration files for the domain schema in this slice.
+   - id: ITEM-0003
+     title: Build server-rendered tracker pages
+     goal: Deliver dashboard, project list, project detail with tasks, and tag detail pages using Django views, templates, and SQLite-backed aggregates.
+diff --git a/ai/iterations/ITER-0001.md b/ai/iterations/ITER-0001.md
+index 146391d71f8642354541ae088f1acf8db2db33ff..f077b7f0d527a849c6bd5a38539e538fc4f8fde1
+--- a/ai/iterations/ITER-0001.md
++++ b/ai/iterations/ITER-0001.md
+@@ -9,3 +9,4 @@
+ | 2026-03-12 | DEV | Scaffolded the Django project baseline with one tracker app, routed a rendered dashboard page, and added a smoke test for the root view | ITEM-0001 required an end-to-end project skeleton before later slices can add models, pages, and async CRUD behavior |
+ | 2026-03-12 | VALIDATOR | Accepted the scaffold baseline as meeting ITEM-0001 acceptance criteria and handed off to review with an environment caveat on Django-dependent tests | The slice is structurally correct and free of scope drift, but full runtime validation remains blocked until Django is installed in the workspace |
+ | 2026-03-12 | REVIEWER | Marked ITEM-0001 done and returned the baton to planning for the next implementation slice | The scaffold meets the locked architecture and acceptance criteria, and the blocked Django test run is an environment limitation rather than a gap in the delivered slice |
++| 2026-03-12 | PLANNER | Activated ITEM-0002 for domain model, form, admin, and migration work and handed off implementation to DEV | The scaffold is complete, and the domain layer is the next dependency needed before server-rendered pages and no-reload CRUD flows can be built |
+
+[35m[3mcodex[0m[0m
+The active item and iteration log are updated. I’m writing the handoff note now with concrete implementation boundaries and validation expectations, then I’ll regenerate the baton files and switch ownership to `DEV`.
+[3m[35mfile update[0m[0m
 [35mM /home/sundaram/code/temp/test/ai/next_agent.md[0m
 @@ -2,4 +2,4 @@
  
@@ -435,156 +557,133 @@ I have the plan shape. I’m updating the backlog, the active item, and the hand
 [32m+- Current role: `DEV`[0m
 [32m+- Prompt: `ai/prompts/04-dev.md`[0m
  - Execution command for Codex sessions: **Follow `ai/next_agent.yaml` exactly.**
-@@ -9,8 +9,8 @@
+@@ -9,14 +9,26 @@
  
-[31m-- The architecture baseline is documented in `context/repo/architecture.md`.[0m
-[31m-- Keep the implementation as one Django project under `apps/project-tracker/` with one main product app rather than splitting into multiple Django apps or platform layers.[0m
-[31m-- Plan around server-rendered pages plus small async CRUD interactions. Prefer HTML partial responses for create, update, and delete flows; use JSON only where a partial would be needlessly awkward.[0m
-[31m-- The planner should turn this into incremental items that establish project scaffolding first, then domain models/forms/admin, then page views/templates, then no-reload interaction wiring, then tests/validation.[0m
-[31m-- Required user-facing views are dashboard, project list, project detail with tasks, and tag filter/detail.[0m
-[31m-- Core model surface is intentionally small: `Project`, `Task`, and `Tag` with direct Django ORM relationships and SQLite-backed aggregates for dashboard counts.[0m
-[31m-- No clarification or exception was needed. `ai/user-questions.yaml` remains `status: none`, and `ai/decision-lock.yaml` remains unchanged.[0m
-[32m+- Active item is `ITEM-0001`: scaffold the Django project baseline under `apps/project-tracker/`.[0m
-[32m+- Create one Django project and one main `tracker` app only. Do not introduce DRF, extra pip packages, multiple Django apps, or speculative service layers.[0m
-[32m+- Start with the skeleton in the architecture doc: `manage.py`, `project_tracker/` settings and URLs, `tracker/` app config and URLs, plus `templates/tracker/base.html` and `static/tracker/app.css` / `app.js`.[0m
-[32m+- Wire SQLite, templates, and static assets in standard Django configuration so later pages can extend the base without rework.[0m
-[32m+- Provide at least one baseline route and template render so the scaffold is visibly connected end to end.[0m
-[32m+- Keep future work in mind: later items will add domain models/forms/admin, then dashboard/list/detail/tag pages, then async partial-based CRUD, then tests and validation.[0m
-[32m+- No clarification or exception was needed. Leave `ai/user-questions.yaml` at `status: none` unless execution uncovers a real blocker.[0m
-[35mM /home/sundaram/code/temp/test/ai/iterations/ITER-0001.md[0m
-@@ -7 +7,2 @@
- | 2026-03-11 | ARCHITECT | Defined a single-project Django architecture centered on one product app, server-rendered templates, and HTML-partial based no-reload CRUD flows | The planner and developer need concrete boundaries, file targets, and implementation tradeoffs before breaking work into execution items |
-[32m+| 2026-03-11 | PLANNER | Broke delivery into scaffold, domain, page, async CRUD, and test slices and activated the scaffold item for development | The developer needs a small implementation-ready first step with explicit file targets before starting code changes |[0m
-[32mapply_patch(auto_approved=true) exited 0 in 7ms:[0m
+[31m-- Review decision for `ITEM-0001`: DONE.[0m
+[31m-- Accepted outcome:[0m
+[31m-  - single Django project scaffold exists under `apps/project-tracker/`[0m
+[31m-  - one `tracker` app is wired into settings and root URLs[0m
+[31m-  - baseline dashboard route renders shared templates[0m
+[31m-  - static CSS and JS are connected through Django static files[0m
+[31m-- Environment caveat kept on record:[0m
+[31m-  - `python3 -m py_compile $(find apps/project-tracker -name '*.py' | sort)` passed[0m
+[31m-  - `python3 apps/project-tracker/manage.py test` is still blocked in this workspace by `ModuleNotFoundError: No module named 'django'`[0m
+[31m-- Planning focus:[0m
+[31m-  - choose the next slice after scaffold completion[0m
+[31m-  - keep the locked architecture intact: single Django project, one main app, no extra packages, no speculative layers[0m
+[31m-  - carry forward the hygiene note that committed `__pycache__` files should be cleaned up opportunistically without derailing feature work[0m
+[32m+- Active item: `ITEM-0002` - implement the tracker domain layer.[0m
+[32m+- Scope for this slice:[0m
+[32m+  - add `Project`, `Task`, and `Tag` models in the existing `tracker` app only[0m
+[32m+  - add Django forms for the domain entities with validation aligned to the locked field choices[0m
+[32m+  - register the models in Django admin with useful list/display configuration[0m
+[32m+  - create initial migrations for the schema under `tracker/migrations/`[0m
+[32m+- Domain constraints from `ai/goal.yaml`:[0m
+[32m+  - `Project`: name, description, status (`active`, `completed`, `archived`), created date[0m
+[32m+  - `Task`: belongs to a project, title, status (`todo`, `in_progress`, `done`), priority (`low`, `medium`, `high`), due date[0m
+[32m+  - `Tag`: many-to-many assignment support for both projects and tasks[0m
+[32m+- Implementation guardrails:[0m
+[32m+  - no extra Django apps, no third-party packages, no DRF, no service/repository layers[0m
+[32m+  - keep logic in models, forms, and standard Django admin structures[0m
+[32m+  - preserve the single-project Django architecture already accepted in `ITEM-0001`[0m
+[32m+- Suggested files to modify or create:[0m
+[32m+  - `apps/project-tracker/tracker/models.py`[0m
+[32m+  - `apps/project-tracker/tracker/forms.py`[0m
+[32m+  - `apps/project-tracker/tracker/admin.py`[0m
+[32m+  - `apps/project-tracker/tracker/migrations/`[0m
+[32m+  - `apps/project-tracker/tracker/tests/`[0m
+[32m+- Validation expectations:[0m
+[32m+  - add domain-focused tests if Django is available in the environment[0m
+[32m+  - if Django remains unavailable, document the exact blocked command and rely on non-Django validation where possible[0m
+[32m+- Existing caveat still applies:[0m
+[32m+  - prior `manage.py test` runs were blocked in this workspace by `ModuleNotFoundError: No module named 'django'`[0m
+[32mapply_patch(auto_approved=true) exited 0 in 6ms:[0m
 [2mSuccess. Updated the following files:[0m
-[2mM /home/sundaram/code/temp/test/ai/backlog.yaml[0m
-[2mM /home/sundaram/code/temp/test/ai/active_item.yaml[0m
-[2mM /home/sundaram/code/temp/test/ai/iterations/ITER-0001.md[0m
 [2mM /home/sundaram/code/temp/test/ai/next_agent.md[0m
 [3m[35mfile update:[0m[0m
 diff --git a/ai/active_item.yaml b/ai/active_item.yaml
-index f50375925215d783106fa27fc1a0a02ccc471b07..9befcb3ab8b135ac177de17cbee99916fbee22f0
+index 9cc57b5e365721179fdd9769d990c4f007252680..990990a1550623df8ff2ccdb3bd1fa472d3843c8
 --- a/ai/active_item.yaml
 +++ b/ai/active_item.yaml
-@@ -1,8 +1,24 @@
--id: null
--title: null
--goal: null
--status: idle
--owner_role: null
--related_files: []
--acceptance_criteria: []
--done_definition: []
-+id: ITEM-0001
-+title: Scaffold Django project tracker baseline
-+goal: Establish the single-project Django skeleton under `apps/project-tracker/` with the tracker app wired into settings, URLs, templates, and static assets.
+@@ -1,24 +1,22 @@
+-id: ITEM-0001
+-title: Scaffold Django project tracker baseline
+-goal: "Establish the single-project Django skeleton under apps/project-tracker/ with the tracker app wired into settings, URLs, templates, and static assets."
+-status: done
+-owner_role: REVIEWER
++id: ITEM-0002
++title: Implement tracker domain models and forms
++goal: "Add Project, Task, and Tag models, related forms, admin registration, and database migrations that match the approved domain surface."
 +status: in_progress
 +owner_role: DEV
-+related_files:
-+  - apps/project-tracker/manage.py
-+  - apps/project-tracker/project_tracker/settings.py
-+  - apps/project-tracker/project_tracker/urls.py
-+  - apps/project-tracker/tracker/apps.py
-+  - apps/project-tracker/tracker/urls.py
-+  - apps/project-tracker/templates/tracker/base.html
-+  - apps/project-tracker/static/tracker/app.css
-+  - apps/project-tracker/static/tracker/app.js
-+acceptance_criteria:
-+  - Django project files exist under `apps/project-tracker/` and run as a single project with one main `tracker` app.
-+  - Settings are configured for SQLite, templates, and static files within the approved project structure.
-+  - Root URLconf includes the tracker app URLconf and a baseline route that can render a tracker template.
-+  - Shared base template and static assets are wired so later views can extend them without restructuring.
-+done_definition:
-+  - Project skeleton is committed in code with no extra packages or speculative app splits.
-+  - `tracker` app is installed and reachable through the project URL configuration.
-+  - Baseline template and static files load through Django's standard configuration.
-+  - Any tests added for the scaffold pass locally, or the dev handoff notes state why tests were deferred for this slice.
+ related_files:
+-  - apps/project-tracker/manage.py
+-  - apps/project-tracker/project_tracker/settings.py
+-  - apps/project-tracker/project_tracker/urls.py
+-  - apps/project-tracker/tracker/apps.py
+-  - apps/project-tracker/tracker/urls.py
+-  - apps/project-tracker/templates/tracker/base.html
+-  - apps/project-tracker/static/tracker/app.css
+-  - apps/project-tracker/static/tracker/app.js
++  - apps/project-tracker/tracker/models.py
++  - apps/project-tracker/tracker/forms.py
++  - apps/project-tracker/tracker/admin.py
++  - apps/project-tracker/tracker/migrations/
++  - apps/project-tracker/tracker/tests/
+ acceptance_criteria:
+-  - "Django project files exist under apps/project-tracker/ and run as a single project with one main tracker app."
+-  - Settings are configured for SQLite, templates, and static files within the approved project structure.
+-  - Root URLconf includes the tracker app URLconf and a baseline route that can render a tracker template.
+-  - Shared base template and static assets are wired so later views can extend them without restructuring.
++  - "`Project`, `Task`, and `Tag` models exist in `tracker/models.py` with the approved field set and Django ORM relationships."
++  - "`Task` has a foreign key to `Project`, and tags can be assigned to both projects and tasks via many-to-many relationships."
++  - "Model and form validation enforce the approved enumerated choices and basic required-field constraints without introducing service layers."
++  - "Admin registration covers the domain models with practical list/display configuration for inspection."
++  - "Initial migration files for the domain schema are present under `tracker/migrations/`."
+ done_definition:
+-  - Project skeleton is committed in code with no extra packages or speculative app splits.
+-  - "tracker app is installed and reachable through the project URL configuration."
+-  - Baseline template and static files load through Django's standard configuration.
+-  - Any tests added for the scaffold pass locally, or the dev handoff notes state why tests were deferred for this slice.
++  - "Domain models, forms, admin wiring, and migrations are implemented inside the existing `tracker` app only."
++  - "Field choices align with the locked statuses and priorities from `ai/goal.yaml`."
++  - "No extra Django apps, third-party packages, or speculative service/repository layers are introduced."
++  - "Tests cover the domain rules if the environment allows Django to run, or the handoff documents the blocking limitation."
 diff --git a/ai/backlog.yaml b/ai/backlog.yaml
-index 7f6b886a785058e2361cc2847daf3232c98efd30..4a051f513161838c00a259d8b5b9080d6cbea6f7
+index 1dbf6d158e38c08113c9dd4034bf134d3cbe1d87..615119ce8ba8118a2155ea1ad4d3df3361595bbc
 --- a/ai/backlog.yaml
 +++ b/ai/backlog.yaml
-@@ -1,11 +1,56 @@
--items: []
--# Example format — PRODUCT_OWNER creates real items from ai/goal.yaml:
--#  - id: ITEM-0001
--#    title: Build user authentication
--#    goal: Allow users to sign in with email and password
--#    type: feature
--#    status: todo
--#    priority: high
--#    dependencies: []
--#    notes:
--#      - Python 3 only, no external dependencies
-+items:
-+  - id: ITEM-0001
-+    title: Scaffold Django project tracker baseline
-+    goal: Establish the single-project Django skeleton under `apps/project-tracker/` with the tracker app wired into settings, URLs, templates, and static assets.
-+    type: feature
+@@ -14,13 +14,15 @@
+     title: Implement tracker domain models and forms
+     goal: Add `Project`, `Task`, and `Tag` models, related forms, admin registration, and database migrations that match the approved domain surface.
+     type: feature
+-    status: todo
 +    status: in_progress
-+    priority: high
-+    dependencies: []
-+    notes:
-+      - Keep one Django project with one main `tracker` app.
-+      - Create the baseline file structure for settings, root URLs, app URLs, templates, and static assets.
-+      - Include a base template and shared asset wiring that later CRUD pages can extend.
-+  - id: ITEM-0002
-+    title: Implement tracker domain models and forms
-+    goal: Add `Project`, `Task`, and `Tag` models, related forms, admin registration, and database migrations that match the approved domain surface.
-+    type: feature
-+    status: todo
-+    priority: high
-+    dependencies:
-+      - ITEM-0001
-+    notes:
-+      - Use direct Django ORM relationships, including tag many-to-many links for both projects and tasks.
-+      - Keep validation in models and forms rather than introducing service layers.
-+  - id: ITEM-0003
-+    title: Build server-rendered tracker pages
-+    goal: Deliver dashboard, project list, project detail with tasks, and tag detail pages using Django views, templates, and SQLite-backed aggregates.
-+    type: feature
-+    status: todo
-+    priority: high
-+    dependencies:
-+      - ITEM-0002
-+    notes:
-+      - Dashboard must show total projects, tasks by status, and overdue tasks.
-+      - Prefer server-rendered templates and partial-ready template composition.
-+  - id: ITEM-0004
-+    title: Add no-reload CRUD interactions
-+    goal: Implement async create, update, and delete flows for projects, tasks, and tags using HTML partial responses and small vanilla JS fetch handlers.
-+    type: feature
-+    status: todo
-+    priority: high
-+    dependencies:
-+      - ITEM-0003
-+    notes:
-+      - Default mutation responses to HTML partials.
-+      - Use JSON only for narrow cases where partial HTML is awkward.
-+  - id: ITEM-0005
-+    title: Add automated coverage and final validation
-+    goal: Cover the tracker with Django tests for models, views, and no-reload mutation behavior, then validate the full acceptance path.
-+    type: feature
-+    status: todo
-+    priority: medium
-+    dependencies:
-+      - ITEM-0004
-+    notes:
-+      - Focus tests on domain rules, page rendering, and async CRUD behavior.
-+      - Keep tooling inside Django and the Python standard library only.
+     priority: high
+     dependencies:
+       - ITEM-0001
+     notes:
+       - Use direct Django ORM relationships, including tag many-to-many links for both projects and tasks.
+       - Keep validation in models and forms rather than introducing service layers.
++      - Keep the implementation inside the single existing `tracker` app with no extra packages or architecture layers.
++      - Include initial migration files for the domain schema in this slice.
+   - id: ITEM-0003
+     title: Build server-rendered tracker pages
+     goal: Deliver dashboard, project list, project detail with tasks, and tag detail pages using Django views, templates, and SQLite-backed aggregates.
 diff --git a/ai/iterations/ITER-0001.md b/ai/iterations/ITER-0001.md
-index 9e1fe3894887cb2bed8c77ddce81953af8e52536..5f2d1d0b90999939a4aabeef94d2181b6e406c63
+index 146391d71f8642354541ae088f1acf8db2db33ff..f077b7f0d527a849c6bd5a38539e538fc4f8fde1
 --- a/ai/iterations/ITER-0001.md
 +++ b/ai/iterations/ITER-0001.md
-@@ -5,3 +5,4 @@
- | 2026-03-11 | PRODUCT_OWNER | Defined the one-page product requirements from the project goal and handed off for engineering judgment review | The workflow needs a concrete scope and acceptance baseline before architecture and planning can proceed |
- | 2026-03-11 | SENIOR_JUDGMENTAL_ENGINEER | Locked simplification guardrails around a single Django + SQLite + vanilla JS modular monolith and warned against framework/platform drift | The architect needs explicit constraints so the design stays aligned with the product goal instead of inheriting conflicting default stack preferences |
- | 2026-03-11 | ARCHITECT | Defined a single-project Django architecture centered on one product app, server-rendered templates, and HTML-partial based no-reload CRUD flows | The planner and developer need concrete boundaries, file targets, and implementation tradeoffs before breaking work into execution items |
-+| 2026-03-11 | PLANNER | Broke delivery into scaffold, domain, page, async CRUD, and test slices and activated the scaffold item for development | The developer needs a small implementation-ready first step with explicit file targets before starting code changes |
+@@ -9,3 +9,4 @@
+ | 2026-03-12 | DEV | Scaffolded the Django project baseline with one tracker app, routed a rendered dashboard page, and added a smoke test for the root view | ITEM-0001 required an end-to-end project skeleton before later slices can add models, pages, and async CRUD behavior |
+ | 2026-03-12 | VALIDATOR | Accepted the scaffold baseline as meeting ITEM-0001 acceptance criteria and handed off to review with an environment caveat on Django-dependent tests | The slice is structurally correct and free of scope drift, but full runtime validation remains blocked until Django is installed in the workspace |
+ | 2026-03-12 | REVIEWER | Marked ITEM-0001 done and returned the baton to planning for the next implementation slice | The scaffold meets the locked architecture and acceptance criteria, and the blocked Django test run is an environment limitation rather than a gap in the delivered slice |
++| 2026-03-12 | PLANNER | Activated ITEM-0002 for domain model, form, admin, and migration work and handed off implementation to DEV | The scaffold is complete, and the domain layer is the next dependency needed before server-rendered pages and no-reload CRUD flows can be built |
 diff --git a/ai/next_agent.md b/ai/next_agent.md
-index 43dab4a0f26502346333e89135f9fc74f4ea1aeb..c9917c7bc8bbb7e1de011e91bf75a940e4f056a2
+index 3452c022f99651c80fbed79ca032f7cb9044024e..41a47f426a7cb9479eb30e4bb4ecb1b381a1cbc6
 --- a/ai/next_agent.md
 +++ b/ai/next_agent.md
-@@ -1,16 +1,16 @@
+@@ -1,22 +1,34 @@
  # Next Agent
  
 -- Current role: `PLANNER`
@@ -596,145 +695,129 @@ index 43dab4a0f26502346333e89135f9fc74f4ea1aeb..c9917c7bc8bbb7e1de011e91bf75a940
  
  ## Handoff Notes
  
--- The architecture baseline is documented in `context/repo/architecture.md`.
--- Keep the implementation as one Django project under `apps/project-tracker/` with one main product app rather than splitting into multiple Django apps or platform layers.
--- Plan around server-rendered pages plus small async CRUD interactions. Prefer HTML partial responses for create, update, and delete flows; use JSON only where a partial would be needlessly awkward.
--- The planner should turn this into incremental items that establish project scaffolding first, then domain models/forms/admin, then page views/templates, then no-reload interaction wiring, then tests/validation.
--- Required user-facing views are dashboard, project list, project detail with tasks, and tag filter/detail.
--- Core model surface is intentionally small: `Project`, `Task`, and `Tag` with direct Django ORM relationships and SQLite-backed aggregates for dashboard counts.
--- No clarification or exception was needed. `ai/user-questions.yaml` remains `status: none`, and `ai/decision-lock.yaml` remains unchanged.
-+- Active item is `ITEM-0001`: scaffold the Django project baseline under `apps/project-tracker/`.
-+- Create one Django project and one main `tracker` app only. Do not introduce DRF, extra pip packages, multiple Django apps, or speculative service layers.
-+- Start with the skeleton in the architecture doc: `manage.py`, `project_tracker/` settings and URLs, `tracker/` app config and URLs, plus `templates/tracker/base.html` and `static/tracker/app.css` / `app.js`.
-+- Wire SQLite, templates, and static assets in standard Django configuration so later pages can extend the base without rework.
-+- Provide at least one baseline route and template render so the scaffold is visibly connected end to end.
-+- Keep future work in mind: later items will add domain models/forms/admin, then dashboard/list/detail/tag pages, then async partial-based CRUD, then tests and validation.
-+- No clarification or exception was needed. Leave `ai/user-questions.yaml` at `status: none` unless execution uncovers a real blocker.
+-- Review decision for `ITEM-0001`: DONE.
+-- Accepted outcome:
+-  - single Django project scaffold exists under `apps/project-tracker/`
+-  - one `tracker` app is wired into settings and root URLs
+-  - baseline dashboard route renders shared templates
+-  - static CSS and JS are connected through Django static files
+-- Environment caveat kept on record:
+-  - `python3 -m py_compile $(find apps/project-tracker -name '*.py' | sort)` passed
+-  - `python3 apps/project-tracker/manage.py test` is still blocked in this workspace by `ModuleNotFoundError: No module named 'django'`
+-- Planning focus:
+-  - choose the next slice after scaffold completion
+-  - keep the locked architecture intact: single Django project, one main app, no extra packages, no speculative layers
+-  - carry forward the hygiene note that committed `__pycache__` files should be cleaned up opportunistically without derailing feature work
++- Active item: `ITEM-0002` - implement the tracker domain layer.
++- Scope for this slice:
++  - add `Project`, `Task`, and `Tag` models in the existing `tracker` app only
++  - add Django forms for the domain entities with validation aligned to the locked field choices
++  - register the models in Django admin with useful list/display configuration
++  - create initial migrations for the schema under `tracker/migrations/`
++- Domain constraints from `ai/goal.yaml`:
++  - `Project`: name, description, status (`active`, `completed`, `archived`), created date
++  - `Task`: belongs to a project, title, status (`todo`, `in_progress`, `done`), priority (`low`, `medium`, `high`), due date
++  - `Tag`: many-to-many assignment support for both projects and tasks
++- Implementation guardrails:
++  - no extra Django apps, no third-party packages, no DRF, no service/repository layers
++  - keep logic in models, forms, and standard Django admin structures
++  - preserve the single-project Django architecture already accepted in `ITEM-0001`
++- Suggested files to modify or create:
++  - `apps/project-tracker/tracker/models.py`
++  - `apps/project-tracker/tracker/forms.py`
++  - `apps/project-tracker/tracker/admin.py`
++  - `apps/project-tracker/tracker/migrations/`
++  - `apps/project-tracker/tracker/tests/`
++- Validation expectations:
++  - add domain-focused tests if Django is available in the environment
++  - if Django remains unavailable, document the exact blocked command and rely on non-Django validation where possible
++- Existing caveat still applies:
++  - prior `manage.py test` runs were blocked in this workspace by `ModuleNotFoundError: No module named 'django'`
 
 [3m[35mfile update:[0m[0m
 diff --git a/ai/active_item.yaml b/ai/active_item.yaml
-index f50375925215d783106fa27fc1a0a02ccc471b07..9befcb3ab8b135ac177de17cbee99916fbee22f0
+index 9cc57b5e365721179fdd9769d990c4f007252680..990990a1550623df8ff2ccdb3bd1fa472d3843c8
 --- a/ai/active_item.yaml
 +++ b/ai/active_item.yaml
-@@ -1,8 +1,24 @@
--id: null
--title: null
--goal: null
--status: idle
--owner_role: null
--related_files: []
--acceptance_criteria: []
--done_definition: []
-+id: ITEM-0001
-+title: Scaffold Django project tracker baseline
-+goal: Establish the single-project Django skeleton under `apps/project-tracker/` with the tracker app wired into settings, URLs, templates, and static assets.
+@@ -1,24 +1,22 @@
+-id: ITEM-0001
+-title: Scaffold Django project tracker baseline
+-goal: "Establish the single-project Django skeleton under apps/project-tracker/ with the tracker app wired into settings, URLs, templates, and static assets."
+-status: done
+-owner_role: REVIEWER
++id: ITEM-0002
++title: Implement tracker domain models and forms
++goal: "Add Project, Task, and Tag models, related forms, admin registration, and database migrations that match the approved domain surface."
 +status: in_progress
 +owner_role: DEV
-+related_files:
-+  - apps/project-tracker/manage.py
-+  - apps/project-tracker/project_tracker/settings.py
-+  - apps/project-tracker/project_tracker/urls.py
-+  - apps/project-tracker/tracker/apps.py
-+  - apps/project-tracker/tracker/urls.py
-+  - apps/project-tracker/templates/tracker/base.html
-+  - apps/project-tracker/static/tracker/app.css
-+  - apps/project-tracker/static/tracker/app.js
-+acceptance_criteria:
-+  - Django project files exist under `apps/project-tracker/` and run as a single project with one main `tracker` app.
-+  - Settings are configured for SQLite, templates, and static files within the approved project structure.
-+  - Root URLconf includes the tracker app URLconf and a baseline route that can render a tracker template.
-+  - Shared base template and static assets are wired so later views can extend them without restructuring.
-+done_definition:
-+  - Project skeleton is committed in code with no extra packages or speculative app splits.
-+  - `tracker` app is installed and reachable through the project URL configuration.
-+  - Baseline template and static files load through Django's standard configuration.
-+  - Any tests added for the scaffold pass locally, or the dev handoff notes state why tests were deferred for this slice.
+ related_files:
+-  - apps/project-tracker/manage.py
+-  - apps/project-tracker/project_tracker/settings.py
+-  - apps/project-tracker/project_tracker/urls.py
+-  - apps/project-tracker/tracker/apps.py
+-  - apps/project-tracker/tracker/urls.py
+-  - apps/project-tracker/templates/tracker/base.html
+-  - apps/project-tracker/static/tracker/app.css
+-  - apps/project-tracker/static/tracker/app.js
++  - apps/project-tracker/tracker/models.py
++  - apps/project-tracker/tracker/forms.py
++  - apps/project-tracker/tracker/admin.py
++  - apps/project-tracker/tracker/migrations/
++  - apps/project-tracker/tracker/tests/
+ acceptance_criteria:
+-  - "Django project files exist under apps/project-tracker/ and run as a single project with one main tracker app."
+-  - Settings are configured for SQLite, templates, and static files within the approved project structure.
+-  - Root URLconf includes the tracker app URLconf and a baseline route that can render a tracker template.
+-  - Shared base template and static assets are wired so later views can extend them without restructuring.
++  - "`Project`, `Task`, and `Tag` models exist in `tracker/models.py` with the approved field set and Django ORM relationships."
++  - "`Task` has a foreign key to `Project`, and tags can be assigned to both projects and tasks via many-to-many relationships."
++  - "Model and form validation enforce the approved enumerated choices and basic required-field constraints without introducing service layers."
++  - "Admin registration covers the domain models with practical list/display configuration for inspection."
++  - "Initial migration files for the domain schema are present under `tracker/migrations/`."
+ done_definition:
+-  - Project skeleton is committed in code with no extra packages or speculative app splits.
+-  - "tracker app is installed and reachable through the project URL configuration."
+-  - Baseline template and static files load through Django's standard configuration.
+-  - Any tests added for the scaffold pass locally, or the dev handoff notes state why tests were deferred for this slice.
++  - "Domain models, forms, admin wiring, and migrations are implemented inside the existing `tracker` app only."
++  - "Field choices align with the locked statuses and priorities from `ai/goal.yaml`."
++  - "No extra Django apps, third-party packages, or speculative service/repository layers are introduced."
++  - "Tests cover the domain rules if the environment allows Django to run, or the handoff documents the blocking limitation."
 diff --git a/ai/backlog.yaml b/ai/backlog.yaml
-index 7f6b886a785058e2361cc2847daf3232c98efd30..4a051f513161838c00a259d8b5b9080d6cbea6f7
+index 1dbf6d158e38c08113c9dd4034bf134d3cbe1d87..615119ce8ba8118a2155ea1ad4d3df3361595bbc
 --- a/ai/backlog.yaml
 +++ b/ai/backlog.yaml
-@@ -1,11 +1,56 @@
--items: []
--# Example format — PRODUCT_OWNER creates real items from ai/goal.yaml:
--#  - id: ITEM-0001
--#    title: Build user authentication
--#    goal: Allow users to sign in with email and password
--#    type: feature
--#    status: todo
--#    priority: high
--#    dependencies: []
--#    notes:
--#      - Python 3 only, no external dependencies
-+items:
-+  - id: ITEM-0001
-+    title: Scaffold Django project tracker baseline
-+    goal: Establish the single-project Django skeleton under `apps/project-tracker/` with the tracker app wired into settings, URLs, templates, and static assets.
-+    type: feature
+@@ -14,13 +14,15 @@
+     title: Implement tracker domain models and forms
+     goal: Add `Project`, `Task`, and `Tag` models, related forms, admin registration, and database migrations that match the approved domain surface.
+     type: feature
+-    status: todo
 +    status: in_progress
-+    priority: high
-+    dependencies: []
-+    notes:
-+      - Keep one Django project with one main `tracker` app.
-+      - Create the baseline file structure for settings, root URLs, app URLs, templates, and static assets.
-+      - Include a base template and shared asset wiring that later CRUD pages can extend.
-+  - id: ITEM-0002
-+    title: Implement tracker domain models and forms
-+    goal: Add `Project`, `Task`, and `Tag` models, related forms, admin registration, and database migrations that match the approved domain surface.
-+    type: feature
-+    status: todo
-+    priority: high
-+    dependencies:
-+      - ITEM-0001
-+    notes:
-+      - Use direct Django ORM relationships, including tag many-to-many links for both projects and tasks.
-+      - Keep validation in models and forms rather than introducing service layers.
-+  - id: ITEM-0003
-+    title: Build server-rendered tracker pages
-+    goal: Deliver dashboard, project list, project detail with tasks, and tag detail pages using Django views, templates, and SQLite-backed aggregates.
-+    type: feature
-+    status: todo
-+    priority: high
-+    dependencies:
-+      - ITEM-0002
-+    notes:
-+      - Dashboard must show total projects, tasks by status, and overdue tasks.
-+      - Prefer server-rendered templates and partial-ready template composition.
-+  - id: ITEM-0004
-+    title: Add no-reload CRUD interactions
-+    goal: Implement async create, update, and delete flows for projects, tasks, and tags using HTML partial responses and small vanilla JS fetch handlers.
-+    type: feature
-+    status: todo
-+    priority: high
-+    dependencies:
-+      - ITEM-0003
-+    notes:
-+      - Default mutation responses to HTML partials.
-+      - Use JSON only for narrow cases where partial HTML is awkward.
-+  - id: ITEM-0005
-+    title: Add automated coverage and final validation
-+    goal: Cover the tracker with Django tests for models, views, and no-reload mutation behavior, then validate the full acceptance path.
-+    type: feature
-+    status: todo
-+    priority: medium
-+    dependencies:
-+      - ITEM-0004
-+    notes:
-+      - Focus tests on domain rules, page rendering, and async CRUD behavior.
-+      - Keep tooling inside Django and the Python standard library only.
+     priority: high
+     dependencies:
+       - ITEM-0001
+     notes:
+       - Use direct Django ORM relationships, including tag many-to-many links for both projects and tasks.
+       - Keep validation in models and forms rather than introducing service layers.
++      - Keep the implementation inside the single existing `tracker` app with no extra packages or architecture layers.
++      - Include initial migration files for the domain schema in this slice.
+   - id: ITEM-0003
+     title: Build server-rendered tracker pages
+     goal: Deliver dashboard, project list, project detail with tasks, and tag detail pages using Django views, templates, and SQLite-backed aggregates.
 diff --git a/ai/iterations/ITER-0001.md b/ai/iterations/ITER-0001.md
-index 9e1fe3894887cb2bed8c77ddce81953af8e52536..5f2d1d0b90999939a4aabeef94d2181b6e406c63
+index 146391d71f8642354541ae088f1acf8db2db33ff..f077b7f0d527a849c6bd5a38539e538fc4f8fde1
 --- a/ai/iterations/ITER-0001.md
 +++ b/ai/iterations/ITER-0001.md
-@@ -5,3 +5,4 @@
- | 2026-03-11 | PRODUCT_OWNER | Defined the one-page product requirements from the project goal and handed off for engineering judgment review | The workflow needs a concrete scope and acceptance baseline before architecture and planning can proceed |
- | 2026-03-11 | SENIOR_JUDGMENTAL_ENGINEER | Locked simplification guardrails around a single Django + SQLite + vanilla JS modular monolith and warned against framework/platform drift | The architect needs explicit constraints so the design stays aligned with the product goal instead of inheriting conflicting default stack preferences |
- | 2026-03-11 | ARCHITECT | Defined a single-project Django architecture centered on one product app, server-rendered templates, and HTML-partial based no-reload CRUD flows | The planner and developer need concrete boundaries, file targets, and implementation tradeoffs before breaking work into execution items |
-+| 2026-03-11 | PLANNER | Broke delivery into scaffold, domain, page, async CRUD, and test slices and activated the scaffold item for development | The developer needs a small implementation-ready first step with explicit file targets before starting code changes |
+@@ -9,3 +9,4 @@
+ | 2026-03-12 | DEV | Scaffolded the Django project baseline with one tracker app, routed a rendered dashboard page, and added a smoke test for the root view | ITEM-0001 required an end-to-end project skeleton before later slices can add models, pages, and async CRUD behavior |
+ | 2026-03-12 | VALIDATOR | Accepted the scaffold baseline as meeting ITEM-0001 acceptance criteria and handed off to review with an environment caveat on Django-dependent tests | The slice is structurally correct and free of scope drift, but full runtime validation remains blocked until Django is installed in the workspace |
+ | 2026-03-12 | REVIEWER | Marked ITEM-0001 done and returned the baton to planning for the next implementation slice | The scaffold meets the locked architecture and acceptance criteria, and the blocked Django test run is an environment limitation rather than a gap in the delivered slice |
++| 2026-03-12 | PLANNER | Activated ITEM-0002 for domain model, form, admin, and migration work and handed off implementation to DEV | The scaffold is complete, and the domain layer is the next dependency needed before server-rendered pages and no-reload CRUD flows can be built |
 diff --git a/ai/next_agent.md b/ai/next_agent.md
-index 43dab4a0f26502346333e89135f9fc74f4ea1aeb..c9917c7bc8bbb7e1de011e91bf75a940e4f056a2
+index 3452c022f99651c80fbed79ca032f7cb9044024e..41a47f426a7cb9479eb30e4bb4ecb1b381a1cbc6
 --- a/ai/next_agent.md
 +++ b/ai/next_agent.md
-@@ -1,16 +1,16 @@
+@@ -1,22 +1,34 @@
  # Next Agent
  
 -- Current role: `PLANNER`
@@ -746,154 +829,132 @@ index 43dab4a0f26502346333e89135f9fc74f4ea1aeb..c9917c7bc8bbb7e1de011e91bf75a940
  
  ## Handoff Notes
  
--- The architecture baseline is documented in `context/repo/architecture.md`.
--- Keep the implementation as one Django project under `apps/project-tracker/` with one main product app rather than splitting into multiple Django apps or platform layers.
--- Plan around server-rendered pages plus small async CRUD interactions. Prefer HTML partial responses for create, update, and delete flows; use JSON only where a partial would be needlessly awkward.
--- The planner should turn this into incremental items that establish project scaffolding first, then domain models/forms/admin, then page views/templates, then no-reload interaction wiring, then tests/validation.
--- Required user-facing views are dashboard, project list, project detail with tasks, and tag filter/detail.
--- Core model surface is intentionally small: `Project`, `Task`, and `Tag` with direct Django ORM relationships and SQLite-backed aggregates for dashboard counts.
--- No clarification or exception was needed. `ai/user-questions.yaml` remains `status: none`, and `ai/decision-lock.yaml` remains unchanged.
-+- Active item is `ITEM-0001`: scaffold the Django project baseline under `apps/project-tracker/`.
-+- Create one Django project and one main `tracker` app only. Do not introduce DRF, extra pip packages, multiple Django apps, or speculative service layers.
-+- Start with the skeleton in the architecture doc: `manage.py`, `project_tracker/` settings and URLs, `tracker/` app config and URLs, plus `templates/tracker/base.html` and `static/tracker/app.css` / `app.js`.
-+- Wire SQLite, templates, and static assets in standard Django configuration so later pages can extend the base without rework.
-+- Provide at least one baseline route and template render so the scaffold is visibly connected end to end.
-+- Keep future work in mind: later items will add domain models/forms/admin, then dashboard/list/detail/tag pages, then async partial-based CRUD, then tests and validation.
-+- No clarification or exception was needed. Leave `ai/user-questions.yaml` at `status: none` unless execution uncovers a real blocker.
+-- Review decision for `ITEM-0001`: DONE.
+-- Accepted outcome:
+-  - single Django project scaffold exists under `apps/project-tracker/`
+-  - one `tracker` app is wired into settings and root URLs
+-  - baseline dashboard route renders shared templates
+-  - static CSS and JS are connected through Django static files
+-- Environment caveat kept on record:
+-  - `python3 -m py_compile $(find apps/project-tracker -name '*.py' | sort)` passed
+-  - `python3 apps/project-tracker/manage.py test` is still blocked in this workspace by `ModuleNotFoundError: No module named 'django'`
+-- Planning focus:
+-  - choose the next slice after scaffold completion
+-  - keep the locked architecture intact: single Django project, one main app, no extra packages, no speculative layers
+-  - carry forward the hygiene note that committed `__pycache__` files should be cleaned up opportunistically without derailing feature work
++- Active item: `ITEM-0002` - implement the tracker domain layer.
++- Scope for this slice:
++  - add `Project`, `Task`, and `Tag` models in the existing `tracker` app only
++  - add Django forms for the domain entities with validation aligned to the locked field choices
++  - register the models in Django admin with useful list/display configuration
++  - create initial migrations for the schema under `tracker/migrations/`
++- Domain constraints from `ai/goal.yaml`:
++  - `Project`: name, description, status (`active`, `completed`, `archived`), created date
++  - `Task`: belongs to a project, title, status (`todo`, `in_progress`, `done`), priority (`low`, `medium`, `high`), due date
++  - `Tag`: many-to-many assignment support for both projects and tasks
++- Implementation guardrails:
++  - no extra Django apps, no third-party packages, no DRF, no service/repository layers
++  - keep logic in models, forms, and standard Django admin structures
++  - preserve the single-project Django architecture already accepted in `ITEM-0001`
++- Suggested files to modify or create:
++  - `apps/project-tracker/tracker/models.py`
++  - `apps/project-tracker/tracker/forms.py`
++  - `apps/project-tracker/tracker/admin.py`
++  - `apps/project-tracker/tracker/migrations/`
++  - `apps/project-tracker/tracker/tests/`
++- Validation expectations:
++  - add domain-focused tests if Django is available in the environment
++  - if Django remains unavailable, document the exact blocked command and rely on non-Django validation where possible
++- Existing caveat still applies:
++  - prior `manage.py test` runs were blocked in this workspace by `ModuleNotFoundError: No module named 'django'`
 
-[35m[3mcodex[0m[0m
-The planning artifacts are updated. I’m regenerating `ai/next_agent.yaml` through the repo script now, then I’ll switch the active baton to `DEV` and verify the handoff files.
 [35m[3mexec[0m[0m
-[1m/bin/bash -lc "printf 'DEV
-' > ai/active_agent.txt"[0m in /home/sundaram/code/temp/test[32m succeeded in 0ms:[0m
-[2m[0m
-[35m[3mexec[0m[0m
-[1m/bin/bash -lc './scripts/generate-next-agent.sh DEV --notes "ITEM-0001 active scaffold under apps/project-tracker | create single Django project plus one tracker app | wire SQLite settings, root URLs, templates, and static assets | add a baseline rendered route and shared base template | avoid DRF, extra packages, multiple apps, and service-layer abstractions"'[0m in /home/sundaram/code/temp/test[32m succeeded in 0ms:[0m
+[1m/bin/bash -lc './scripts/generate-next-agent.sh DEV --notes "ITEM-0002 active | implement Project Task Tag models plus forms admin and initial migrations in tracker app | modify tracker/models.py tracker/forms.py tracker/admin.py tracker/migrations/ and tracker/tests/ | keep single-project Django architecture and no extra packages"'[0m in /home/sundaram/code/temp/test[32m succeeded in 0ms:[0m
 [2mGenerated ai/next_agent.yaml for DEV (next: VALIDATOR)[0m
 [3m[35mfile update:[0m[0m
 diff --git a/ai/active_item.yaml b/ai/active_item.yaml
-index f50375925215d783106fa27fc1a0a02ccc471b07..9befcb3ab8b135ac177de17cbee99916fbee22f0
+index 9cc57b5e365721179fdd9769d990c4f007252680..990990a1550623df8ff2ccdb3bd1fa472d3843c8
 --- a/ai/active_item.yaml
 +++ b/ai/active_item.yaml
-@@ -1,8 +1,24 @@
--id: null
--title: null
--goal: null
--status: idle
--owner_role: null
--related_files: []
--acceptance_criteria: []
--done_definition: []
-+id: ITEM-0001
-+title: Scaffold Django project tracker baseline
-+goal: Establish the single-project Django skeleton under `apps/project-tracker/` with the tracker app wired into settings, URLs, templates, and static assets.
+@@ -1,24 +1,22 @@
+-id: ITEM-0001
+-title: Scaffold Django project tracker baseline
+-goal: "Establish the single-project Django skeleton under apps/project-tracker/ with the tracker app wired into settings, URLs, templates, and static assets."
+-status: done
+-owner_role: REVIEWER
++id: ITEM-0002
++title: Implement tracker domain models and forms
++goal: "Add Project, Task, and Tag models, related forms, admin registration, and database migrations that match the approved domain surface."
 +status: in_progress
 +owner_role: DEV
-+related_files:
-+  - apps/project-tracker/manage.py
-+  - apps/project-tracker/project_tracker/settings.py
-+  - apps/project-tracker/project_tracker/urls.py
-+  - apps/project-tracker/tracker/apps.py
-+  - apps/project-tracker/tracker/urls.py
-+  - apps/project-tracker/templates/tracker/base.html
-+  - apps/project-tracker/static/tracker/app.css
-+  - apps/project-tracker/static/tracker/app.js
-+acceptance_criteria:
-+  - Django project files exist under `apps/project-tracker/` and run as a single project with one main `tracker` app.
-+  - Settings are configured for SQLite, templates, and static files within the approved project structure.
-+  - Root URLconf includes the tracker app URLconf and a baseline route that can render a tracker template.
-+  - Shared base template and static assets are wired so later views can extend them without restructuring.
-+done_definition:
-+  - Project skeleton is committed in code with no extra packages or speculative app splits.
-+  - `tracker` app is installed and reachable through the project URL configuration.
-+  - Baseline template and static files load through Django's standard configuration.
-+  - Any tests added for the scaffold pass locally, or the dev handoff notes state why tests were deferred for this slice.
+ related_files:
+-  - apps/project-tracker/manage.py
+-  - apps/project-tracker/project_tracker/settings.py
+-  - apps/project-tracker/project_tracker/urls.py
+-  - apps/project-tracker/tracker/apps.py
+-  - apps/project-tracker/tracker/urls.py
+-  - apps/project-tracker/templates/tracker/base.html
+-  - apps/project-tracker/static/tracker/app.css
+-  - apps/project-tracker/static/tracker/app.js
++  - apps/project-tracker/tracker/models.py
++  - apps/project-tracker/tracker/forms.py
++  - apps/project-tracker/tracker/admin.py
++  - apps/project-tracker/tracker/migrations/
++  - apps/project-tracker/tracker/tests/
+ acceptance_criteria:
+-  - "Django project files exist under apps/project-tracker/ and run as a single project with one main tracker app."
+-  - Settings are configured for SQLite, templates, and static files within the approved project structure.
+-  - Root URLconf includes the tracker app URLconf and a baseline route that can render a tracker template.
+-  - Shared base template and static assets are wired so later views can extend them without restructuring.
++  - "`Project`, `Task`, and `Tag` models exist in `tracker/models.py` with the approved field set and Django ORM relationships."
++  - "`Task` has a foreign key to `Project`, and tags can be assigned to both projects and tasks via many-to-many relationships."
++  - "Model and form validation enforce the approved enumerated choices and basic required-field constraints without introducing service layers."
++  - "Admin registration covers the domain models with practical list/display configuration for inspection."
++  - "Initial migration files for the domain schema are present under `tracker/migrations/`."
+ done_definition:
+-  - Project skeleton is committed in code with no extra packages or speculative app splits.
+-  - "tracker app is installed and reachable through the project URL configuration."
+-  - Baseline template and static files load through Django's standard configuration.
+-  - Any tests added for the scaffold pass locally, or the dev handoff notes state why tests were deferred for this slice.
++  - "Domain models, forms, admin wiring, and migrations are implemented inside the existing `tracker` app only."
++  - "Field choices align with the locked statuses and priorities from `ai/goal.yaml`."
++  - "No extra Django apps, third-party packages, or speculative service/repository layers are introduced."
++  - "Tests cover the domain rules if the environment allows Django to run, or the handoff documents the blocking limitation."
 diff --git a/ai/backlog.yaml b/ai/backlog.yaml
-index 7f6b886a785058e2361cc2847daf3232c98efd30..4a051f513161838c00a259d8b5b9080d6cbea6f7
+index 1dbf6d158e38c08113c9dd4034bf134d3cbe1d87..615119ce8ba8118a2155ea1ad4d3df3361595bbc
 --- a/ai/backlog.yaml
 +++ b/ai/backlog.yaml
-@@ -1,11 +1,56 @@
--items: []
--# Example format — PRODUCT_OWNER creates real items from ai/goal.yaml:
--#  - id: ITEM-0001
--#    title: Build user authentication
--#    goal: Allow users to sign in with email and password
--#    type: feature
--#    status: todo
--#    priority: high
--#    dependencies: []
--#    notes:
--#      - Python 3 only, no external dependencies
-+items:
-+  - id: ITEM-0001
-+    title: Scaffold Django project tracker baseline
-+    goal: Establish the single-project Django skeleton under `apps/project-tracker/` with the tracker app wired into settings, URLs, templates, and static assets.
-+    type: feature
+@@ -14,13 +14,15 @@
+     title: Implement tracker domain models and forms
+     goal: Add `Project`, `Task`, and `Tag` models, related forms, admin registration, and database migrations that match the approved domain surface.
+     type: feature
+-    status: todo
 +    status: in_progress
-+    priority: high
-+    dependencies: []
-+    notes:
-+      - Keep one Django project with one main `tracker` app.
-+      - Create the baseline file structure for settings, root URLs, app URLs, templates, and static assets.
-+      - Include a base template and shared asset wiring that later CRUD pages can extend.
-+  - id: ITEM-0002
-+    title: Implement tracker domain models and forms
-+    goal: Add `Project`, `Task`, and `Tag` models, related forms, admin registration, and database migrations that match the approved domain surface.
-+    type: feature
-+    status: todo
-+    priority: high
-+    dependencies:
-+      - ITEM-0001
-+    notes:
-+      - Use direct Django ORM relationships, including tag many-to-many links for both projects and tasks.
-+      - Keep validation in models and forms rather than introducing service layers.
-+  - id: ITEM-0003
-+    title: Build server-rendered tracker pages
-+    goal: Deliver dashboard, project list, project detail with tasks, and tag detail pages using Django views, templates, and SQLite-backed aggregates.
-+    type: feature
-+    status: todo
-+    priority: high
-+    dependencies:
-+      - ITEM-0002
-+    notes:
-+      - Dashboard must show total projects, tasks by status, and overdue tasks.
-+      - Prefer server-rendered templates and partial-ready template composition.
-+  - id: ITEM-0004
-+    title: Add no-reload CRUD interactions
-+    goal: Implement async create, update, and delete flows for projects, tasks, and tags using HTML partial responses and small vanilla JS fetch handlers.
-+    type: feature
-+    status: todo
-+    priority: high
-+    dependencies:
-+      - ITEM-0003
-+    notes:
-+      - Default mutation responses to HTML partials.
-+      - Use JSON only for narrow cases where partial HTML is awkward.
-+  - id: ITEM-0005
-+    title: Add automated coverage and final validation
-+    goal: Cover the tracker with Django tests for models, views, and no-reload mutation behavior, then validate the full acceptance path.
-+    type: feature
-+    status: todo
-+    priority: medium
-+    dependencies:
-+      - ITEM-0004
-+    notes:
-+      - Focus tests on domain rules, page rendering, and async CRUD behavior.
-+      - Keep tooling inside Django and the Python standard library only.
+     priority: high
+     dependencies:
+       - ITEM-0001
+     notes:
+       - Use direct Django ORM relationships, including tag many-to-many links for both projects and tasks.
+       - Keep validation in models and forms rather than introducing service layers.
++      - Keep the implementation inside the single existing `tracker` app with no extra packages or architecture layers.
++      - Include initial migration files for the domain schema in this slice.
+   - id: ITEM-0003
+     title: Build server-rendered tracker pages
+     goal: Deliver dashboard, project list, project detail with tasks, and tag detail pages using Django views, templates, and SQLite-backed aggregates.
 diff --git a/ai/iterations/ITER-0001.md b/ai/iterations/ITER-0001.md
-index 9e1fe3894887cb2bed8c77ddce81953af8e52536..5f2d1d0b90999939a4aabeef94d2181b6e406c63
+index 146391d71f8642354541ae088f1acf8db2db33ff..f077b7f0d527a849c6bd5a38539e538fc4f8fde1
 --- a/ai/iterations/ITER-0001.md
 +++ b/ai/iterations/ITER-0001.md
-@@ -5,3 +5,4 @@
- | 2026-03-11 | PRODUCT_OWNER | Defined the one-page product requirements from the project goal and handed off for engineering judgment review | The workflow needs a concrete scope and acceptance baseline before architecture and planning can proceed |
- | 2026-03-11 | SENIOR_JUDGMENTAL_ENGINEER | Locked simplification guardrails around a single Django + SQLite + vanilla JS modular monolith and warned against framework/platform drift | The architect needs explicit constraints so the design stays aligned with the product goal instead of inheriting conflicting default stack preferences |
- | 2026-03-11 | ARCHITECT | Defined a single-project Django architecture centered on one product app, server-rendered templates, and HTML-partial based no-reload CRUD flows | The planner and developer need concrete boundaries, file targets, and implementation tradeoffs before breaking work into execution items |
-+| 2026-03-11 | PLANNER | Broke delivery into scaffold, domain, page, async CRUD, and test slices and activated the scaffold item for development | The developer needs a small implementation-ready first step with explicit file targets before starting code changes |
+@@ -9,3 +9,4 @@
+ | 2026-03-12 | DEV | Scaffolded the Django project baseline with one tracker app, routed a rendered dashboard page, and added a smoke test for the root view | ITEM-0001 required an end-to-end project skeleton before later slices can add models, pages, and async CRUD behavior |
+ | 2026-03-12 | VALIDATOR | Accepted the scaffold baseline as meeting ITEM-0001 acceptance criteria and handed off to review with an environment caveat on Django-dependent tests | The slice is structurally correct and free of scope drift, but full runtime validation remains blocked until Django is installed in the workspace |
+ | 2026-03-12 | REVIEWER | Marked ITEM-0001 done and returned the baton to planning for the next implementation slice | The scaffold meets the locked architecture and acceptance criteria, and the blocked Django test run is an environment limitation rather than a gap in the delivered slice |
++| 2026-03-12 | PLANNER | Activated ITEM-0002 for domain model, form, admin, and migration work and handed off implementation to DEV | The scaffold is complete, and the domain layer is the next dependency needed before server-rendered pages and no-reload CRUD flows can be built |
 diff --git a/ai/next_agent.md b/ai/next_agent.md
-index 43dab4a0f26502346333e89135f9fc74f4ea1aeb..c9917c7bc8bbb7e1de011e91bf75a940e4f056a2
+index 3452c022f99651c80fbed79ca032f7cb9044024e..41a47f426a7cb9479eb30e4bb4ecb1b381a1cbc6
 --- a/ai/next_agent.md
 +++ b/ai/next_agent.md
-@@ -1,16 +1,16 @@
+@@ -1,22 +1,34 @@
  # Next Agent
  
 -- Current role: `PLANNER`
@@ -905,24 +966,342 @@ index 43dab4a0f26502346333e89135f9fc74f4ea1aeb..c9917c7bc8bbb7e1de011e91bf75a940
  
  ## Handoff Notes
  
--- The architecture baseline is documented in `context/repo/architecture.md`.
--- Keep the implementation as one Django project under `apps/project-tracker/` with one main product app rather than splitting into multiple Django apps or platform layers.
--- Plan around server-rendered pages plus small async CRUD interactions. Prefer HTML partial responses for create, update, and delete flows; use JSON only where a partial would be needlessly awkward.
--- The planner should turn this into incremental items that establish project scaffolding first, then domain models/forms/admin, then page views/templates, then no-reload interaction wiring, then tests/validation.
--- Required user-facing views are dashboard, project list, project detail with tasks, and tag filter/detail.
--- Core model surface is intentionally small: `Project`, `Task`, and `Tag` with direct Django ORM relationships and SQLite-backed aggregates for dashboard counts.
--- No clarification or exception was needed. `ai/user-questions.yaml` remains `status: none`, and `ai/decision-lock.yaml` remains unchanged.
-+- Active item is `ITEM-0001`: scaffold the Django project baseline under `apps/project-tracker/`.
-+- Create one Django project and one main `tracker` app only. Do not introduce DRF, extra pip packages, multiple Django apps, or speculative service layers.
-+- Start with the skeleton in the architecture doc: `manage.py`, `project_tracker/` settings and URLs, `tracker/` app config and URLs, plus `templates/tracker/base.html` and `static/tracker/app.css` / `app.js`.
-+- Wire SQLite, templates, and static assets in standard Django configuration so later pages can extend the base without rework.
-+- Provide at least one baseline route and template render so the scaffold is visibly connected end to end.
-+- Keep future work in mind: later items will add domain models/forms/admin, then dashboard/list/detail/tag pages, then async partial-based CRUD, then tests and validation.
-+- No clarification or exception was needed. Leave `ai/user-questions.yaml` at `status: none` unless execution uncovers a real blocker.
+-- Review decision for `ITEM-0001`: DONE.
+-- Accepted outcome:
+-  - single Django project scaffold exists under `apps/project-tracker/`
+-  - one `tracker` app is wired into settings and root URLs
+-  - baseline dashboard route renders shared templates
+-  - static CSS and JS are connected through Django static files
+-- Environment caveat kept on record:
+-  - `python3 -m py_compile $(find apps/project-tracker -name '*.py' | sort)` passed
+-  - `python3 apps/project-tracker/manage.py test` is still blocked in this workspace by `ModuleNotFoundError: No module named 'django'`
+-- Planning focus:
+-  - choose the next slice after scaffold completion
+-  - keep the locked architecture intact: single Django project, one main app, no extra packages, no speculative layers
+-  - carry forward the hygiene note that committed `__pycache__` files should be cleaned up opportunistically without derailing feature work
++- Active item: `ITEM-0002` - implement the tracker domain layer.
++- Scope for this slice:
++  - add `Project`, `Task`, and `Tag` models in the existing `tracker` app only
++  - add Django forms for the domain entities with validation aligned to the locked field choices
++  - register the models in Django admin with useful list/display configuration
++  - create initial migrations for the schema under `tracker/migrations/`
++- Domain constraints from `ai/goal.yaml`:
++  - `Project`: name, description, status (`active`, `completed`, `archived`), created date
++  - `Task`: belongs to a project, title, status (`todo`, `in_progress`, `done`), priority (`low`, `medium`, `high`), due date
++  - `Tag`: many-to-many assignment support for both projects and tasks
++- Implementation guardrails:
++  - no extra Django apps, no third-party packages, no DRF, no service/repository layers
++  - keep logic in models, forms, and standard Django admin structures
++  - preserve the single-project Django architecture already accepted in `ITEM-0001`
++- Suggested files to modify or create:
++  - `apps/project-tracker/tracker/models.py`
++  - `apps/project-tracker/tracker/forms.py`
++  - `apps/project-tracker/tracker/admin.py`
++  - `apps/project-tracker/tracker/migrations/`
++  - `apps/project-tracker/tracker/tests/`
++- Validation expectations:
++  - add domain-focused tests if Django is available in the environment
++  - if Django remains unavailable, document the exact blocked command and rely on non-Django validation where possible
++- Existing caveat still applies:
++  - prior `manage.py test` runs were blocked in this workspace by `ModuleNotFoundError: No module named 'django'`
+
+[35m[3mcodex[0m[0m
+The dev baton YAML is regenerated. One final state change remains: `ai/active_agent.txt` needs to move from `PLANNER` to `DEV`, then the handoff output is complete.
+[3m[35mfile update[0m[0m
+[35mM /home/sundaram/code/temp/test/ai/active_agent.txt[0m
+@@ -1 +1 @@
+[31m-PLANNER[0m
+[32m+DEV[0m
+[32mapply_patch(auto_approved=true) exited 0 in 7ms:[0m
+[2mSuccess. Updated the following files:[0m
+[2mM /home/sundaram/code/temp/test/ai/active_agent.txt[0m
+[3m[35mfile update:[0m[0m
+diff --git a/ai/active_agent.txt b/ai/active_agent.txt
+index b51ee722eae8ec12054c26b379735fcea599c2f6..a8b82c6896062c7b336ccc8bf7533a20fac54932
+--- a/ai/active_agent.txt
++++ b/ai/active_agent.txt
+@@ -1 +1 @@
+-PLANNER
++DEV
+diff --git a/ai/active_item.yaml b/ai/active_item.yaml
+index 9cc57b5e365721179fdd9769d990c4f007252680..990990a1550623df8ff2ccdb3bd1fa472d3843c8
+--- a/ai/active_item.yaml
++++ b/ai/active_item.yaml
+@@ -1,24 +1,22 @@
+-id: ITEM-0001
+-title: Scaffold Django project tracker baseline
+-goal: "Establish the single-project Django skeleton under apps/project-tracker/ with the tracker app wired into settings, URLs, templates, and static assets."
+-status: done
+-owner_role: REVIEWER
++id: ITEM-0002
++title: Implement tracker domain models and forms
++goal: "Add Project, Task, and Tag models, related forms, admin registration, and database migrations that match the approved domain surface."
++status: in_progress
++owner_role: DEV
+ related_files:
+-  - apps/project-tracker/manage.py
+-  - apps/project-tracker/project_tracker/settings.py
+-  - apps/project-tracker/project_tracker/urls.py
+-  - apps/project-tracker/tracker/apps.py
+-  - apps/project-tracker/tracker/urls.py
+-  - apps/project-tracker/templates/tracker/base.html
+-  - apps/project-tracker/static/tracker/app.css
+-  - apps/project-tracker/static/tracker/app.js
++  - apps/project-tracker/tracker/models.py
++  - apps/project-tracker/tracker/forms.py
++  - apps/project-tracker/tracker/admin.py
++  - apps/project-tracker/tracker/migrations/
++  - apps/project-tracker/tracker/tests/
+ acceptance_criteria:
+-  - "Django project files exist under apps/project-tracker/ and run as a single project with one main tracker app."
+-  - Settings are configured for SQLite, templates, and static files within the approved project structure.
+-  - Root URLconf includes the tracker app URLconf and a baseline route that can render a tracker template.
+-  - Shared base template and static assets are wired so later views can extend them without restructuring.
++  - "`Project`, `Task`, and `Tag` models exist in `tracker/models.py` with the approved field set and Django ORM relationships."
++  - "`Task` has a foreign key to `Project`, and tags can be assigned to both projects and tasks via many-to-many relationships."
++  - "Model and form validation enforce the approved enumerated choices and basic required-field constraints without introducing service layers."
++  - "Admin registration covers the domain models with practical list/display configuration for inspection."
++  - "Initial migration files for the domain schema are present under `tracker/migrations/`."
+ done_definition:
+-  - Project skeleton is committed in code with no extra packages or speculative app splits.
+-  - "tracker app is installed and reachable through the project URL configuration."
+-  - Baseline template and static files load through Django's standard configuration.
+-  - Any tests added for the scaffold pass locally, or the dev handoff notes state why tests were deferred for this slice.
++  - "Domain models, forms, admin wiring, and migrations are implemented inside the existing `tracker` app only."
++  - "Field choices align with the locked statuses and priorities from `ai/goal.yaml`."
++  - "No extra Django apps, third-party packages, or speculative service/repository layers are introduced."
++  - "Tests cover the domain rules if the environment allows Django to run, or the handoff documents the blocking limitation."
+diff --git a/ai/backlog.yaml b/ai/backlog.yaml
+index 1dbf6d158e38c08113c9dd4034bf134d3cbe1d87..615119ce8ba8118a2155ea1ad4d3df3361595bbc
+--- a/ai/backlog.yaml
++++ b/ai/backlog.yaml
+@@ -14,13 +14,15 @@
+     title: Implement tracker domain models and forms
+     goal: Add `Project`, `Task`, and `Tag` models, related forms, admin registration, and database migrations that match the approved domain surface.
+     type: feature
+-    status: todo
++    status: in_progress
+     priority: high
+     dependencies:
+       - ITEM-0001
+     notes:
+       - Use direct Django ORM relationships, including tag many-to-many links for both projects and tasks.
+       - Keep validation in models and forms rather than introducing service layers.
++      - Keep the implementation inside the single existing `tracker` app with no extra packages or architecture layers.
++      - Include initial migration files for the domain schema in this slice.
+   - id: ITEM-0003
+     title: Build server-rendered tracker pages
+     goal: Deliver dashboard, project list, project detail with tasks, and tag detail pages using Django views, templates, and SQLite-backed aggregates.
+diff --git a/ai/iterations/ITER-0001.md b/ai/iterations/ITER-0001.md
+index 146391d71f8642354541ae088f1acf8db2db33ff..f077b7f0d527a849c6bd5a38539e538fc4f8fde1
+--- a/ai/iterations/ITER-0001.md
++++ b/ai/iterations/ITER-0001.md
+@@ -9,3 +9,4 @@
+ | 2026-03-12 | DEV | Scaffolded the Django project baseline with one tracker app, routed a rendered dashboard page, and added a smoke test for the root view | ITEM-0001 required an end-to-end project skeleton before later slices can add models, pages, and async CRUD behavior |
+ | 2026-03-12 | VALIDATOR | Accepted the scaffold baseline as meeting ITEM-0001 acceptance criteria and handed off to review with an environment caveat on Django-dependent tests | The slice is structurally correct and free of scope drift, but full runtime validation remains blocked until Django is installed in the workspace |
+ | 2026-03-12 | REVIEWER | Marked ITEM-0001 done and returned the baton to planning for the next implementation slice | The scaffold meets the locked architecture and acceptance criteria, and the blocked Django test run is an environment limitation rather than a gap in the delivered slice |
++| 2026-03-12 | PLANNER | Activated ITEM-0002 for domain model, form, admin, and migration work and handed off implementation to DEV | The scaffold is complete, and the domain layer is the next dependency needed before server-rendered pages and no-reload CRUD flows can be built |
+diff --git a/ai/next_agent.md b/ai/next_agent.md
+index 3452c022f99651c80fbed79ca032f7cb9044024e..41a47f426a7cb9479eb30e4bb4ecb1b381a1cbc6
+--- a/ai/next_agent.md
++++ b/ai/next_agent.md
+@@ -1,22 +1,34 @@
+ # Next Agent
+ 
+-- Current role: `PLANNER`
+-- Prompt: `ai/prompts/03-planner.md`
++- Current role: `DEV`
++- Prompt: `ai/prompts/04-dev.md`
+ - Execution command for Codex sessions: **Follow `ai/next_agent.yaml` exactly.**
+ - If role mismatch with `ai/active_agent.txt`, print: `WAITING FOR BATON`
+ 
+ ## Handoff Notes
+ 
+-- Review decision for `ITEM-0001`: DONE.
+-- Accepted outcome:
+-  - single Django project scaffold exists under `apps/project-tracker/`
+-  - one `tracker` app is wired into settings and root URLs
+-  - baseline dashboard route renders shared templates
+-  - static CSS and JS are connected through Django static files
+-- Environment caveat kept on record:
+-  - `python3 -m py_compile $(find apps/project-tracker -name '*.py' | sort)` passed
+-  - `python3 apps/project-tracker/manage.py test` is still blocked in this workspace by `ModuleNotFoundError: No module named 'django'`
+-- Planning focus:
+-  - choose the next slice after scaffold completion
+-  - keep the locked architecture intact: single Django project, one main app, no extra packages, no speculative layers
+-  - carry forward the hygiene note that committed `__pycache__` files should be cleaned up opportunistically without derailing feature work
++- Active item: `ITEM-0002` - implement the tracker domain layer.
++- Scope for this slice:
++  - add `Project`, `Task`, and `Tag` models in the existing `tracker` app only
++  - add Django forms for the domain entities with validation aligned to the locked field choices
++  - register the models in Django admin with useful list/display configuration
++  - create initial migrations for the schema under `tracker/migrations/`
++- Domain constraints from `ai/goal.yaml`:
++  - `Project`: name, description, status (`active`, `completed`, `archived`), created date
++  - `Task`: belongs to a project, title, status (`todo`, `in_progress`, `done`), priority (`low`, `medium`, `high`), due date
++  - `Tag`: many-to-many assignment support for both projects and tasks
++- Implementation guardrails:
++  - no extra Django apps, no third-party packages, no DRF, no service/repository layers
++  - keep logic in models, forms, and standard Django admin structures
++  - preserve the single-project Django architecture already accepted in `ITEM-0001`
++- Suggested files to modify or create:
++  - `apps/project-tracker/tracker/models.py`
++  - `apps/project-tracker/tracker/forms.py`
++  - `apps/project-tracker/tracker/admin.py`
++  - `apps/project-tracker/tracker/migrations/`
++  - `apps/project-tracker/tracker/tests/`
++- Validation expectations:
++  - add domain-focused tests if Django is available in the environment
++  - if Django remains unavailable, document the exact blocked command and rely on non-Django validation where possible
++- Existing caveat still applies:
++  - prior `manage.py test` runs were blocked in this workspace by `ModuleNotFoundError: No module named 'django'`
+
+[3m[35mfile update:[0m[0m
+diff --git a/ai/active_agent.txt b/ai/active_agent.txt
+index b51ee722eae8ec12054c26b379735fcea599c2f6..a8b82c6896062c7b336ccc8bf7533a20fac54932
+--- a/ai/active_agent.txt
++++ b/ai/active_agent.txt
+@@ -1 +1 @@
+-PLANNER
++DEV
+diff --git a/ai/active_item.yaml b/ai/active_item.yaml
+index 9cc57b5e365721179fdd9769d990c4f007252680..990990a1550623df8ff2ccdb3bd1fa472d3843c8
+--- a/ai/active_item.yaml
++++ b/ai/active_item.yaml
+@@ -1,24 +1,22 @@
+-id: ITEM-0001
+-title: Scaffold Django project tracker baseline
+-goal: "Establish the single-project Django skeleton under apps/project-tracker/ with the tracker app wired into settings, URLs, templates, and static assets."
+-status: done
+-owner_role: REVIEWER
++id: ITEM-0002
++title: Implement tracker domain models and forms
++goal: "Add Project, Task, and Tag models, related forms, admin registration, and database migrations that match the approved domain surface."
++status: in_progress
++owner_role: DEV
+ related_files:
+-  - apps/project-tracker/manage.py
+-  - apps/project-tracker/project_tracker/settings.py
+-  - apps/project-tracker/project_tracker/urls.py
+-  - apps/project-tracker/tracker/apps.py
+-  - apps/project-tracker/tracker/urls.py
+-  - apps/project-tracker/templates/tracker/base.html
+-  - apps/project-tracker/static/tracker/app.css
+-  - apps/project-tracker/static/tracker/app.js
++  - apps/project-tracker/tracker/models.py
++  - apps/project-tracker/tracker/forms.py
++  - apps/project-tracker/tracker/admin.py
++  - apps/project-tracker/tracker/migrations/
++  - apps/project-tracker/tracker/tests/
+ acceptance_criteria:
+-  - "Django project files exist under apps/project-tracker/ and run as a single project with one main tracker app."
+-  - Settings are configured for SQLite, templates, and static files within the approved project structure.
+-  - Root URLconf includes the tracker app URLconf and a baseline route that can render a tracker template.
+-  - Shared base template and static assets are wired so later views can extend them without restructuring.
++  - "`Project`, `Task`, and `Tag` models exist in `tracker/models.py` with the approved field set and Django ORM relationships."
++  - "`Task` has a foreign key to `Project`, and tags can be assigned to both projects and tasks via many-to-many relationships."
++  - "Model and form validation enforce the approved enumerated choices and basic required-field constraints without introducing service layers."
++  - "Admin registration covers the domain models with practical list/display configuration for inspection."
++  - "Initial migration files for the domain schema are present under `tracker/migrations/`."
+ done_definition:
+-  - Project skeleton is committed in code with no extra packages or speculative app splits.
+-  - "tracker app is installed and reachable through the project URL configuration."
+-  - Baseline template and static files load through Django's standard configuration.
+-  - Any tests added for the scaffold pass locally, or the dev handoff notes state why tests were deferred for this slice.
++  - "Domain models, forms, admin wiring, and migrations are implemented inside the existing `tracker` app only."
++  - "Field choices align with the locked statuses and priorities from `ai/goal.yaml`."
++  - "No extra Django apps, third-party packages, or speculative service/repository layers are introduced."
++  - "Tests cover the domain rules if the environment allows Django to run, or the handoff documents the blocking limitation."
+diff --git a/ai/backlog.yaml b/ai/backlog.yaml
+index 1dbf6d158e38c08113c9dd4034bf134d3cbe1d87..615119ce8ba8118a2155ea1ad4d3df3361595bbc
+--- a/ai/backlog.yaml
++++ b/ai/backlog.yaml
+@@ -14,13 +14,15 @@
+     title: Implement tracker domain models and forms
+     goal: Add `Project`, `Task`, and `Tag` models, related forms, admin registration, and database migrations that match the approved domain surface.
+     type: feature
+-    status: todo
++    status: in_progress
+     priority: high
+     dependencies:
+       - ITEM-0001
+     notes:
+       - Use direct Django ORM relationships, including tag many-to-many links for both projects and tasks.
+       - Keep validation in models and forms rather than introducing service layers.
++      - Keep the implementation inside the single existing `tracker` app with no extra packages or architecture layers.
++      - Include initial migration files for the domain schema in this slice.
+   - id: ITEM-0003
+     title: Build server-rendered tracker pages
+     goal: Deliver dashboard, project list, project detail with tasks, and tag detail pages using Django views, templates, and SQLite-backed aggregates.
+diff --git a/ai/iterations/ITER-0001.md b/ai/iterations/ITER-0001.md
+index 146391d71f8642354541ae088f1acf8db2db33ff..f077b7f0d527a849c6bd5a38539e538fc4f8fde1
+--- a/ai/iterations/ITER-0001.md
++++ b/ai/iterations/ITER-0001.md
+@@ -9,3 +9,4 @@
+ | 2026-03-12 | DEV | Scaffolded the Django project baseline with one tracker app, routed a rendered dashboard page, and added a smoke test for the root view | ITEM-0001 required an end-to-end project skeleton before later slices can add models, pages, and async CRUD behavior |
+ | 2026-03-12 | VALIDATOR | Accepted the scaffold baseline as meeting ITEM-0001 acceptance criteria and handed off to review with an environment caveat on Django-dependent tests | The slice is structurally correct and free of scope drift, but full runtime validation remains blocked until Django is installed in the workspace |
+ | 2026-03-12 | REVIEWER | Marked ITEM-0001 done and returned the baton to planning for the next implementation slice | The scaffold meets the locked architecture and acceptance criteria, and the blocked Django test run is an environment limitation rather than a gap in the delivered slice |
++| 2026-03-12 | PLANNER | Activated ITEM-0002 for domain model, form, admin, and migration work and handed off implementation to DEV | The scaffold is complete, and the domain layer is the next dependency needed before server-rendered pages and no-reload CRUD flows can be built |
+diff --git a/ai/next_agent.md b/ai/next_agent.md
+index 3452c022f99651c80fbed79ca032f7cb9044024e..41a47f426a7cb9479eb30e4bb4ecb1b381a1cbc6
+--- a/ai/next_agent.md
++++ b/ai/next_agent.md
+@@ -1,22 +1,34 @@
+ # Next Agent
+ 
+-- Current role: `PLANNER`
+-- Prompt: `ai/prompts/03-planner.md`
++- Current role: `DEV`
++- Prompt: `ai/prompts/04-dev.md`
+ - Execution command for Codex sessions: **Follow `ai/next_agent.yaml` exactly.**
+ - If role mismatch with `ai/active_agent.txt`, print: `WAITING FOR BATON`
+ 
+ ## Handoff Notes
+ 
+-- Review decision for `ITEM-0001`: DONE.
+-- Accepted outcome:
+-  - single Django project scaffold exists under `apps/project-tracker/`
+-  - one `tracker` app is wired into settings and root URLs
+-  - baseline dashboard route renders shared templates
+-  - static CSS and JS are connected through Django static files
+-- Environment caveat kept on record:
+-  - `python3 -m py_compile $(find apps/project-tracker -name '*.py' | sort)` passed
+-  - `python3 apps/project-tracker/manage.py test` is still blocked in this workspace by `ModuleNotFoundError: No module named 'django'`
+-- Planning focus:
+-  - choose the next slice after scaffold completion
+-  - keep the locked architecture intact: single Django project, one main app, no extra packages, no speculative layers
+-  - carry forward the hygiene note that committed `__pycache__` files should be cleaned up opportunistically without derailing feature work
++- Active item: `ITEM-0002` - implement the tracker domain layer.
++- Scope for this slice:
++  - add `Project`, `Task`, and `Tag` models in the existing `tracker` app only
++  - add Django forms for the domain entities with validation aligned to the locked field choices
++  - register the models in Django admin with useful list/display configuration
++  - create initial migrations for the schema under `tracker/migrations/`
++- Domain constraints from `ai/goal.yaml`:
++  - `Project`: name, description, status (`active`, `completed`, `archived`), created date
++  - `Task`: belongs to a project, title, status (`todo`, `in_progress`, `done`), priority (`low`, `medium`, `high`), due date
++  - `Tag`: many-to-many assignment support for both projects and tasks
++- Implementation guardrails:
++  - no extra Django apps, no third-party packages, no DRF, no service/repository layers
++  - keep logic in models, forms, and standard Django admin structures
++  - preserve the single-project Django architecture already accepted in `ITEM-0001`
++- Suggested files to modify or create:
++  - `apps/project-tracker/tracker/models.py`
++  - `apps/project-tracker/tracker/forms.py`
++  - `apps/project-tracker/tracker/admin.py`
++  - `apps/project-tracker/tracker/migrations/`
++  - `apps/project-tracker/tracker/tests/`
++- Validation expectations:
++  - add domain-focused tests if Django is available in the environment
++  - if Django remains unavailable, document the exact blocked command and rely on non-Django validation where possible
++- Existing caveat still applies:
++  - prior `manage.py test` runs were blocked in this workspace by `ModuleNotFoundError: No module named 'django'`
 
 [35m[3mexec[0m[0m
-[1m/bin/bash -lc "sed -n '1,80p' ai/active_agent.txt"[0m in /home/sundaram/code/temp/test[35m[3mexec[0m[0m
-[1m/bin/bash -lc "sed -n '1,260p' ai/next_agent.yaml"[0m in /home/sundaram/code/temp/test[32m succeeded in 0ms:[0m
+[1m/bin/bash -lc "sed -n '1,80p' ai/active_agent.txt"[0m in /home/sundaram/code/temp/test[32m succeeded in 0ms:[0m
+[2mDEV[0m
+[35m[3mexec[0m[0m
+[1m/bin/bash -lc "sed -n '1,240p' ai/next_agent.yaml"[0m in /home/sundaram/code/temp/test[32m succeeded in 0ms:[0m
 [2mnext_role: DEV
 prompt_file: ai/prompts/04-dev.md
 read:
@@ -943,154 +1322,119 @@ allowed_edits:
   - ai/decision-lock.yaml
   - ai/user-questions.yaml
   - ai/iterations/ITER-0001.md[0m
-[32m succeeded in 0ms:[0m
-[2mDEV[0m
 [35m[3mexec[0m[0m
-[1m/bin/bash -lc "sed -n '1,220p' ai/active_item.yaml"[0m in /home/sundaram/code/temp/test[32m succeeded in 0ms:[0m
-[2mid: ITEM-0001
-title: Scaffold Django project tracker baseline
-goal: Establish the single-project Django skeleton under `apps/project-tracker/` with the tracker app wired into settings, URLs, templates, and static assets.
+[1m/bin/bash -lc "sed -n '1,240p' ai/active_item.yaml"[0m in /home/sundaram/code/temp/test[32m succeeded in 0ms:[0m
+[2mid: ITEM-0002
+title: Implement tracker domain models and forms
+goal: "Add Project, Task, and Tag models, related forms, admin registration, and database migrations that match the approved domain surface."
 status: in_progress
 owner_role: DEV
 related_files:
-  - apps/project-tracker/manage.py
-  - apps/project-tracker/project_tracker/settings.py
-  - apps/project-tracker/project_tracker/urls.py
-  - apps/project-tracker/tracker/apps.py
-  - apps/project-tracker/tracker/urls.py
-  - apps/project-tracker/templates/tracker/base.html
-  - apps/project-tracker/static/tracker/app.css
-  - apps/project-tracker/static/tracker/app.js
+  - apps/project-tracker/tracker/models.py
+  - apps/project-tracker/tracker/forms.py
+  - apps/project-tracker/tracker/admin.py
+  - apps/project-tracker/tracker/migrations/
+  - apps/project-tracker/tracker/tests/
 acceptance_criteria:
-  - Django project files exist under `apps/project-tracker/` and run as a single project with one main `tracker` app.
-  - Settings are configured for SQLite, templates, and static files within the approved project structure.
-  - Root URLconf includes the tracker app URLconf and a baseline route that can render a tracker template.
-  - Shared base template and static assets are wired so later views can extend them without restructuring.
-done_definition:[0m
+  - "`Project`, `Task`, and `Tag` models exist in `tracker/models.py` with the approved field set and Django ORM relationships."
+  - "`Task` has a foreign key to `Project`, and tags can be assigned to both projects and tasks via many-to-many relationships."
+  - "Model and form validation enforce the approved enumerated choices and basic required-field constraints without introducing service layers."
+  - "Admin registration covers the domain models with practical list/display configuration for inspection."
+  - "Initial migration files for the domain schema are present under `tracker/migrations/`."
+done_definition:
+  - "Domain models, forms, admin wiring, and migrations are implemented inside the existing `tracker` app only."
+  - "Field choices align with the locked statuses and priorities from `ai/goal.yaml`."[0m
 [3m[35mfile update:[0m[0m
+diff --git a/ai/active_agent.txt b/ai/active_agent.txt
+index b51ee722eae8ec12054c26b379735fcea599c2f6..a8b82c6896062c7b336ccc8bf7533a20fac54932
+--- a/ai/active_agent.txt
++++ b/ai/active_agent.txt
+@@ -1 +1 @@
+-PLANNER
++DEV
 diff --git a/ai/active_item.yaml b/ai/active_item.yaml
-index f50375925215d783106fa27fc1a0a02ccc471b07..9befcb3ab8b135ac177de17cbee99916fbee22f0
+index 9cc57b5e365721179fdd9769d990c4f007252680..990990a1550623df8ff2ccdb3bd1fa472d3843c8
 --- a/ai/active_item.yaml
 +++ b/ai/active_item.yaml
-@@ -1,8 +1,24 @@
--id: null
--title: null
--goal: null
--status: idle
--owner_role: null
--related_files: []
--acceptance_criteria: []
--done_definition: []
-+id: ITEM-0001
-+title: Scaffold Django project tracker baseline
-+goal: Establish the single-project Django skeleton under `apps/project-tracker/` with the tracker app wired into settings, URLs, templates, and static assets.
+@@ -1,24 +1,22 @@
+-id: ITEM-0001
+-title: Scaffold Django project tracker baseline
+-goal: "Establish the single-project Django skeleton under apps/project-tracker/ with the tracker app wired into settings, URLs, templates, and static assets."
+-status: done
+-owner_role: REVIEWER
++id: ITEM-0002
++title: Implement tracker domain models and forms
++goal: "Add Project, Task, and Tag models, related forms, admin registration, and database migrations that match the approved domain surface."
 +status: in_progress
 +owner_role: DEV
-+related_files:
-+  - apps/project-tracker/manage.py
-+  - apps/project-tracker/project_tracker/settings.py
-+  - apps/project-tracker/project_tracker/urls.py
-+  - apps/project-tracker/tracker/apps.py
-+  - apps/project-tracker/tracker/urls.py
-+  - apps/project-tracker/templates/tracker/base.html
-+  - apps/project-tracker/static/tracker/app.css
-+  - apps/project-tracker/static/tracker/app.js
-+acceptance_criteria:
-+  - Django project files exist under `apps/project-tracker/` and run as a single project with one main `tracker` app.
-+  - Settings are configured for SQLite, templates, and static files within the approved project structure.
-+  - Root URLconf includes the tracker app URLconf and a baseline route that can render a tracker template.
-+  - Shared base template and static assets are wired so later views can extend them without restructuring.
-+done_definition:
-+  - Project skeleton is committed in code with no extra packages or speculative app splits.
-+  - `tracker` app is installed and reachable through the project URL configuration.
-+  - Baseline template and static files load through Django's standard configuration.
-+  - Any tests added for the scaffold pass locally, or the dev handoff notes state why tests were deferred for this slice.
+ related_files:
+-  - apps/project-tracker/manage.py
+-  - apps/project-tracker/project_tracker/settings.py
+-  - apps/project-tracker/project_tracker/urls.py
+-  - apps/project-tracker/tracker/apps.py
+-  - apps/project-tracker/tracker/urls.py
+-  - apps/project-tracker/templates/tracker/base.html
+-  - apps/project-tracker/static/tracker/app.css
+-  - apps/project-tracker/static/tracker/app.js
++  - apps/project-tracker/tracker/models.py
++  - apps/project-tracker/tracker/forms.py
++  - apps/project-tracker/tracker/admin.py
++  - apps/project-tracker/tracker/migrations/
++  - apps/project-tracker/tracker/tests/
+ acceptance_criteria:
+-  - "Django project files exist under apps/project-tracker/ and run as a single project with one main tracker app."
+-  - Settings are configured for SQLite, templates, and static files within the approved project structure.
+-  - Root URLconf includes the tracker app URLconf and a baseline route that can render a tracker template.
+-  - Shared base template and static assets are wired so later views can extend them without restructuring.
++  - "`Project`, `Task`, and `Tag` models exist in `tracker/models.py` with the approved field set and Django ORM relationships."
++  - "`Task` has a foreign key to `Project`, and tags can be assigned to both projects and tasks via many-to-many relationships."
++  - "Model and form validation enforce the approved enumerated choices and basic required-field constraints without introducing service layers."
++  - "Admin registration covers the domain models with practical list/display configuration for inspection."
++  - "Initial migration files for the domain schema are present under `tracker/migrations/`."
+ done_definition:
+-  - Project skeleton is committed in code with no extra packages or speculative app splits.
+-  - "tracker app is installed and reachable through the project URL configuration."
+-  - Baseline template and static files load through Django's standard configuration.
+-  - Any tests added for the scaffold pass locally, or the dev handoff notes state why tests were deferred for this slice.
++  - "Domain models, forms, admin wiring, and migrations are implemented inside the existing `tracker` app only."
++  - "Field choices align with the locked statuses and priorities from `ai/goal.yaml`."
++  - "No extra Django apps, third-party packages, or speculative service/repository layers are introduced."
++  - "Tests cover the domain rules if the environment allows Django to run, or the handoff documents the blocking limitation."
 diff --git a/ai/backlog.yaml b/ai/backlog.yaml
-index 7f6b886a785058e2361cc2847daf3232c98efd30..4a051f513161838c00a259d8b5b9080d6cbea6f7
+index 1dbf6d158e38c08113c9dd4034bf134d3cbe1d87..615119ce8ba8118a2155ea1ad4d3df3361595bbc
 --- a/ai/backlog.yaml
 +++ b/ai/backlog.yaml
-@@ -1,11 +1,56 @@
--items: []
--# Example format — PRODUCT_OWNER creates real items from ai/goal.yaml:
--#  - id: ITEM-0001
--#    title: Build user authentication
--#    goal: Allow users to sign in with email and password
--#    type: feature
--#    status: todo
--#    priority: high
--#    dependencies: []
--#    notes:
--#      - Python 3 only, no external dependencies
-+items:
-+  - id: ITEM-0001
-+    title: Scaffold Django project tracker baseline
-+    goal: Establish the single-project Django skeleton under `apps/project-tracker/` with the tracker app wired into settings, URLs, templates, and static assets.
-+    type: feature
+@@ -14,13 +14,15 @@
+     title: Implement tracker domain models and forms
+     goal: Add `Project`, `Task`, and `Tag` models, related forms, admin registration, and database migrations that match the approved domain surface.
+     type: feature
+-    status: todo
 +    status: in_progress
-+    priority: high
-+    dependencies: []
-+    notes:
-+      - Keep one Django project with one main `tracker` app.
-+      - Create the baseline file structure for settings, root URLs, app URLs, templates, and static assets.
-+      - Include a base template and shared asset wiring that later CRUD pages can extend.
-+  - id: ITEM-0002
-+    title: Implement tracker domain models and forms
-+    goal: Add `Project`, `Task`, and `Tag` models, related forms, admin registration, and database migrations that match the approved domain surface.
-+    type: feature
-+    status: todo
-+    priority: high
-+    dependencies:
-+      - ITEM-0001
-+    notes:
-+      - Use direct Django ORM relationships, including tag many-to-many links for both projects and tasks.
-+      - Keep validation in models and forms rather than introducing service layers.
-+  - id: ITEM-0003
-+    title: Build server-rendered tracker pages
-+    goal: Deliver dashboard, project list, project detail with tasks, and tag detail pages using Django views, templates, and SQLite-backed aggregates.
-+    type: feature
-+    status: todo
-+    priority: high
-+    dependencies:
-+      - ITEM-0002
-+    notes:
-+      - Dashboard must show total projects, tasks by status, and overdue tasks.
-+      - Prefer server-rendered templates and partial-ready template composition.
-+  - id: ITEM-0004
-+    title: Add no-reload CRUD interactions
-+    goal: Implement async create, update, and delete flows for projects, tasks, and tags using HTML partial responses and small vanilla JS fetch handlers.
-+    type: feature
-+    status: todo
-+    priority: high
-+    dependencies:
-+      - ITEM-0003
-+    notes:
-+      - Default mutation responses to HTML partials.
-+      - Use JSON only for narrow cases where partial HTML is awkward.
-+  - id: ITEM-0005
-+    title: Add automated coverage and final validation
-+    goal: Cover the tracker with Django tests for models, views, and no-reload mutation behavior, then validate the full acceptance path.
-+    type: feature
-+    status: todo
-+    priority: medium
-+    dependencies:
-+      - ITEM-0004
-+    notes:
-+      - Focus tests on domain rules, page rendering, and async CRUD behavior.
-+      - Keep tooling inside Django and the Python standard library only.
+     priority: high
+     dependencies:
+       - ITEM-0001
+     notes:
+       - Use direct Django ORM relationships, including tag many-to-many links for both projects and tasks.
+       - Keep validation in models and forms rather than introducing service layers.
++      - Keep the implementation inside the single existing `tracker` app with no extra packages or architecture layers.
++      - Include initial migration files for the domain schema in this slice.
+   - id: ITEM-0003
+     title: Build server-rendered tracker pages
+     goal: Deliver dashboard, project list, project detail with tasks, and tag detail pages using Django views, templates, and SQLite-backed aggregates.
 diff --git a/ai/iterations/ITER-0001.md b/ai/iterations/ITER-0001.md
-index 9e1fe3894887cb2bed8c77ddce81953af8e52536..5f2d1d0b90999939a4aabeef94d2181b6e406c63
+index 146391d71f8642354541ae088f1acf8db2db33ff..f077b7f0d527a849c6bd5a38539e538fc4f8fde1
 --- a/ai/iterations/ITER-0001.md
 +++ b/ai/iterations/ITER-0001.md
-@@ -5,3 +5,4 @@
- | 2026-03-11 | PRODUCT_OWNER | Defined the one-page product requirements from the project goal and handed off for engineering judgment review | The workflow needs a concrete scope and acceptance baseline before architecture and planning can proceed |
- | 2026-03-11 | SENIOR_JUDGMENTAL_ENGINEER | Locked simplification guardrails around a single Django + SQLite + vanilla JS modular monolith and warned against framework/platform drift | The architect needs explicit constraints so the design stays aligned with the product goal instead of inheriting conflicting default stack preferences |
- | 2026-03-11 | ARCHITECT | Defined a single-project Django architecture centered on one product app, server-rendered templates, and HTML-partial based no-reload CRUD flows | The planner and developer need concrete boundaries, file targets, and implementation tradeoffs before breaking work into execution items |
-+| 2026-03-11 | PLANNER | Broke delivery into scaffold, domain, page, async CRUD, and test slices and activated the scaffold item for development | The developer needs a small implementation-ready first step with explicit file targets before starting code changes |
+@@ -9,3 +9,4 @@
+ | 2026-03-12 | DEV | Scaffolded the Django project baseline with one tracker app, routed a rendered dashboard page, and added a smoke test for the root view | ITEM-0001 required an end-to-end project skeleton before later slices can add models, pages, and async CRUD behavior |
+ | 2026-03-12 | VALIDATOR | Accepted the scaffold baseline as meeting ITEM-0001 acceptance criteria and handed off to review with an environment caveat on Django-dependent tests | The slice is structurally correct and free of scope drift, but full runtime validation remains blocked until Django is installed in the workspace |
+ | 2026-03-12 | REVIEWER | Marked ITEM-0001 done and returned the baton to planning for the next implementation slice | The scaffold meets the locked architecture and acceptance criteria, and the blocked Django test run is an environment limitation rather than a gap in the delivered slice |
++| 2026-03-12 | PLANNER | Activated ITEM-0002 for domain model, form, admin, and migration work and handed off implementation to DEV | The scaffold is complete, and the domain layer is the next dependency needed before server-rendered pages and no-reload CRUD flows can be built |
 diff --git a/ai/next_agent.md b/ai/next_agent.md
-index 43dab4a0f26502346333e89135f9fc74f4ea1aeb..c9917c7bc8bbb7e1de011e91bf75a940e4f056a2
+index 3452c022f99651c80fbed79ca032f7cb9044024e..41a47f426a7cb9479eb30e4bb4ecb1b381a1cbc6
 --- a/ai/next_agent.md
 +++ b/ai/next_agent.md
-@@ -1,16 +1,16 @@
+@@ -1,22 +1,34 @@
  # Next Agent
  
 -- Current role: `PLANNER`
@@ -1102,147 +1446,138 @@ index 43dab4a0f26502346333e89135f9fc74f4ea1aeb..c9917c7bc8bbb7e1de011e91bf75a940
  
  ## Handoff Notes
  
--- The architecture baseline is documented in `context/repo/architecture.md`.
--- Keep the implementation as one Django project under `apps/project-tracker/` with one main product app rather than splitting into multiple Django apps or platform layers.
--- Plan around server-rendered pages plus small async CRUD interactions. Prefer HTML partial responses for create, update, and delete flows; use JSON only where a partial would be needlessly awkward.
--- The planner should turn this into incremental items that establish project scaffolding first, then domain models/forms/admin, then page views/templates, then no-reload interaction wiring, then tests/validation.
--- Required user-facing views are dashboard, project list, project detail with tasks, and tag filter/detail.
--- Core model surface is intentionally small: `Project`, `Task`, and `Tag` with direct Django ORM relationships and SQLite-backed aggregates for dashboard counts.
--- No clarification or exception was needed. `ai/user-questions.yaml` remains `status: none`, and `ai/decision-lock.yaml` remains unchanged.
-+- Active item is `ITEM-0001`: scaffold the Django project baseline under `apps/project-tracker/`.
-+- Create one Django project and one main `tracker` app only. Do not introduce DRF, extra pip packages, multiple Django apps, or speculative service layers.
-+- Start with the skeleton in the architecture doc: `manage.py`, `project_tracker/` settings and URLs, `tracker/` app config and URLs, plus `templates/tracker/base.html` and `static/tracker/app.css` / `app.js`.
-+- Wire SQLite, templates, and static assets in standard Django configuration so later pages can extend the base without rework.
-+- Provide at least one baseline route and template render so the scaffold is visibly connected end to end.
-+- Keep future work in mind: later items will add domain models/forms/admin, then dashboard/list/detail/tag pages, then async partial-based CRUD, then tests and validation.
-+- No clarification or exception was needed. Leave `ai/user-questions.yaml` at `status: none` unless execution uncovers a real blocker.
+-- Review decision for `ITEM-0001`: DONE.
+-- Accepted outcome:
+-  - single Django project scaffold exists under `apps/project-tracker/`
+-  - one `tracker` app is wired into settings and root URLs
+-  - baseline dashboard route renders shared templates
+-  - static CSS and JS are connected through Django static files
+-- Environment caveat kept on record:
+-  - `python3 -m py_compile $(find apps/project-tracker -name '*.py' | sort)` passed
+-  - `python3 apps/project-tracker/manage.py test` is still blocked in this workspace by `ModuleNotFoundError: No module named 'django'`
+-- Planning focus:
+-  - choose the next slice after scaffold completion
+-  - keep the locked architecture intact: single Django project, one main app, no extra packages, no speculative layers
+-  - carry forward the hygiene note that committed `__pycache__` files should be cleaned up opportunistically without derailing feature work
++- Active item: `ITEM-0002` - implement the tracker domain layer.
++- Scope for this slice:
++  - add `Project`, `Task`, and `Tag` models in the existing `tracker` app only
++  - add Django forms for the domain entities with validation aligned to the locked field choices
++  - register the models in Django admin with useful list/display configuration
++  - create initial migrations for the schema under `tracker/migrations/`
++- Domain constraints from `ai/goal.yaml`:
++  - `Project`: name, description, status (`active`, `completed`, `archived`), created date
++  - `Task`: belongs to a project, title, status (`todo`, `in_progress`, `done`), priority (`low`, `medium`, `high`), due date
++  - `Tag`: many-to-many assignment support for both projects and tasks
++- Implementation guardrails:
++  - no extra Django apps, no third-party packages, no DRF, no service/repository layers
++  - keep logic in models, forms, and standard Django admin structures
++  - preserve the single-project Django architecture already accepted in `ITEM-0001`
++- Suggested files to modify or create:
++  - `apps/project-tracker/tracker/models.py`
++  - `apps/project-tracker/tracker/forms.py`
++  - `apps/project-tracker/tracker/admin.py`
++  - `apps/project-tracker/tracker/migrations/`
++  - `apps/project-tracker/tracker/tests/`
++- Validation expectations:
++  - add domain-focused tests if Django is available in the environment
++  - if Django remains unavailable, document the exact blocked command and rely on non-Django validation where possible
++- Existing caveat still applies:
++  - prior `manage.py test` runs were blocked in this workspace by `ModuleNotFoundError: No module named 'django'`
 
 [35m[3mcodex[0m[0m
 HANDOFF TO DEV
 [3m[35mfile update:[0m[0m
+diff --git a/ai/active_agent.txt b/ai/active_agent.txt
+index b51ee722eae8ec12054c26b379735fcea599c2f6..a8b82c6896062c7b336ccc8bf7533a20fac54932
+--- a/ai/active_agent.txt
++++ b/ai/active_agent.txt
+@@ -1 +1 @@
+-PLANNER
++DEV
 diff --git a/ai/active_item.yaml b/ai/active_item.yaml
-index f50375925215d783106fa27fc1a0a02ccc471b07..9befcb3ab8b135ac177de17cbee99916fbee22f0
+index 9cc57b5e365721179fdd9769d990c4f007252680..990990a1550623df8ff2ccdb3bd1fa472d3843c8
 --- a/ai/active_item.yaml
 +++ b/ai/active_item.yaml
-@@ -1,8 +1,24 @@
--id: null
--title: null
--goal: null
--status: idle
--owner_role: null
--related_files: []
--acceptance_criteria: []
--done_definition: []
-+id: ITEM-0001
-+title: Scaffold Django project tracker baseline
-+goal: Establish the single-project Django skeleton under `apps/project-tracker/` with the tracker app wired into settings, URLs, templates, and static assets.
+@@ -1,24 +1,22 @@
+-id: ITEM-0001
+-title: Scaffold Django project tracker baseline
+-goal: "Establish the single-project Django skeleton under apps/project-tracker/ with the tracker app wired into settings, URLs, templates, and static assets."
+-status: done
+-owner_role: REVIEWER
++id: ITEM-0002
++title: Implement tracker domain models and forms
++goal: "Add Project, Task, and Tag models, related forms, admin registration, and database migrations that match the approved domain surface."
 +status: in_progress
 +owner_role: DEV
-+related_files:
-+  - apps/project-tracker/manage.py
-+  - apps/project-tracker/project_tracker/settings.py
-+  - apps/project-tracker/project_tracker/urls.py
-+  - apps/project-tracker/tracker/apps.py
-+  - apps/project-tracker/tracker/urls.py
-+  - apps/project-tracker/templates/tracker/base.html
-+  - apps/project-tracker/static/tracker/app.css
-+  - apps/project-tracker/static/tracker/app.js
-+acceptance_criteria:
-+  - Django project files exist under `apps/project-tracker/` and run as a single project with one main `tracker` app.
-+  - Settings are configured for SQLite, templates, and static files within the approved project structure.
-+  - Root URLconf includes the tracker app URLconf and a baseline route that can render a tracker template.
-+  - Shared base template and static assets are wired so later views can extend them without restructuring.
-+done_definition:
-+  - Project skeleton is committed in code with no extra packages or speculative app splits.
-+  - `tracker` app is installed and reachable through the project URL configuration.
-+  - Baseline template and static files load through Django's standard configuration.
-+  - Any tests added for the scaffold pass locally, or the dev handoff notes state why tests were deferred for this slice.
+ related_files:
+-  - apps/project-tracker/manage.py
+-  - apps/project-tracker/project_tracker/settings.py
+-  - apps/project-tracker/project_tracker/urls.py
+-  - apps/project-tracker/tracker/apps.py
+-  - apps/project-tracker/tracker/urls.py
+-  - apps/project-tracker/templates/tracker/base.html
+-  - apps/project-tracker/static/tracker/app.css
+-  - apps/project-tracker/static/tracker/app.js
++  - apps/project-tracker/tracker/models.py
++  - apps/project-tracker/tracker/forms.py
++  - apps/project-tracker/tracker/admin.py
++  - apps/project-tracker/tracker/migrations/
++  - apps/project-tracker/tracker/tests/
+ acceptance_criteria:
+-  - "Django project files exist under apps/project-tracker/ and run as a single project with one main tracker app."
+-  - Settings are configured for SQLite, templates, and static files within the approved project structure.
+-  - Root URLconf includes the tracker app URLconf and a baseline route that can render a tracker template.
+-  - Shared base template and static assets are wired so later views can extend them without restructuring.
++  - "`Project`, `Task`, and `Tag` models exist in `tracker/models.py` with the approved field set and Django ORM relationships."
++  - "`Task` has a foreign key to `Project`, and tags can be assigned to both projects and tasks via many-to-many relationships."
++  - "Model and form validation enforce the approved enumerated choices and basic required-field constraints without introducing service layers."
++  - "Admin registration covers the domain models with practical list/display configuration for inspection."
++  - "Initial migration files for the domain schema are present under `tracker/migrations/`."
+ done_definition:
+-  - Project skeleton is committed in code with no extra packages or speculative app splits.
+-  - "tracker app is installed and reachable through the project URL configuration."
+-  - Baseline template and static files load through Django's standard configuration.
+-  - Any tests added for the scaffold pass locally, or the dev handoff notes state why tests were deferred for this slice.
++  - "Domain models, forms, admin wiring, and migrations are implemented inside the existing `tracker` app only."
++  - "Field choices align with the locked statuses and priorities from `ai/goal.yaml`."
++  - "No extra Django apps, third-party packages, or speculative service/repository layers are introduced."
++  - "Tests cover the domain rules if the environment allows Django to run, or the handoff documents the blocking limitation."
 diff --git a/ai/backlog.yaml b/ai/backlog.yaml
-index 7f6b886a785058e2361cc2847daf3232c98efd30..4a051f513161838c00a259d8b5b9080d6cbea6f7
+index 1dbf6d158e38c08113c9dd4034bf134d3cbe1d87..615119ce8ba8118a2155ea1ad4d3df3361595bbc
 --- a/ai/backlog.yaml
 +++ b/ai/backlog.yaml
-@@ -1,11 +1,56 @@
--items: []
--# Example format — PRODUCT_OWNER creates real items from ai/goal.yaml:
--#  - id: ITEM-0001
--#    title: Build user authentication
--#    goal: Allow users to sign in with email and password
--#    type: feature
--#    status: todo
--#    priority: high
--#    dependencies: []
--#    notes:
--#      - Python 3 only, no external dependencies
-+items:
-+  - id: ITEM-0001
-+    title: Scaffold Django project tracker baseline
-+    goal: Establish the single-project Django skeleton under `apps/project-tracker/` with the tracker app wired into settings, URLs, templates, and static assets.
-+    type: feature
+@@ -14,13 +14,15 @@
+     title: Implement tracker domain models and forms
+     goal: Add `Project`, `Task`, and `Tag` models, related forms, admin registration, and database migrations that match the approved domain surface.
+     type: feature
+-    status: todo
 +    status: in_progress
-+    priority: high
-+    dependencies: []
-+    notes:
-+      - Keep one Django project with one main `tracker` app.
-+      - Create the baseline file structure for settings, root URLs, app URLs, templates, and static assets.
-+      - Include a base template and shared asset wiring that later CRUD pages can extend.
-+  - id: ITEM-0002
-+    title: Implement tracker domain models and forms
-+    goal: Add `Project`, `Task`, and `Tag` models, related forms, admin registration, and database migrations that match the approved domain surface.
-+    type: feature
-+    status: todo
-+    priority: high
-+    dependencies:
-+      - ITEM-0001
-+    notes:
-+      - Use direct Django ORM relationships, including tag many-to-many links for both projects and tasks.
-+      - Keep validation in models and forms rather than introducing service layers.
-+  - id: ITEM-0003
-+    title: Build server-rendered tracker pages
-+    goal: Deliver dashboard, project list, project detail with tasks, and tag detail pages using Django views, templates, and SQLite-backed aggregates.
-+    type: feature
-+    status: todo
-+    priority: high
-+    dependencies:
-+      - ITEM-0002
-+    notes:
-+      - Dashboard must show total projects, tasks by status, and overdue tasks.
-+      - Prefer server-rendered templates and partial-ready template composition.
-+  - id: ITEM-0004
-+    title: Add no-reload CRUD interactions
-+    goal: Implement async create, update, and delete flows for projects, tasks, and tags using HTML partial responses and small vanilla JS fetch handlers.
-+    type: feature
-+    status: todo
-+    priority: high
-+    dependencies:
-+      - ITEM-0003
-+    notes:
-+      - Default mutation responses to HTML partials.
-+      - Use JSON only for narrow cases where partial HTML is awkward.
-+  - id: ITEM-0005
-+    title: Add automated coverage and final validation
-+    goal: Cover the tracker with Django tests for models, views, and no-reload mutation behavior, then validate the full acceptance path.
-+    type: feature
-+    status: todo
-+    priority: medium
-+    dependencies:
-+      - ITEM-0004
-+    notes:
-+      - Focus tests on domain rules, page rendering, and async CRUD behavior.
-+      - Keep tooling inside Django and the Python standard library only.
+     priority: high
+     dependencies:
+       - ITEM-0001
+     notes:
+       - Use direct Django ORM relationships, including tag many-to-many links for both projects and tasks.
+       - Keep validation in models and forms rather than introducing service layers.
++      - Keep the implementation inside the single existing `tracker` app with no extra packages or architecture layers.
++      - Include initial migration files for the domain schema in this slice.
+   - id: ITEM-0003
+     title: Build server-rendered tracker pages
+     goal: Deliver dashboard, project list, project detail with tasks, and tag detail pages using Django views, templates, and SQLite-backed aggregates.
 diff --git a/ai/iterations/ITER-0001.md b/ai/iterations/ITER-0001.md
-index 9e1fe3894887cb2bed8c77ddce81953af8e52536..5f2d1d0b90999939a4aabeef94d2181b6e406c63
+index 146391d71f8642354541ae088f1acf8db2db33ff..f077b7f0d527a849c6bd5a38539e538fc4f8fde1
 --- a/ai/iterations/ITER-0001.md
 +++ b/ai/iterations/ITER-0001.md
-@@ -5,3 +5,4 @@
- | 2026-03-11 | PRODUCT_OWNER | Defined the one-page product requirements from the project goal and handed off for engineering judgment review | The workflow needs a concrete scope and acceptance baseline before architecture and planning can proceed |
- | 2026-03-11 | SENIOR_JUDGMENTAL_ENGINEER | Locked simplification guardrails around a single Django + SQLite + vanilla JS modular monolith and warned against framework/platform drift | The architect needs explicit constraints so the design stays aligned with the product goal instead of inheriting conflicting default stack preferences |
- | 2026-03-11 | ARCHITECT | Defined a single-project Django architecture centered on one product app, server-rendered templates, and HTML-partial based no-reload CRUD flows | The planner and developer need concrete boundaries, file targets, and implementation tradeoffs before breaking work into execution items |
-+| 2026-03-11 | PLANNER | Broke delivery into scaffold, domain, page, async CRUD, and test slices and activated the scaffold item for development | The developer needs a small implementation-ready first step with explicit file targets before starting code changes |
+@@ -9,3 +9,4 @@
+ | 2026-03-12 | DEV | Scaffolded the Django project baseline with one tracker app, routed a rendered dashboard page, and added a smoke test for the root view | ITEM-0001 required an end-to-end project skeleton before later slices can add models, pages, and async CRUD behavior |
+ | 2026-03-12 | VALIDATOR | Accepted the scaffold baseline as meeting ITEM-0001 acceptance criteria and handed off to review with an environment caveat on Django-dependent tests | The slice is structurally correct and free of scope drift, but full runtime validation remains blocked until Django is installed in the workspace |
+ | 2026-03-12 | REVIEWER | Marked ITEM-0001 done and returned the baton to planning for the next implementation slice | The scaffold meets the locked architecture and acceptance criteria, and the blocked Django test run is an environment limitation rather than a gap in the delivered slice |
++| 2026-03-12 | PLANNER | Activated ITEM-0002 for domain model, form, admin, and migration work and handed off implementation to DEV | The scaffold is complete, and the domain layer is the next dependency needed before server-rendered pages and no-reload CRUD flows can be built |
 diff --git a/ai/next_agent.md b/ai/next_agent.md
-index 43dab4a0f26502346333e89135f9fc74f4ea1aeb..c9917c7bc8bbb7e1de011e91bf75a940e4f056a2
+index 3452c022f99651c80fbed79ca032f7cb9044024e..41a47f426a7cb9479eb30e4bb4ecb1b381a1cbc6
 --- a/ai/next_agent.md
 +++ b/ai/next_agent.md
-@@ -1,16 +1,16 @@
+@@ -1,22 +1,34 @@
  # Next Agent
  
 -- Current role: `PLANNER`
@@ -1254,22 +1589,46 @@ index 43dab4a0f26502346333e89135f9fc74f4ea1aeb..c9917c7bc8bbb7e1de011e91bf75a940
  
  ## Handoff Notes
  
--- The architecture baseline is documented in `context/repo/architecture.md`.
--- Keep the implementation as one Django project under `apps/project-tracker/` with one main product app rather than splitting into multiple Django apps or platform layers.
--- Plan around server-rendered pages plus small async CRUD interactions. Prefer HTML partial responses for create, update, and delete flows; use JSON only where a partial would be needlessly awkward.
--- The planner should turn this into incremental items that establish project scaffolding first, then domain models/forms/admin, then page views/templates, then no-reload interaction wiring, then tests/validation.
--- Required user-facing views are dashboard, project list, project detail with tasks, and tag filter/detail.
--- Core model surface is intentionally small: `Project`, `Task`, and `Tag` with direct Django ORM relationships and SQLite-backed aggregates for dashboard counts.
--- No clarification or exception was needed. `ai/user-questions.yaml` remains `status: none`, and `ai/decision-lock.yaml` remains unchanged.
-+- Active item is `ITEM-0001`: scaffold the Django project baseline under `apps/project-tracker/`.
-+- Create one Django project and one main `tracker` app only. Do not introduce DRF, extra pip packages, multiple Django apps, or speculative service layers.
-+- Start with the skeleton in the architecture doc: `manage.py`, `project_tracker/` settings and URLs, `tracker/` app config and URLs, plus `templates/tracker/base.html` and `static/tracker/app.css` / `app.js`.
-+- Wire SQLite, templates, and static assets in standard Django configuration so later pages can extend the base without rework.
-+- Provide at least one baseline route and template render so the scaffold is visibly connected end to end.
-+- Keep future work in mind: later items will add domain models/forms/admin, then dashboard/list/detail/tag pages, then async partial-based CRUD, then tests and validation.
-+- No clarification or exception was needed. Leave `ai/user-questions.yaml` at `status: none` unless execution uncovers a real blocker.
+-- Review decision for `ITEM-0001`: DONE.
+-- Accepted outcome:
+-  - single Django project scaffold exists under `apps/project-tracker/`
+-  - one `tracker` app is wired into settings and root URLs
+-  - baseline dashboard route renders shared templates
+-  - static CSS and JS are connected through Django static files
+-- Environment caveat kept on record:
+-  - `python3 -m py_compile $(find apps/project-tracker -name '*.py' | sort)` passed
+-  - `python3 apps/project-tracker/manage.py test` is still blocked in this workspace by `ModuleNotFoundError: No module named 'django'`
+-- Planning focus:
+-  - choose the next slice after scaffold completion
+-  - keep the locked architecture intact: single Django project, one main app, no extra packages, no speculative layers
+-  - carry forward the hygiene note that committed `__pycache__` files should be cleaned up opportunistically without derailing feature work
++- Active item: `ITEM-0002` - implement the tracker domain layer.
++- Scope for this slice:
++  - add `Project`, `Task`, and `Tag` models in the existing `tracker` app only
++  - add Django forms for the domain entities with validation aligned to the locked field choices
++  - register the models in Django admin with useful list/display configuration
++  - create initial migrations for the schema under `tracker/migrations/`
++- Domain constraints from `ai/goal.yaml`:
++  - `Project`: name, description, status (`active`, `completed`, `archived`), created date
++  - `Task`: belongs to a project, title, status (`todo`, `in_progress`, `done`), priority (`low`, `medium`, `high`), due date
++  - `Tag`: many-to-many assignment support for both projects and tasks
++- Implementation guardrails:
++  - no extra Django apps, no third-party packages, no DRF, no service/repository layers
++  - keep logic in models, forms, and standard Django admin structures
++  - preserve the single-project Django architecture already accepted in `ITEM-0001`
++- Suggested files to modify or create:
++  - `apps/project-tracker/tracker/models.py`
++  - `apps/project-tracker/tracker/forms.py`
++  - `apps/project-tracker/tracker/admin.py`
++  - `apps/project-tracker/tracker/migrations/`
++  - `apps/project-tracker/tracker/tests/`
++- Validation expectations:
++  - add domain-focused tests if Django is available in the environment
++  - if Django remains unavailable, document the exact blocked command and rely on non-Django validation where possible
++- Existing caveat still applies:
++  - prior `manage.py test` runs were blocked in this workspace by `ModuleNotFoundError: No module named 'django'`
 
 [3m[35mtokens used[0m[0m
-16,335
+18,918
 
-Script done on 2026-03-11 21:56:01-05:00 [COMMAND_EXIT_CODE="0"]
+Script done on 2026-03-11 22:06:23-05:00 [COMMAND_EXIT_CODE="0"]
