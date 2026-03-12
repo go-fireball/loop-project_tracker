@@ -1,0 +1,50 @@
+<section class="panel">
+  <div class="panel-heading">
+    <div>
+      <h2>Tasks</h2>
+      <p class="section-copy">Tasks assigned to this project, including due dates and shared tags.</p>
+    </div>
+  </div>
+  {% if project.tasks.all %}
+    <div class="stack">
+      {% for task in project.tasks.all %}
+        <article class="list-card">
+          <div class="list-card-main">
+            <h3>{{ task.title }}</h3>
+            <p>{{ task.get_status_display }} priority: {{ task.get_priority_display }}</p>
+          </div>
+          <div class="meta-cluster">
+            <span class="badge">{{ task.get_status_display }}</span>
+            <span class="meta-copy">Priority {{ task.get_priority_display }}</span>
+            {% if task.due_date %}
+              <span class="meta-copy">Due {{ task.due_date }}</span>
+            {% else %}
+              <span class="meta-copy">No due date</span>
+            {% endif %}
+            {% for tag in task.tags.all %}
+              <a class="chip" href="{% url 'tracker:tag_detail' tag.id %}">{{ tag.name }}</a>
+            {% empty %}
+              <span class="meta-copy">No tags</span>
+            {% endfor %}
+            <a
+              class="button-secondary"
+              href="{% url 'tracker:task_update' project.id task.id %}"
+              data-async-link
+            >Edit task</a>
+            <form
+              action="{% url 'tracker:task_delete' project.id task.id %}"
+              method="post"
+              data-async-form
+              data-confirm="Delete {{ task.title }}?"
+            >
+              {% csrf_token %}
+              <button class="button-secondary" type="submit">Delete task</button>
+            </form>
+          </div>
+        </article>
+      {% endfor %}
+    </div>
+  {% else %}
+    <p class="empty-state">This project does not have tasks yet.</p>
+  {% endif %}
+</section>

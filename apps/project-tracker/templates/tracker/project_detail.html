@@ -7,44 +7,12 @@
     {% include "tracker/partials/project_detail_panel.html" %}
   </div>
 
-  <div id="project-edit-form-region">
-    {% include "tracker/partials/project_edit_placeholder.html" %}
+  {% include "tracker/partials/project_edit_placeholder.html" %}
+  <div id="task-create-form-region">
+    {% include "tracker/partials/task_form_panel.html" with form=task_form form_action=task_create_url form_heading="Add a task" form_submit_label="Create task" %}
   </div>
-
-  <section class="panel">
-    <div class="panel-heading">
-      <div>
-        <h2>Tasks</h2>
-        <p class="section-copy">Tasks assigned to this project, including due dates and shared tags.</p>
-      </div>
-    </div>
-    {% if project.tasks.all %}
-      <div class="stack">
-        {% for task in project.tasks.all %}
-          <article class="list-card">
-            <div class="list-card-main">
-              <h3>{{ task.title }}</h3>
-              <p>{{ task.get_status_display }} priority: {{ task.get_priority_display }}</p>
-            </div>
-            <div class="meta-cluster">
-              <span class="badge">{{ task.get_status_display }}</span>
-              <span class="meta-copy">Priority {{ task.get_priority_display }}</span>
-              {% if task.due_date %}
-                <span class="meta-copy">Due {{ task.due_date }}</span>
-              {% else %}
-                <span class="meta-copy">No due date</span>
-              {% endif %}
-              {% for tag in task.tags.all %}
-                <a class="chip" href="{% url 'tracker:tag_detail' tag.id %}">{{ tag.name }}</a>
-              {% empty %}
-                <span class="meta-copy">No tags</span>
-              {% endfor %}
-            </div>
-          </article>
-        {% endfor %}
-      </div>
-    {% else %}
-      <p class="empty-state">This project does not have tasks yet.</p>
-    {% endif %}
-  </section>
+  <div id="task-edit-form-region"></div>
+  <div id="task-list-region">
+    {% include "tracker/partials/task_list_panel.html" %}
+  </div>
 {% endblock %}

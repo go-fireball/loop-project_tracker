@@ -1,0 +1,63 @@
+<section class="panel form-panel">
+  <div class="panel-heading">
+    <div>
+      <h2>{{ form_heading }}</h2>
+      <p class="section-copy">Task changes save through this project page without a full reload.</p>
+    </div>
+  </div>
+  <form
+    class="project-form"
+    action="{{ form_action }}"
+    method="post"
+    data-async-form
+  >
+    {% csrf_token %}
+    {% if form.non_field_errors %}
+      <div class="form-errors" role="alert">
+        {% for error in form.non_field_errors %}
+          <p>{{ error }}</p>
+        {% endfor %}
+      </div>
+    {% endif %}
+    <div class="form-grid">
+      <div class="field-group field-span-2">
+        <label for="{{ form.title.id_for_label }}">Title</label>
+        {{ form.title }}
+        {% for error in form.title.errors %}
+          <p class="field-error">{{ error }}</p>
+        {% endfor %}
+      </div>
+      <div class="field-group">
+        <label for="{{ form.status.id_for_label }}">Status</label>
+        {{ form.status }}
+        {% for error in form.status.errors %}
+          <p class="field-error">{{ error }}</p>
+        {% endfor %}
+      </div>
+      <div class="field-group">
+        <label for="{{ form.priority.id_for_label }}">Priority</label>
+        {{ form.priority }}
+        {% for error in form.priority.errors %}
+          <p class="field-error">{{ error }}</p>
+        {% endfor %}
+      </div>
+      <div class="field-group field-span-2">
+        <label for="{{ form.due_date.id_for_label }}">Due date</label>
+        {{ form.due_date }}
+        {% for error in form.due_date.errors %}
+          <p class="field-error">{{ error }}</p>
+        {% endfor %}
+      </div>
+      <div class="field-group field-span-2">
+        <label for="{{ form.tags.id_for_label }}">Tags</label>
+        {{ form.tags }}
+        {% for error in form.tags.errors %}
+          <p class="field-error">{{ error }}</p>
+        {% endfor %}
+      </div>
+    </div>
+    <div class="form-actions">
+      <button class="button-primary" type="submit">{{ form_submit_label }}</button>
+    </div>
+  </form>
+</section>

@@ -4,7 +4,7 @@
 
 {% block content %}
   <div id="dashboard-project-create-form-region">
-    {% include "tracker/partials/project_form_panel.html" with form=project_form source_page="dashboard" form_action=project_create_url|default:"" form_heading="Add a project" form_submit_label="Create project" %}
+    {% include "tracker/partials/project_form_panel.html" with form=project_form source_page="dashboard" form_action=project_create_url form_heading="Add a project" form_submit_label="Create project" %}
   </div>
   <div id="dashboard-stats-region">
     {% include "tracker/partials/dashboard_stats_panel.html" %}

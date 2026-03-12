@@ -9,6 +9,7 @@
   <div class="meta-cluster">
     <span class="badge">{{ project.get_status_display }}</span>
     <span class="meta-copy">Created {{ project.created_date }}</span>
+    <span class="meta-copy">{{ project.tasks.count }} tasks</span>
     {% for tag in project.tags.all %}
       <a class="chip" href="{% url 'tracker:tag_detail' tag.id %}">{{ tag.name }}</a>
     {% empty %}

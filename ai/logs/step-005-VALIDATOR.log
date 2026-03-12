@@ -1,0 +1,1545 @@
+Script started on 2026-03-11 22:58:38-05:00 [COMMAND="codex exec --model gpt-5.4 --full-auto Follow\ ai/next_agent.yaml\ exactly. " TERM="xterm-256color" TTY="/dev/pts/0" COLUMNS="184" LINES="43"]
+OpenAI Codex v0.114.0 (research preview)
+--------
+[1mworkdir:[0m /home/sundaram/code/temp/test
+[1mmodel:[0m gpt-5.4
+[1mprovider:[0m openai
+[1mapproval:[0m never
+[1msandbox:[0m workspace-write [workdir, /tmp, $TMPDIR, /home/sundaram/.codex/memories]
+[1mreasoning effort:[0m medium
+[1mreasoning summaries:[0m none
+[1msession id:[0m 019ce032-4c9e-7580-b6b1-016f6b6d44cc
+--------
+[36muser[0m
+Follow ai/next_agent.yaml exactly.
+[36mmcp startup:[0m no servers
+[35m[3mcodex[0m[0m
+I’m checking the repository instructions and opening `ai/next_agent.yaml` first so I can follow it exactly before making any changes.
+[35m[3mexec[0m[0m
+[1m/bin/bash -lc pwd[0m in /home/sundaram/code/temp/test[32m succeeded in 0ms:[0m
+[2m/home/sundaram/code/temp/test[0m
+[35m[3mexec[0m[0m
+[1m/bin/bash -lc 'rg --files'[0m in /home/sundaram/code/temp/test[32m succeeded in 0ms:[0m
+[2minit.sh
+context/repo/architecture.md
+apps/project-tracker/manage.py
+scripts/check-baton.sh
+scripts/validate_baton.py
+scripts/run-baton.sh
+scripts/check-goal.sh
+scripts/resume-baton.sh
+scripts/generate-next-agent.sh
+scripts/bootstrap.sh
+apps/project-tracker/tracker/admin.py
+apps/project-tracker/__pycache__/manage.cpython-312.pyc
+apps/project-tracker/tracker/apps.py
+apps/project-tracker/tracker/views.py
+apps/project-tracker/tracker/__init__.py
+apps/project-tracker/tracker/forms.py
+apps/project-tracker/tracker/urls.py
+apps/project-tracker/static/tracker/app.js
+apps/project-tracker/tracker/migrations/__init__.py
+apps/project-tracker/static/tracker/app.css[0m
+[35m[3mcodex[0m[0m
+I have the repo layout; next I’m reading the workflow file and any referenced state files so I can execute the requested step without guessing.
+[35m[3mexec[0m[0m
+[1m/bin/bash -lc "sed -n '1,220p' ai/active_agent.txt"[0m in /home/sundaram/code/temp/test[35m[3mexec[0m[0m
+[1m/bin/bash -lc "sed -n '1,220p' ai/next_agent.yaml"[0m in /home/sundaram/code/temp/test[32m succeeded in 0ms:[0m
+[2mnext_role: VALIDATOR
+prompt_file: ai/prompts/05-validator.md
+read:
+  - ai/active_item.yaml
+  - ai/review.md
+  - ai/decision-lock.yaml
+  - ai/goal.yaml
+  - ai/constitution.yaml
+  - ai/active_agent.txt
+  - ai/next_agent.md
+  - ai/user-questions.yaml
+allowed_edits:
+  - ai/review.md
+  - ai/decision-lock.yaml
+  - ai/user-questions.yaml
+  - ai/iterations/ITER-0001.md
+  - ai/active_agent.txt
+  - ai/next_agent.yaml
+  - ai/next_agent.md
+stop_conditions:[0m
+[32m succeeded in 0ms:[0m
+[2mVALIDATOR[0m
+[35m[3mexec[0m[0m
+[1m/bin/bash -lc "sed -n '1,220p' ai/active_item.yaml"[0m in /home/sundaram/code/temp/test[32m succeeded in 0ms:[0m
+[2mid: ITEM-0006
+title: Add no-reload tag CRUD interactions
+goal: "Implement async create, update, and delete flows for tags using HTML partial responses and small vanilla JS fetch handlers on a server-rendered tag management surface."
+status: in_progress
+owner_role: DEV
+related_files:
+  - apps/project-tracker/tracker/views.py
+  - apps/project-tracker/tracker/urls.py
+  - apps/project-tracker/tracker/forms.py
+  - apps/project-tracker/templates/tracker/tag_detail.html
+  - apps/project-tracker/templates/tracker/partials/
+  - apps/project-tracker/static/tracker/app.js
+  - apps/project-tracker/static/tracker/app.css
+  - apps/project-tracker/tracker/tests/test_views.py
+acceptance_criteria:
+  - "Users can create a tag from the tag management surface and see the tag list and create form update without a full page reload."
+  - "Users can edit an existing tag from the tag management surface and see the updated tag content render via returned HTML partials."
+  - "Users can delete an existing tag from the tag management surface and the affected tag list plus selected tag detail state update without a full page reload."
+  - "Invalid tag submissions render inline form errors through partial HTML responses rather than forcing a full-page workflow."
+  - "The implementation stays inside the existing Django tracker app with plain HTML, CSS, and vanilla JS fetch handlers only."[0m
+[35m[3mexec[0m[0m
+[1m/bin/bash -lc "sed -n '1,260p' ai/decision-lock.yaml"[0m in /home/sundaram/code/temp/test[35m[3mexec[0m[0m
+[1m/bin/bash -lc "sed -n '1,260p' ai/review.md"[0m in /home/sundaram/code/temp/test[32m succeeded in 0ms:[0m
+[2mconfirmed_by_user: false
+blocked_on_user: false
+last_user_decision: null
+approved_exceptions: []
+approved_decisions: [][0m
+[32m succeeded in 0ms:[0m
+[2m# Review Notes
+
+Use this file for reviewer outcomes:
+
+- **DONE**: item accepted and loop returns to PLANNER for next item.
+- **REVISE**: route back to specific role with explicit gap list.
+- **ESCALATE**: WAITING FOR USER only for approved escalation categories.
+
+## Judgment Warnings
+
+- Flag any introduction of React, Next.js, DRF, extra pip packages, or cloud/deployment scaffolding as scope drift unless requirements are updated.
+- Flag architecture that splits the app into speculative layers, services, or multiple Django apps without a demonstrated need.
+- Flag CRUD implementations that require full page reloads, since no-reload interactions are part of acceptance.
+
+## Architecture Decisions
+
+- Use a single Django project under `apps/project-tracker/` with one main product app for projects, tasks, and tags.
+- Treat server-rendered templates as the primary UI and use small async `fetch` flows for no-reload CRUD interactions.
+- Prefer HTML partial responses for mutations; allow narrow JSON responses only when HTML would be more awkward for the specific interaction.
+- Keep domain logic in models, forms, and views; reject speculative service, repository, command-bus, or multi-app splits.[0m
+[35m[3mexec[0m[0m
+[1m/bin/bash -lc "sed -n '1,260p' ai/next_agent.md"[0m in /home/sundaram/code/temp/test[32m succeeded in 0ms:[0m
+[2m# Next Agent
+
+- Current role: `VALIDATOR`
+- Prompt: `ai/prompts/05-validator.md`
+- Execution command for Codex sessions: **Follow `ai/next_agent.yaml` exactly.**
+- If role mismatch with `ai/active_agent.txt`, print: `WAITING FOR BATON`
+
+## Handoff Notes
+
+- Active item remains `ITEM-0006` "Add no-reload tag CRUD interactions".
+- Implemented a dedicated tag management surface at `apps/project-tracker/templates/tracker/tag_detail.html` and added a `tags/` index route so the page can render with or without a selected tag.
+- Added tag CRUD endpoints in `apps/project-tracker/tracker/views.py` and `apps/project-tracker/tracker/urls.py`:
+  - `tag_list`
+  - `tag_create`
+  - `tag_update` (`GET` loads edit form partial, `POST` saves)
+  - `tag_delete`
+  - `tag_detail` now returns partial swaps for async selection requests and full-page render for normal navigation
+- Added reusable tag partials:
+  - `templates/tracker/partials/tag_form_panel.html`
+  - `templates/tracker/partials/tag_list_panel.html`[0m
+[35m[3mexec[0m[0m
+[1m/bin/bash -lc "sed -n '1,260p' ai/goal.yaml"[0m in /home/sundaram/code/temp/test[35m[3mexec[0m[0m
+[1m/bin/bash -lc "sed -n '1,260p' ai/user-questions.yaml"[0m in /home/sundaram/code/temp/test[32m succeeded in 0ms:[0m
+[2mproject_goal: Build a personal project tracker web app using Django with a SQLite database and HTML/JS frontend
+success_criteria:
+  - Django REST endpoints for CRUD operations on projects, tasks, and tags
+  - Each project has a name, description, status (active/completed/archived), and created date
+  - Each task belongs to a project and has a title, status (todo/in_progress/done), priority (low/medium/high), and due date
+  - Tags can be assigned to both projects and tasks (many-to-many)
+  - Frontend has separate views for projects list, project detail (showing its tasks), and a tag filter view
+  - Adding/editing/deleting entities works without full page reload
+  - Dashboard view showing summary stats (total projects, tasks by status, overdue tasks)
+  - Data persists in SQLite database
+context_notes:
+  - Use Django with SQLite backend
+  - Frontend is plain HTML, CSS, and vanilla JS (no React/Vue/Angular)
+  - Django serves both the API and static/template files
+  - All code lives in apps/project-tracker/
+  - Use Django models with proper foreign key and many-to-many relationships
+constraints:
+  - Django and its built-in dependencies only, no additional pip packages (no DRF, no celery, etc.)
+  - No frontend JS frameworks
+  - Single Django project, no microservices[0m
+[35m[3mexec[0m[0m
+[1m/bin/bash -lc "sed -n '1,260p' ai/constitution.yaml"[0m in /home/sundaram/code/temp/test[35m[3mexec[0m[0m
+[1m/bin/bash -lc "sed -n '1,260p' ai/prompts/05-validator.md"[0m in /home/sundaram/code/temp/test[32m succeeded in 0ms:[0m
+[2mstatus: none
+return_to_role: null
+questions: [][0m
+[32m succeeded in 0ms:[0m
+[2m# ROLE: VALIDATOR
+
+## 1) Baton check
+- Read `ai/active_agent.txt`.
+- If value is not exactly `VALIDATOR`, output exactly:
+`WAITING FOR BATON`
+- Stop.
+
+## 2) Required reads
+- `ai/goal.yaml`
+- `ai/active_item.yaml`
+- `ai/review.md`
+- `ai/decision-lock.yaml`
+- `ai/user-questions.yaml`
+- `ai/constitution.yaml`
+- `ai/next_agent.md`
+- changed files under `apps/` and `infra/`
+- test output / verification artifacts
+
+## 3) Allowed edits (only)[0m
+[32m succeeded in 0ms:[0m
+[2mcore_rules:
+  - state lives in files, not chat memory
+  - baton ownership is authoritative
+  - roles must not edit outside allowed files
+baton_rules:
+  - if active agent mismatch, print exactly WAITING FOR BATON
+  - baton must be handed off explicitly
+edit_rules:
+  - only edit allowed files listed in the current role prompt
+stop_rules:
+  - if human clarification is needed, print exactly WAITING FOR USER
+  - always append an iteration log entry before handoff[0m
+[35m[3mcodex[0m[0m
+I’ve got the validator workflow and current handoff notes. Now I’m inspecting the changed app files directly, with emphasis on the new tag swap contract and the shared JS helper because that’s where the stated regression risk sits.
+[35m[3mexec[0m[0m
+[1m/bin/bash -lc 'git status --short'[0m in /home/sundaram/code/temp/test[32m succeeded in 0ms:[0m
+[2m M ai/active_agent.txt
+ M ai/active_item.yaml
+ M ai/backlog.yaml
+ M ai/iterations/ITER-0001.md
+ M ai/logs/baton.log
+ M ai/next_agent.md
+ M ai/next_agent.yaml
+ M ai/review.md
+ M apps/project-tracker/static/tracker/app.css
+ M apps/project-tracker/static/tracker/app.js
+ M apps/project-tracker/templates/tracker/base.html
+ M apps/project-tracker/templates/tracker/dashboard.html
+ M apps/project-tracker/templates/tracker/partials/project_detail_panel.html
+ M apps/project-tracker/templates/tracker/project_detail.html
+ M apps/project-tracker/templates/tracker/project_list.html
+ M apps/project-tracker/templates/tracker/tag_detail.html
+ M apps/project-tracker/tracker/__pycache__/forms.cpython-312.pyc
+ M apps/project-tracker/tracker/__pycache__/urls.cpython-312.pyc
+ M apps/project-tracker/tracker/__pycache__/views.cpython-312.pyc
+ M apps/project-tracker/tracker/forms.py[0m
+[35m[3mexec[0m[0m
+[1m/bin/bash -lc 'git diff -- apps/project-tracker/tracker/views.py apps/project-tracker/tracker/urls.py apps/project-tracker/static/tracker/app.js apps/project-tracker/static/tracker/app.css apps/project-tracker/templates/tracker/base.html apps/project-tracker/templates/tracker/tag_detail.html apps/project-tracker/templates/tracker/partials/tag_form_panel.html apps/project-tracker/templates/tracker/partials/tag_list_panel.html apps/project-tracker/templates/tracker/partials/tag_detail_panel.html apps/project-tracker/templates/tracker/partials/tag_edit_placeholder.html apps/project-tracker/tracker/tests/test_views.py'[0m in /home/sundaram/code/temp/test[32m succeeded in 0ms:[0m
+[2mdiff --git a/apps/project-tracker/static/tracker/app.css b/apps/project-tracker/static/tracker/app.css
+index 44afa44..c67af2f 100644
+--- a/apps/project-tracker/static/tracker/app.css
++++ b/apps/project-tracker/static/tracker/app.css
+@@ -46,6 +46,38 @@ body {
+   font-weight: 700;
+ }
+ 
++.button-primary,
++.button-secondary,
++.button-danger {
++  display: inline-flex;
++  align-items: center;
++  justify-content: center;
++  min-height: 2.75rem;
++  padding: 0.65rem 1rem;
++  border-radius: 999px;
++  border: 1px solid var(--border);
++  text-decoration: none;
++  font: inherit;[0m
+[35m[3mexec[0m[0m
+[1m/bin/bash -lc "sed -n '1,260p' apps/project-tracker/templates/tracker/partials/tag_form_panel.html"[0m in /home/sundaram/code/temp/test[32m succeeded in 0ms:[0m
+[2m<section class="panel form-panel">
+  <div class="panel-heading">
+    <div>
+      <h2>{{ form_heading }}</h2>
+      <p class="section-copy">Tag changes save through this page without a full reload.</p>
+    </div>
+  </div>
+  <form
+    class="project-form"
+    action="{{ form_action }}"
+    method="post"
+    data-async-form
+  >
+    {% csrf_token %}
+    {% if form.non_field_errors %}
+      <div class="form-errors" role="alert">
+        {% for error in form.non_field_errors %}
+          <p>{{ error }}</p>
+        {% endfor %}
+      </div>[0m
+[35m[3mexec[0m[0m
+[1m/bin/bash -lc "sed -n '1,260p' apps/project-tracker/templates/tracker/partials/project_detail_panel.html"[0m in /home/sundaram/code/temp/test[32m succeeded in 0ms:[0m
+[2m<section class="panel">
+  <div class="panel-heading">
+    <div>
+      <h2>{{ project.name }}</h2>
+      <p class="section-copy">{{ project.description|default:"No description provided yet." }}</p>
+    </div>
+    <a class="inline-link" href="{% url 'tracker:project_list' %}">All projects</a>
+  </div>
+  <div class="meta-cluster">
+    <span class="badge">{{ project.get_status_display }}</span>
+    <span class="meta-copy">Created {{ project.created_date }}</span>
+    <span class="meta-copy">{{ project.tasks.count }} tasks</span>
+    {% for tag in project.tags.all %}
+      <a class="chip" href="{% url 'tracker:tag_detail' tag.id %}">{{ tag.name }}</a>
+    {% empty %}
+      <span class="meta-copy">No tags</span>
+    {% endfor %}
+  </div>
+  <div class="action-row">
+    <a[0m
+[35m[3mexec[0m[0m
+[1m/bin/bash -lc "sed -n '1,260p' apps/project-tracker/templates/tracker/partials/tag_list_panel.html"[0m in /home/sundaram/code/temp/test[32m succeeded in 0ms:[0m
+[2m<section class="panel">
+  <div class="panel-heading">
+    <div>
+      <h2>All tags</h2>
+      <p class="section-copy">Select a tag to inspect its related projects and tasks.</p>
+    </div>
+  </div>
+  {% if tags %}
+    <div class="stack">
+      {% for tag in tags %}
+        <article class="list-card {% if selected_tag_id == tag.id %}list-card-active{% endif %}">
+          <div class="list-card-main">
+            <h3>
+              <a class="inline-link" href="{% url 'tracker:tag_detail' tag.id %}" data-async-link>{{ tag.name }}</a>
+            </h3>
+            <p>{{ tag.project_count }} projects and {{ tag.task_count }} tasks use this tag.</p>
+          </div>
+          <div class="meta-cluster">
+            <span class="badge">{{ tag.project_count }} projects</span>
+            <span class="badge">{{ tag.task_count }} tasks</span>[0m
+[35m[3mexec[0m[0m
+[1m/bin/bash -lc "sed -n '1,220p' apps/project-tracker/templates/tracker/partials/tag_edit_placeholder.html"[0m in /home/sundaram/code/temp/test[32m succeeded in 0ms:[0m
+[2m<div id="tag-edit-form-region"></div>[0m
+[35m[3mexec[0m[0m
+[1m/bin/bash -lc "sed -n '1,260p' apps/project-tracker/templates/tracker/partials/tag_detail_panel.html"[0m in /home/sundaram/code/temp/test[32m succeeded in 0ms:[0m
+[2m<section class="panel">
+  {% if selected_tag %}
+    <div class="panel-heading">
+      <div>
+        <h2>Tag: {{ selected_tag.name }}</h2>
+        <p class="section-copy">Projects and tasks associated with this shared tracker tag.</p>
+      </div>
+      <div class="action-row">
+        <a
+          class="button-secondary"
+          href="{% url 'tracker:tag_update' selected_tag.id %}"
+          data-async-link
+        >Edit tag</a>
+        <form
+          action="{% url 'tracker:tag_delete' selected_tag.id %}"
+          method="post"
+          data-async-form
+          data-confirm="Delete {{ selected_tag.name }}?"
+        >
+          {% csrf_token %}[0m
+[35m[3mexec[0m[0m
+[1m/bin/bash -lc "sed -n '1,260p' apps/project-tracker/templates/tracker/project_detail.html"[0m in /home/sundaram/code/temp/test[32m succeeded in 0ms:[0m
+[2m{% extends "tracker/base.html" %}
+
+{% block title %}{{ project.name }}{% endblock %}
+
+{% block content %}
+  <div id="project-detail-region">
+    {% include "tracker/partials/project_detail_panel.html" %}
+  </div>
+
+  {% include "tracker/partials/project_edit_placeholder.html" %}
+  <div id="task-create-form-region">
+    {% include "tracker/partials/task_form_panel.html" with form=task_form form_action=task_create_url form_heading="Add a task" form_submit_label="Create task" %}
+  </div>
+  <div id="task-edit-form-region"></div>
+  <div id="task-list-region">
+    {% include "tracker/partials/task_list_panel.html" %}
+  </div>
+{% endblock %}[0m
+[35m[3mexec[0m[0m
+[1m/bin/bash -lc "sed -n '1,260p' apps/project-tracker/tracker/forms.py"[0m in /home/sundaram/code/temp/test[32m succeeded in 0ms:[0m
+[2mfrom django import forms
+
+from .models import Project, Tag, Task
+
+
+def _validate_choice(value: str, choices: list[tuple[str, str]], field_name: str) -> str:
+    valid_values = {choice for choice, _label in choices}
+    if value not in valid_values:
+        raise forms.ValidationError(f"Choose a valid {field_name}.")
+    return value
+
+
+class ProjectForm(forms.ModelForm):
+    class Meta:
+        model = Project
+        fields = ["name", "description", "status", "created_date", "tags"]
+        widgets = {
+            "created_date": forms.DateInput(attrs={"type": "date"}),
+        }
+[0m
+[35m[3mcodex[0m[0m
+The templates and tests are in place. I’m drilling into the response-building helpers now because the likely failure mode is not in the templates themselves, but in how the async swaps are assembled and applied across shared regions.
+[35m[3mexec[0m[0m
+[1m/bin/bash -lc "sed -n '340,760p' apps/project-tracker/tracker/views.py"[0m in /home/sundaram/code/temp/test[35m[3mexec[0m[0m
+[1m/bin/bash -lc "sed -n '1,340p' apps/project-tracker/tracker/views.py"[0m in /home/sundaram/code/temp/test[32m succeeded in 0ms:[0m
+[2mfrom django.db.models import Count, Prefetch, Q
+from django.http import HttpResponseNotAllowed
+from django.shortcuts import get_object_or_404, render
+from django.template.loader import render_to_string
+from django.urls import reverse
+from django.utils import timezone
+
+from .forms import ProjectForm, TagForm, TaskForm
+from .models import Project, Tag, Task
+
+
+def _project_list_queryset():
+    return (
+        Project.objects.annotate(
+            task_count=Count("tasks", distinct=True),
+            open_task_count=Count(
+                "tasks",
+                filter=~Q(tasks__status=Task.STATUS_DONE),
+                distinct=True,
+            ),[0m
+[32m succeeded in 0ms:[0m
+[2m                    ),
+                )
+            ],
+        )
+
+    if request.method != "POST":
+        return HttpResponseNotAllowed(["GET", "POST"])
+
+    form = ProjectForm(request.POST, instance=project)
+    if form.is_valid():
+        project = form.save()
+        project = get_object_or_404(_project_detail_queryset(), pk=project.pk)
+        return _render_mutation_response(
+            request,
+            [
+                (
+                    "#project-detail-region",
+                    "tracker/partials/project_detail_panel.html",
+                    {"project": project},
+                ),[0m
+[35m[3mexec[0m[0m
+[1m/bin/bash -lc "sed -n '1,220p' apps/project-tracker/templates/tracker/project_list.html"[0m in /home/sundaram/code/temp/test[32m succeeded in 0ms:[0m
+[2m{% extends "tracker/base.html" %}
+
+{% block title %}Projects{% endblock %}
+
+{% block content %}
+  <div id="project-create-form-region">
+    {% include "tracker/partials/project_form_panel.html" with form=project_form source_page="project_list" form_action=project_create_url form_heading="Add a project" form_submit_label="Create project" %}
+  </div>
+  <div id="project-list-region">
+    {% include "tracker/partials/project_list_panel.html" %}
+  </div>
+{% endblock %}[0m
+[35m[3mexec[0m[0m
+[1m/bin/bash -lc "sed -n '1,260p' apps/project-tracker/templates/tracker/dashboard.html"[0m in /home/sundaram/code/temp/test[32m succeeded in 0ms:[0m
+[2m{% extends "tracker/base.html" %}
+
+{% block title %}Project Tracker{% endblock %}
+
+{% block content %}
+  <div id="dashboard-project-create-form-region">
+    {% include "tracker/partials/project_form_panel.html" with form=project_form source_page="dashboard" form_action=project_create_url form_heading="Add a project" form_submit_label="Create project" %}
+  </div>
+  <div id="dashboard-stats-region">
+    {% include "tracker/partials/dashboard_stats_panel.html" %}
+  </div>
+  <div id="dashboard-recent-projects-region">
+    {% include "tracker/partials/dashboard_recent_projects_panel.html" %}
+  </div>
+{% endblock %}[0m
+[35m[3mexec[0m[0m
+[1m/bin/bash -lc "sed -n '1,260p' apps/project-tracker/templates/tracker/partials/task_form_panel.html"[0m in /home/sundaram/code/temp/test[35m[3mexec[0m[0m
+[1m/bin/bash -lc "sed -n '1,220p' apps/project-tracker/templates/tracker/partials/project_mutation_response.html"[0m in /home/sundaram/code/temp/test[32m succeeded in 0ms:[0m
+[2m{% for replacement in replacements %}
+  <template data-swap-target="{{ replacement.selector }}">{{ replacement.html|safe }}</template>
+{% endfor %}[0m
+[32m succeeded in 0ms:[0m
+[2m<section class="panel form-panel">
+  <div class="panel-heading">
+    <div>
+      <h2>{{ form_heading }}</h2>
+      <p class="section-copy">Task changes save through this project page without a full reload.</p>
+    </div>
+  </div>
+  <form
+    class="project-form"
+    action="{{ form_action }}"
+    method="post"
+    data-async-form
+  >
+    {% csrf_token %}
+    {% if form.non_field_errors %}
+      <div class="form-errors" role="alert">
+        {% for error in form.non_field_errors %}
+          <p>{{ error }}</p>
+        {% endfor %}
+      </div>[0m
+[35m[3mexec[0m[0m
+[1m/bin/bash -lc "sed -n '1,220p' apps/project-tracker/templates/tracker/partials/task_list_placeholder.html"[0m in /home/sundaram/code/temp/test[35m[3mexec[0m[0m
+[1m/bin/bash -lc "sed -n '1,260p' apps/project-tracker/templates/tracker/partials/task_list_panel.html"[0m in /home/sundaram/code/temp/test[32m succeeded in 0ms:[0m
+[2m<section class="panel">
+  <div class="panel-heading">
+    <div>
+      <h2>Tasks</h2>
+      <p class="section-copy">Tasks assigned to this project, including due dates and shared tags.</p>
+    </div>
+  </div>
+  {% if project.tasks.all %}
+    <div class="stack">
+      {% for task in project.tasks.all %}
+        <article class="list-card">
+          <div class="list-card-main">
+            <h3>{{ task.title }}</h3>
+            <p>{{ task.get_status_display }} priority: {{ task.get_priority_display }}</p>
+          </div>
+          <div class="meta-cluster">
+            <span class="badge">{{ task.get_status_display }}</span>
+            <span class="meta-copy">Priority {{ task.get_priority_display }}</span>
+            {% if task.due_date %}
+              <span class="meta-copy">Due {{ task.due_date }}</span>[0m
+[32m succeeded in 0ms:[0m
+[2m<div id="task-list-region"></div>[0m
+[35m[3mexec[0m[0m
+[1m/bin/bash -lc "sed -n '1,220p' apps/project-tracker/templates/tracker/partials/task_create_placeholder.html"[0m in /home/sundaram/code/temp/test[32m succeeded in 0ms:[0m
+[2m<div id="task-create-form-region"></div>[0m
+[35m[3mcodex[0m[0m
+I’ve checked the tag-specific pieces. The last pass is parity on the older project/task regions to make sure the shared `parseAndSwap` change still does the right thing when fragments either do or do not include their wrapper node.
+[35m[3mexec[0m[0m
+[1m/bin/bash -lc "sed -n '1,220p' apps/project-tracker/templates/tracker/partials/project_edit_placeholder.html"[0m in /home/sundaram/code/temp/test[32m succeeded in 0ms:[0m
+[2m<div id="project-edit-form-region"></div>[0m
+[35m[3mexec[0m[0m
+[1m/bin/bash -lc "sed -n '1,260p' apps/project-tracker/templates/tracker/partials/project_form_panel.html"[0m in /home/sundaram/code/temp/test[32m succeeded in 0ms:[0m
+[2m<section class="panel form-panel">
+  <div class="panel-heading">
+    <div>
+      <h2>{{ form_heading }}</h2>
+      <p class="section-copy">Project changes save through the current page without a full reload.</p>
+    </div>
+  </div>
+  <form
+    class="project-form"
+    action="{{ form_action }}"
+    method="post"
+    data-async-form
+  >
+    {% csrf_token %}
+    <input type="hidden" name="source_page" value="{{ source_page }}">
+    {% if form.non_field_errors %}
+      <div class="form-errors" role="alert">
+        {% for error in form.non_field_errors %}
+          <p>{{ error }}</p>
+        {% endfor %}[0m
+[35m[3mexec[0m[0m
+[1m/bin/bash -lc "sed -n '1,260p' apps/project-tracker/templates/tracker/partials/project_list_panel.html"[0m in /home/sundaram/code/temp/test[32m succeeded in 0ms:[0m
+[2m<section class="panel">
+  <div class="panel-heading">
+    <div>
+      <h2>Projects</h2>
+      <p class="section-copy">Every tracked project with its current status, tags, and task totals.</p>
+    </div>
+    <a class="inline-link" href="{% url 'tracker:dashboard' %}">Back to dashboard</a>
+  </div>
+  {% if projects %}
+    <div class="stack">
+      {% for project in projects %}
+        {% include "tracker/partials/project_card.html" with source_page="project_list" %}
+      {% endfor %}
+    </div>
+  {% else %}
+    <p class="empty-state">No projects have been created yet.</p>
+  {% endif %}
+</section>[0m
+[35m[3mexec[0m[0m
+[1m/bin/bash -lc "sed -n '1,260p' apps/project-tracker/templates/tracker/partials/project_deleted_panel.html"[0m in /home/sundaram/code/temp/test[32m succeeded in 0ms:[0m
+[2m<section class="panel">
+  <div class="panel-heading">
+    <div>
+      <h2>Project deleted</h2>
+      <p class="section-copy">{{ project_name }} was removed without leaving the current page.</p>
+    </div>
+    <a class="inline-link" href="{% url 'tracker:project_list' %}">Back to projects</a>
+  </div>
+</section>[0m
+[35m[3mexec[0m[0m
+[1m/bin/bash -lc "sed -n '1,260p' apps/project-tracker/tracker/tests/test_domain.py"[0m in /home/sundaram/code/temp/test[32m succeeded in 0ms:[0m
+[2mfrom datetime import date
+
+from django.core.exceptions import ValidationError
+from django.test import TestCase
+
+from tracker.forms import ProjectForm, TagForm, TaskForm
+from tracker.models import Project, Tag, Task
+
+
+class TrackerModelTests(TestCase):
+    def test_project_and_task_support_tag_assignment(self):
+        project = Project.objects.create(
+            name="Launch site",
+            description="Ship the marketing site.",
+            status=Project.STATUS_ACTIVE,
+        )
+        task = Task.objects.create(
+            project=project,
+            title="Write copy",
+            status=Task.STATUS_TODO,[0m
+[35m[3mcodex[0m[0m
+I’m not finding a correctness regression in the tag slice on code inspection. I’m doing one final verification pass with static checks and then I’ll write the validator outcome, handoff, and baton updates required by the repo workflow.
+[35m[3mexec[0m[0m
+[1m/bin/bash -lc "sed -n '1,260p' ai/iterations/ITER-0001.md"[0m in /home/sundaram/code/temp/test[32m succeeded in 0ms:[0m
+[2m# ITER-0001 Decision Log
+
+| Timestamp | Role | Decision | Why |
+|-----------|------|----------|-----|
+| 2026-03-11 | PRODUCT_OWNER | Defined the one-page product requirements from the project goal and handed off for engineering judgment review | The workflow needs a concrete scope and acceptance baseline before architecture and planning can proceed |
+| 2026-03-11 | SENIOR_JUDGMENTAL_ENGINEER | Locked simplification guardrails around a single Django + SQLite + vanilla JS modular monolith and warned against framework/platform drift | The architect needs explicit constraints so the design stays aligned with the product goal instead of inheriting conflicting default stack preferences |
+| 2026-03-11 | ARCHITECT | Defined a single-project Django architecture centered on one product app, server-rendered templates, and HTML-partial based no-reload CRUD flows | The planner and developer need concrete boundaries, file targets, and implementation tradeoffs before breaking work into execution items |
+| 2026-03-11 | PLANNER | Broke delivery into scaffold, domain, page, async CRUD, and test slices and activated the scaffold item for development | The developer needs a small implementation-ready first step with explicit file targets before starting code changes |
+| 2026-03-12 | DEV | Scaffolded the Django project baseline with one tracker app, routed a rendered dashboard page, and added a smoke test for the root view | ITEM-0001 required an end-to-end project skeleton before later slices can add models, pages, and async CRUD behavior |
+| 2026-03-12 | VALIDATOR | Accepted the scaffold baseline as meeting ITEM-0001 acceptance criteria and handed off to review with an environment caveat on Django-dependent tests | The slice is structurally correct and free of scope drift, but full runtime validation remains blocked until Django is installed in the workspace |
+| 2026-03-12 | REVIEWER | Marked ITEM-0001 done and returned the baton to planning for the next implementation slice | The scaffold meets the locked architecture and acceptance criteria, and the blocked Django test run is an environment limitation rather than a gap in the delivered slice |
+| 2026-03-12 | PLANNER | Activated ITEM-0002 for domain model, form, admin, and migration work and handed off implementation to DEV | The scaffold is complete, and the domain layer is the next dependency needed before server-rendered pages and no-reload CRUD flows can be built |
+| 2026-03-12 | DEV | Implemented tracker domain models, forms, admin registration, a manual initial migration, and domain-focused tests for ITEM-0002 | The next slices depend on concrete project, task, and tag persistence plus validated form surfaces inside the existing Django app |
+| 2026-03-12 | VALIDATOR | Accepted the domain model slice for ITEM-0002 and handed off to review with a documented Django-environment caveat | The implemented models, forms, admin wiring, and manual migration align with the locked requirements, and the remaining verification gap is limited to missing Django in the workspace |
+| 2026-03-12 | REVIEWER | Marked ITEM-0002 done and returned the baton to planning for the next implementation slice | The domain models, forms, admin wiring, and initial migration satisfy the locked slice, and the blocked Django runtime checks remain an environment caveat rather than a delivered-code gap |
+| 2026-03-12 | PLANNER | Activated ITEM-0003 for server-rendered dashboard, project list/detail, and tag detail page implementation and handed off to DEV | The domain layer is accepted, so the next dependency-ready slice is the read-only page surface that prepares the app for later no-reload CRUD work |
+| 2026-03-11 | DEV | Implemented ORM-backed dashboard aggregates, project list/detail and tag detail pages, and focused view tests for ITEM-0003 | The read-only server-rendered page slice now uses the accepted domain models directly and is ready for validator review, with Django runtime execution still blocked by the missing package in the workspace |
+| 2026-03-12 | VALIDATOR | Accepted the read-only page slice for ITEM-0003 and handed off to review with the Django-environment caveat preserved | Static validation passed, acceptance criteria are met by inspection, and the only blocked verification step is the missing Django package in the workspace |
+| 2026-03-12 | REVIEWER | Marked ITEM-0003 done and returned the baton to planning for the next implementation slice | The read-only tracker pages satisfy the locked acceptance criteria without scope drift, and the blocked Django runtime checks remain an environment caveat rather than a delivered-code gap |
+| 2026-03-12 | PLANNER | Split the async CRUD epic into project and task/tag mutation slices, activated ITEM-0004, and handed implementation to DEV | The original no-reload CRUD item was too large for one safe pass, and project mutations are the smallest vertical slice that builds directly on the accepted read-only pages |[0m
+[35m[3mexec[0m[0m
+[1m/bin/bash -lc "sed -n '1,260p' scripts/generate-next-agent.sh"[0m in /home/sundaram/code/temp/test[32m succeeded in 0ms:[0m
+[2m#!/usr/bin/env bash
+set -euo pipefail
+#
+# Usage: ./scripts/generate-next-agent.sh <ROLE> [--notes "context"] [--return-to "ROLE"]
+#
+# Generates ai/next_agent.yaml with the correct config for the given role.
+# Pass --notes to include handoff context (what was done, what to watch for).
+# Pass --return-to to specify which role the baton returns to (used with HUMAN).
+# Called by each role prompt at handoff time so agents don't hand-write YAML.
+
+ROOT="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)"
+cd "$ROOT"
+
+ROLE=""
+NOTES=""
+RETURN_TO=""
+
+# Parse args
+while [[ $# -gt 0 ]]; do
+  case "$1" in[0m
+[35m[3mexec[0m[0m
+[1m/bin/bash -lc 'python3 -m py_compile $(find apps/project-tracker -name '"'*.py' | sort)"[0m in /home/sundaram/code/temp/test[32m succeeded in 0ms:[0m
+[2m[0m
+[35m[3mexec[0m[0m
+[1m/bin/bash -lc 'python3 apps/project-tracker/manage.py test tracker.tests.test_views'[0m in /home/sundaram/code/temp/test[31m exited 1 in 0ms:[0m
+[2mTraceback (most recent call last):
+  File "/home/sundaram/code/temp/test/apps/project-tracker/manage.py", line 14, in <module>
+    main()
+  File "/home/sundaram/code/temp/test/apps/project-tracker/manage.py", line 8, in main
+    from django.core.management import execute_from_command_line
+ModuleNotFoundError: No module named 'django'[0m
+[35m[3mcodex[0m[0m
+I’ve finished the static verification. The slice looks acceptable: the tag management routes and partial swaps line up, the shared JS helper still preserves region wrappers for repeated mutations, and the only blocked check remains the missing Django runtime.
+[35m[3mexec[0m[0m
+[1m/bin/bash -lc 'tail -n 80 ai/review.md'[0m in /home/sundaram/code/temp/test[32m succeeded in 0ms:[0m
+[2m## Known Risks
+
+- Runtime validation of the new task mutation views and templates is still blocked until Django is installed in the workspace.
+- The async task CRUD flow depends on the shipped selector contract between server-rendered partial responses and DOM region IDs on `project_detail.html`, so validator should inspect those selectors together.
+
+## Validator Outcome
+
+- Result: FAIL for `ITEM-0005`.
+- Acceptance criteria check:
+  - `tracker/views.py` adds task create, update, and delete endpoints under project detail routes and keeps the implementation inside the existing Django app with HTML partial responses and the established vanilla JS swap contract.
+  - `TaskForm` no longer exposes cross-project reassignment, so task ownership is correctly fixed by the URL-driven project context in the task mutation views.
+  - `project_detail.html` and the new task partials provide stable swap regions for task create, task edit, and task list updates, and the focused view tests cover the intended success and invalid-create paths by inspection.
+- Regression check:
+  - Regression found: deleting a project from the detail page now leaves stale task create, task edit, and task list regions rendered on screen because `project_detail.html` moved those regions outside `#project-detail-region`, but `project_delete()` still only replaces `#project-detail-region` and `#project-edit-form-region`.
+  - This leaves visible controls pointing at deleted-project task endpoints after project deletion, which breaks the no-reload detail-page flow and is not covered by the current delete test.
+
+## Validation Evidence
+
+- `python3 -m py_compile $(find apps/project-tracker -name '*.py' | sort)` passed.
+- `python3 apps/project-tracker/manage.py test tracker.tests.test_views` failed in the workspace with `ModuleNotFoundError: No module named 'django'`.[0m
+[35m[3mexec[0m[0m
+[1m/bin/bash -lc 'tail -n 40 ai/next_agent.md'[0m in /home/sundaram/code/temp/test[32m succeeded in 0ms:[0m
+[2m- If role mismatch with `ai/active_agent.txt`, print: `WAITING FOR BATON`
+
+## Handoff Notes
+
+- Active item remains `ITEM-0006` "Add no-reload tag CRUD interactions".
+- Implemented a dedicated tag management surface at `apps/project-tracker/templates/tracker/tag_detail.html` and added a `tags/` index route so the page can render with or without a selected tag.
+- Added tag CRUD endpoints in `apps/project-tracker/tracker/views.py` and `apps/project-tracker/tracker/urls.py`:
+  - `tag_list`
+  - `tag_create`
+  - `tag_update` (`GET` loads edit form partial, `POST` saves)
+  - `tag_delete`
+  - `tag_detail` now returns partial swaps for async selection requests and full-page render for normal navigation
+- Added reusable tag partials:
+  - `templates/tracker/partials/tag_form_panel.html`
+  - `templates/tracker/partials/tag_list_panel.html`
+  - `templates/tracker/partials/tag_detail_panel.html`
+  - `templates/tracker/partials/tag_edit_placeholder.html`
+- Updated `static/tracker/app.js` so selector-targeted swaps preserve region wrapper IDs when the replacement fragment does not include the wrapper. This is necessary for repeated tag mutations and also affects existing project/task mutation regions.
+- Updated `static/tracker/app.css` and `templates/tracker/base.html` for the tag management layout and nav link.
+- Extended `tracker/tests/test_views.py` with focused tag tests:[0m
+[35m[3mcodex[0m[0m
+I’m writing the validator record and handoff files now. I’m keeping the baton flow exactly aligned with `ai/next_agent.yaml`: update the review log, append the iteration decision, prepare reviewer context, flip `ai/active_agent.txt`, and then emit the exact handoff message.
+[3m[35mfile update[0m[0m
+[35mM /home/sundaram/code/temp/test/ai/iterations/ITER-0001.md[0m
+@@ -32 +32,2 @@
+ | 2026-03-12 | DEV | Implemented no-reload tag CRUD on a dedicated management surface, added focused tag mutation tests, and hardened the shared DOM swap helper to preserve region IDs across repeated async updates | ITEM-0006 required server-rendered tag create, update, and delete flows that reuse the existing partial-response contract, and repeated tag mutations depend on stable swap-region selectors |
+[32m+| 2026-03-12 | VALIDATOR | Accepted ITEM-0006 for reviewer handoff after inspecting the tag-region swap contract, full-page tag routing, and shared swap-helper behavior | The tag CRUD slice meets the active-item acceptance criteria without scope drift, and the only remaining verification gap is the workspace-level missing-Django runtime limitation |[0m
+[35mM /home/sundaram/code/temp/test/ai/next_agent.md[0m
+@@ -2,4 +2,4 @@
+ 
+[31m-- Current role: `VALIDATOR`[0m
+[31m-- Prompt: `ai/prompts/05-validator.md`[0m
+[32m+- Current role: `REVIEWER`[0m
+[32m+- Prompt: `ai/prompts/06-reviewer.md`[0m
+ - Execution command for Codex sessions: **Follow `ai/next_agent.yaml` exactly.**
+@@ -10,31 +10,29 @@
+ - Active item remains `ITEM-0006` "Add no-reload tag CRUD interactions".
+[31m-- Implemented a dedicated tag management surface at `apps/project-tracker/templates/tracker/tag_detail.html` and added a `tags/` index route so the page can render with or without a selected tag.[0m
+[31m-- Added tag CRUD endpoints in `apps/project-tracker/tracker/views.py` and `apps/project-tracker/tracker/urls.py`:[0m
+[32m+- Validator result: PASS.[0m
+[32m+- Accepted by inspection because the tag management slice meets the locked acceptance criteria and the shared swap-helper change does not introduce an observed regression on the existing project/task mutation surfaces.[0m
+[32m+[0m
+[32m+## What Was Validated[0m
+[32m+[0m
+[32m+- `tracker/views.py` and `tracker/urls.py` now provide:[0m
+   - `tag_list`
+[32m+  - `tag_detail`[0m
+   - `tag_create`
+[31m-  - `tag_update` (`GET` loads edit form partial, `POST` saves)[0m
+[32m+  - `tag_update`[0m
+   - `tag_delete`
+[31m-  - `tag_detail` now returns partial swaps for async selection requests and full-page render for normal navigation[0m
+[31m-- Added reusable tag partials:[0m
+[31m-  - `templates/tracker/partials/tag_form_panel.html`[0m
+[31m-  - `templates/tracker/partials/tag_list_panel.html`[0m
+[31m-  - `templates/tracker/partials/tag_detail_panel.html`[0m
+[31m-  - `templates/tracker/partials/tag_edit_placeholder.html`[0m
+[31m-- Updated `static/tracker/app.js` so selector-targeted swaps preserve region wrapper IDs when the replacement fragment does not include the wrapper. This is necessary for repeated tag mutations and also affects existing project/task mutation regions.[0m
+[31m-- Updated `static/tracker/app.css` and `templates/tracker/base.html` for the tag management layout and nav link.[0m
+[31m-- Extended `tracker/tests/test_views.py` with focused tag tests:[0m
+[31m-  - management page render without selection[0m
+[31m-  - create success[0m
+[31m-  - create invalid[0m
+[31m-  - update form load[0m
+[31m-  - update success[0m
+[31m-  - delete success[0m
+[31m-[0m
+[31m-## Validation Targets[0m
+[31m-[0m
+[31m-- Inspect the tag selector contract:[0m
+[31m-  - page regions: `#tag-create-form-region`, `#tag-detail-region`, `#tag-edit-form-region`, `#tag-list-region`[0m
+[31m-  - async responses replace the correct subset of those regions for create, selection, update, and delete[0m
+[31m-- Inspect the shared swap-helper change in `static/tracker/app.js` for regressions on the existing project/task async flows, since this now uses `innerHTML` unless the returned fragment root matches the target wrapper ID.[0m
+[31m-- Confirm `tag_detail` still works as a normal full-page route when reached from project/task tag links.[0m
+[32m+- `templates/tracker/tag_detail.html` exposes four stable async regions:[0m
+[32m+  - `#tag-create-form-region`[0m
+[32m+  - `#tag-detail-region`[0m
+[32m+  - `#tag-edit-form-region`[0m
+[32m+  - `#tag-list-region`[0m
+[32m+- Async selector contract matches the flow:[0m
+[32m+  - create swaps create/list/detail/edit reset[0m
+[32m+  - selection swaps list/detail/edit reset[0m
+[32m+  - update swaps list/detail/edit reset[0m
+[32m+  - delete swaps create/list/detail/edit reset[0m
+[32m+- Direct navigation contract is preserved:[0m
+[32m+  - project/task tag chips still link normally to `tag_detail`[0m
+[32m+  - `tag_detail()` returns a full page for normal requests and partial swaps only for XHR[0m
+[32m+- Shared JS helper check:[0m
+[32m+  - `static/tracker/app.js` replaces the wrapper only when the returned fragment root already matches the target wrapper ID[0m
+[32m+  - otherwise it updates `innerHTML`, which preserves the existing region IDs used by repeated project/task/tag swaps[0m
+ 
+@@ -45 +43,6 @@
+   - failure: `ModuleNotFoundError: No module named 'django'`
+[32m+[0m
+[32m+## Reviewer Focus[0m
+[32m+[0m
+[32m+- Confirm the tag CRUD slice should be marked done despite the unchanged environment caveat blocking Django runtime tests.[0m
+[32m+- Keep an eye on the shared `app.js` helper change because it affects all async mutation surfaces, although validator inspection did not find a parity break.[0m
+[35mM /home/sundaram/code/temp/test/ai/active_agent.txt[0m
+@@ -1 +1 @@
+[31m-VALIDATOR[0m
+[32m+REVIEWER[0m
+[35mM /home/sundaram/code/temp/test/ai/review.md[0m
+@@ -271 +271,28 @@
+ - No scope drift found in the revision: the change stays inside the existing Django tracker app, preserves the HTML partial swap contract, and does not introduce new framework or architecture surface beyond the targeted delete-response fix.
+[32m+[0m
+[32m+## Validator Outcome[0m
+[32m+[0m
+[32m+- Result: PASS for `ITEM-0006`.[0m
+[32m+- Acceptance criteria check:[0m
+[32m+  - `tracker/views.py` and `tracker/urls.py` add a dedicated tag management surface with create, update, delete, list, and detail flows that stay inside the existing Django tracker app and use HTML partial responses instead of a new frontend layer.[0m
+[32m+  - `tag_detail.html` and the new tag partials expose stable async swap regions for `#tag-create-form-region`, `#tag-detail-region`, `#tag-edit-form-region`, and `#tag-list-region`, and the selector coverage matches the intended create, selection, update, and delete flows.[0m
+[32m+  - `tag_detail()` still serves a normal full-page route for direct navigation from project/task tag links while returning partial swaps for async selection requests.[0m
+[32m+  - `static/tracker/app.js` preserves wrapper IDs for repeated region swaps by replacing the wrapper only when the returned fragment root matches the target ID and otherwise updating `innerHTML`, which remains compatible with the existing project and task mutation regions.[0m
+[32m+  - Focused view tests cover tag management rendering plus successful and invalid tag mutations by inspection.[0m
+[32m+- Regression check:[0m
+[32m+  - No correctness regression found on inspection in the shared swap-helper change. Existing project/task surfaces still target stable wrapper IDs, and the new helper behavior preserves those wrappers when the returned partial omits them.[0m
+[32m+  - No scope drift found: the slice stays within the existing single Django app, uses plain templates and vanilla JS, and does not introduce DRF, extra apps, or speculative architecture.[0m
+[32m+[0m
+[32m+## Validation Evidence[0m
+[32m+[0m
+[32m+- `python3 -m py_compile $(find apps/project-tracker -name '*.py' | sort)` passed.[0m
+[32m+- `python3 apps/project-tracker/manage.py test tracker.tests.test_views` failed in the workspace with `ModuleNotFoundError: No module named 'django'`.[0m
+[32m+- Code inspection evidence:[0m
+[32m+  - `tag_create()` returns swaps for `#tag-create-form-region`, `#tag-list-region`, `#tag-detail-region`, and `#tag-edit-form-region`, which matches the management page layout.[0m
+[32m+  - `tag_detail()` returns partial swaps for list/detail/edit reset on async selection and a full-page render for normal navigation, preserving direct-link behavior from project/task surfaces.[0m
+[32m+  - `parseAndSwap()` keeps region wrapper IDs intact when the replacement fragment does not include them, which is the contract used by the project/task/tag mutation partials.[0m
+[32m+[0m
+[32m+## Known Risks[0m
+[32m+[0m
+[32m+- Runtime validation of the new tag CRUD views and templates is still blocked until Django is installed in the workspace.[0m
+[32m+- The focused tag tests are present in `tracker/tests/test_views.py`, but they could not be executed end to end in this workspace because Django is unavailable.[0m
+[32mapply_patch(auto_approved=true) exited 0 in 7ms:[0m
+[2mSuccess. Updated the following files:[0m
+[2mM /home/sundaram/code/temp/test/ai/review.md[0m
+[2mM /home/sundaram/code/temp/test/ai/iterations/ITER-0001.md[0m
+[2mM /home/sundaram/code/temp/test/ai/next_agent.md[0m
+[2mM /home/sundaram/code/temp/test/ai/active_agent.txt[0m
+[3m[35mfile update:[0m[0m
+diff --git a/ai/active_agent.txt b/ai/active_agent.txt
+index 925a277add2e0889531e063e180e94c062e5dbb6..9b1cdc0e7e5ff55ba45e80b0786b46c37c9c32ac
+--- a/ai/active_agent.txt
++++ b/ai/active_agent.txt
+@@ -1 +1 @@
+-VALIDATOR
++REVIEWER
+diff --git a/ai/iterations/ITER-0001.md b/ai/iterations/ITER-0001.md
+index 4f41836793183946c76c3515057c3610978a228c..4099b0311683a50be436b73cb5f7cebc4849eaa1
+--- a/ai/iterations/ITER-0001.md
++++ b/ai/iterations/ITER-0001.md
+@@ -30,3 +30,4 @@
+ | 2026-03-12 | REVIEWER | Marked ITEM-0005 done and returned the baton to planning for the next backlog item | The revised task CRUD slice resolves the previously rejected project-delete regression without scope drift, and the only remaining gap is the documented workspace-level Django runtime limitation |
+ | 2026-03-12 | PLANNER | Activated ITEM-0006 for no-reload tag CRUD on a dedicated server-rendered tag management surface and handed implementation to DEV | Task CRUD is accepted, and tag entity mutations are the remaining async CRUD slice needed before the final coverage and validation pass |
+ | 2026-03-12 | DEV | Implemented no-reload tag CRUD on a dedicated management surface, added focused tag mutation tests, and hardened the shared DOM swap helper to preserve region IDs across repeated async updates | ITEM-0006 required server-rendered tag create, update, and delete flows that reuse the existing partial-response contract, and repeated tag mutations depend on stable swap-region selectors |
++| 2026-03-12 | VALIDATOR | Accepted ITEM-0006 for reviewer handoff after inspecting the tag-region swap contract, full-page tag routing, and shared swap-helper behavior | The tag CRUD slice meets the active-item acceptance criteria without scope drift, and the only remaining verification gap is the workspace-level missing-Django runtime limitation |
+diff --git a/ai/next_agent.md b/ai/next_agent.md
+index 912e20e06c626d6b5b0a3aab8e11df5367c684d8..c89b739d32d7b75b64044ef65880c5255795310d
+--- a/ai/next_agent.md
++++ b/ai/next_agent.md
+@@ -1,45 +1,48 @@
+ # Next Agent
+ 
+-- Current role: `VALIDATOR`
+-- Prompt: `ai/prompts/05-validator.md`
++- Current role: `REVIEWER`
++- Prompt: `ai/prompts/06-reviewer.md`
+ - Execution command for Codex sessions: **Follow `ai/next_agent.yaml` exactly.**
+ - If role mismatch with `ai/active_agent.txt`, print: `WAITING FOR BATON`
+ 
+ ## Handoff Notes
+ 
+ - Active item remains `ITEM-0006` "Add no-reload tag CRUD interactions".
+-- Implemented a dedicated tag management surface at `apps/project-tracker/templates/tracker/tag_detail.html` and added a `tags/` index route so the page can render with or without a selected tag.
+-- Added tag CRUD endpoints in `apps/project-tracker/tracker/views.py` and `apps/project-tracker/tracker/urls.py`:
++- Validator result: PASS.
++- Accepted by inspection because the tag management slice meets the locked acceptance criteria and the shared swap-helper change does not introduce an observed regression on the existing project/task mutation surfaces.
++
++## What Was Validated
++
++- `tracker/views.py` and `tracker/urls.py` now provide:
+   - `tag_list`
++  - `tag_detail`
+   - `tag_create`
+-  - `tag_update` (`GET` loads edit form partial, `POST` saves)
++  - `tag_update`
+   - `tag_delete`
+-  - `tag_detail` now returns partial swaps for async selection requests and full-page render for normal navigation
+-- Added reusable tag partials:
+-  - `templates/tracker/partials/tag_form_panel.html`
+-  - `templates/tracker/partials/tag_list_panel.html`
+-  - `templates/tracker/partials/tag_detail_panel.html`
+-  - `templates/tracker/partials/tag_edit_placeholder.html`
+-- Updated `static/tracker/app.js` so selector-targeted swaps preserve region wrapper IDs when the replacement fragment does not include the wrapper. This is necessary for repeated tag mutations and also affects existing project/task mutation regions.
+-- Updated `static/tracker/app.css` and `templates/tracker/base.html` for the tag management layout and nav link.
+-- Extended `tracker/tests/test_views.py` with focused tag tests:
+-  - management page render without selection
+-  - create success
+-  - create invalid
+-  - update form load
+-  - update success
+-  - delete success
+-
+-## Validation Targets
+-
+-- Inspect the tag selector contract:
+-  - page regions: `#tag-create-form-region`, `#tag-detail-region`, `#tag-edit-form-region`, `#tag-list-region`
+-  - async responses replace the correct subset of those regions for create, selection, update, and delete
+-- Inspect the shared swap-helper change in `static/tracker/app.js` for regressions on the existing project/task async flows, since this now uses `innerHTML` unless the returned fragment root matches the target wrapper ID.
+-- Confirm `tag_detail` still works as a normal full-page route when reached from project/task tag links.
++- `templates/tracker/tag_detail.html` exposes four stable async regions:
++  - `#tag-create-form-region`
++  - `#tag-detail-region`
++  - `#tag-edit-form-region`
++  - `#tag-list-region`
++- Async selector contract matches the flow:
++  - create swaps create/list/detail/edit reset
++  - selection swaps list/detail/edit reset
++  - update swaps list/detail/edit reset
++  - delete swaps create/list/detail/edit reset
++- Direct navigation contract is preserved:
++  - project/task tag chips still link normally to `tag_detail`
++  - `tag_detail()` returns a full page for normal requests and partial swaps only for XHR
++- Shared JS helper check:
++  - `static/tracker/app.js` replaces the wrapper only when the returned fragment root already matches the target wrapper ID
++  - otherwise it updates `innerHTML`, which preserves the existing region IDs used by repeated project/task/tag swaps
+ 
+ ## Verification Evidence
+ 
+ - Passed: `python3 -m py_compile $(find apps/project-tracker -name '*.py' | sort)`
+ - Blocked in workspace: `python3 apps/project-tracker/manage.py test tracker.tests.test_views`
+   - failure: `ModuleNotFoundError: No module named 'django'`
++
++## Reviewer Focus
++
++- Confirm the tag CRUD slice should be marked done despite the unchanged environment caveat blocking Django runtime tests.
++- Keep an eye on the shared `app.js` helper change because it affects all async mutation surfaces, although validator inspection did not find a parity break.
+diff --git a/ai/review.md b/ai/review.md
+index 4b8d46a3738a8cb4e0184ce744f08fa36c8e2a9d..06b1c34b177f50e1cad545e96a03d9b3e3e6ec3a
+--- a/ai/review.md
++++ b/ai/review.md
+@@ -269,3 +269,30 @@
+ - Accepted because the previously rejected regression is now explicitly fixed: `project_delete()` clears every task CRUD region that remains outside `#project-detail-region` on the detail page, so deleting a project no longer leaves stale task controls or task content behind.
+ - Accepted with the existing environment caveat unchanged: `python3 apps/project-tracker/manage.py test tracker.tests.test_views` is still blocked in this workspace by `ModuleNotFoundError: No module named 'django'`, so the reviewer decision is based on code inspection, the tightened focused delete test, and passing `py_compile` validation.
+ - No scope drift found in the revision: the change stays inside the existing Django tracker app, preserves the HTML partial swap contract, and does not introduce new framework or architecture surface beyond the targeted delete-response fix.
++
++## Validator Outcome
++
++- Result: PASS for `ITEM-0006`.
++- Acceptance criteria check:
++  - `tracker/views.py` and `tracker/urls.py` add a dedicated tag management surface with create, update, delete, list, and detail flows that stay inside the existing Django tracker app and use HTML partial responses instead of a new frontend layer.
++  - `tag_detail.html` and the new tag partials expose stable async swap regions for `#tag-create-form-region`, `#tag-detail-region`, `#tag-edit-form-region`, and `#tag-list-region`, and the selector coverage matches the intended create, selection, update, and delete flows.
++  - `tag_detail()` still serves a normal full-page route for direct navigation from project/task tag links while returning partial swaps for async selection requests.
++  - `static/tracker/app.js` preserves wrapper IDs for repeated region swaps by replacing the wrapper only when the returned fragment root matches the target ID and otherwise updating `innerHTML`, which remains compatible with the existing project and task mutation regions.
++  - Focused view tests cover tag management rendering plus successful and invalid tag mutations by inspection.
++- Regression check:
++  - No correctness regression found on inspection in the shared swap-helper change. Existing project/task surfaces still target stable wrapper IDs, and the new helper behavior preserves those wrappers when the returned partial omits them.
++  - No scope drift found: the slice stays within the existing single Django app, uses plain templates and vanilla JS, and does not introduce DRF, extra apps, or speculative architecture.
++
++## Validation Evidence
++
++- `python3 -m py_compile $(find apps/project-tracker -name '*.py' | sort)` passed.
++- `python3 apps/project-tracker/manage.py test tracker.tests.test_views` failed in the workspace with `ModuleNotFoundError: No module named 'django'`.
++- Code inspection evidence:
++  - `tag_create()` returns swaps for `#tag-create-form-region`, `#tag-list-region`, `#tag-detail-region`, and `#tag-edit-form-region`, which matches the management page layout.
++  - `tag_detail()` returns partial swaps for list/detail/edit reset on async selection and a full-page render for normal navigation, preserving direct-link behavior from project/task surfaces.
++  - `parseAndSwap()` keeps region wrapper IDs intact when the replacement fragment does not include them, which is the contract used by the project/task/tag mutation partials.
++
++## Known Risks
++
++- Runtime validation of the new tag CRUD views and templates is still blocked until Django is installed in the workspace.
++- The focused tag tests are present in `tracker/tests/test_views.py`, but they could not be executed end to end in this workspace because Django is unavailable.
+
+[3m[35mfile update:[0m[0m
+diff --git a/ai/active_agent.txt b/ai/active_agent.txt
+index 925a277add2e0889531e063e180e94c062e5dbb6..9b1cdc0e7e5ff55ba45e80b0786b46c37c9c32ac
+--- a/ai/active_agent.txt
++++ b/ai/active_agent.txt
+@@ -1 +1 @@
+-VALIDATOR
++REVIEWER
+diff --git a/ai/iterations/ITER-0001.md b/ai/iterations/ITER-0001.md
+index 4f41836793183946c76c3515057c3610978a228c..4099b0311683a50be436b73cb5f7cebc4849eaa1
+--- a/ai/iterations/ITER-0001.md
++++ b/ai/iterations/ITER-0001.md
+@@ -30,3 +30,4 @@
+ | 2026-03-12 | REVIEWER | Marked ITEM-0005 done and returned the baton to planning for the next backlog item | The revised task CRUD slice resolves the previously rejected project-delete regression without scope drift, and the only remaining gap is the documented workspace-level Django runtime limitation |
+ | 2026-03-12 | PLANNER | Activated ITEM-0006 for no-reload tag CRUD on a dedicated server-rendered tag management surface and handed implementation to DEV | Task CRUD is accepted, and tag entity mutations are the remaining async CRUD slice needed before the final coverage and validation pass |
+ | 2026-03-12 | DEV | Implemented no-reload tag CRUD on a dedicated management surface, added focused tag mutation tests, and hardened the shared DOM swap helper to preserve region IDs across repeated async updates | ITEM-0006 required server-rendered tag create, update, and delete flows that reuse the existing partial-response contract, and repeated tag mutations depend on stable swap-region selectors |
++| 2026-03-12 | VALIDATOR | Accepted ITEM-0006 for reviewer handoff after inspecting the tag-region swap contract, full-page tag routing, and shared swap-helper behavior | The tag CRUD slice meets the active-item acceptance criteria without scope drift, and the only remaining verification gap is the workspace-level missing-Django runtime limitation |
+diff --git a/ai/next_agent.md b/ai/next_agent.md
+index 912e20e06c626d6b5b0a3aab8e11df5367c684d8..c89b739d32d7b75b64044ef65880c5255795310d
+--- a/ai/next_agent.md
++++ b/ai/next_agent.md
+@@ -1,45 +1,48 @@
+ # Next Agent
+ 
+-- Current role: `VALIDATOR`
+-- Prompt: `ai/prompts/05-validator.md`
++- Current role: `REVIEWER`
++- Prompt: `ai/prompts/06-reviewer.md`
+ - Execution command for Codex sessions: **Follow `ai/next_agent.yaml` exactly.**
+ - If role mismatch with `ai/active_agent.txt`, print: `WAITING FOR BATON`
+ 
+ ## Handoff Notes
+ 
+ - Active item remains `ITEM-0006` "Add no-reload tag CRUD interactions".
+-- Implemented a dedicated tag management surface at `apps/project-tracker/templates/tracker/tag_detail.html` and added a `tags/` index route so the page can render with or without a selected tag.
+-- Added tag CRUD endpoints in `apps/project-tracker/tracker/views.py` and `apps/project-tracker/tracker/urls.py`:
++- Validator result: PASS.
++- Accepted by inspection because the tag management slice meets the locked acceptance criteria and the shared swap-helper change does not introduce an observed regression on the existing project/task mutation surfaces.
++
++## What Was Validated
++
++- `tracker/views.py` and `tracker/urls.py` now provide:
+   - `tag_list`
++  - `tag_detail`
+   - `tag_create`
+-  - `tag_update` (`GET` loads edit form partial, `POST` saves)
++  - `tag_update`
+   - `tag_delete`
+-  - `tag_detail` now returns partial swaps for async selection requests and full-page render for normal navigation
+-- Added reusable tag partials:
+-  - `templates/tracker/partials/tag_form_panel.html`
+-  - `templates/tracker/partials/tag_list_panel.html`
+-  - `templates/tracker/partials/tag_detail_panel.html`
+-  - `templates/tracker/partials/tag_edit_placeholder.html`
+-- Updated `static/tracker/app.js` so selector-targeted swaps preserve region wrapper IDs when the replacement fragment does not include the wrapper. This is necessary for repeated tag mutations and also affects existing project/task mutation regions.
+-- Updated `static/tracker/app.css` and `templates/tracker/base.html` for the tag management layout and nav link.
+-- Extended `tracker/tests/test_views.py` with focused tag tests:
+-  - management page render without selection
+-  - create success
+-  - create invalid
+-  - update form load
+-  - update success
+-  - delete success
+-
+-## Validation Targets
+-
+-- Inspect the tag selector contract:
+-  - page regions: `#tag-create-form-region`, `#tag-detail-region`, `#tag-edit-form-region`, `#tag-list-region`
+-  - async responses replace the correct subset of those regions for create, selection, update, and delete
+-- Inspect the shared swap-helper change in `static/tracker/app.js` for regressions on the existing project/task async flows, since this now uses `innerHTML` unless the returned fragment root matches the target wrapper ID.
+-- Confirm `tag_detail` still works as a normal full-page route when reached from project/task tag links.
++- `templates/tracker/tag_detail.html` exposes four stable async regions:
++  - `#tag-create-form-region`
++  - `#tag-detail-region`
++  - `#tag-edit-form-region`
++  - `#tag-list-region`
++- Async selector contract matches the flow:
++  - create swaps create/list/detail/edit reset
++  - selection swaps list/detail/edit reset
++  - update swaps list/detail/edit reset
++  - delete swaps create/list/detail/edit reset
++- Direct navigation contract is preserved:
++  - project/task tag chips still link normally to `tag_detail`
++  - `tag_detail()` returns a full page for normal requests and partial swaps only for XHR
++- Shared JS helper check:
++  - `static/tracker/app.js` replaces the wrapper only when the returned fragment root already matches the target wrapper ID
++  - otherwise it updates `innerHTML`, which preserves the existing region IDs used by repeated project/task/tag swaps
+ 
+ ## Verification Evidence
+ 
+ - Passed: `python3 -m py_compile $(find apps/project-tracker -name '*.py' | sort)`
+ - Blocked in workspace: `python3 apps/project-tracker/manage.py test tracker.tests.test_views`
+   - failure: `ModuleNotFoundError: No module named 'django'`
++
++## Reviewer Focus
++
++- Confirm the tag CRUD slice should be marked done despite the unchanged environment caveat blocking Django runtime tests.
++- Keep an eye on the shared `app.js` helper change because it affects all async mutation surfaces, although validator inspection did not find a parity break.
+diff --git a/ai/review.md b/ai/review.md
+index 4b8d46a3738a8cb4e0184ce744f08fa36c8e2a9d..06b1c34b177f50e1cad545e96a03d9b3e3e6ec3a
+--- a/ai/review.md
++++ b/ai/review.md
+@@ -269,3 +269,30 @@
+ - Accepted because the previously rejected regression is now explicitly fixed: `project_delete()` clears every task CRUD region that remains outside `#project-detail-region` on the detail page, so deleting a project no longer leaves stale task controls or task content behind.
+ - Accepted with the existing environment caveat unchanged: `python3 apps/project-tracker/manage.py test tracker.tests.test_views` is still blocked in this workspace by `ModuleNotFoundError: No module named 'django'`, so the reviewer decision is based on code inspection, the tightened focused delete test, and passing `py_compile` validation.
+ - No scope drift found in the revision: the change stays inside the existing Django tracker app, preserves the HTML partial swap contract, and does not introduce new framework or architecture surface beyond the targeted delete-response fix.
++
++## Validator Outcome
++
++- Result: PASS for `ITEM-0006`.
++- Acceptance criteria check:
++  - `tracker/views.py` and `tracker/urls.py` add a dedicated tag management surface with create, update, delete, list, and detail flows that stay inside the existing Django tracker app and use HTML partial responses instead of a new frontend layer.
++  - `tag_detail.html` and the new tag partials expose stable async swap regions for `#tag-create-form-region`, `#tag-detail-region`, `#tag-edit-form-region`, and `#tag-list-region`, and the selector coverage matches the intended create, selection, update, and delete flows.
++  - `tag_detail()` still serves a normal full-page route for direct navigation from project/task tag links while returning partial swaps for async selection requests.
++  - `static/tracker/app.js` preserves wrapper IDs for repeated region swaps by replacing the wrapper only when the returned fragment root matches the target ID and otherwise updating `innerHTML`, which remains compatible with the existing project and task mutation regions.
++  - Focused view tests cover tag management rendering plus successful and invalid tag mutations by inspection.
++- Regression check:
++  - No correctness regression found on inspection in the shared swap-helper change. Existing project/task surfaces still target stable wrapper IDs, and the new helper behavior preserves those wrappers when the returned partial omits them.
++  - No scope drift found: the slice stays within the existing single Django app, uses plain templates and vanilla JS, and does not introduce DRF, extra apps, or speculative architecture.
++
++## Validation Evidence
++
++- `python3 -m py_compile $(find apps/project-tracker -name '*.py' | sort)` passed.
++- `python3 apps/project-tracker/manage.py test tracker.tests.test_views` failed in the workspace with `ModuleNotFoundError: No module named 'django'`.
++- Code inspection evidence:
++  - `tag_create()` returns swaps for `#tag-create-form-region`, `#tag-list-region`, `#tag-detail-region`, and `#tag-edit-form-region`, which matches the management page layout.
++  - `tag_detail()` returns partial swaps for list/detail/edit reset on async selection and a full-page render for normal navigation, preserving direct-link behavior from project/task surfaces.
++  - `parseAndSwap()` keeps region wrapper IDs intact when the replacement fragment does not include them, which is the contract used by the project/task/tag mutation partials.
++
++## Known Risks
++
++- Runtime validation of the new tag CRUD views and templates is still blocked until Django is installed in the workspace.
++- The focused tag tests are present in `tracker/tests/test_views.py`, but they could not be executed end to end in this workspace because Django is unavailable.
+
+[35m[3mexec[0m[0m
+[1m/bin/bash -lc './scripts/generate-next-agent.sh REVIEWER --notes "validation results | PASS for ITEM-0006 | tag CRUD selector contract and shared swap-helper inspection passed; Django runtime tests still blocked by missing django"'[0m in /home/sundaram/code/temp/test[32m succeeded in 0ms:[0m
+[2mGenerated ai/next_agent.yaml for REVIEWER (next: PLANNER)[0m
+[3m[35mfile update:[0m[0m
+diff --git a/ai/active_agent.txt b/ai/active_agent.txt
+index 925a277add2e0889531e063e180e94c062e5dbb6..9b1cdc0e7e5ff55ba45e80b0786b46c37c9c32ac
+--- a/ai/active_agent.txt
++++ b/ai/active_agent.txt
+@@ -1 +1 @@
+-VALIDATOR
++REVIEWER
+diff --git a/ai/iterations/ITER-0001.md b/ai/iterations/ITER-0001.md
+index 4f41836793183946c76c3515057c3610978a228c..4099b0311683a50be436b73cb5f7cebc4849eaa1
+--- a/ai/iterations/ITER-0001.md
++++ b/ai/iterations/ITER-0001.md
+@@ -30,3 +30,4 @@
+ | 2026-03-12 | REVIEWER | Marked ITEM-0005 done and returned the baton to planning for the next backlog item | The revised task CRUD slice resolves the previously rejected project-delete regression without scope drift, and the only remaining gap is the documented workspace-level Django runtime limitation |
+ | 2026-03-12 | PLANNER | Activated ITEM-0006 for no-reload tag CRUD on a dedicated server-rendered tag management surface and handed implementation to DEV | Task CRUD is accepted, and tag entity mutations are the remaining async CRUD slice needed before the final coverage and validation pass |
+ | 2026-03-12 | DEV | Implemented no-reload tag CRUD on a dedicated management surface, added focused tag mutation tests, and hardened the shared DOM swap helper to preserve region IDs across repeated async updates | ITEM-0006 required server-rendered tag create, update, and delete flows that reuse the existing partial-response contract, and repeated tag mutations depend on stable swap-region selectors |
++| 2026-03-12 | VALIDATOR | Accepted ITEM-0006 for reviewer handoff after inspecting the tag-region swap contract, full-page tag routing, and shared swap-helper behavior | The tag CRUD slice meets the active-item acceptance criteria without scope drift, and the only remaining verification gap is the workspace-level missing-Django runtime limitation |
+diff --git a/ai/next_agent.md b/ai/next_agent.md
+index 912e20e06c626d6b5b0a3aab8e11df5367c684d8..c89b739d32d7b75b64044ef65880c5255795310d
+--- a/ai/next_agent.md
++++ b/ai/next_agent.md
+@@ -1,45 +1,48 @@
+ # Next Agent
+ 
+-- Current role: `VALIDATOR`
+-- Prompt: `ai/prompts/05-validator.md`
++- Current role: `REVIEWER`
++- Prompt: `ai/prompts/06-reviewer.md`
+ - Execution command for Codex sessions: **Follow `ai/next_agent.yaml` exactly.**
+ - If role mismatch with `ai/active_agent.txt`, print: `WAITING FOR BATON`
+ 
+ ## Handoff Notes
+ 
+ - Active item remains `ITEM-0006` "Add no-reload tag CRUD interactions".
+-- Implemented a dedicated tag management surface at `apps/project-tracker/templates/tracker/tag_detail.html` and added a `tags/` index route so the page can render with or without a selected tag.
+-- Added tag CRUD endpoints in `apps/project-tracker/tracker/views.py` and `apps/project-tracker/tracker/urls.py`:
++- Validator result: PASS.
++- Accepted by inspection because the tag management slice meets the locked acceptance criteria and the shared swap-helper change does not introduce an observed regression on the existing project/task mutation surfaces.
++
++## What Was Validated
++
++- `tracker/views.py` and `tracker/urls.py` now provide:
+   - `tag_list`
++  - `tag_detail`
+   - `tag_create`
+-  - `tag_update` (`GET` loads edit form partial, `POST` saves)
++  - `tag_update`
+   - `tag_delete`
+-  - `tag_detail` now returns partial swaps for async selection requests and full-page render for normal navigation
+-- Added reusable tag partials:
+-  - `templates/tracker/partials/tag_form_panel.html`
+-  - `templates/tracker/partials/tag_list_panel.html`
+-  - `templates/tracker/partials/tag_detail_panel.html`
+-  - `templates/tracker/partials/tag_edit_placeholder.html`
+-- Updated `static/tracker/app.js` so selector-targeted swaps preserve region wrapper IDs when the replacement fragment does not include the wrapper. This is necessary for repeated tag mutations and also affects existing project/task mutation regions.
+-- Updated `static/tracker/app.css` and `templates/tracker/base.html` for the tag management layout and nav link.
+-- Extended `tracker/tests/test_views.py` with focused tag tests:
+-  - management page render without selection
+-  - create success
+-  - create invalid
+-  - update form load
+-  - update success
+-  - delete success
+-
+-## Validation Targets
+-
+-- Inspect the tag selector contract:
+-  - page regions: `#tag-create-form-region`, `#tag-detail-region`, `#tag-edit-form-region`, `#tag-list-region`
+-  - async responses replace the correct subset of those regions for create, selection, update, and delete
+-- Inspect the shared swap-helper change in `static/tracker/app.js` for regressions on the existing project/task async flows, since this now uses `innerHTML` unless the returned fragment root matches the target wrapper ID.
+-- Confirm `tag_detail` still works as a normal full-page route when reached from project/task tag links.
++- `templates/tracker/tag_detail.html` exposes four stable async regions:
++  - `#tag-create-form-region`
++  - `#tag-detail-region`
++  - `#tag-edit-form-region`
++  - `#tag-list-region`
++- Async selector contract matches the flow:
++  - create swaps create/list/detail/edit reset
++  - selection swaps list/detail/edit reset
++  - update swaps list/detail/edit reset
++  - delete swaps create/list/detail/edit reset
++- Direct navigation contract is preserved:
++  - project/task tag chips still link normally to `tag_detail`
++  - `tag_detail()` returns a full page for normal requests and partial swaps only for XHR
++- Shared JS helper check:
++  - `static/tracker/app.js` replaces the wrapper only when the returned fragment root already matches the target wrapper ID
++  - otherwise it updates `innerHTML`, which preserves the existing region IDs used by repeated project/task/tag swaps
+ 
+ ## Verification Evidence
+ 
+ - Passed: `python3 -m py_compile $(find apps/project-tracker -name '*.py' | sort)`
+ - Blocked in workspace: `python3 apps/project-tracker/manage.py test tracker.tests.test_views`
+   - failure: `ModuleNotFoundError: No module named 'django'`
++
++## Reviewer Focus
++
++- Confirm the tag CRUD slice should be marked done despite the unchanged environment caveat blocking Django runtime tests.
++- Keep an eye on the shared `app.js` helper change because it affects all async mutation surfaces, although validator inspection did not find a parity break.
+diff --git a/ai/review.md b/ai/review.md
+index 4b8d46a3738a8cb4e0184ce744f08fa36c8e2a9d..06b1c34b177f50e1cad545e96a03d9b3e3e6ec3a
+--- a/ai/review.md
++++ b/ai/review.md
+@@ -269,3 +269,30 @@
+ - Accepted because the previously rejected regression is now explicitly fixed: `project_delete()` clears every task CRUD region that remains outside `#project-detail-region` on the detail page, so deleting a project no longer leaves stale task controls or task content behind.
+ - Accepted with the existing environment caveat unchanged: `python3 apps/project-tracker/manage.py test tracker.tests.test_views` is still blocked in this workspace by `ModuleNotFoundError: No module named 'django'`, so the reviewer decision is based on code inspection, the tightened focused delete test, and passing `py_compile` validation.
+ - No scope drift found in the revision: the change stays inside the existing Django tracker app, preserves the HTML partial swap contract, and does not introduce new framework or architecture surface beyond the targeted delete-response fix.
++
++## Validator Outcome
++
++- Result: PASS for `ITEM-0006`.
++- Acceptance criteria check:
++  - `tracker/views.py` and `tracker/urls.py` add a dedicated tag management surface with create, update, delete, list, and detail flows that stay inside the existing Django tracker app and use HTML partial responses instead of a new frontend layer.
++  - `tag_detail.html` and the new tag partials expose stable async swap regions for `#tag-create-form-region`, `#tag-detail-region`, `#tag-edit-form-region`, and `#tag-list-region`, and the selector coverage matches the intended create, selection, update, and delete flows.
++  - `tag_detail()` still serves a normal full-page route for direct navigation from project/task tag links while returning partial swaps for async selection requests.
++  - `static/tracker/app.js` preserves wrapper IDs for repeated region swaps by replacing the wrapper only when the returned fragment root matches the target ID and otherwise updating `innerHTML`, which remains compatible with the existing project and task mutation regions.
++  - Focused view tests cover tag management rendering plus successful and invalid tag mutations by inspection.
++- Regression check:
++  - No correctness regression found on inspection in the shared swap-helper change. Existing project/task surfaces still target stable wrapper IDs, and the new helper behavior preserves those wrappers when the returned partial omits them.
++  - No scope drift found: the slice stays within the existing single Django app, uses plain templates and vanilla JS, and does not introduce DRF, extra apps, or speculative architecture.
++
++## Validation Evidence
++
++- `python3 -m py_compile $(find apps/project-tracker -name '*.py' | sort)` passed.
++- `python3 apps/project-tracker/manage.py test tracker.tests.test_views` failed in the workspace with `ModuleNotFoundError: No module named 'django'`.
++- Code inspection evidence:
++  - `tag_create()` returns swaps for `#tag-create-form-region`, `#tag-list-region`, `#tag-detail-region`, and `#tag-edit-form-region`, which matches the management page layout.
++  - `tag_detail()` returns partial swaps for list/detail/edit reset on async selection and a full-page render for normal navigation, preserving direct-link behavior from project/task surfaces.
++  - `parseAndSwap()` keeps region wrapper IDs intact when the replacement fragment does not include them, which is the contract used by the project/task/tag mutation partials.
++
++## Known Risks
++
++- Runtime validation of the new tag CRUD views and templates is still blocked until Django is installed in the workspace.
++- The focused tag tests are present in `tracker/tests/test_views.py`, but they could not be executed end to end in this workspace because Django is unavailable.
+
+[35m[3mcodex[0m[0m
+The baton file is generated and the reviewer handoff is written. I’m doing a quick consistency check on the baton state before I finish, so the next role gets a clean start.
+[35m[3mexec[0m[0m
+[1m/bin/bash -lc 'cat ai/active_agent.txt'[0m in /home/sundaram/code/temp/test[35m[3mexec[0m[0m
+[1m/bin/bash -lc "sed -n '1,220p' ai/next_agent.yaml"[0m in /home/sundaram/code/temp/test[32m succeeded in 0ms:[0m
+[2mREVIEWER[0m
+[32m succeeded in 0ms:[0m
+[2mnext_role: REVIEWER
+prompt_file: ai/prompts/06-reviewer.md
+read:
+  - ai/active_item.yaml
+  - ai/backlog.yaml
+  - ai/review.md
+  - ai/decision-lock.yaml
+  - ai/constitution.yaml
+  - ai/goal.yaml
+  - ai/active_agent.txt
+  - ai/next_agent.md
+  - ai/user-questions.yaml
+allowed_edits:
+  - ai/review.md
+  - ai/backlog.yaml
+  - ai/active_item.yaml
+  - ai/decision-lock.yaml
+  - ai/user-questions.yaml
+  - ai/iterations/ITER-0001.md
+  - ai/active_agent.txt[0m
+[35m[3mexec[0m[0m
+[1m/bin/bash -lc 'tail -n 40 ai/iterations/ITER-0001.md'[0m in /home/sundaram/code/temp/test[32m succeeded in 0ms:[0m
+[2m# ITER-0001 Decision Log
+
+| Timestamp | Role | Decision | Why |
+|-----------|------|----------|-----|
+| 2026-03-11 | PRODUCT_OWNER | Defined the one-page product requirements from the project goal and handed off for engineering judgment review | The workflow needs a concrete scope and acceptance baseline before architecture and planning can proceed |
+| 2026-03-11 | SENIOR_JUDGMENTAL_ENGINEER | Locked simplification guardrails around a single Django + SQLite + vanilla JS modular monolith and warned against framework/platform drift | The architect needs explicit constraints so the design stays aligned with the product goal instead of inheriting conflicting default stack preferences |
+| 2026-03-11 | ARCHITECT | Defined a single-project Django architecture centered on one product app, server-rendered templates, and HTML-partial based no-reload CRUD flows | The planner and developer need concrete boundaries, file targets, and implementation tradeoffs before breaking work into execution items |
+| 2026-03-11 | PLANNER | Broke delivery into scaffold, domain, page, async CRUD, and test slices and activated the scaffold item for development | The developer needs a small implementation-ready first step with explicit file targets before starting code changes |
+| 2026-03-12 | DEV | Scaffolded the Django project baseline with one tracker app, routed a rendered dashboard page, and added a smoke test for the root view | ITEM-0001 required an end-to-end project skeleton before later slices can add models, pages, and async CRUD behavior |
+| 2026-03-12 | VALIDATOR | Accepted the scaffold baseline as meeting ITEM-0001 acceptance criteria and handed off to review with an environment caveat on Django-dependent tests | The slice is structurally correct and free of scope drift, but full runtime validation remains blocked until Django is installed in the workspace |
+| 2026-03-12 | REVIEWER | Marked ITEM-0001 done and returned the baton to planning for the next implementation slice | The scaffold meets the locked architecture and acceptance criteria, and the blocked Django test run is an environment limitation rather than a gap in the delivered slice |
+| 2026-03-12 | PLANNER | Activated ITEM-0002 for domain model, form, admin, and migration work and handed off implementation to DEV | The scaffold is complete, and the domain layer is the next dependency needed before server-rendered pages and no-reload CRUD flows can be built |
+| 2026-03-12 | DEV | Implemented tracker domain models, forms, admin registration, a manual initial migration, and domain-focused tests for ITEM-0002 | The next slices depend on concrete project, task, and tag persistence plus validated form surfaces inside the existing Django app |
+| 2026-03-12 | VALIDATOR | Accepted the domain model slice for ITEM-0002 and handed off to review with a documented Django-environment caveat | The implemented models, forms, admin wiring, and manual migration align with the locked requirements, and the remaining verification gap is limited to missing Django in the workspace |
+| 2026-03-12 | REVIEWER | Marked ITEM-0002 done and returned the baton to planning for the next implementation slice | The domain models, forms, admin wiring, and initial migration satisfy the locked slice, and the blocked Django runtime checks remain an environment caveat rather than a delivered-code gap |
+| 2026-03-12 | PLANNER | Activated ITEM-0003 for server-rendered dashboard, project list/detail, and tag detail page implementation and handed off to DEV | The domain layer is accepted, so the next dependency-ready slice is the read-only page surface that prepares the app for later no-reload CRUD work |
+| 2026-03-11 | DEV | Implemented ORM-backed dashboard aggregates, project list/detail and tag detail pages, and focused view tests for ITEM-0003 | The read-only server-rendered page slice now uses the accepted domain models directly and is ready for validator review, with Django runtime execution still blocked by the missing package in the workspace |
+| 2026-03-12 | VALIDATOR | Accepted the read-only page slice for ITEM-0003 and handed off to review with the Django-environment caveat preserved | Static validation passed, acceptance criteria are met by inspection, and the only blocked verification step is the missing Django package in the workspace |
+| 2026-03-12 | REVIEWER | Marked ITEM-0003 done and returned the baton to planning for the next implementation slice | The read-only tracker pages satisfy the locked acceptance criteria without scope drift, and the blocked Django runtime checks remain an environment caveat rather than a delivered-code gap |
+| 2026-03-12 | PLANNER | Split the async CRUD epic into project and task/tag mutation slices, activated ITEM-0004, and handed implementation to DEV | The original no-reload CRUD item was too large for one safe pass, and project mutations are the smallest vertical slice that builds directly on the accepted read-only pages |[0m
+[3m[35mfile update:[0m[0m
+diff --git a/ai/active_agent.txt b/ai/active_agent.txt
+index 925a277add2e0889531e063e180e94c062e5dbb6..9b1cdc0e7e5ff55ba45e80b0786b46c37c9c32ac
+--- a/ai/active_agent.txt
++++ b/ai/active_agent.txt
+@@ -1 +1 @@
+-VALIDATOR
++REVIEWER
+diff --git a/ai/iterations/ITER-0001.md b/ai/iterations/ITER-0001.md
+index 4f41836793183946c76c3515057c3610978a228c..4099b0311683a50be436b73cb5f7cebc4849eaa1
+--- a/ai/iterations/ITER-0001.md
++++ b/ai/iterations/ITER-0001.md
+@@ -30,3 +30,4 @@
+ | 2026-03-12 | REVIEWER | Marked ITEM-0005 done and returned the baton to planning for the next backlog item | The revised task CRUD slice resolves the previously rejected project-delete regression without scope drift, and the only remaining gap is the documented workspace-level Django runtime limitation |
+ | 2026-03-12 | PLANNER | Activated ITEM-0006 for no-reload tag CRUD on a dedicated server-rendered tag management surface and handed implementation to DEV | Task CRUD is accepted, and tag entity mutations are the remaining async CRUD slice needed before the final coverage and validation pass |
+ | 2026-03-12 | DEV | Implemented no-reload tag CRUD on a dedicated management surface, added focused tag mutation tests, and hardened the shared DOM swap helper to preserve region IDs across repeated async updates | ITEM-0006 required server-rendered tag create, update, and delete flows that reuse the existing partial-response contract, and repeated tag mutations depend on stable swap-region selectors |
++| 2026-03-12 | VALIDATOR | Accepted ITEM-0006 for reviewer handoff after inspecting the tag-region swap contract, full-page tag routing, and shared swap-helper behavior | The tag CRUD slice meets the active-item acceptance criteria without scope drift, and the only remaining verification gap is the workspace-level missing-Django runtime limitation |
+diff --git a/ai/next_agent.md b/ai/next_agent.md
+index 912e20e06c626d6b5b0a3aab8e11df5367c684d8..c89b739d32d7b75b64044ef65880c5255795310d
+--- a/ai/next_agent.md
++++ b/ai/next_agent.md
+@@ -1,45 +1,48 @@
+ # Next Agent
+ 
+-- Current role: `VALIDATOR`
+-- Prompt: `ai/prompts/05-validator.md`
++- Current role: `REVIEWER`
++- Prompt: `ai/prompts/06-reviewer.md`
+ - Execution command for Codex sessions: **Follow `ai/next_agent.yaml` exactly.**
+ - If role mismatch with `ai/active_agent.txt`, print: `WAITING FOR BATON`
+ 
+ ## Handoff Notes
+ 
+ - Active item remains `ITEM-0006` "Add no-reload tag CRUD interactions".
+-- Implemented a dedicated tag management surface at `apps/project-tracker/templates/tracker/tag_detail.html` and added a `tags/` index route so the page can render with or without a selected tag.
+-- Added tag CRUD endpoints in `apps/project-tracker/tracker/views.py` and `apps/project-tracker/tracker/urls.py`:
++- Validator result: PASS.
++- Accepted by inspection because the tag management slice meets the locked acceptance criteria and the shared swap-helper change does not introduce an observed regression on the existing project/task mutation surfaces.
++
++## What Was Validated
++
++- `tracker/views.py` and `tracker/urls.py` now provide:
+   - `tag_list`
++  - `tag_detail`
+   - `tag_create`
+-  - `tag_update` (`GET` loads edit form partial, `POST` saves)
++  - `tag_update`
+   - `tag_delete`
+-  - `tag_detail` now returns partial swaps for async selection requests and full-page render for normal navigation
+-- Added reusable tag partials:
+-  - `templates/tracker/partials/tag_form_panel.html`
+-  - `templates/tracker/partials/tag_list_panel.html`
+-  - `templates/tracker/partials/tag_detail_panel.html`
+-  - `templates/tracker/partials/tag_edit_placeholder.html`
+-- Updated `static/tracker/app.js` so selector-targeted swaps preserve region wrapper IDs when the replacement fragment does not include the wrapper. This is necessary for repeated tag mutations and also affects existing project/task mutation regions.
+-- Updated `static/tracker/app.css` and `templates/tracker/base.html` for the tag management layout and nav link.
+-- Extended `tracker/tests/test_views.py` with focused tag tests:
+-  - management page render without selection
+-  - create success
+-  - create invalid
+-  - update form load
+-  - update success
+-  - delete success
+-
+-## Validation Targets
+-
+-- Inspect the tag selector contract:
+-  - page regions: `#tag-create-form-region`, `#tag-detail-region`, `#tag-edit-form-region`, `#tag-list-region`
+-  - async responses replace the correct subset of those regions for create, selection, update, and delete
+-- Inspect the shared swap-helper change in `static/tracker/app.js` for regressions on the existing project/task async flows, since this now uses `innerHTML` unless the returned fragment root matches the target wrapper ID.
+-- Confirm `tag_detail` still works as a normal full-page route when reached from project/task tag links.
++- `templates/tracker/tag_detail.html` exposes four stable async regions:
++  - `#tag-create-form-region`
++  - `#tag-detail-region`
++  - `#tag-edit-form-region`
++  - `#tag-list-region`
++- Async selector contract matches the flow:
++  - create swaps create/list/detail/edit reset
++  - selection swaps list/detail/edit reset
++  - update swaps list/detail/edit reset
++  - delete swaps create/list/detail/edit reset
++- Direct navigation contract is preserved:
++  - project/task tag chips still link normally to `tag_detail`
++  - `tag_detail()` returns a full page for normal requests and partial swaps only for XHR
++- Shared JS helper check:
++  - `static/tracker/app.js` replaces the wrapper only when the returned fragment root already matches the target wrapper ID
++  - otherwise it updates `innerHTML`, which preserves the existing region IDs used by repeated project/task/tag swaps
+ 
+ ## Verification Evidence
+ 
+ - Passed: `python3 -m py_compile $(find apps/project-tracker -name '*.py' | sort)`
+ - Blocked in workspace: `python3 apps/project-tracker/manage.py test tracker.tests.test_views`
+   - failure: `ModuleNotFoundError: No module named 'django'`
++
++## Reviewer Focus
++
++- Confirm the tag CRUD slice should be marked done despite the unchanged environment caveat blocking Django runtime tests.
++- Keep an eye on the shared `app.js` helper change because it affects all async mutation surfaces, although validator inspection did not find a parity break.
+diff --git a/ai/review.md b/ai/review.md
+index 4b8d46a3738a8cb4e0184ce744f08fa36c8e2a9d..06b1c34b177f50e1cad545e96a03d9b3e3e6ec3a
+--- a/ai/review.md
++++ b/ai/review.md
+@@ -269,3 +269,30 @@
+ - Accepted because the previously rejected regression is now explicitly fixed: `project_delete()` clears every task CRUD region that remains outside `#project-detail-region` on the detail page, so deleting a project no longer leaves stale task controls or task content behind.
+ - Accepted with the existing environment caveat unchanged: `python3 apps/project-tracker/manage.py test tracker.tests.test_views` is still blocked in this workspace by `ModuleNotFoundError: No module named 'django'`, so the reviewer decision is based on code inspection, the tightened focused delete test, and passing `py_compile` validation.
+ - No scope drift found in the revision: the change stays inside the existing Django tracker app, preserves the HTML partial swap contract, and does not introduce new framework or architecture surface beyond the targeted delete-response fix.
++
++## Validator Outcome
++
++- Result: PASS for `ITEM-0006`.
++- Acceptance criteria check:
++  - `tracker/views.py` and `tracker/urls.py` add a dedicated tag management surface with create, update, delete, list, and detail flows that stay inside the existing Django tracker app and use HTML partial responses instead of a new frontend layer.
++  - `tag_detail.html` and the new tag partials expose stable async swap regions for `#tag-create-form-region`, `#tag-detail-region`, `#tag-edit-form-region`, and `#tag-list-region`, and the selector coverage matches the intended create, selection, update, and delete flows.
++  - `tag_detail()` still serves a normal full-page route for direct navigation from project/task tag links while returning partial swaps for async selection requests.
++  - `static/tracker/app.js` preserves wrapper IDs for repeated region swaps by replacing the wrapper only when the returned fragment root matches the target ID and otherwise updating `innerHTML`, which remains compatible with the existing project and task mutation regions.
++  - Focused view tests cover tag management rendering plus successful and invalid tag mutations by inspection.
++- Regression check:
++  - No correctness regression found on inspection in the shared swap-helper change. Existing project/task surfaces still target stable wrapper IDs, and the new helper behavior preserves those wrappers when the returned partial omits them.
++  - No scope drift found: the slice stays within the existing single Django app, uses plain templates and vanilla JS, and does not introduce DRF, extra apps, or speculative architecture.
++
++## Validation Evidence
++
++- `python3 -m py_compile $(find apps/project-tracker -name '*.py' | sort)` passed.
++- `python3 apps/project-tracker/manage.py test tracker.tests.test_views` failed in the workspace with `ModuleNotFoundError: No module named 'django'`.
++- Code inspection evidence:
++  - `tag_create()` returns swaps for `#tag-create-form-region`, `#tag-list-region`, `#tag-detail-region`, and `#tag-edit-form-region`, which matches the management page layout.
++  - `tag_detail()` returns partial swaps for list/detail/edit reset on async selection and a full-page render for normal navigation, preserving direct-link behavior from project/task surfaces.
++  - `parseAndSwap()` keeps region wrapper IDs intact when the replacement fragment does not include them, which is the contract used by the project/task/tag mutation partials.
++
++## Known Risks
++
++- Runtime validation of the new tag CRUD views and templates is still blocked until Django is installed in the workspace.
++- The focused tag tests are present in `tracker/tests/test_views.py`, but they could not be executed end to end in this workspace because Django is unavailable.
+
+[35m[3mcodex[0m[0m
+HANDOFF TO REVIEWER
+[3m[35mfile update:[0m[0m
+diff --git a/ai/active_agent.txt b/ai/active_agent.txt
+index 925a277add2e0889531e063e180e94c062e5dbb6..9b1cdc0e7e5ff55ba45e80b0786b46c37c9c32ac
+--- a/ai/active_agent.txt
++++ b/ai/active_agent.txt
+@@ -1 +1 @@
+-VALIDATOR
++REVIEWER
+diff --git a/ai/iterations/ITER-0001.md b/ai/iterations/ITER-0001.md
+index 4f41836793183946c76c3515057c3610978a228c..4099b0311683a50be436b73cb5f7cebc4849eaa1
+--- a/ai/iterations/ITER-0001.md
++++ b/ai/iterations/ITER-0001.md
+@@ -30,3 +30,4 @@
+ | 2026-03-12 | REVIEWER | Marked ITEM-0005 done and returned the baton to planning for the next backlog item | The revised task CRUD slice resolves the previously rejected project-delete regression without scope drift, and the only remaining gap is the documented workspace-level Django runtime limitation |
+ | 2026-03-12 | PLANNER | Activated ITEM-0006 for no-reload tag CRUD on a dedicated server-rendered tag management surface and handed implementation to DEV | Task CRUD is accepted, and tag entity mutations are the remaining async CRUD slice needed before the final coverage and validation pass |
+ | 2026-03-12 | DEV | Implemented no-reload tag CRUD on a dedicated management surface, added focused tag mutation tests, and hardened the shared DOM swap helper to preserve region IDs across repeated async updates | ITEM-0006 required server-rendered tag create, update, and delete flows that reuse the existing partial-response contract, and repeated tag mutations depend on stable swap-region selectors |
++| 2026-03-12 | VALIDATOR | Accepted ITEM-0006 for reviewer handoff after inspecting the tag-region swap contract, full-page tag routing, and shared swap-helper behavior | The tag CRUD slice meets the active-item acceptance criteria without scope drift, and the only remaining verification gap is the workspace-level missing-Django runtime limitation |
+diff --git a/ai/next_agent.md b/ai/next_agent.md
+index 912e20e06c626d6b5b0a3aab8e11df5367c684d8..c89b739d32d7b75b64044ef65880c5255795310d
+--- a/ai/next_agent.md
++++ b/ai/next_agent.md
+@@ -1,45 +1,48 @@
+ # Next Agent
+ 
+-- Current role: `VALIDATOR`
+-- Prompt: `ai/prompts/05-validator.md`
++- Current role: `REVIEWER`
++- Prompt: `ai/prompts/06-reviewer.md`
+ - Execution command for Codex sessions: **Follow `ai/next_agent.yaml` exactly.**
+ - If role mismatch with `ai/active_agent.txt`, print: `WAITING FOR BATON`
+ 
+ ## Handoff Notes
+ 
+ - Active item remains `ITEM-0006` "Add no-reload tag CRUD interactions".
+-- Implemented a dedicated tag management surface at `apps/project-tracker/templates/tracker/tag_detail.html` and added a `tags/` index route so the page can render with or without a selected tag.
+-- Added tag CRUD endpoints in `apps/project-tracker/tracker/views.py` and `apps/project-tracker/tracker/urls.py`:
++- Validator result: PASS.
++- Accepted by inspection because the tag management slice meets the locked acceptance criteria and the shared swap-helper change does not introduce an observed regression on the existing project/task mutation surfaces.
++
++## What Was Validated
++
++- `tracker/views.py` and `tracker/urls.py` now provide:
+   - `tag_list`
++  - `tag_detail`
+   - `tag_create`
+-  - `tag_update` (`GET` loads edit form partial, `POST` saves)
++  - `tag_update`
+   - `tag_delete`
+-  - `tag_detail` now returns partial swaps for async selection requests and full-page render for normal navigation
+-- Added reusable tag partials:
+-  - `templates/tracker/partials/tag_form_panel.html`
+-  - `templates/tracker/partials/tag_list_panel.html`
+-  - `templates/tracker/partials/tag_detail_panel.html`
+-  - `templates/tracker/partials/tag_edit_placeholder.html`
+-- Updated `static/tracker/app.js` so selector-targeted swaps preserve region wrapper IDs when the replacement fragment does not include the wrapper. This is necessary for repeated tag mutations and also affects existing project/task mutation regions.
+-- Updated `static/tracker/app.css` and `templates/tracker/base.html` for the tag management layout and nav link.
+-- Extended `tracker/tests/test_views.py` with focused tag tests:
+-  - management page render without selection
+-  - create success
+-  - create invalid
+-  - update form load
+-  - update success
+-  - delete success
+-
+-## Validation Targets
+-
+-- Inspect the tag selector contract:
+-  - page regions: `#tag-create-form-region`, `#tag-detail-region`, `#tag-edit-form-region`, `#tag-list-region`
+-  - async responses replace the correct subset of those regions for create, selection, update, and delete
+-- Inspect the shared swap-helper change in `static/tracker/app.js` for regressions on the existing project/task async flows, since this now uses `innerHTML` unless the returned fragment root matches the target wrapper ID.
+-- Confirm `tag_detail` still works as a normal full-page route when reached from project/task tag links.
++- `templates/tracker/tag_detail.html` exposes four stable async regions:
++  - `#tag-create-form-region`
++  - `#tag-detail-region`
++  - `#tag-edit-form-region`
++  - `#tag-list-region`
++- Async selector contract matches the flow:
++  - create swaps create/list/detail/edit reset
++  - selection swaps list/detail/edit reset
++  - update swaps list/detail/edit reset
++  - delete swaps create/list/detail/edit reset
++- Direct navigation contract is preserved:
++  - project/task tag chips still link normally to `tag_detail`
++  - `tag_detail()` returns a full page for normal requests and partial swaps only for XHR
++- Shared JS helper check:
++  - `static/tracker/app.js` replaces the wrapper only when the returned fragment root already matches the target wrapper ID
++  - otherwise it updates `innerHTML`, which preserves the existing region IDs used by repeated project/task/tag swaps
+ 
+ ## Verification Evidence
+ 
+ - Passed: `python3 -m py_compile $(find apps/project-tracker -name '*.py' | sort)`
+ - Blocked in workspace: `python3 apps/project-tracker/manage.py test tracker.tests.test_views`
+   - failure: `ModuleNotFoundError: No module named 'django'`
++
++## Reviewer Focus
++
++- Confirm the tag CRUD slice should be marked done despite the unchanged environment caveat blocking Django runtime tests.
++- Keep an eye on the shared `app.js` helper change because it affects all async mutation surfaces, although validator inspection did not find a parity break.
+diff --git a/ai/review.md b/ai/review.md
+index 4b8d46a3738a8cb4e0184ce744f08fa36c8e2a9d..06b1c34b177f50e1cad545e96a03d9b3e3e6ec3a
+--- a/ai/review.md
++++ b/ai/review.md
+@@ -269,3 +269,30 @@
+ - Accepted because the previously rejected regression is now explicitly fixed: `project_delete()` clears every task CRUD region that remains outside `#project-detail-region` on the detail page, so deleting a project no longer leaves stale task controls or task content behind.
+ - Accepted with the existing environment caveat unchanged: `python3 apps/project-tracker/manage.py test tracker.tests.test_views` is still blocked in this workspace by `ModuleNotFoundError: No module named 'django'`, so the reviewer decision is based on code inspection, the tightened focused delete test, and passing `py_compile` validation.
+ - No scope drift found in the revision: the change stays inside the existing Django tracker app, preserves the HTML partial swap contract, and does not introduce new framework or architecture surface beyond the targeted delete-response fix.
++
++## Validator Outcome
++
++- Result: PASS for `ITEM-0006`.
++- Acceptance criteria check:
++  - `tracker/views.py` and `tracker/urls.py` add a dedicated tag management surface with create, update, delete, list, and detail flows that stay inside the existing Django tracker app and use HTML partial responses instead of a new frontend layer.
++  - `tag_detail.html` and the new tag partials expose stable async swap regions for `#tag-create-form-region`, `#tag-detail-region`, `#tag-edit-form-region`, and `#tag-list-region`, and the selector coverage matches the intended create, selection, update, and delete flows.
++  - `tag_detail()` still serves a normal full-page route for direct navigation from project/task tag links while returning partial swaps for async selection requests.
++  - `static/tracker/app.js` preserves wrapper IDs for repeated region swaps by replacing the wrapper only when the returned fragment root matches the target ID and otherwise updating `innerHTML`, which remains compatible with the existing project and task mutation regions.
++  - Focused view tests cover tag management rendering plus successful and invalid tag mutations by inspection.
++- Regression check:
++  - No correctness regression found on inspection in the shared swap-helper change. Existing project/task surfaces still target stable wrapper IDs, and the new helper behavior preserves those wrappers when the returned partial omits them.
++  - No scope drift found: the slice stays within the existing single Django app, uses plain templates and vanilla JS, and does not introduce DRF, extra apps, or speculative architecture.
++
++## Validation Evidence
++
++- `python3 -m py_compile $(find apps/project-tracker -name '*.py' | sort)` passed.
++- `python3 apps/project-tracker/manage.py test tracker.tests.test_views` failed in the workspace with `ModuleNotFoundError: No module named 'django'`.
++- Code inspection evidence:
++  - `tag_create()` returns swaps for `#tag-create-form-region`, `#tag-list-region`, `#tag-detail-region`, and `#tag-edit-form-region`, which matches the management page layout.
++  - `tag_detail()` returns partial swaps for list/detail/edit reset on async selection and a full-page render for normal navigation, preserving direct-link behavior from project/task surfaces.
++  - `parseAndSwap()` keeps region wrapper IDs intact when the replacement fragment does not include them, which is the contract used by the project/task/tag mutation partials.
++
++## Known Risks
++
++- Runtime validation of the new tag CRUD views and templates is still blocked until Django is installed in the workspace.
++- The focused tag tests are present in `tracker/tests/test_views.py`, but they could not be executed end to end in this workspace because Django is unavailable.
+
+[3m[35mtokens used[0m[0m
+83,456
+
+Script done on 2026-03-11 23:01:05-05:00 [COMMAND_EXIT_CODE="0"]

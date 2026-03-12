@@ -5,7 +5,7 @@ from django.template.loader import render_to_string
 from django.urls import reverse
 from django.utils import timezone
 
-from .forms import ProjectForm
+from .forms import ProjectForm, TagForm, TaskForm
 from .models import Project, Tag, Task
 
 
@@ -33,6 +33,44 @@ def _project_detail_queryset():
         "tags",
         Prefetch("tasks", queryset=Task.objects.prefetch_related("tags").order_by("due_date", "title")),
     )
+
+
+def _project_detail_context(project, task_form=None):
+    return {
+        "page_title": project.name,
+        "project": project,
+        "task_form": task_form or TaskForm(),
+        "task_create_url": reverse("tracker:task_create", args=[project.id]),
+    }
+
+
+def _tag_list_queryset():
+    return (
+        Tag.objects.annotate(
+            project_count=Count("projects", distinct=True),
+            task_count=Count("tasks", distinct=True),
+        )
+        .order_by("name")
+    )
+
+
+def _tag_detail_queryset():
+    return Tag.objects.prefetch_related(
+        Prefetch("projects", queryset=Project.objects.order_by("name")),
+        Prefetch("tasks", queryset=Task.objects.select_related("project").order_by("due_date", "title")),
+    )
+
+
+def _tag_management_context(selected_tag=None, form=None, deleted_tag_name=None):
+    return {
+        "page_title": selected_tag.name if selected_tag else "Tags",
+        "tag_form": form or TagForm(),
+        "tag_create_url": reverse("tracker:tag_create"),
+        "selected_tag": selected_tag,
+        "selected_tag_id": selected_tag.id if selected_tag else None,
+        "tags": _tag_list_queryset(),
+        "deleted_tag_name": deleted_tag_name,
+    }
 
 
 def _dashboard_context(form=None):
@@ -97,6 +135,92 @@ def _project_form_context(form, source_page, action, heading, submit_label):
     }
 
 
+def _task_form_context(form, action, heading, submit_label):
+    return {
+        "form": form,
+        "form_action": action,
+        "form_heading": heading,
+        "form_submit_label": submit_label,
+    }
+
+
+def _tag_form_context(form, action, heading, submit_label, cancel_url=None):
+    return {
+        "form": form,
+        "form_action": action,
+        "form_heading": heading,
+        "form_submit_label": submit_label,
+        "cancel_url": cancel_url,
+    }
+
+
+def _task_mutation_success_response(request, project, create_form=None):
+    return _render_mutation_response(
+        request,
+        [
+            (
+                "#project-detail-region",
+                "tracker/partials/project_detail_panel.html",
+                {"project": project},
+            ),
+            (
+                "#task-create-form-region",
+                "tracker/partials/task_form_panel.html",
+                _task_form_context(
+                    create_form or TaskForm(),
+                    reverse("tracker:task_create", args=[project.id]),
+                    "Add a task",
+                    "Create task",
+                ),
+            ),
+            (
+                "#task-list-region",
+                "tracker/partials/task_list_panel.html",
+                {"project": project},
+            ),
+            (
+                "#task-edit-form-region",
+                "tracker/partials/task_edit_placeholder.html",
+                {},
+            ),
+        ],
+    )
+
+
+def _tag_mutation_success_response(request, selected_tag=None, deleted_tag_name=None):
+    context = _tag_management_context(selected_tag=selected_tag, deleted_tag_name=deleted_tag_name)
+    return _render_mutation_response(
+        request,
+        [
+            (
+                "#tag-create-form-region",
+                "tracker/partials/tag_form_panel.html",
+                _tag_form_context(
+                    TagForm(),
+                    reverse("tracker:tag_create"),
+                    "Add a tag",
+                    "Create tag",
+                ),
+            ),
+            (
+                "#tag-list-region",
+                "tracker/partials/tag_list_panel.html",
+                context,
+            ),
+            (
+                "#tag-detail-region",
+                "tracker/partials/tag_detail_panel.html",
+                context,
+            ),
+            (
+                "#tag-edit-form-region",
+                "tracker/partials/tag_edit_placeholder.html",
+                {},
+            ),
+        ],
+    )
+
+
 def dashboard(request):
     return render(request, "tracker/dashboard.html", _dashboard_context())
 
@@ -110,14 +234,7 @@ def project_detail(request, project_id):
         _project_detail_queryset(),
         pk=project_id,
     )
-    return render(
-        request,
-        "tracker/project_detail.html",
-        {
-            "page_title": project.name,
-            "project": project,
-        },
-    )
+    return render(request, "tracker/project_detail.html", _project_detail_context(project))
 
 
 def project_create(request):
@@ -319,23 +436,228 @@ def project_delete(request, project_id):
                 "tracker/partials/project_edit_placeholder.html",
                 {},
             ),
+            (
+                "#task-create-form-region",
+                "tracker/partials/task_create_placeholder.html",
+                {},
+            ),
+            (
+                "#task-edit-form-region",
+                "tracker/partials/task_edit_placeholder.html",
+                {},
+            ),
+            (
+                "#task-list-region",
+                "tracker/partials/task_list_placeholder.html",
+                {},
+            ),
         ],
     )
 
 
-def tag_detail(request, tag_id):
-    tag = get_object_or_404(
-        Tag.objects.prefetch_related(
-            Prefetch("projects", queryset=Project.objects.order_by("name")),
-            Prefetch("tasks", queryset=Task.objects.select_related("project").order_by("due_date", "title")),
-        ),
-        pk=tag_id,
-    )
-    return render(
+def task_create(request, project_id):
+    if request.method != "POST":
+        return HttpResponseNotAllowed(["POST"])
+
+    project = get_object_or_404(Project, pk=project_id)
+    form = TaskForm(request.POST)
+    if form.is_valid():
+        task = form.save(commit=False)
+        task.project = project
+        task.save()
+        form.save_m2m()
+        project = get_object_or_404(_project_detail_queryset(), pk=project_id)
+        return _task_mutation_success_response(request, project)
+
+    project = get_object_or_404(_project_detail_queryset(), pk=project_id)
+    return _render_mutation_response(
         request,
-        "tracker/tag_detail.html",
-        {
-            "page_title": tag.name,
-            "tag": tag,
-        },
+        [
+            (
+                "#task-create-form-region",
+                "tracker/partials/task_form_panel.html",
+                _task_form_context(
+                    form,
+                    reverse("tracker:task_create", args=[project.id]),
+                    "Add a task",
+                    "Create task",
+                ),
+            )
+        ],
+        status=400,
     )
+
+
+def task_update(request, project_id, task_id):
+    project = get_object_or_404(Project, pk=project_id)
+    task = get_object_or_404(Task.objects.prefetch_related("tags"), pk=task_id, project=project)
+    if request.method == "GET":
+        return _render_mutation_response(
+            request,
+            [
+                (
+                    "#task-edit-form-region",
+                    "tracker/partials/task_form_panel.html",
+                    _task_form_context(
+                        TaskForm(instance=task),
+                        request.path,
+                        f"Edit {task.title}",
+                        "Save task",
+                    ),
+                )
+            ],
+        )
+
+    if request.method != "POST":
+        return HttpResponseNotAllowed(["GET", "POST"])
+
+    form = TaskForm(request.POST, instance=task)
+    if form.is_valid():
+        form.save()
+        project = get_object_or_404(_project_detail_queryset(), pk=project_id)
+        return _task_mutation_success_response(request, project)
+
+    return _render_mutation_response(
+        request,
+        [
+            (
+                "#task-edit-form-region",
+                "tracker/partials/task_form_panel.html",
+                _task_form_context(
+                    form,
+                    request.path,
+                    f"Edit {task.title}",
+                    "Save task",
+                ),
+            )
+        ],
+        status=400,
+    )
+
+
+def task_delete(request, project_id, task_id):
+    if request.method != "POST":
+        return HttpResponseNotAllowed(["POST"])
+
+    project = get_object_or_404(Project, pk=project_id)
+    task = get_object_or_404(Task, pk=task_id, project=project)
+    task.delete()
+    project = get_object_or_404(_project_detail_queryset(), pk=project_id)
+    return _task_mutation_success_response(request, project)
+
+
+def tag_list(request):
+    return render(request, "tracker/tag_detail.html", _tag_management_context())
+
+
+def tag_detail(request, tag_id):
+    tag = get_object_or_404(_tag_detail_queryset(), pk=tag_id)
+    context = _tag_management_context(selected_tag=tag)
+    if request.headers.get("X-Requested-With") == "XMLHttpRequest":
+        return _render_mutation_response(
+            request,
+            [
+                (
+                    "#tag-list-region",
+                    "tracker/partials/tag_list_panel.html",
+                    context,
+                ),
+                (
+                    "#tag-detail-region",
+                    "tracker/partials/tag_detail_panel.html",
+                    context,
+                ),
+                (
+                    "#tag-edit-form-region",
+                    "tracker/partials/tag_edit_placeholder.html",
+                    {},
+                ),
+            ],
+        )
+    return render(request, "tracker/tag_detail.html", context)
+
+
+def tag_create(request):
+    if request.method != "POST":
+        return HttpResponseNotAllowed(["POST"])
+
+    form = TagForm(request.POST)
+    if form.is_valid():
+        tag = form.save()
+        tag = get_object_or_404(_tag_detail_queryset(), pk=tag.pk)
+        return _tag_mutation_success_response(request, selected_tag=tag)
+
+    return _render_mutation_response(
+        request,
+        [
+            (
+                "#tag-create-form-region",
+                "tracker/partials/tag_form_panel.html",
+                _tag_form_context(
+                    form,
+                    reverse("tracker:tag_create"),
+                    "Add a tag",
+                    "Create tag",
+                ),
+            )
+        ],
+        status=400,
+    )
+
+
+def tag_update(request, tag_id):
+    tag = get_object_or_404(Tag, pk=tag_id)
+    if request.method == "GET":
+        return _render_mutation_response(
+            request,
+            [
+                (
+                    "#tag-edit-form-region",
+                    "tracker/partials/tag_form_panel.html",
+                    _tag_form_context(
+                        TagForm(instance=tag),
+                        request.path,
+                        f"Edit {tag.name}",
+                        "Save tag",
+                        cancel_url=reverse("tracker:tag_detail", args=[tag.id]),
+                    ),
+                )
+            ],
+        )
+
+    if request.method != "POST":
+        return HttpResponseNotAllowed(["GET", "POST"])
+
+    form = TagForm(request.POST, instance=tag)
+    if form.is_valid():
+        tag = form.save()
+        tag = get_object_or_404(_tag_detail_queryset(), pk=tag.pk)
+        return _tag_mutation_success_response(request, selected_tag=tag)
+
+    return _render_mutation_response(
+        request,
+        [
+            (
+                "#tag-edit-form-region",
+                "tracker/partials/tag_form_panel.html",
+                _tag_form_context(
+                    form,
+                    request.path,
+                    f"Edit {tag.name}",
+                    "Save tag",
+                    cancel_url=reverse("tracker:tag_detail", args=[tag.id]),
+                ),
+            )
+        ],
+        status=400,
+    )
+
+
+def tag_delete(request, tag_id):
+    if request.method != "POST":
+        return HttpResponseNotAllowed(["POST"])
+
+    tag = get_object_or_404(Tag, pk=tag_id)
+    tag_name = tag.name
+    tag.delete()
+    return _tag_mutation_success_response(request, deleted_tag_name=tag_name)

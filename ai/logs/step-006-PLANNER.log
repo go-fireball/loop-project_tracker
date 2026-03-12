@@ -1,0 +1,1540 @@
+Script started on 2026-03-11 22:33:44-05:00 [COMMAND="codex exec --model gpt-5.4 --full-auto Follow\ ai/next_agent.yaml\ exactly. " TERM="xterm-256color" TTY="/dev/pts/0" COLUMNS="184" LINES="43"]
+OpenAI Codex v0.114.0 (research preview)
+--------
+[1mworkdir:[0m /home/sundaram/code/temp/test
+[1mmodel:[0m gpt-5.4
+[1mprovider:[0m openai
+[1mapproval:[0m never
+[1msandbox:[0m workspace-write [workdir, /tmp, $TMPDIR, /home/sundaram/.codex/memories]
+[1mreasoning effort:[0m medium
+[1mreasoning summaries:[0m none
+[1msession id:[0m 019ce01b-7f33-7101-9b58-d02cd28d1787
+--------
+[36muser[0m
+Follow ai/next_agent.yaml exactly.
+[36mmcp startup:[0m no servers
+[35m[3mcodex[0m[0m
+I’m locating `ai/next_agent.yaml` and the surrounding repo context first, then I’ll follow its instructions exactly.
+[35m[3mexec[0m[0m
+[1m/bin/bash -lc pwd[0m in /home/sundaram/code/temp/test[32m succeeded in 0ms:[0m
+[2m/home/sundaram/code/temp/test[0m
+[35m[3mexec[0m[0m
+[1m/bin/bash -lc 'rg --files'[0m in /home/sundaram/code/temp/test[32m succeeded in 0ms:[0m
+[2mai/logs/step-003-ARCHITECT.log
+ai/logs/step-008-PLANNER.log
+ai/logs/step-006-VALIDATOR.log
+ai/logs/step-002-VALIDATOR.log
+ai/logs/step-007-REVIEWER.log
+ai/logs/step-009-DEV.log
+ai/logs/step-001-DEV.log
+ai/logs/step-002-PLANNER.log
+ai/logs/step-010-VALIDATOR.log
+ai/logs/step-002-SENIOR_JUDGMENTAL_ENGINEER.log
+ai/logs/step-003-REVIEWER.log
+ai/logs/baton.log
+ai/logs/step-005-DEV.log
+ai/logs/step-004-PLANNER.log
+ai/logs/step-004-VALIDATOR.log
+ai/logs/step-003-DEV.log
+ai/logs/step-001-PRODUCT_OWNER.log
+ai/logs/step-001-REVIEWER.log
+ai/logs/step-005-REVIEWER.log
+ai/next_agent.md[0m
+[35m[3mcodex[0m[0m
+I found the handoff files. Reading `ai/next_agent.yaml` now, then I’ll execute whatever it specifies and inspect any referenced context it depends on.
+[35m[3mexec[0m[0m
+[1m/bin/bash -lc "sed -n '1,220p' ai/next_agent.yaml"[0m in /home/sundaram/code/temp/test[32m succeeded in 0ms:[0m
+[2mnext_role: PLANNER
+prompt_file: ai/prompts/03-planner.md
+read:
+  - ai/backlog.yaml
+  - ai/active_item.yaml
+  - ai/goal.yaml
+  - ai/decision-lock.yaml
+  - ai/review.md
+  - ai/constitution.yaml
+  - ai/active_agent.txt
+  - ai/next_agent.md
+  - ai/user-questions.yaml
+allowed_edits:
+  - ai/backlog.yaml
+  - ai/active_item.yaml
+  - ai/decision-lock.yaml
+  - ai/user-questions.yaml
+  - ai/iterations/ITER-0001.md
+  - ai/active_agent.txt
+  - ai/next_agent.yaml[0m
+[35m[3mexec[0m[0m
+[1m/bin/bash -lc "sed -n '1,220p' ai/active_item.yaml"[0m in /home/sundaram/code/temp/test[32m succeeded in 0ms:[0m
+[2mid: ITEM-0004
+title: Add no-reload project CRUD interactions
+goal: "Implement async create, update, and delete flows for projects using HTML partial responses and small vanilla JS fetch handlers."
+status: done
+owner_role: PLANNER
+related_files:
+  - apps/project-tracker/tracker/views.py
+  - apps/project-tracker/tracker/urls.py
+  - apps/project-tracker/tracker/forms.py
+  - apps/project-tracker/templates/tracker/dashboard.html
+  - apps/project-tracker/templates/tracker/project_list.html
+  - apps/project-tracker/templates/tracker/project_detail.html
+  - apps/project-tracker/templates/tracker/
+  - apps/project-tracker/static/tracker/app.js
+  - apps/project-tracker/static/tracker/app.css
+  - apps/project-tracker/tracker/tests/test_views.py
+acceptance_criteria:
+  - "Users can create a project from a server-rendered page and see the relevant UI update without a full page reload."
+  - "Users can edit an existing project from a server-rendered page and see the updated project content render via returned HTML partials."
+  - "Users can delete an existing project from a server-rendered page and the affected list/detail UI updates without a full page reload."[0m
+[35m[3mexec[0m[0m
+[1m/bin/bash -lc "sed -n '1,220p' ai/logs/baton.log"[0m in /home/sundaram/code/temp/test[32m succeeded in 0ms:[0m
+[2m# Baton run log
+# Timestamped entries from scripts/run-baton.sh are appended here.
+[2026-03-12T02:50:22Z] STEP 1 START role=PRODUCT_OWNER executor=codex model=gpt-5.4
+[2026-03-12T02:51:31Z] STEP 1 END role=PRODUCT_OWNER result=HANDOFF to=SENIOR_JUDGMENTAL_ENGINEER
+[2026-03-12T02:51:31Z] STEP 2 START role=SENIOR_JUDGMENTAL_ENGINEER executor=codex model=gpt-5.4
+[2026-03-12T02:52:54Z] STEP 2 END role=SENIOR_JUDGMENTAL_ENGINEER result=HANDOFF to=ARCHITECT
+[2026-03-12T02:52:54Z] STEP 3 START role=ARCHITECT executor=codex model=gpt-5.4
+[2026-03-12T02:54:32Z] STEP 3 END role=ARCHITECT result=HANDOFF to=PLANNER
+[2026-03-12T02:54:32Z] STEP 4 START role=PLANNER executor=codex model=gpt-5.4
+[2026-03-12T02:56:01Z] STEP 4 END role=PLANNER result=HANDOFF to=DEV
+[2026-03-12T02:56:01Z] STEP 5 START role=DEV executor=codex model=gpt-5.4
+[2026-03-12T02:56:01Z] STEP 5 END role=DEV result=INVALID_STATE
+[2026-03-12T02:59:31Z] STEP 1 START role=DEV executor=codex model=gpt-5.4
+[2026-03-12T03:02:06Z] STEP 1 END role=DEV result=HANDOFF to=VALIDATOR
+[2026-03-12T03:02:06Z] STEP 2 START role=VALIDATOR executor=codex model=gpt-5.4
+[2026-03-12T03:03:28Z] STEP 2 END role=VALIDATOR result=HANDOFF to=REVIEWER
+[2026-03-12T03:03:28Z] STEP 3 START role=REVIEWER executor=codex model=gpt-5.4
+[2026-03-12T03:04:53Z] STEP 3 END role=REVIEWER result=HANDOFF to=PLANNER
+[2026-03-12T03:04:53Z] STEP 4 START role=PLANNER executor=codex model=gpt-5.4
+[2026-03-12T03:06:23Z] STEP 4 END role=PLANNER result=HANDOFF to=DEV[0m
+[35m[3mcodex[0m[0m
+`ai/next_agent.yaml` assigns me the `PLANNER` role. I’m checking baton state and the planner inputs now so I can either hand off cleanly or stop on the exact condition it defines.
+[35m[3mexec[0m[0m
+[1m/bin/bash -lc "sed -n '1,260p' ai/backlog.yaml"[0m in /home/sundaram/code/temp/test[32m succeeded in 0ms:[0m
+[2mitems:
+  - id: ITEM-0001
+    title: Scaffold Django project tracker baseline
+    goal: Establish the single-project Django skeleton under `apps/project-tracker/` with the tracker app wired into settings, URLs, templates, and static assets.
+    type: feature
+    status: done
+    priority: high
+    dependencies: []
+    notes:
+      - Keep one Django project with one main `tracker` app.
+      - Create the baseline file structure for settings, root URLs, app URLs, templates, and static assets.
+      - Include a base template and shared asset wiring that later CRUD pages can extend.
+  - id: ITEM-0002
+    title: Implement tracker domain models and forms
+    goal: Add `Project`, `Task`, and `Tag` models, related forms, admin registration, and database migrations that match the approved domain surface.
+    type: feature
+    status: done
+    priority: high
+    dependencies:
+      - ITEM-0001[0m
+[35m[3mexec[0m[0m
+[1m/bin/bash -lc "sed -n '1,220p' ai/active_agent.txt"[0m in /home/sundaram/code/temp/test[32m succeeded in 0ms:[0m
+[2mPLANNER[0m
+[35m[3mexec[0m[0m
+[1m/bin/bash -lc "sed -n '1,260p' ai/review.md"[0m in /home/sundaram/code/temp/test[32m succeeded in 0ms:[0m
+[2m# Review Notes
+
+Use this file for reviewer outcomes:
+
+- **DONE**: item accepted and loop returns to PLANNER for next item.
+- **REVISE**: route back to specific role with explicit gap list.
+- **ESCALATE**: WAITING FOR USER only for approved escalation categories.
+
+## Judgment Warnings
+
+- Flag any introduction of React, Next.js, DRF, extra pip packages, or cloud/deployment scaffolding as scope drift unless requirements are updated.
+- Flag architecture that splits the app into speculative layers, services, or multiple Django apps without a demonstrated need.
+- Flag CRUD implementations that require full page reloads, since no-reload interactions are part of acceptance.
+
+## Architecture Decisions
+
+- Use a single Django project under `apps/project-tracker/` with one main product app for projects, tasks, and tags.
+- Treat server-rendered templates as the primary UI and use small async `fetch` flows for no-reload CRUD interactions.
+- Prefer HTML partial responses for mutations; allow narrow JSON responses only when HTML would be more awkward for the specific interaction.
+- Keep domain logic in models, forms, and views; reject speculative service, repository, command-bus, or multi-app splits.[0m
+[35m[3mexec[0m[0m
+[1m/bin/bash -lc "sed -n '1,220p' ai/goal.yaml"[0m in /home/sundaram/code/temp/test[32m succeeded in 0ms:[0m
+[2mproject_goal: Build a personal project tracker web app using Django with a SQLite database and HTML/JS frontend
+success_criteria:
+  - Django REST endpoints for CRUD operations on projects, tasks, and tags
+  - Each project has a name, description, status (active/completed/archived), and created date
+  - Each task belongs to a project and has a title, status (todo/in_progress/done), priority (low/medium/high), and due date
+  - Tags can be assigned to both projects and tasks (many-to-many)
+  - Frontend has separate views for projects list, project detail (showing its tasks), and a tag filter view
+  - Adding/editing/deleting entities works without full page reload
+  - Dashboard view showing summary stats (total projects, tasks by status, overdue tasks)
+  - Data persists in SQLite database
+context_notes:
+  - Use Django with SQLite backend
+  - Frontend is plain HTML, CSS, and vanilla JS (no React/Vue/Angular)
+  - Django serves both the API and static/template files
+  - All code lives in apps/project-tracker/
+  - Use Django models with proper foreign key and many-to-many relationships
+constraints:
+  - Django and its built-in dependencies only, no additional pip packages (no DRF, no celery, etc.)
+  - No frontend JS frameworks
+  - Single Django project, no microservices[0m
+[35m[3mexec[0m[0m
+[1m/bin/bash -lc "sed -n '1,260p' ai/constitution.yaml"[0m in /home/sundaram/code/temp/test[32m succeeded in 0ms:[0m
+[2mcore_rules:
+  - state lives in files, not chat memory
+  - baton ownership is authoritative
+  - roles must not edit outside allowed files
+baton_rules:
+  - if active agent mismatch, print exactly WAITING FOR BATON
+  - baton must be handed off explicitly
+edit_rules:
+  - only edit allowed files listed in the current role prompt
+stop_rules:
+  - if human clarification is needed, print exactly WAITING FOR USER
+  - always append an iteration log entry before handoff[0m
+[35m[3mexec[0m[0m
+[1m/bin/bash -lc "sed -n '1,220p' ai/user-questions.yaml"[0m in /home/sundaram/code/temp/test[35m[3mexec[0m[0m
+[1m/bin/bash -lc "sed -n '1,260p' ai/next_agent.md"[0m in /home/sundaram/code/temp/test[32m succeeded in 0ms:[0m
+[2mstatus: none
+return_to_role: null
+questions: [][0m
+[32m succeeded in 0ms:[0m
+[2m# Next Agent
+
+- Current role: `PLANNER`
+- Prompt: `ai/prompts/03-planner.md`
+- Execution command for Codex sessions: **Follow `ai/next_agent.yaml` exactly.**
+- If role mismatch with `ai/active_agent.txt`, print: `WAITING FOR BATON`
+
+## Handoff Notes
+
+- Reviewer decision for `ITEM-0004`: DONE.
+- Accepted scope:
+  - Project-only no-reload CRUD is complete inside `apps/project-tracker/` using HTML partial mutation responses and small vanilla JS fetch handlers.
+  - `tracker/views.py`, `tracker/urls.py`, the tracker templates/partials, and `static/tracker/app.js` remain aligned with the locked single-app Django architecture and avoid DRF, extra packages, or speculative layers.
+- Validation evidence carried forward:
+  - `python3 -m py_compile $(find apps/project-tracker -name '*.py' | sort)` passed.
+  - `python3 apps/project-tracker/manage.py test tracker.tests.test_views` is still blocked in this workspace by `ModuleNotFoundError: No module named 'django'`.
+- Residual risk to note when planning next work:
+  - Focused tests still do not include a dedicated invalid-update case or a dedicated project-list delete-response case; those paths were accepted by inspection.
+- Planning expectation:
+  - Select the next backlog item after `ITEM-0004`, likely the task/tag no-reload CRUD slice, and preserve the existing partial-response pattern rather than inventing a second async approach.[0m
+[35m[3mexec[0m[0m
+[1m/bin/bash -lc "sed -n '1,260p' ai/decision-lock.yaml"[0m in /home/sundaram/code/temp/test[32m succeeded in 0ms:[0m
+[2mconfirmed_by_user: false
+blocked_on_user: false
+last_user_decision: null
+approved_exceptions: []
+approved_decisions: [][0m
+[35m[3mcodex[0m[0m
+The baton is valid and the prior item is accepted. I’m pulling the planner prompt now, then I’ll update the handoff files for the next implementation slice and append the required iteration log entry.
+[35m[3mexec[0m[0m
+[1m/bin/bash -lc "sed -n '1,260p' ai/prompts/03-planner.md"[0m in /home/sundaram/code/temp/test[35m[3mexec[0m[0m
+[1m/bin/bash -lc "sed -n '1,220p' ai/iterations/ITER-0001.md"[0m in /home/sundaram/code/temp/test[32m succeeded in 0ms:[0m
+[2m# ROLE: PLANNER
+
+## 1) Baton check
+- Read `ai/active_agent.txt`.
+- If value is not exactly `PLANNER`, output exactly:
+`WAITING FOR BATON`
+- Stop.
+
+## 2) Required reads
+- `ai/goal.yaml`
+- `ai/backlog.yaml`
+- `ai/active_item.yaml`
+- `ai/decision-lock.yaml`
+- `ai/user-questions.yaml`
+- `ai/constitution.yaml`
+- `ai/review.md`
+- `ai/next_agent.md`
+
+## 3) Allowed edits (only)
+- `ai/backlog.yaml`[0m
+[32m succeeded in 0ms:[0m
+[2m# ITER-0001 Decision Log
+
+| Timestamp | Role | Decision | Why |
+|-----------|------|----------|-----|
+| 2026-03-11 | PRODUCT_OWNER | Defined the one-page product requirements from the project goal and handed off for engineering judgment review | The workflow needs a concrete scope and acceptance baseline before architecture and planning can proceed |
+| 2026-03-11 | SENIOR_JUDGMENTAL_ENGINEER | Locked simplification guardrails around a single Django + SQLite + vanilla JS modular monolith and warned against framework/platform drift | The architect needs explicit constraints so the design stays aligned with the product goal instead of inheriting conflicting default stack preferences |
+| 2026-03-11 | ARCHITECT | Defined a single-project Django architecture centered on one product app, server-rendered templates, and HTML-partial based no-reload CRUD flows | The planner and developer need concrete boundaries, file targets, and implementation tradeoffs before breaking work into execution items |
+| 2026-03-11 | PLANNER | Broke delivery into scaffold, domain, page, async CRUD, and test slices and activated the scaffold item for development | The developer needs a small implementation-ready first step with explicit file targets before starting code changes |
+| 2026-03-12 | DEV | Scaffolded the Django project baseline with one tracker app, routed a rendered dashboard page, and added a smoke test for the root view | ITEM-0001 required an end-to-end project skeleton before later slices can add models, pages, and async CRUD behavior |
+| 2026-03-12 | VALIDATOR | Accepted the scaffold baseline as meeting ITEM-0001 acceptance criteria and handed off to review with an environment caveat on Django-dependent tests | The slice is structurally correct and free of scope drift, but full runtime validation remains blocked until Django is installed in the workspace |
+| 2026-03-12 | REVIEWER | Marked ITEM-0001 done and returned the baton to planning for the next implementation slice | The scaffold meets the locked architecture and acceptance criteria, and the blocked Django test run is an environment limitation rather than a gap in the delivered slice |
+| 2026-03-12 | PLANNER | Activated ITEM-0002 for domain model, form, admin, and migration work and handed off implementation to DEV | The scaffold is complete, and the domain layer is the next dependency needed before server-rendered pages and no-reload CRUD flows can be built |
+| 2026-03-12 | DEV | Implemented tracker domain models, forms, admin registration, a manual initial migration, and domain-focused tests for ITEM-0002 | The next slices depend on concrete project, task, and tag persistence plus validated form surfaces inside the existing Django app |
+| 2026-03-12 | VALIDATOR | Accepted the domain model slice for ITEM-0002 and handed off to review with a documented Django-environment caveat | The implemented models, forms, admin wiring, and manual migration align with the locked requirements, and the remaining verification gap is limited to missing Django in the workspace |
+| 2026-03-12 | REVIEWER | Marked ITEM-0002 done and returned the baton to planning for the next implementation slice | The domain models, forms, admin wiring, and initial migration satisfy the locked slice, and the blocked Django runtime checks remain an environment caveat rather than a delivered-code gap |
+| 2026-03-12 | PLANNER | Activated ITEM-0003 for server-rendered dashboard, project list/detail, and tag detail page implementation and handed off to DEV | The domain layer is accepted, so the next dependency-ready slice is the read-only page surface that prepares the app for later no-reload CRUD work |
+| 2026-03-11 | DEV | Implemented ORM-backed dashboard aggregates, project list/detail and tag detail pages, and focused view tests for ITEM-0003 | The read-only server-rendered page slice now uses the accepted domain models directly and is ready for validator review, with Django runtime execution still blocked by the missing package in the workspace |
+| 2026-03-12 | VALIDATOR | Accepted the read-only page slice for ITEM-0003 and handed off to review with the Django-environment caveat preserved | Static validation passed, acceptance criteria are met by inspection, and the only blocked verification step is the missing Django package in the workspace |
+| 2026-03-12 | REVIEWER | Marked ITEM-0003 done and returned the baton to planning for the next implementation slice | The read-only tracker pages satisfy the locked acceptance criteria without scope drift, and the blocked Django runtime checks remain an environment caveat rather than a delivered-code gap |
+| 2026-03-12 | PLANNER | Split the async CRUD epic into project and task/tag mutation slices, activated ITEM-0004, and handed implementation to DEV | The original no-reload CRUD item was too large for one safe pass, and project mutations are the smallest vertical slice that builds directly on the accepted read-only pages |[0m
+[35m[3mcodex[0m[0m
+I have the planner contract. Next I’m checking the current task/tag surfaces in the tracker app so the next active item is implementation-ready rather than a vague backlog title.
+[35m[3mexec[0m[0m
+[1m/bin/bash -lc "sed -n '1,240p' apps/project-tracker/tracker/urls.py"[0m in /home/sundaram/code/temp/test[35m[3mexec[0m[0m
+[1m/bin/bash -lc "sed -n '1,260p' apps/project-tracker/tracker/views.py"[0m in /home/sundaram/code/temp/test[32m succeeded in 0ms:[0m
+[2mfrom django.urls import path
+
+from .views import (
+    dashboard,
+    project_create,
+    project_delete,
+    project_detail,
+    project_list,
+    project_update,
+    tag_detail,
+)
+
+app_name = "tracker"
+
+urlpatterns = [
+    path("", dashboard, name="dashboard"),
+    path("projects/", project_list, name="project_list"),
+    path("projects/create/", project_create, name="project_create"),
+    path("projects/<int:project_id>/", project_detail, name="project_detail"),
+    path("projects/<int:project_id>/edit/", project_update, name="project_update"),[0m
+[32m succeeded in 0ms:[0m
+[2mfrom django.db.models import Count, Prefetch, Q
+from django.http import HttpResponseNotAllowed
+from django.shortcuts import get_object_or_404, render
+from django.template.loader import render_to_string
+from django.urls import reverse
+from django.utils import timezone
+
+from .forms import ProjectForm
+from .models import Project, Tag, Task
+
+
+def _project_list_queryset():
+    return (
+        Project.objects.annotate(
+            task_count=Count("tasks", distinct=True),
+            open_task_count=Count(
+                "tasks",
+                filter=~Q(tasks__status=Task.STATUS_DONE),
+                distinct=True,
+            ),[0m
+[35m[3mexec[0m[0m
+[1m/bin/bash -lc "sed -n '1,260p' apps/project-tracker/templates/tracker/tag_detail.html"[0m in /home/sundaram/code/temp/test[32m succeeded in 0ms:[0m
+[2m{% extends "tracker/base.html" %}
+
+{% block title %}{{ tag.name }}{% endblock %}
+
+{% block content %}
+  <section class="panel">
+    <div class="panel-heading">
+      <div>
+        <h2>Tag: {{ tag.name }}</h2>
+        <p class="section-copy">Projects and tasks associated with this shared tracker tag.</p>
+      </div>
+      <a class="inline-link" href="{% url 'tracker:project_list' %}">Browse projects</a>
+    </div>
+  </section>
+
+  <section class="panel">
+    <div class="panel-heading">
+      <div>
+        <h2>Projects</h2>
+      </div>[0m
+[35m[3mexec[0m[0m
+[1m/bin/bash -lc "sed -n '1,320p' apps/project-tracker/tracker/tests/test_views.py"[0m in /home/sundaram/code/temp/test[32m succeeded in 0ms:[0m
+[2mfrom datetime import timedelta
+
+from django.test import TestCase
+from django.urls import reverse
+from django.utils import timezone
+
+from tracker.models import Project, Tag, Task
+
+
+class TrackerViewTests(TestCase):
+    def setUp(self):
+        self.project = Project.objects.create(
+            name="Launch site",
+            description="Ship the marketing site.",
+            status=Project.STATUS_ACTIVE,
+        )
+        self.other_project = Project.objects.create(
+            name="Archive docs",
+            description="Tidy older project notes.",
+            status=Project.STATUS_ARCHIVED,[0m
+[35m[3mexec[0m[0m
+[1m/bin/bash -lc "sed -n '1,260p' apps/project-tracker/templates/tracker/project_detail.html"[0m in /home/sundaram/code/temp/test[32m succeeded in 0ms:[0m
+[2m{% extends "tracker/base.html" %}
+
+{% block title %}{{ project.name }}{% endblock %}
+
+{% block content %}
+  <div id="project-detail-region">
+    {% include "tracker/partials/project_detail_panel.html" %}
+  </div>
+
+  {% include "tracker/partials/project_edit_placeholder.html" %}
+
+  <section class="panel">
+    <div class="panel-heading">
+      <div>
+        <h2>Tasks</h2>
+        <p class="section-copy">Tasks assigned to this project, including due dates and shared tags.</p>
+      </div>
+    </div>
+    {% if project.tasks.all %}
+      <div class="stack">[0m
+[35m[3mexec[0m[0m
+[1m/bin/bash -lc "sed -n '1,260p' apps/project-tracker/tracker/forms.py"[0m in /home/sundaram/code/temp/test[32m succeeded in 0ms:[0m
+[2mfrom django import forms
+
+from .models import Project, Tag, Task
+
+
+def _validate_choice(value: str, choices: list[tuple[str, str]], field_name: str) -> str:
+    valid_values = {choice for choice, _label in choices}
+    if value not in valid_values:
+        raise forms.ValidationError(f"Choose a valid {field_name}.")
+    return value
+
+
+class ProjectForm(forms.ModelForm):
+    class Meta:
+        model = Project
+        fields = ["name", "description", "status", "created_date", "tags"]
+        widgets = {
+            "created_date": forms.DateInput(attrs={"type": "date"}),
+        }
+[0m
+[35m[3mexec[0m[0m
+[1m/bin/bash -lc "sed -n '1,320p' apps/project-tracker/static/tracker/app.js"[0m in /home/sundaram/code/temp/test[32m succeeded in 0ms:[0m
+[2mdocument.documentElement.dataset.app = "project-tracker";
+
+const parseAndSwap = async (response) => {
+  const html = await response.text();
+  const doc = new DOMParser().parseFromString(html, "text/html");
+  const swaps = doc.querySelectorAll("template[data-swap-target]");
+
+  swaps.forEach((swap) => {
+    const selector = swap.dataset.swapTarget;
+    const target = document.querySelector(selector);
+    if (!target) {
+      return;
+    }
+
+    target.outerHTML = swap.innerHTML.trim();
+  });
+};
+
+const submitAsyncForm = async (form) => {
+  const confirmMessage = form.dataset.confirm;[0m
+[35m[3mcodex[0m[0m
+The next slice is clear enough to refine: task mutations belong on project detail, while tag mutations need a small management surface that doesn’t invent a second UI pattern. I’m checking the domain model now so the handoff can name the exact fields and likely template seams.
+[35m[3mexec[0m[0m
+[1m/bin/bash -lc "sed -n '1,260p' apps/project-tracker/tracker/models.py"[0m in /home/sundaram/code/temp/test[32m succeeded in 0ms:[0m
+[2mfrom django.core.exceptions import ValidationError
+from django.db import models
+from django.utils import timezone
+
+
+class Tag(models.Model):
+    name = models.CharField(max_length=100, unique=True)
+
+    class Meta:
+        ordering = ["name"]
+
+    def __str__(self) -> str:
+        return self.name
+
+
+class Project(models.Model):
+    STATUS_ACTIVE = "active"
+    STATUS_COMPLETED = "completed"
+    STATUS_ARCHIVED = "archived"
+    STATUS_CHOICES = [[0m
+[35m[3mexec[0m[0m
+[1m/bin/bash -lc "sed -n '1,260p' apps/project-tracker/templates/tracker/project_list.html"[0m in /home/sundaram/code/temp/test[35m[3mexec[0m[0m
+[1m/bin/bash -lc "sed -n '1,260p' apps/project-tracker/templates/tracker/dashboard.html"[0m in /home/sundaram/code/temp/test[32m succeeded in 0ms:[0m
+[2m{% extends "tracker/base.html" %}
+
+{% block title %}Projects{% endblock %}
+
+{% block content %}
+  <div id="project-create-form-region">
+    {% include "tracker/partials/project_form_panel.html" with form=project_form source_page="project_list" form_action=project_create_url form_heading="Add a project" form_submit_label="Create project" %}
+  </div>
+  <div id="project-list-region">
+    {% include "tracker/partials/project_list_panel.html" %}
+  </div>
+{% endblock %}[0m
+[32m succeeded in 0ms:[0m
+[2m{% extends "tracker/base.html" %}
+
+{% block title %}Project Tracker{% endblock %}
+
+{% block content %}
+  <div id="dashboard-project-create-form-region">
+    {% include "tracker/partials/project_form_panel.html" with form=project_form source_page="dashboard" form_action=project_create_url form_heading="Add a project" form_submit_label="Create project" %}
+  </div>
+  <div id="dashboard-stats-region">
+    {% include "tracker/partials/dashboard_stats_panel.html" %}
+  </div>
+  <div id="dashboard-recent-projects-region">
+    {% include "tracker/partials/dashboard_recent_projects_panel.html" %}
+  </div>
+{% endblock %}[0m
+[35m[3mcodex[0m[0m
+I’ve got enough context to lock the next slice. I’m updating the planning files now: splitting the remaining async CRUD work so DEV gets a tighter task-only scope first, then I’ll generate the next baton and log the decision.
+[3m[35mfile update[0m[0m
+[35mM /home/sundaram/code/temp/test/ai/next_agent.md[0m
+@@ -2,4 +2,4 @@
+ 
+[31m-- Current role: `PLANNER`[0m
+[31m-- Prompt: `ai/prompts/03-planner.md`[0m
+[32m+- Current role: `DEV`[0m
+[32m+- Prompt: `ai/prompts/04-dev.md`[0m
+ - Execution command for Codex sessions: **Follow `ai/next_agent.yaml` exactly.**
+@@ -9,12 +9,39 @@
+ 
+[31m-- Reviewer decision for `ITEM-0004`: DONE.[0m
+[31m-- Accepted scope:[0m
+[31m-  - Project-only no-reload CRUD is complete inside `apps/project-tracker/` using HTML partial mutation responses and small vanilla JS fetch handlers.[0m
+[31m-  - `tracker/views.py`, `tracker/urls.py`, the tracker templates/partials, and `static/tracker/app.js` remain aligned with the locked single-app Django architecture and avoid DRF, extra packages, or speculative layers.[0m
+[31m-- Validation evidence carried forward:[0m
+[31m-  - `python3 -m py_compile $(find apps/project-tracker -name '*.py' | sort)` passed.[0m
+[31m-  - `python3 apps/project-tracker/manage.py test tracker.tests.test_views` is still blocked in this workspace by `ModuleNotFoundError: No module named 'django'`.[0m
+[31m-- Residual risk to note when planning next work:[0m
+[31m-  - Focused tests still do not include a dedicated invalid-update case or a dedicated project-list delete-response case; those paths were accepted by inspection.[0m
+[31m-- Planning expectation:[0m
+[31m-  - Select the next backlog item after `ITEM-0004`, likely the task/tag no-reload CRUD slice, and preserve the existing partial-response pattern rather than inventing a second async approach.[0m
+[32m+- Active item: `ITEM-0005` is now the task-only no-reload CRUD slice.[0m
+[32m+- Why this split:[0m
+[32m+  - The old task-and-tag mutation item was too large for one safe pass.[0m
+[32m+  - Tasks already have a natural server-rendered home on `project_detail`, so this is the smallest next vertical slice.[0m
+[32m+  - Tag entity CRUD is deferred to `ITEM-0006` and should reuse the same mutation contract later.[0m
+[32m+- Existing pattern to preserve:[0m
+[32m+  - Keep using HTML partial mutation responses rendered through `tracker/partials/project_mutation_response.html`.[0m
+[32m+  - Reuse the small vanilla JS `data-async-form` and `data-async-link` fetch/swap flow in `static/tracker/app.js`; extend it only if task interactions truly require it.[0m
+[32m+  - Stay inside the single `tracker` app with forms, views, templates, and direct ORM usage. No DRF, extra apps, or service/repository layers.[0m
+[32m+- Implementation target for this slice:[0m
+[32m+  - Add task create, update, and delete endpoints in `tracker/views.py` and `tracker/urls.py`.[0m
+[32m+  - Keep task mutations centered on `project_detail`.[0m
+[32m+  - Return partial updates that refresh the project detail summary region, the task list region, and the task form/edit regions as needed.[0m
+[32m+  - Invalid task submissions should return inline errors via partial HTML with a `400` response.[0m
+[32m+- Likely files to modify:[0m
+[32m+  - `apps/project-tracker/tracker/views.py`[0m
+[32m+  - `apps/project-tracker/tracker/urls.py`[0m
+[32m+  - `apps/project-tracker/tracker/forms.py`[0m
+[32m+  - `apps/project-tracker/templates/tracker/project_detail.html`[0m
+[32m+  - `apps/project-tracker/templates/tracker/partials/` for reusable task form, task list, edit placeholder, and any project-detail panel updates[0m
+[32m+  - `apps/project-tracker/static/tracker/app.js`[0m
+[32m+  - `apps/project-tracker/static/tracker/app.css`[0m
+[32m+  - `apps/project-tracker/tracker/tests/test_views.py`[0m
+[32m+- Suggested implementation shape:[0m
+[32m+  - Add a project-detail context helper that supplies a blank `TaskForm`, task-create URL, and a project queryset with prefetched task tags.[0m
+[32m+  - Constrain task creation to the current project detail surface so the `project` field is fixed by the route or initial form setup rather than exposed as a cross-project mutation control.[0m
+[32m+  - Add separate swap regions on the project detail page for task create form, task list, and task edit form.[0m
+[32m+  - On successful create/update/delete, refresh both the task list region and the project detail summary region so task counts stay current.[0m
+[32m+  - On task edit GET, load a task form partial into a dedicated edit region similar to the existing project edit flow.[0m
+[32m+- Focused tests expected:[0m
+[32m+  - task create success from project detail[0m
+[32m+  - task create invalid returns inline errors[0m
+[32m+  - task update GET returns edit form partial[0m
+[32m+  - task update POST returns updated task list/detail content[0m
+[32m+  - task delete returns refreshed task list/detail content[0m
+[32m+- Validation caveat carried forward:[0m
+[32m+  - `python3 -m py_compile $(find apps/project-tracker -name '*.py' | sort)` has been the reliable static check.[0m
+[32m+  - `python3 apps/project-tracker/manage.py test tracker.tests.test_views` remains blocked here by `ModuleNotFoundError: No module named 'django'`.[0m
+[35mM /home/sundaram/code/temp/test/ai/backlog.yaml[0m
+@@ -49,6 +49,6 @@
+   - id: ITEM-0005
+[31m-    title: Add no-reload task and tag CRUD interactions[0m
+[31m-    goal: Implement async create, update, and delete flows for tasks and tags using HTML partial responses and small vanilla JS fetch handlers.[0m
+[32m+    title: Add no-reload task CRUD interactions[0m
+[32m+    goal: Implement async create, update, and delete flows for tasks from project detail pages using HTML partial responses and small vanilla JS fetch handlers.[0m
+     type: feature
+[31m-    status: todo[0m
+[32m+    status: in_progress[0m
+     priority: high
+@@ -58,5 +58,18 @@
+       - Reuse the async interaction pattern established for project mutations instead of inventing a second approach.
+[31m-      - Support task mutations from project detail views and tag mutations where they are created or managed.[0m
+[32m+      - Support task mutations directly from project detail views.[0m
+       - Keep responses partial-first and use JSON only when HTML is clearly awkward.
+[32m+      - Scope this slice to tasks only so the mutation surface stays small and validator can inspect one interaction family at a time.[0m
+   - id: ITEM-0006
+[32m+    title: Add no-reload tag CRUD interactions[0m
+[32m+    goal: Implement async create, update, and delete flows for tags using HTML partial responses and small vanilla JS fetch handlers on a server-rendered tag management surface.[0m
+[32m+    type: feature[0m
+[32m+    status: todo[0m
+[32m+    priority: high[0m
+[32m+    dependencies:[0m
+[32m+      - ITEM-0005[0m
+[32m+    notes:[0m
+[32m+      - Reuse the same partial swap contract used for project and task mutations.[0m
+[32m+      - Add a small server-rendered management surface for tags rather than introducing a new UI architecture.[0m
+[32m+      - Keep project and task tag assignment inside existing forms; this slice is about tag entity CRUD.[0m
+[32m+  - id: ITEM-0007[0m
+     title: Add automated coverage and final validation
+@@ -67,3 +80,3 @@
+     dependencies:
+[31m-      - ITEM-0005[0m
+[32m+      - ITEM-0006[0m
+     notes:
+[35mM /home/sundaram/code/temp/test/ai/active_item.yaml[0m
+@@ -1,7 +1,8 @@
+[31m-id: ITEM-0004[0m
+[31m-title: Add no-reload project CRUD interactions[0m
+[31m-goal: "Implement async create, update, and delete flows for projects using HTML partial responses and small vanilla JS fetch handlers."[0m
+[31m-status: done[0m
+[31m-owner_role: PLANNER[0m
+[32m+id: ITEM-0005[0m
+[32m+title: Add no-reload task CRUD interactions[0m
+[32m+goal: "Implement async create, update, and delete flows for tasks from project detail pages using HTML partial responses and small vanilla JS fetch handlers."[0m
+[32m+status: ready[0m
+[32m+owner_role: DEV[0m
+ related_files:
+[32m+  - apps/project-tracker/tracker/models.py[0m
+   - apps/project-tracker/tracker/views.py
+@@ -9,6 +10,4 @@
+   - apps/project-tracker/tracker/forms.py
+[31m-  - apps/project-tracker/templates/tracker/dashboard.html[0m
+[31m-  - apps/project-tracker/templates/tracker/project_list.html[0m
+   - apps/project-tracker/templates/tracker/project_detail.html
+[31m-  - apps/project-tracker/templates/tracker/[0m
+[32m+  - apps/project-tracker/templates/tracker/partials/[0m
+   - apps/project-tracker/static/tracker/app.js
+@@ -17,12 +16,12 @@
+ acceptance_criteria:
+[31m-  - "Users can create a project from a server-rendered page and see the relevant UI update without a full page reload."[0m
+[31m-  - "Users can edit an existing project from a server-rendered page and see the updated project content render via returned HTML partials."[0m
+[31m-  - "Users can delete an existing project from a server-rendered page and the affected list/detail UI updates without a full page reload."[0m
+[31m-  - "Invalid project submissions render inline form errors through partial HTML responses rather than forcing a full-page workflow."[0m
+[32m+  - "Users can create a task from a project detail page and see the task list and supporting project summary update without a full page reload."[0m
+[32m+  - "Users can edit an existing task from a project detail page and see the updated task content render via returned HTML partials."[0m
+[32m+  - "Users can delete an existing task from a project detail page and the affected task list and project summary update without a full page reload."[0m
+[32m+  - "Invalid task submissions render inline form errors through partial HTML responses rather than forcing a full-page workflow."[0m
+   - "The implementation stays inside the existing Django tracker app with plain HTML, CSS, and vanilla JS fetch handlers only."
+ done_definition:
+[31m-  - "Django views and URLs handle project create, update, and delete flows without introducing DRF, extra apps, or service/repository layers."[0m
+[31m-  - "Templates include reusable project form or list/detail partials so async mutations can replace targeted DOM regions cleanly."[0m
+[31m-  - "Client-side JS remains small and framework-free, intercepting mutation forms with fetch and swapping returned HTML into the current page."[0m
+[31m-  - "Focused Django tests cover successful and invalid project mutation responses if Django is available, or the handoff documents the blocking limitation."[0m
+[32m+  - "Django views and URLs handle task create, update, and delete flows without introducing DRF, extra apps, or service/repository layers."[0m
+[32m+  - "Templates include reusable task form and task list/detail partials so async mutations can replace targeted DOM regions cleanly on project detail pages."[0m
+[32m+  - "Client-side JS remains small and framework-free, reusing the existing fetch-and-swap pattern for task mutation forms and edit links."[0m
+[32m+  - "Focused Django tests cover successful and invalid task mutation responses if Django is available, or the handoff documents the blocking limitation."[0m
+   - "The existing Django-missing runtime caveat remains documented until the workspace can execute manage.py commands."
+[35mM /home/sundaram/code/temp/test/ai/iterations/ITER-0001.md[0m
+@@ -23 +23,2 @@
+ | 2026-03-12 | REVIEWER | Marked ITEM-0004 done and returned the baton to planning for the next backlog item | The project-only no-reload CRUD slice satisfies the locked acceptance criteria without scope drift, and the remaining gaps are documented as environment-blocked runtime validation plus narrow inspection-only test coverage |
+[32m+| 2026-03-12 | PLANNER | Split the remaining async CRUD work into task and tag slices, activated ITEM-0005 for project-detail task mutations, and handed off to DEV | The combined task-and-tag item was oversized, and task CRUD on the existing project detail surface is the smallest implementation-ready next step that preserves the established partial-response pattern |[0m
+[32mapply_patch(auto_approved=true) exited 0 in 6ms:[0m
+[2mSuccess. Updated the following files:[0m
+[2mM /home/sundaram/code/temp/test/ai/backlog.yaml[0m
+[2mM /home/sundaram/code/temp/test/ai/active_item.yaml[0m
+[2mM /home/sundaram/code/temp/test/ai/next_agent.md[0m
+[2mM /home/sundaram/code/temp/test/ai/iterations/ITER-0001.md[0m
+[3m[35mfile update:[0m[0m
+diff --git a/ai/active_item.yaml b/ai/active_item.yaml
+index 218b574fcb491b7780936b386073d10efd75c779..7a094c1fa0280b3c14e58618bfe9e6e35df32f90
+--- a/ai/active_item.yaml
++++ b/ai/active_item.yaml
+@@ -1,28 +1,27 @@
+-id: ITEM-0004
+-title: Add no-reload project CRUD interactions
+-goal: "Implement async create, update, and delete flows for projects using HTML partial responses and small vanilla JS fetch handlers."
+-status: done
+-owner_role: PLANNER
++id: ITEM-0005
++title: Add no-reload task CRUD interactions
++goal: "Implement async create, update, and delete flows for tasks from project detail pages using HTML partial responses and small vanilla JS fetch handlers."
++status: ready
++owner_role: DEV
+ related_files:
++  - apps/project-tracker/tracker/models.py
+   - apps/project-tracker/tracker/views.py
+   - apps/project-tracker/tracker/urls.py
+   - apps/project-tracker/tracker/forms.py
+-  - apps/project-tracker/templates/tracker/dashboard.html
+-  - apps/project-tracker/templates/tracker/project_list.html
+   - apps/project-tracker/templates/tracker/project_detail.html
+-  - apps/project-tracker/templates/tracker/
++  - apps/project-tracker/templates/tracker/partials/
+   - apps/project-tracker/static/tracker/app.js
+   - apps/project-tracker/static/tracker/app.css
+   - apps/project-tracker/tracker/tests/test_views.py
+ acceptance_criteria:
+-  - "Users can create a project from a server-rendered page and see the relevant UI update without a full page reload."
+-  - "Users can edit an existing project from a server-rendered page and see the updated project content render via returned HTML partials."
+-  - "Users can delete an existing project from a server-rendered page and the affected list/detail UI updates without a full page reload."
+-  - "Invalid project submissions render inline form errors through partial HTML responses rather than forcing a full-page workflow."
++  - "Users can create a task from a project detail page and see the task list and supporting project summary update without a full page reload."
++  - "Users can edit an existing task from a project detail page and see the updated task content render via returned HTML partials."
++  - "Users can delete an existing task from a project detail page and the affected task list and project summary update without a full page reload."
++  - "Invalid task submissions render inline form errors through partial HTML responses rather than forcing a full-page workflow."
+   - "The implementation stays inside the existing Django tracker app with plain HTML, CSS, and vanilla JS fetch handlers only."
+ done_definition:
+-  - "Django views and URLs handle project create, update, and delete flows without introducing DRF, extra apps, or service/repository layers."
+-  - "Templates include reusable project form or list/detail partials so async mutations can replace targeted DOM regions cleanly."
+-  - "Client-side JS remains small and framework-free, intercepting mutation forms with fetch and swapping returned HTML into the current page."
+-  - "Focused Django tests cover successful and invalid project mutation responses if Django is available, or the handoff documents the blocking limitation."
++  - "Django views and URLs handle task create, update, and delete flows without introducing DRF, extra apps, or service/repository layers."
++  - "Templates include reusable task form and task list/detail partials so async mutations can replace targeted DOM regions cleanly on project detail pages."
++  - "Client-side JS remains small and framework-free, reusing the existing fetch-and-swap pattern for task mutation forms and edit links."
++  - "Focused Django tests cover successful and invalid task mutation responses if Django is available, or the handoff documents the blocking limitation."
+   - "The existing Django-missing runtime caveat remains documented until the workspace can execute manage.py commands."
+diff --git a/ai/backlog.yaml b/ai/backlog.yaml
+index 6a0a5066af097ee0afabc0cd2ce5f4b6fffe2b67..d6ab2a56edd251a9a65452e8e2283c7683baefc0
+--- a/ai/backlog.yaml
++++ b/ai/backlog.yaml
+@@ -47,25 +47,38 @@
+       - Default mutation responses to HTML partials and inline form-error rendering.
+       - Keep the JS small and framework-free, using fetch against Django views inside the existing tracker app.
+   - id: ITEM-0005
+-    title: Add no-reload task and tag CRUD interactions
+-    goal: Implement async create, update, and delete flows for tasks and tags using HTML partial responses and small vanilla JS fetch handlers.
++    title: Add no-reload task CRUD interactions
++    goal: Implement async create, update, and delete flows for tasks from project detail pages using HTML partial responses and small vanilla JS fetch handlers.
+     type: feature
+-    status: todo
++    status: in_progress
+     priority: high
+     dependencies:
+       - ITEM-0004
+     notes:
+       - Reuse the async interaction pattern established for project mutations instead of inventing a second approach.
+-      - Support task mutations from project detail views and tag mutations where they are created or managed.
++      - Support task mutations directly from project detail views.
+       - Keep responses partial-first and use JSON only when HTML is clearly awkward.
++      - Scope this slice to tasks only so the mutation surface stays small and validator can inspect one interaction family at a time.
+   - id: ITEM-0006
++    title: Add no-reload tag CRUD interactions
++    goal: Implement async create, update, and delete flows for tags using HTML partial responses and small vanilla JS fetch handlers on a server-rendered tag management surface.
++    type: feature
++    status: todo
++    priority: high
++    dependencies:
++      - ITEM-0005
++    notes:
++      - Reuse the same partial swap contract used for project and task mutations.
++      - Add a small server-rendered management surface for tags rather than introducing a new UI architecture.
++      - Keep project and task tag assignment inside existing forms; this slice is about tag entity CRUD.
++  - id: ITEM-0007
+     title: Add automated coverage and final validation
+     goal: Cover the tracker with Django tests for models, views, and no-reload mutation behavior, then validate the full acceptance path.
+     type: feature
+     status: todo
+     priority: medium
+     dependencies:
+-      - ITEM-0005
++      - ITEM-0006
+     notes:
+       - Focus tests on domain rules, page rendering, and async CRUD behavior.
+       - Keep tooling inside Django and the Python standard library only.
+diff --git a/ai/iterations/ITER-0001.md b/ai/iterations/ITER-0001.md
+index 3a05f5a2f7a49819a6ea085f4b3fb6287aae94e4..e37670932b6a67285e26cb6c1715d21798fb3d12
+--- a/ai/iterations/ITER-0001.md
++++ b/ai/iterations/ITER-0001.md
+@@ -21,3 +21,4 @@
+ | 2026-03-12 | DEV | Completed the project-only no-reload CRUD slice with HTML partial mutation responses, minimal vanilla JS swap handlers, and focused mutation view coverage for ITEM-0004 | This vertical cut delivers project create, edit, and delete without full page reloads on the existing Django pages while preserving the missing-Django runtime caveat for validator follow-up |
+ | 2026-03-12 | VALIDATOR | Accepted ITEM-0004 for reviewer handoff after selector-contract inspection and py-compile verification, while preserving the blocked Django runtime caveat and calling out remaining focused-test gaps | The project-only no-reload CRUD slice meets the active-item requirements without scope drift, and the unresolved risk is limited to workspace environment constraints plus a small amount of inspection-only parity coverage |
+ | 2026-03-12 | REVIEWER | Marked ITEM-0004 done and returned the baton to planning for the next backlog item | The project-only no-reload CRUD slice satisfies the locked acceptance criteria without scope drift, and the remaining gaps are documented as environment-blocked runtime validation plus narrow inspection-only test coverage |
++| 2026-03-12 | PLANNER | Split the remaining async CRUD work into task and tag slices, activated ITEM-0005 for project-detail task mutations, and handed off to DEV | The combined task-and-tag item was oversized, and task CRUD on the existing project detail surface is the smallest implementation-ready next step that preserves the established partial-response pattern |
+diff --git a/ai/next_agent.md b/ai/next_agent.md
+index 93fb9bfe57036477a372ae208f379a642c6aade2..ff827b9a83dce6a3dbd088777e22ab28eb390bc2
+--- a/ai/next_agent.md
++++ b/ai/next_agent.md
+@@ -1,20 +1,47 @@
+ # Next Agent
+ 
+-- Current role: `PLANNER`
+-- Prompt: `ai/prompts/03-planner.md`
++- Current role: `DEV`
++- Prompt: `ai/prompts/04-dev.md`
+ - Execution command for Codex sessions: **Follow `ai/next_agent.yaml` exactly.**
+ - If role mismatch with `ai/active_agent.txt`, print: `WAITING FOR BATON`
+ 
+ ## Handoff Notes
+ 
+-- Reviewer decision for `ITEM-0004`: DONE.
+-- Accepted scope:
+-  - Project-only no-reload CRUD is complete inside `apps/project-tracker/` using HTML partial mutation responses and small vanilla JS fetch handlers.
+-  - `tracker/views.py`, `tracker/urls.py`, the tracker templates/partials, and `static/tracker/app.js` remain aligned with the locked single-app Django architecture and avoid DRF, extra packages, or speculative layers.
+-- Validation evidence carried forward:
+-  - `python3 -m py_compile $(find apps/project-tracker -name '*.py' | sort)` passed.
+-  - `python3 apps/project-tracker/manage.py test tracker.tests.test_views` is still blocked in this workspace by `ModuleNotFoundError: No module named 'django'`.
+-- Residual risk to note when planning next work:
+-  - Focused tests still do not include a dedicated invalid-update case or a dedicated project-list delete-response case; those paths were accepted by inspection.
+-- Planning expectation:
+-  - Select the next backlog item after `ITEM-0004`, likely the task/tag no-reload CRUD slice, and preserve the existing partial-response pattern rather than inventing a second async approach.
++- Active item: `ITEM-0005` is now the task-only no-reload CRUD slice.
++- Why this split:
++  - The old task-and-tag mutation item was too large for one safe pass.
++  - Tasks already have a natural server-rendered home on `project_detail`, so this is the smallest next vertical slice.
++  - Tag entity CRUD is deferred to `ITEM-0006` and should reuse the same mutation contract later.
++- Existing pattern to preserve:
++  - Keep using HTML partial mutation responses rendered through `tracker/partials/project_mutation_response.html`.
++  - Reuse the small vanilla JS `data-async-form` and `data-async-link` fetch/swap flow in `static/tracker/app.js`; extend it only if task interactions truly require it.
++  - Stay inside the single `tracker` app with forms, views, templates, and direct ORM usage. No DRF, extra apps, or service/repository layers.
++- Implementation target for this slice:
++  - Add task create, update, and delete endpoints in `tracker/views.py` and `tracker/urls.py`.
++  - Keep task mutations centered on `project_detail`.
++  - Return partial updates that refresh the project detail summary region, the task list region, and the task form/edit regions as needed.
++  - Invalid task submissions should return inline errors via partial HTML with a `400` response.
++- Likely files to modify:
++  - `apps/project-tracker/tracker/views.py`
++  - `apps/project-tracker/tracker/urls.py`
++  - `apps/project-tracker/tracker/forms.py`
++  - `apps/project-tracker/templates/tracker/project_detail.html`
++  - `apps/project-tracker/templates/tracker/partials/` for reusable task form, task list, edit placeholder, and any project-detail panel updates
++  - `apps/project-tracker/static/tracker/app.js`
++  - `apps/project-tracker/static/tracker/app.css`
++  - `apps/project-tracker/tracker/tests/test_views.py`
++- Suggested implementation shape:
++  - Add a project-detail context helper that supplies a blank `TaskForm`, task-create URL, and a project queryset with prefetched task tags.
++  - Constrain task creation to the current project detail surface so the `project` field is fixed by the route or initial form setup rather than exposed as a cross-project mutation control.
++  - Add separate swap regions on the project detail page for task create form, task list, and task edit form.
++  - On successful create/update/delete, refresh both the task list region and the project detail summary region so task counts stay current.
++  - On task edit GET, load a task form partial into a dedicated edit region similar to the existing project edit flow.
++- Focused tests expected:
++  - task create success from project detail
++  - task create invalid returns inline errors
++  - task update GET returns edit form partial
++  - task update POST returns updated task list/detail content
++  - task delete returns refreshed task list/detail content
++- Validation caveat carried forward:
++  - `python3 -m py_compile $(find apps/project-tracker -name '*.py' | sort)` has been the reliable static check.
++  - `python3 apps/project-tracker/manage.py test tracker.tests.test_views` remains blocked here by `ModuleNotFoundError: No module named 'django'`.
+
+[3m[35mfile update:[0m[0m
+diff --git a/ai/active_item.yaml b/ai/active_item.yaml
+index 218b574fcb491b7780936b386073d10efd75c779..7a094c1fa0280b3c14e58618bfe9e6e35df32f90
+--- a/ai/active_item.yaml
++++ b/ai/active_item.yaml
+@@ -1,28 +1,27 @@
+-id: ITEM-0004
+-title: Add no-reload project CRUD interactions
+-goal: "Implement async create, update, and delete flows for projects using HTML partial responses and small vanilla JS fetch handlers."
+-status: done
+-owner_role: PLANNER
++id: ITEM-0005
++title: Add no-reload task CRUD interactions
++goal: "Implement async create, update, and delete flows for tasks from project detail pages using HTML partial responses and small vanilla JS fetch handlers."
++status: ready
++owner_role: DEV
+ related_files:
++  - apps/project-tracker/tracker/models.py
+   - apps/project-tracker/tracker/views.py
+   - apps/project-tracker/tracker/urls.py
+   - apps/project-tracker/tracker/forms.py
+-  - apps/project-tracker/templates/tracker/dashboard.html
+-  - apps/project-tracker/templates/tracker/project_list.html
+   - apps/project-tracker/templates/tracker/project_detail.html
+-  - apps/project-tracker/templates/tracker/
++  - apps/project-tracker/templates/tracker/partials/
+   - apps/project-tracker/static/tracker/app.js
+   - apps/project-tracker/static/tracker/app.css
+   - apps/project-tracker/tracker/tests/test_views.py
+ acceptance_criteria:
+-  - "Users can create a project from a server-rendered page and see the relevant UI update without a full page reload."
+-  - "Users can edit an existing project from a server-rendered page and see the updated project content render via returned HTML partials."
+-  - "Users can delete an existing project from a server-rendered page and the affected list/detail UI updates without a full page reload."
+-  - "Invalid project submissions render inline form errors through partial HTML responses rather than forcing a full-page workflow."
++  - "Users can create a task from a project detail page and see the task list and supporting project summary update without a full page reload."
++  - "Users can edit an existing task from a project detail page and see the updated task content render via returned HTML partials."
++  - "Users can delete an existing task from a project detail page and the affected task list and project summary update without a full page reload."
++  - "Invalid task submissions render inline form errors through partial HTML responses rather than forcing a full-page workflow."
+   - "The implementation stays inside the existing Django tracker app with plain HTML, CSS, and vanilla JS fetch handlers only."
+ done_definition:
+-  - "Django views and URLs handle project create, update, and delete flows without introducing DRF, extra apps, or service/repository layers."
+-  - "Templates include reusable project form or list/detail partials so async mutations can replace targeted DOM regions cleanly."
+-  - "Client-side JS remains small and framework-free, intercepting mutation forms with fetch and swapping returned HTML into the current page."
+-  - "Focused Django tests cover successful and invalid project mutation responses if Django is available, or the handoff documents the blocking limitation."
++  - "Django views and URLs handle task create, update, and delete flows without introducing DRF, extra apps, or service/repository layers."
++  - "Templates include reusable task form and task list/detail partials so async mutations can replace targeted DOM regions cleanly on project detail pages."
++  - "Client-side JS remains small and framework-free, reusing the existing fetch-and-swap pattern for task mutation forms and edit links."
++  - "Focused Django tests cover successful and invalid task mutation responses if Django is available, or the handoff documents the blocking limitation."
+   - "The existing Django-missing runtime caveat remains documented until the workspace can execute manage.py commands."
+diff --git a/ai/backlog.yaml b/ai/backlog.yaml
+index 6a0a5066af097ee0afabc0cd2ce5f4b6fffe2b67..d6ab2a56edd251a9a65452e8e2283c7683baefc0
+--- a/ai/backlog.yaml
++++ b/ai/backlog.yaml
+@@ -47,25 +47,38 @@
+       - Default mutation responses to HTML partials and inline form-error rendering.
+       - Keep the JS small and framework-free, using fetch against Django views inside the existing tracker app.
+   - id: ITEM-0005
+-    title: Add no-reload task and tag CRUD interactions
+-    goal: Implement async create, update, and delete flows for tasks and tags using HTML partial responses and small vanilla JS fetch handlers.
++    title: Add no-reload task CRUD interactions
++    goal: Implement async create, update, and delete flows for tasks from project detail pages using HTML partial responses and small vanilla JS fetch handlers.
+     type: feature
+-    status: todo
++    status: in_progress
+     priority: high
+     dependencies:
+       - ITEM-0004
+     notes:
+       - Reuse the async interaction pattern established for project mutations instead of inventing a second approach.
+-      - Support task mutations from project detail views and tag mutations where they are created or managed.
++      - Support task mutations directly from project detail views.
+       - Keep responses partial-first and use JSON only when HTML is clearly awkward.
++      - Scope this slice to tasks only so the mutation surface stays small and validator can inspect one interaction family at a time.
+   - id: ITEM-0006
++    title: Add no-reload tag CRUD interactions
++    goal: Implement async create, update, and delete flows for tags using HTML partial responses and small vanilla JS fetch handlers on a server-rendered tag management surface.
++    type: feature
++    status: todo
++    priority: high
++    dependencies:
++      - ITEM-0005
++    notes:
++      - Reuse the same partial swap contract used for project and task mutations.
++      - Add a small server-rendered management surface for tags rather than introducing a new UI architecture.
++      - Keep project and task tag assignment inside existing forms; this slice is about tag entity CRUD.
++  - id: ITEM-0007
+     title: Add automated coverage and final validation
+     goal: Cover the tracker with Django tests for models, views, and no-reload mutation behavior, then validate the full acceptance path.
+     type: feature
+     status: todo
+     priority: medium
+     dependencies:
+-      - ITEM-0005
++      - ITEM-0006
+     notes:
+       - Focus tests on domain rules, page rendering, and async CRUD behavior.
+       - Keep tooling inside Django and the Python standard library only.
+diff --git a/ai/iterations/ITER-0001.md b/ai/iterations/ITER-0001.md
+index 3a05f5a2f7a49819a6ea085f4b3fb6287aae94e4..e37670932b6a67285e26cb6c1715d21798fb3d12
+--- a/ai/iterations/ITER-0001.md
++++ b/ai/iterations/ITER-0001.md
+@@ -21,3 +21,4 @@
+ | 2026-03-12 | DEV | Completed the project-only no-reload CRUD slice with HTML partial mutation responses, minimal vanilla JS swap handlers, and focused mutation view coverage for ITEM-0004 | This vertical cut delivers project create, edit, and delete without full page reloads on the existing Django pages while preserving the missing-Django runtime caveat for validator follow-up |
+ | 2026-03-12 | VALIDATOR | Accepted ITEM-0004 for reviewer handoff after selector-contract inspection and py-compile verification, while preserving the blocked Django runtime caveat and calling out remaining focused-test gaps | The project-only no-reload CRUD slice meets the active-item requirements without scope drift, and the unresolved risk is limited to workspace environment constraints plus a small amount of inspection-only parity coverage |
+ | 2026-03-12 | REVIEWER | Marked ITEM-0004 done and returned the baton to planning for the next backlog item | The project-only no-reload CRUD slice satisfies the locked acceptance criteria without scope drift, and the remaining gaps are documented as environment-blocked runtime validation plus narrow inspection-only test coverage |
++| 2026-03-12 | PLANNER | Split the remaining async CRUD work into task and tag slices, activated ITEM-0005 for project-detail task mutations, and handed off to DEV | The combined task-and-tag item was oversized, and task CRUD on the existing project detail surface is the smallest implementation-ready next step that preserves the established partial-response pattern |
+diff --git a/ai/next_agent.md b/ai/next_agent.md
+index 93fb9bfe57036477a372ae208f379a642c6aade2..ff827b9a83dce6a3dbd088777e22ab28eb390bc2
+--- a/ai/next_agent.md
++++ b/ai/next_agent.md
+@@ -1,20 +1,47 @@
+ # Next Agent
+ 
+-- Current role: `PLANNER`
+-- Prompt: `ai/prompts/03-planner.md`
++- Current role: `DEV`
++- Prompt: `ai/prompts/04-dev.md`
+ - Execution command for Codex sessions: **Follow `ai/next_agent.yaml` exactly.**
+ - If role mismatch with `ai/active_agent.txt`, print: `WAITING FOR BATON`
+ 
+ ## Handoff Notes
+ 
+-- Reviewer decision for `ITEM-0004`: DONE.
+-- Accepted scope:
+-  - Project-only no-reload CRUD is complete inside `apps/project-tracker/` using HTML partial mutation responses and small vanilla JS fetch handlers.
+-  - `tracker/views.py`, `tracker/urls.py`, the tracker templates/partials, and `static/tracker/app.js` remain aligned with the locked single-app Django architecture and avoid DRF, extra packages, or speculative layers.
+-- Validation evidence carried forward:
+-  - `python3 -m py_compile $(find apps/project-tracker -name '*.py' | sort)` passed.
+-  - `python3 apps/project-tracker/manage.py test tracker.tests.test_views` is still blocked in this workspace by `ModuleNotFoundError: No module named 'django'`.
+-- Residual risk to note when planning next work:
+-  - Focused tests still do not include a dedicated invalid-update case or a dedicated project-list delete-response case; those paths were accepted by inspection.
+-- Planning expectation:
+-  - Select the next backlog item after `ITEM-0004`, likely the task/tag no-reload CRUD slice, and preserve the existing partial-response pattern rather than inventing a second async approach.
++- Active item: `ITEM-0005` is now the task-only no-reload CRUD slice.
++- Why this split:
++  - The old task-and-tag mutation item was too large for one safe pass.
++  - Tasks already have a natural server-rendered home on `project_detail`, so this is the smallest next vertical slice.
++  - Tag entity CRUD is deferred to `ITEM-0006` and should reuse the same mutation contract later.
++- Existing pattern to preserve:
++  - Keep using HTML partial mutation responses rendered through `tracker/partials/project_mutation_response.html`.
++  - Reuse the small vanilla JS `data-async-form` and `data-async-link` fetch/swap flow in `static/tracker/app.js`; extend it only if task interactions truly require it.
++  - Stay inside the single `tracker` app with forms, views, templates, and direct ORM usage. No DRF, extra apps, or service/repository layers.
++- Implementation target for this slice:
++  - Add task create, update, and delete endpoints in `tracker/views.py` and `tracker/urls.py`.
++  - Keep task mutations centered on `project_detail`.
++  - Return partial updates that refresh the project detail summary region, the task list region, and the task form/edit regions as needed.
++  - Invalid task submissions should return inline errors via partial HTML with a `400` response.
++- Likely files to modify:
++  - `apps/project-tracker/tracker/views.py`
++  - `apps/project-tracker/tracker/urls.py`
++  - `apps/project-tracker/tracker/forms.py`
++  - `apps/project-tracker/templates/tracker/project_detail.html`
++  - `apps/project-tracker/templates/tracker/partials/` for reusable task form, task list, edit placeholder, and any project-detail panel updates
++  - `apps/project-tracker/static/tracker/app.js`
++  - `apps/project-tracker/static/tracker/app.css`
++  - `apps/project-tracker/tracker/tests/test_views.py`
++- Suggested implementation shape:
++  - Add a project-detail context helper that supplies a blank `TaskForm`, task-create URL, and a project queryset with prefetched task tags.
++  - Constrain task creation to the current project detail surface so the `project` field is fixed by the route or initial form setup rather than exposed as a cross-project mutation control.
++  - Add separate swap regions on the project detail page for task create form, task list, and task edit form.
++  - On successful create/update/delete, refresh both the task list region and the project detail summary region so task counts stay current.
++  - On task edit GET, load a task form partial into a dedicated edit region similar to the existing project edit flow.
++- Focused tests expected:
++  - task create success from project detail
++  - task create invalid returns inline errors
++  - task update GET returns edit form partial
++  - task update POST returns updated task list/detail content
++  - task delete returns refreshed task list/detail content
++- Validation caveat carried forward:
++  - `python3 -m py_compile $(find apps/project-tracker -name '*.py' | sort)` has been the reliable static check.
++  - `python3 apps/project-tracker/manage.py test tracker.tests.test_views` remains blocked here by `ModuleNotFoundError: No module named 'django'`.
+
+[35m[3mcodex[0m[0m
+The planning files are updated. I’m generating the DEV baton from the repo script now, then I’ll switch `ai/active_agent.txt` to `DEV` to complete the handoff exactly as required.
+[35m[3mexec[0m[0m
+[1m/bin/bash -lc "printf 'DEV
+' > ai/active_agent.txt"[0m in /home/sundaram/code/temp/test[32m succeeded in 0ms:[0m
+[2m[0m
+[35m[3mexec[0m[0m
+[1m/bin/bash -lc './scripts/generate-next-agent.sh DEV --notes "ITEM-0005 task-only no-reload CRUD | add task create/update/delete on project detail using HTML partial swaps | modify tracker views/urls/forms, project detail partials, app.js/app.css, and focused view tests"'[0m in /home/sundaram/code/temp/test[32m succeeded in 0ms:[0m
+[2mGenerated ai/next_agent.yaml for DEV (next: VALIDATOR)[0m
+[3m[35mfile update:[0m[0m
+diff --git a/ai/active_item.yaml b/ai/active_item.yaml
+index 218b574fcb491b7780936b386073d10efd75c779..7a094c1fa0280b3c14e58618bfe9e6e35df32f90
+--- a/ai/active_item.yaml
++++ b/ai/active_item.yaml
+@@ -1,28 +1,27 @@
+-id: ITEM-0004
+-title: Add no-reload project CRUD interactions
+-goal: "Implement async create, update, and delete flows for projects using HTML partial responses and small vanilla JS fetch handlers."
+-status: done
+-owner_role: PLANNER
++id: ITEM-0005
++title: Add no-reload task CRUD interactions
++goal: "Implement async create, update, and delete flows for tasks from project detail pages using HTML partial responses and small vanilla JS fetch handlers."
++status: ready
++owner_role: DEV
+ related_files:
++  - apps/project-tracker/tracker/models.py
+   - apps/project-tracker/tracker/views.py
+   - apps/project-tracker/tracker/urls.py
+   - apps/project-tracker/tracker/forms.py
+-  - apps/project-tracker/templates/tracker/dashboard.html
+-  - apps/project-tracker/templates/tracker/project_list.html
+   - apps/project-tracker/templates/tracker/project_detail.html
+-  - apps/project-tracker/templates/tracker/
++  - apps/project-tracker/templates/tracker/partials/
+   - apps/project-tracker/static/tracker/app.js
+   - apps/project-tracker/static/tracker/app.css
+   - apps/project-tracker/tracker/tests/test_views.py
+ acceptance_criteria:
+-  - "Users can create a project from a server-rendered page and see the relevant UI update without a full page reload."
+-  - "Users can edit an existing project from a server-rendered page and see the updated project content render via returned HTML partials."
+-  - "Users can delete an existing project from a server-rendered page and the affected list/detail UI updates without a full page reload."
+-  - "Invalid project submissions render inline form errors through partial HTML responses rather than forcing a full-page workflow."
++  - "Users can create a task from a project detail page and see the task list and supporting project summary update without a full page reload."
++  - "Users can edit an existing task from a project detail page and see the updated task content render via returned HTML partials."
++  - "Users can delete an existing task from a project detail page and the affected task list and project summary update without a full page reload."
++  - "Invalid task submissions render inline form errors through partial HTML responses rather than forcing a full-page workflow."
+   - "The implementation stays inside the existing Django tracker app with plain HTML, CSS, and vanilla JS fetch handlers only."
+ done_definition:
+-  - "Django views and URLs handle project create, update, and delete flows without introducing DRF, extra apps, or service/repository layers."
+-  - "Templates include reusable project form or list/detail partials so async mutations can replace targeted DOM regions cleanly."
+-  - "Client-side JS remains small and framework-free, intercepting mutation forms with fetch and swapping returned HTML into the current page."
+-  - "Focused Django tests cover successful and invalid project mutation responses if Django is available, or the handoff documents the blocking limitation."
++  - "Django views and URLs handle task create, update, and delete flows without introducing DRF, extra apps, or service/repository layers."
++  - "Templates include reusable task form and task list/detail partials so async mutations can replace targeted DOM regions cleanly on project detail pages."
++  - "Client-side JS remains small and framework-free, reusing the existing fetch-and-swap pattern for task mutation forms and edit links."
++  - "Focused Django tests cover successful and invalid task mutation responses if Django is available, or the handoff documents the blocking limitation."
+   - "The existing Django-missing runtime caveat remains documented until the workspace can execute manage.py commands."
+diff --git a/ai/backlog.yaml b/ai/backlog.yaml
+index 6a0a5066af097ee0afabc0cd2ce5f4b6fffe2b67..d6ab2a56edd251a9a65452e8e2283c7683baefc0
+--- a/ai/backlog.yaml
++++ b/ai/backlog.yaml
+@@ -47,25 +47,38 @@
+       - Default mutation responses to HTML partials and inline form-error rendering.
+       - Keep the JS small and framework-free, using fetch against Django views inside the existing tracker app.
+   - id: ITEM-0005
+-    title: Add no-reload task and tag CRUD interactions
+-    goal: Implement async create, update, and delete flows for tasks and tags using HTML partial responses and small vanilla JS fetch handlers.
++    title: Add no-reload task CRUD interactions
++    goal: Implement async create, update, and delete flows for tasks from project detail pages using HTML partial responses and small vanilla JS fetch handlers.
+     type: feature
+-    status: todo
++    status: in_progress
+     priority: high
+     dependencies:
+       - ITEM-0004
+     notes:
+       - Reuse the async interaction pattern established for project mutations instead of inventing a second approach.
+-      - Support task mutations from project detail views and tag mutations where they are created or managed.
++      - Support task mutations directly from project detail views.
+       - Keep responses partial-first and use JSON only when HTML is clearly awkward.
++      - Scope this slice to tasks only so the mutation surface stays small and validator can inspect one interaction family at a time.
+   - id: ITEM-0006
++    title: Add no-reload tag CRUD interactions
++    goal: Implement async create, update, and delete flows for tags using HTML partial responses and small vanilla JS fetch handlers on a server-rendered tag management surface.
++    type: feature
++    status: todo
++    priority: high
++    dependencies:
++      - ITEM-0005
++    notes:
++      - Reuse the same partial swap contract used for project and task mutations.
++      - Add a small server-rendered management surface for tags rather than introducing a new UI architecture.
++      - Keep project and task tag assignment inside existing forms; this slice is about tag entity CRUD.
++  - id: ITEM-0007
+     title: Add automated coverage and final validation
+     goal: Cover the tracker with Django tests for models, views, and no-reload mutation behavior, then validate the full acceptance path.
+     type: feature
+     status: todo
+     priority: medium
+     dependencies:
+-      - ITEM-0005
++      - ITEM-0006
+     notes:
+       - Focus tests on domain rules, page rendering, and async CRUD behavior.
+       - Keep tooling inside Django and the Python standard library only.
+diff --git a/ai/iterations/ITER-0001.md b/ai/iterations/ITER-0001.md
+index 3a05f5a2f7a49819a6ea085f4b3fb6287aae94e4..e37670932b6a67285e26cb6c1715d21798fb3d12
+--- a/ai/iterations/ITER-0001.md
++++ b/ai/iterations/ITER-0001.md
+@@ -21,3 +21,4 @@
+ | 2026-03-12 | DEV | Completed the project-only no-reload CRUD slice with HTML partial mutation responses, minimal vanilla JS swap handlers, and focused mutation view coverage for ITEM-0004 | This vertical cut delivers project create, edit, and delete without full page reloads on the existing Django pages while preserving the missing-Django runtime caveat for validator follow-up |
+ | 2026-03-12 | VALIDATOR | Accepted ITEM-0004 for reviewer handoff after selector-contract inspection and py-compile verification, while preserving the blocked Django runtime caveat and calling out remaining focused-test gaps | The project-only no-reload CRUD slice meets the active-item requirements without scope drift, and the unresolved risk is limited to workspace environment constraints plus a small amount of inspection-only parity coverage |
+ | 2026-03-12 | REVIEWER | Marked ITEM-0004 done and returned the baton to planning for the next backlog item | The project-only no-reload CRUD slice satisfies the locked acceptance criteria without scope drift, and the remaining gaps are documented as environment-blocked runtime validation plus narrow inspection-only test coverage |
++| 2026-03-12 | PLANNER | Split the remaining async CRUD work into task and tag slices, activated ITEM-0005 for project-detail task mutations, and handed off to DEV | The combined task-and-tag item was oversized, and task CRUD on the existing project detail surface is the smallest implementation-ready next step that preserves the established partial-response pattern |
+diff --git a/ai/next_agent.md b/ai/next_agent.md
+index 93fb9bfe57036477a372ae208f379a642c6aade2..ff827b9a83dce6a3dbd088777e22ab28eb390bc2
+--- a/ai/next_agent.md
++++ b/ai/next_agent.md
+@@ -1,20 +1,47 @@
+ # Next Agent
+ 
+-- Current role: `PLANNER`
+-- Prompt: `ai/prompts/03-planner.md`
++- Current role: `DEV`
++- Prompt: `ai/prompts/04-dev.md`
+ - Execution command for Codex sessions: **Follow `ai/next_agent.yaml` exactly.**
+ - If role mismatch with `ai/active_agent.txt`, print: `WAITING FOR BATON`
+ 
+ ## Handoff Notes
+ 
+-- Reviewer decision for `ITEM-0004`: DONE.
+-- Accepted scope:
+-  - Project-only no-reload CRUD is complete inside `apps/project-tracker/` using HTML partial mutation responses and small vanilla JS fetch handlers.
+-  - `tracker/views.py`, `tracker/urls.py`, the tracker templates/partials, and `static/tracker/app.js` remain aligned with the locked single-app Django architecture and avoid DRF, extra packages, or speculative layers.
+-- Validation evidence carried forward:
+-  - `python3 -m py_compile $(find apps/project-tracker -name '*.py' | sort)` passed.
+-  - `python3 apps/project-tracker/manage.py test tracker.tests.test_views` is still blocked in this workspace by `ModuleNotFoundError: No module named 'django'`.
+-- Residual risk to note when planning next work:
+-  - Focused tests still do not include a dedicated invalid-update case or a dedicated project-list delete-response case; those paths were accepted by inspection.
+-- Planning expectation:
+-  - Select the next backlog item after `ITEM-0004`, likely the task/tag no-reload CRUD slice, and preserve the existing partial-response pattern rather than inventing a second async approach.
++- Active item: `ITEM-0005` is now the task-only no-reload CRUD slice.
++- Why this split:
++  - The old task-and-tag mutation item was too large for one safe pass.
++  - Tasks already have a natural server-rendered home on `project_detail`, so this is the smallest next vertical slice.
++  - Tag entity CRUD is deferred to `ITEM-0006` and should reuse the same mutation contract later.
++- Existing pattern to preserve:
++  - Keep using HTML partial mutation responses rendered through `tracker/partials/project_mutation_response.html`.
++  - Reuse the small vanilla JS `data-async-form` and `data-async-link` fetch/swap flow in `static/tracker/app.js`; extend it only if task interactions truly require it.
++  - Stay inside the single `tracker` app with forms, views, templates, and direct ORM usage. No DRF, extra apps, or service/repository layers.
++- Implementation target for this slice:
++  - Add task create, update, and delete endpoints in `tracker/views.py` and `tracker/urls.py`.
++  - Keep task mutations centered on `project_detail`.
++  - Return partial updates that refresh the project detail summary region, the task list region, and the task form/edit regions as needed.
++  - Invalid task submissions should return inline errors via partial HTML with a `400` response.
++- Likely files to modify:
++  - `apps/project-tracker/tracker/views.py`
++  - `apps/project-tracker/tracker/urls.py`
++  - `apps/project-tracker/tracker/forms.py`
++  - `apps/project-tracker/templates/tracker/project_detail.html`
++  - `apps/project-tracker/templates/tracker/partials/` for reusable task form, task list, edit placeholder, and any project-detail panel updates
++  - `apps/project-tracker/static/tracker/app.js`
++  - `apps/project-tracker/static/tracker/app.css`
++  - `apps/project-tracker/tracker/tests/test_views.py`
++- Suggested implementation shape:
++  - Add a project-detail context helper that supplies a blank `TaskForm`, task-create URL, and a project queryset with prefetched task tags.
++  - Constrain task creation to the current project detail surface so the `project` field is fixed by the route or initial form setup rather than exposed as a cross-project mutation control.
++  - Add separate swap regions on the project detail page for task create form, task list, and task edit form.
++  - On successful create/update/delete, refresh both the task list region and the project detail summary region so task counts stay current.
++  - On task edit GET, load a task form partial into a dedicated edit region similar to the existing project edit flow.
++- Focused tests expected:
++  - task create success from project detail
++  - task create invalid returns inline errors
++  - task update GET returns edit form partial
++  - task update POST returns updated task list/detail content
++  - task delete returns refreshed task list/detail content
++- Validation caveat carried forward:
++  - `python3 -m py_compile $(find apps/project-tracker -name '*.py' | sort)` has been the reliable static check.
++  - `python3 apps/project-tracker/manage.py test tracker.tests.test_views` remains blocked here by `ModuleNotFoundError: No module named 'django'`.
+
+[35m[3mcodex[0m[0m
+I’ve handed the baton forward. I’m doing one quick verification pass on the generated handoff files so the final output matches the exact planner contract before I stop.
+[35m[3mexec[0m[0m
+[1m/bin/bash -lc "sed -n '1,220p' ai/next_agent.yaml"[0m in /home/sundaram/code/temp/test[35m[3mexec[0m[0m
+[1m/bin/bash -lc "sed -n '1,20p' ai/active_agent.txt"[0m in /home/sundaram/code/temp/test[32m succeeded in 0ms:[0m
+[2mnext_role: DEV
+prompt_file: ai/prompts/04-dev.md
+read:
+  - ai/active_item.yaml
+  - ai/requirements.md
+  - ai/judgment.yaml
+  - ai/simplification.md
+  - ai/decision-lock.yaml
+  - ai/goal.yaml
+  - ai/constitution.yaml
+  - ai/active_agent.txt
+  - ai/next_agent.md
+  - ai/user-questions.yaml
+allowed_edits:
+  - apps/
+  - infra/
+  - ai/review.md
+  - ai/decision-lock.yaml
+  - ai/user-questions.yaml
+  - ai/iterations/ITER-0001.md[0m
+[32m succeeded in 0ms:[0m
+[2mDEV[0m
+[3m[35mfile update:[0m[0m
+diff --git a/ai/active_item.yaml b/ai/active_item.yaml
+index 218b574fcb491b7780936b386073d10efd75c779..7a094c1fa0280b3c14e58618bfe9e6e35df32f90
+--- a/ai/active_item.yaml
++++ b/ai/active_item.yaml
+@@ -1,28 +1,27 @@
+-id: ITEM-0004
+-title: Add no-reload project CRUD interactions
+-goal: "Implement async create, update, and delete flows for projects using HTML partial responses and small vanilla JS fetch handlers."
+-status: done
+-owner_role: PLANNER
++id: ITEM-0005
++title: Add no-reload task CRUD interactions
++goal: "Implement async create, update, and delete flows for tasks from project detail pages using HTML partial responses and small vanilla JS fetch handlers."
++status: ready
++owner_role: DEV
+ related_files:
++  - apps/project-tracker/tracker/models.py
+   - apps/project-tracker/tracker/views.py
+   - apps/project-tracker/tracker/urls.py
+   - apps/project-tracker/tracker/forms.py
+-  - apps/project-tracker/templates/tracker/dashboard.html
+-  - apps/project-tracker/templates/tracker/project_list.html
+   - apps/project-tracker/templates/tracker/project_detail.html
+-  - apps/project-tracker/templates/tracker/
++  - apps/project-tracker/templates/tracker/partials/
+   - apps/project-tracker/static/tracker/app.js
+   - apps/project-tracker/static/tracker/app.css
+   - apps/project-tracker/tracker/tests/test_views.py
+ acceptance_criteria:
+-  - "Users can create a project from a server-rendered page and see the relevant UI update without a full page reload."
+-  - "Users can edit an existing project from a server-rendered page and see the updated project content render via returned HTML partials."
+-  - "Users can delete an existing project from a server-rendered page and the affected list/detail UI updates without a full page reload."
+-  - "Invalid project submissions render inline form errors through partial HTML responses rather than forcing a full-page workflow."
++  - "Users can create a task from a project detail page and see the task list and supporting project summary update without a full page reload."
++  - "Users can edit an existing task from a project detail page and see the updated task content render via returned HTML partials."
++  - "Users can delete an existing task from a project detail page and the affected task list and project summary update without a full page reload."
++  - "Invalid task submissions render inline form errors through partial HTML responses rather than forcing a full-page workflow."
+   - "The implementation stays inside the existing Django tracker app with plain HTML, CSS, and vanilla JS fetch handlers only."
+ done_definition:
+-  - "Django views and URLs handle project create, update, and delete flows without introducing DRF, extra apps, or service/repository layers."
+-  - "Templates include reusable project form or list/detail partials so async mutations can replace targeted DOM regions cleanly."
+-  - "Client-side JS remains small and framework-free, intercepting mutation forms with fetch and swapping returned HTML into the current page."
+-  - "Focused Django tests cover successful and invalid project mutation responses if Django is available, or the handoff documents the blocking limitation."
++  - "Django views and URLs handle task create, update, and delete flows without introducing DRF, extra apps, or service/repository layers."
++  - "Templates include reusable task form and task list/detail partials so async mutations can replace targeted DOM regions cleanly on project detail pages."
++  - "Client-side JS remains small and framework-free, reusing the existing fetch-and-swap pattern for task mutation forms and edit links."
++  - "Focused Django tests cover successful and invalid task mutation responses if Django is available, or the handoff documents the blocking limitation."
+   - "The existing Django-missing runtime caveat remains documented until the workspace can execute manage.py commands."
+diff --git a/ai/backlog.yaml b/ai/backlog.yaml
+index 6a0a5066af097ee0afabc0cd2ce5f4b6fffe2b67..d6ab2a56edd251a9a65452e8e2283c7683baefc0
+--- a/ai/backlog.yaml
++++ b/ai/backlog.yaml
+@@ -47,25 +47,38 @@
+       - Default mutation responses to HTML partials and inline form-error rendering.
+       - Keep the JS small and framework-free, using fetch against Django views inside the existing tracker app.
+   - id: ITEM-0005
+-    title: Add no-reload task and tag CRUD interactions
+-    goal: Implement async create, update, and delete flows for tasks and tags using HTML partial responses and small vanilla JS fetch handlers.
++    title: Add no-reload task CRUD interactions
++    goal: Implement async create, update, and delete flows for tasks from project detail pages using HTML partial responses and small vanilla JS fetch handlers.
+     type: feature
+-    status: todo
++    status: in_progress
+     priority: high
+     dependencies:
+       - ITEM-0004
+     notes:
+       - Reuse the async interaction pattern established for project mutations instead of inventing a second approach.
+-      - Support task mutations from project detail views and tag mutations where they are created or managed.
++      - Support task mutations directly from project detail views.
+       - Keep responses partial-first and use JSON only when HTML is clearly awkward.
++      - Scope this slice to tasks only so the mutation surface stays small and validator can inspect one interaction family at a time.
+   - id: ITEM-0006
++    title: Add no-reload tag CRUD interactions
++    goal: Implement async create, update, and delete flows for tags using HTML partial responses and small vanilla JS fetch handlers on a server-rendered tag management surface.
++    type: feature
++    status: todo
++    priority: high
++    dependencies:
++      - ITEM-0005
++    notes:
++      - Reuse the same partial swap contract used for project and task mutations.
++      - Add a small server-rendered management surface for tags rather than introducing a new UI architecture.
++      - Keep project and task tag assignment inside existing forms; this slice is about tag entity CRUD.
++  - id: ITEM-0007
+     title: Add automated coverage and final validation
+     goal: Cover the tracker with Django tests for models, views, and no-reload mutation behavior, then validate the full acceptance path.
+     type: feature
+     status: todo
+     priority: medium
+     dependencies:
+-      - ITEM-0005
++      - ITEM-0006
+     notes:
+       - Focus tests on domain rules, page rendering, and async CRUD behavior.
+       - Keep tooling inside Django and the Python standard library only.
+diff --git a/ai/iterations/ITER-0001.md b/ai/iterations/ITER-0001.md
+index 3a05f5a2f7a49819a6ea085f4b3fb6287aae94e4..e37670932b6a67285e26cb6c1715d21798fb3d12
+--- a/ai/iterations/ITER-0001.md
++++ b/ai/iterations/ITER-0001.md
+@@ -21,3 +21,4 @@
+ | 2026-03-12 | DEV | Completed the project-only no-reload CRUD slice with HTML partial mutation responses, minimal vanilla JS swap handlers, and focused mutation view coverage for ITEM-0004 | This vertical cut delivers project create, edit, and delete without full page reloads on the existing Django pages while preserving the missing-Django runtime caveat for validator follow-up |
+ | 2026-03-12 | VALIDATOR | Accepted ITEM-0004 for reviewer handoff after selector-contract inspection and py-compile verification, while preserving the blocked Django runtime caveat and calling out remaining focused-test gaps | The project-only no-reload CRUD slice meets the active-item requirements without scope drift, and the unresolved risk is limited to workspace environment constraints plus a small amount of inspection-only parity coverage |
+ | 2026-03-12 | REVIEWER | Marked ITEM-0004 done and returned the baton to planning for the next backlog item | The project-only no-reload CRUD slice satisfies the locked acceptance criteria without scope drift, and the remaining gaps are documented as environment-blocked runtime validation plus narrow inspection-only test coverage |
++| 2026-03-12 | PLANNER | Split the remaining async CRUD work into task and tag slices, activated ITEM-0005 for project-detail task mutations, and handed off to DEV | The combined task-and-tag item was oversized, and task CRUD on the existing project detail surface is the smallest implementation-ready next step that preserves the established partial-response pattern |
+diff --git a/ai/next_agent.md b/ai/next_agent.md
+index 93fb9bfe57036477a372ae208f379a642c6aade2..ff827b9a83dce6a3dbd088777e22ab28eb390bc2
+--- a/ai/next_agent.md
++++ b/ai/next_agent.md
+@@ -1,20 +1,47 @@
+ # Next Agent
+ 
+-- Current role: `PLANNER`
+-- Prompt: `ai/prompts/03-planner.md`
++- Current role: `DEV`
++- Prompt: `ai/prompts/04-dev.md`
+ - Execution command for Codex sessions: **Follow `ai/next_agent.yaml` exactly.**
+ - If role mismatch with `ai/active_agent.txt`, print: `WAITING FOR BATON`
+ 
+ ## Handoff Notes
+ 
+-- Reviewer decision for `ITEM-0004`: DONE.
+-- Accepted scope:
+-  - Project-only no-reload CRUD is complete inside `apps/project-tracker/` using HTML partial mutation responses and small vanilla JS fetch handlers.
+-  - `tracker/views.py`, `tracker/urls.py`, the tracker templates/partials, and `static/tracker/app.js` remain aligned with the locked single-app Django architecture and avoid DRF, extra packages, or speculative layers.
+-- Validation evidence carried forward:
+-  - `python3 -m py_compile $(find apps/project-tracker -name '*.py' | sort)` passed.
+-  - `python3 apps/project-tracker/manage.py test tracker.tests.test_views` is still blocked in this workspace by `ModuleNotFoundError: No module named 'django'`.
+-- Residual risk to note when planning next work:
+-  - Focused tests still do not include a dedicated invalid-update case or a dedicated project-list delete-response case; those paths were accepted by inspection.
+-- Planning expectation:
+-  - Select the next backlog item after `ITEM-0004`, likely the task/tag no-reload CRUD slice, and preserve the existing partial-response pattern rather than inventing a second async approach.
++- Active item: `ITEM-0005` is now the task-only no-reload CRUD slice.
++- Why this split:
++  - The old task-and-tag mutation item was too large for one safe pass.
++  - Tasks already have a natural server-rendered home on `project_detail`, so this is the smallest next vertical slice.
++  - Tag entity CRUD is deferred to `ITEM-0006` and should reuse the same mutation contract later.
++- Existing pattern to preserve:
++  - Keep using HTML partial mutation responses rendered through `tracker/partials/project_mutation_response.html`.
++  - Reuse the small vanilla JS `data-async-form` and `data-async-link` fetch/swap flow in `static/tracker/app.js`; extend it only if task interactions truly require it.
++  - Stay inside the single `tracker` app with forms, views, templates, and direct ORM usage. No DRF, extra apps, or service/repository layers.
++- Implementation target for this slice:
++  - Add task create, update, and delete endpoints in `tracker/views.py` and `tracker/urls.py`.
++  - Keep task mutations centered on `project_detail`.
++  - Return partial updates that refresh the project detail summary region, the task list region, and the task form/edit regions as needed.
++  - Invalid task submissions should return inline errors via partial HTML with a `400` response.
++- Likely files to modify:
++  - `apps/project-tracker/tracker/views.py`
++  - `apps/project-tracker/tracker/urls.py`
++  - `apps/project-tracker/tracker/forms.py`
++  - `apps/project-tracker/templates/tracker/project_detail.html`
++  - `apps/project-tracker/templates/tracker/partials/` for reusable task form, task list, edit placeholder, and any project-detail panel updates
++  - `apps/project-tracker/static/tracker/app.js`
++  - `apps/project-tracker/static/tracker/app.css`
++  - `apps/project-tracker/tracker/tests/test_views.py`
++- Suggested implementation shape:
++  - Add a project-detail context helper that supplies a blank `TaskForm`, task-create URL, and a project queryset with prefetched task tags.
++  - Constrain task creation to the current project detail surface so the `project` field is fixed by the route or initial form setup rather than exposed as a cross-project mutation control.
++  - Add separate swap regions on the project detail page for task create form, task list, and task edit form.
++  - On successful create/update/delete, refresh both the task list region and the project detail summary region so task counts stay current.
++  - On task edit GET, load a task form partial into a dedicated edit region similar to the existing project edit flow.
++- Focused tests expected:
++  - task create success from project detail
++  - task create invalid returns inline errors
++  - task update GET returns edit form partial
++  - task update POST returns updated task list/detail content
++  - task delete returns refreshed task list/detail content
++- Validation caveat carried forward:
++  - `python3 -m py_compile $(find apps/project-tracker -name '*.py' | sort)` has been the reliable static check.
++  - `python3 apps/project-tracker/manage.py test tracker.tests.test_views` remains blocked here by `ModuleNotFoundError: No module named 'django'`.
+
+[35m[3mcodex[0m[0m
+HANDOFF TO DEV
+[3m[35mfile update:[0m[0m
+diff --git a/ai/active_item.yaml b/ai/active_item.yaml
+index 218b574fcb491b7780936b386073d10efd75c779..7a094c1fa0280b3c14e58618bfe9e6e35df32f90
+--- a/ai/active_item.yaml
++++ b/ai/active_item.yaml
+@@ -1,28 +1,27 @@
+-id: ITEM-0004
+-title: Add no-reload project CRUD interactions
+-goal: "Implement async create, update, and delete flows for projects using HTML partial responses and small vanilla JS fetch handlers."
+-status: done
+-owner_role: PLANNER
++id: ITEM-0005
++title: Add no-reload task CRUD interactions
++goal: "Implement async create, update, and delete flows for tasks from project detail pages using HTML partial responses and small vanilla JS fetch handlers."
++status: ready
++owner_role: DEV
+ related_files:
++  - apps/project-tracker/tracker/models.py
+   - apps/project-tracker/tracker/views.py
+   - apps/project-tracker/tracker/urls.py
+   - apps/project-tracker/tracker/forms.py
+-  - apps/project-tracker/templates/tracker/dashboard.html
+-  - apps/project-tracker/templates/tracker/project_list.html
+   - apps/project-tracker/templates/tracker/project_detail.html
+-  - apps/project-tracker/templates/tracker/
++  - apps/project-tracker/templates/tracker/partials/
+   - apps/project-tracker/static/tracker/app.js
+   - apps/project-tracker/static/tracker/app.css
+   - apps/project-tracker/tracker/tests/test_views.py
+ acceptance_criteria:
+-  - "Users can create a project from a server-rendered page and see the relevant UI update without a full page reload."
+-  - "Users can edit an existing project from a server-rendered page and see the updated project content render via returned HTML partials."
+-  - "Users can delete an existing project from a server-rendered page and the affected list/detail UI updates without a full page reload."
+-  - "Invalid project submissions render inline form errors through partial HTML responses rather than forcing a full-page workflow."
++  - "Users can create a task from a project detail page and see the task list and supporting project summary update without a full page reload."
++  - "Users can edit an existing task from a project detail page and see the updated task content render via returned HTML partials."
++  - "Users can delete an existing task from a project detail page and the affected task list and project summary update without a full page reload."
++  - "Invalid task submissions render inline form errors through partial HTML responses rather than forcing a full-page workflow."
+   - "The implementation stays inside the existing Django tracker app with plain HTML, CSS, and vanilla JS fetch handlers only."
+ done_definition:
+-  - "Django views and URLs handle project create, update, and delete flows without introducing DRF, extra apps, or service/repository layers."
+-  - "Templates include reusable project form or list/detail partials so async mutations can replace targeted DOM regions cleanly."
+-  - "Client-side JS remains small and framework-free, intercepting mutation forms with fetch and swapping returned HTML into the current page."
+-  - "Focused Django tests cover successful and invalid project mutation responses if Django is available, or the handoff documents the blocking limitation."
++  - "Django views and URLs handle task create, update, and delete flows without introducing DRF, extra apps, or service/repository layers."
++  - "Templates include reusable task form and task list/detail partials so async mutations can replace targeted DOM regions cleanly on project detail pages."
++  - "Client-side JS remains small and framework-free, reusing the existing fetch-and-swap pattern for task mutation forms and edit links."
++  - "Focused Django tests cover successful and invalid task mutation responses if Django is available, or the handoff documents the blocking limitation."
+   - "The existing Django-missing runtime caveat remains documented until the workspace can execute manage.py commands."
+diff --git a/ai/backlog.yaml b/ai/backlog.yaml
+index 6a0a5066af097ee0afabc0cd2ce5f4b6fffe2b67..d6ab2a56edd251a9a65452e8e2283c7683baefc0
+--- a/ai/backlog.yaml
++++ b/ai/backlog.yaml
+@@ -47,25 +47,38 @@
+       - Default mutation responses to HTML partials and inline form-error rendering.
+       - Keep the JS small and framework-free, using fetch against Django views inside the existing tracker app.
+   - id: ITEM-0005
+-    title: Add no-reload task and tag CRUD interactions
+-    goal: Implement async create, update, and delete flows for tasks and tags using HTML partial responses and small vanilla JS fetch handlers.
++    title: Add no-reload task CRUD interactions
++    goal: Implement async create, update, and delete flows for tasks from project detail pages using HTML partial responses and small vanilla JS fetch handlers.
+     type: feature
+-    status: todo
++    status: in_progress
+     priority: high
+     dependencies:
+       - ITEM-0004
+     notes:
+       - Reuse the async interaction pattern established for project mutations instead of inventing a second approach.
+-      - Support task mutations from project detail views and tag mutations where they are created or managed.
++      - Support task mutations directly from project detail views.
+       - Keep responses partial-first and use JSON only when HTML is clearly awkward.
++      - Scope this slice to tasks only so the mutation surface stays small and validator can inspect one interaction family at a time.
+   - id: ITEM-0006
++    title: Add no-reload tag CRUD interactions
++    goal: Implement async create, update, and delete flows for tags using HTML partial responses and small vanilla JS fetch handlers on a server-rendered tag management surface.
++    type: feature
++    status: todo
++    priority: high
++    dependencies:
++      - ITEM-0005
++    notes:
++      - Reuse the same partial swap contract used for project and task mutations.
++      - Add a small server-rendered management surface for tags rather than introducing a new UI architecture.
++      - Keep project and task tag assignment inside existing forms; this slice is about tag entity CRUD.
++  - id: ITEM-0007
+     title: Add automated coverage and final validation
+     goal: Cover the tracker with Django tests for models, views, and no-reload mutation behavior, then validate the full acceptance path.
+     type: feature
+     status: todo
+     priority: medium
+     dependencies:
+-      - ITEM-0005
++      - ITEM-0006
+     notes:
+       - Focus tests on domain rules, page rendering, and async CRUD behavior.
+       - Keep tooling inside Django and the Python standard library only.
+diff --git a/ai/iterations/ITER-0001.md b/ai/iterations/ITER-0001.md
+index 3a05f5a2f7a49819a6ea085f4b3fb6287aae94e4..e37670932b6a67285e26cb6c1715d21798fb3d12
+--- a/ai/iterations/ITER-0001.md
++++ b/ai/iterations/ITER-0001.md
+@@ -21,3 +21,4 @@
+ | 2026-03-12 | DEV | Completed the project-only no-reload CRUD slice with HTML partial mutation responses, minimal vanilla JS swap handlers, and focused mutation view coverage for ITEM-0004 | This vertical cut delivers project create, edit, and delete without full page reloads on the existing Django pages while preserving the missing-Django runtime caveat for validator follow-up |
+ | 2026-03-12 | VALIDATOR | Accepted ITEM-0004 for reviewer handoff after selector-contract inspection and py-compile verification, while preserving the blocked Django runtime caveat and calling out remaining focused-test gaps | The project-only no-reload CRUD slice meets the active-item requirements without scope drift, and the unresolved risk is limited to workspace environment constraints plus a small amount of inspection-only parity coverage |
+ | 2026-03-12 | REVIEWER | Marked ITEM-0004 done and returned the baton to planning for the next backlog item | The project-only no-reload CRUD slice satisfies the locked acceptance criteria without scope drift, and the remaining gaps are documented as environment-blocked runtime validation plus narrow inspection-only test coverage |
++| 2026-03-12 | PLANNER | Split the remaining async CRUD work into task and tag slices, activated ITEM-0005 for project-detail task mutations, and handed off to DEV | The combined task-and-tag item was oversized, and task CRUD on the existing project detail surface is the smallest implementation-ready next step that preserves the established partial-response pattern |
+diff --git a/ai/next_agent.md b/ai/next_agent.md
+index 93fb9bfe57036477a372ae208f379a642c6aade2..ff827b9a83dce6a3dbd088777e22ab28eb390bc2
+--- a/ai/next_agent.md
++++ b/ai/next_agent.md
+@@ -1,20 +1,47 @@
+ # Next Agent
+ 
+-- Current role: `PLANNER`
+-- Prompt: `ai/prompts/03-planner.md`
++- Current role: `DEV`
++- Prompt: `ai/prompts/04-dev.md`
+ - Execution command for Codex sessions: **Follow `ai/next_agent.yaml` exactly.**
+ - If role mismatch with `ai/active_agent.txt`, print: `WAITING FOR BATON`
+ 
+ ## Handoff Notes
+ 
+-- Reviewer decision for `ITEM-0004`: DONE.
+-- Accepted scope:
+-  - Project-only no-reload CRUD is complete inside `apps/project-tracker/` using HTML partial mutation responses and small vanilla JS fetch handlers.
+-  - `tracker/views.py`, `tracker/urls.py`, the tracker templates/partials, and `static/tracker/app.js` remain aligned with the locked single-app Django architecture and avoid DRF, extra packages, or speculative layers.
+-- Validation evidence carried forward:
+-  - `python3 -m py_compile $(find apps/project-tracker -name '*.py' | sort)` passed.
+-  - `python3 apps/project-tracker/manage.py test tracker.tests.test_views` is still blocked in this workspace by `ModuleNotFoundError: No module named 'django'`.
+-- Residual risk to note when planning next work:
+-  - Focused tests still do not include a dedicated invalid-update case or a dedicated project-list delete-response case; those paths were accepted by inspection.
+-- Planning expectation:
+-  - Select the next backlog item after `ITEM-0004`, likely the task/tag no-reload CRUD slice, and preserve the existing partial-response pattern rather than inventing a second async approach.
++- Active item: `ITEM-0005` is now the task-only no-reload CRUD slice.
++- Why this split:
++  - The old task-and-tag mutation item was too large for one safe pass.
++  - Tasks already have a natural server-rendered home on `project_detail`, so this is the smallest next vertical slice.
++  - Tag entity CRUD is deferred to `ITEM-0006` and should reuse the same mutation contract later.
++- Existing pattern to preserve:
++  - Keep using HTML partial mutation responses rendered through `tracker/partials/project_mutation_response.html`.
++  - Reuse the small vanilla JS `data-async-form` and `data-async-link` fetch/swap flow in `static/tracker/app.js`; extend it only if task interactions truly require it.
++  - Stay inside the single `tracker` app with forms, views, templates, and direct ORM usage. No DRF, extra apps, or service/repository layers.
++- Implementation target for this slice:
++  - Add task create, update, and delete endpoints in `tracker/views.py` and `tracker/urls.py`.
++  - Keep task mutations centered on `project_detail`.
++  - Return partial updates that refresh the project detail summary region, the task list region, and the task form/edit regions as needed.
++  - Invalid task submissions should return inline errors via partial HTML with a `400` response.
++- Likely files to modify:
++  - `apps/project-tracker/tracker/views.py`
++  - `apps/project-tracker/tracker/urls.py`
++  - `apps/project-tracker/tracker/forms.py`
++  - `apps/project-tracker/templates/tracker/project_detail.html`
++  - `apps/project-tracker/templates/tracker/partials/` for reusable task form, task list, edit placeholder, and any project-detail panel updates
++  - `apps/project-tracker/static/tracker/app.js`
++  - `apps/project-tracker/static/tracker/app.css`
++  - `apps/project-tracker/tracker/tests/test_views.py`
++- Suggested implementation shape:
++  - Add a project-detail context helper that supplies a blank `TaskForm`, task-create URL, and a project queryset with prefetched task tags.
++  - Constrain task creation to the current project detail surface so the `project` field is fixed by the route or initial form setup rather than exposed as a cross-project mutation control.
++  - Add separate swap regions on the project detail page for task create form, task list, and task edit form.
++  - On successful create/update/delete, refresh both the task list region and the project detail summary region so task counts stay current.
++  - On task edit GET, load a task form partial into a dedicated edit region similar to the existing project edit flow.
++- Focused tests expected:
++  - task create success from project detail
++  - task create invalid returns inline errors
++  - task update GET returns edit form partial
++  - task update POST returns updated task list/detail content
++  - task delete returns refreshed task list/detail content
++- Validation caveat carried forward:
++  - `python3 -m py_compile $(find apps/project-tracker -name '*.py' | sort)` has been the reliable static check.
++  - `python3 apps/project-tracker/manage.py test tracker.tests.test_views` remains blocked here by `ModuleNotFoundError: No module named 'django'`.
+
+[3m[35mtokens used[0m[0m
+24,246
+
+Script done on 2026-03-11 22:35:53-05:00 [COMMAND_EXIT_CODE="0"]

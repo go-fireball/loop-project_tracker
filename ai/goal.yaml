@@ -14,8 +14,13 @@ context_notes:
   - Django serves both the API and static/template files
   - All code lives in apps/project-tracker/
   - Use Django models with proper foreign key and many-to-many relationships
+  - Use Poetry for dependency management (pyproject.toml at the repository root)
+  - Use pyenv for Python version management (Python 3.12+)
+  - Run Django commands via `poetry run python manage.py ...`
 constraints:
   - Django and its built-in dependencies only, no additional pip packages (no DRF, no celery, etc.)
   - No frontend JS frameworks
   - Single Django project, no microservices
   - SQLite only, no external database server
+  - Use Poetry (not pip/venv) for package management
+  - Use pyenv for Python version management

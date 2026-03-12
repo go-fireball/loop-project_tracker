@@ -1,0 +1,740 @@
+Script started on 2026-03-11 22:43:14-05:00 [COMMAND="codex exec --model gpt-5.4 --full-auto Follow\ ai/next_agent.yaml\ exactly. " TERM="xterm-256color" TTY="/dev/pts/0" COLUMNS="184" LINES="43"]
+OpenAI Codex v0.114.0 (research preview)
+--------
+[1mworkdir:[0m /home/sundaram/code/temp/test
+[1mmodel:[0m gpt-5.4
+[1mprovider:[0m openai
+[1mapproval:[0m never
+[1msandbox:[0m workspace-write [workdir, /tmp, $TMPDIR, /home/sundaram/.codex/memories]
+[1mreasoning effort:[0m medium
+[1mreasoning summaries:[0m none
+[1msession id:[0m 019ce024-3340-7031-88a6-21fe4d295b8f
+--------
+[36muser[0m
+Follow ai/next_agent.yaml exactly.
+[36mmcp startup:[0m no servers
+[35m[3mcodex[0m[0m
+I’m checking the repository instructions and the referenced `ai/next_agent.yaml` first, then I’ll execute whatever workflow it specifies exactly.
+[35m[3mexec[0m[0m
+[1m/bin/bash -lc pwd[0m in /home/sundaram/code/temp/test[32m succeeded in 0ms:[0m
+[2m/home/sundaram/code/temp/test[0m
+[35m[3mexec[0m[0m
+[1m/bin/bash -lc "rg --files -g 'AGENTS.md' -g 'ai/next_agent.yaml' -g 'ai/**'"[0m in /home/sundaram/code/temp/test[32m succeeded in 0ms:[0m
+[2mai/logs/step-003-ARCHITECT.log
+ai/logs/step-008-PLANNER.log
+ai/logs/step-006-VALIDATOR.log
+ai/logs/step-002-VALIDATOR.log
+ai/logs/step-007-REVIEWER.log
+ai/logs/step-007-DEV.log
+ai/logs/step-009-DEV.log
+ai/logs/step-001-DEV.log
+ai/logs/step-002-PLANNER.log
+ai/logs/step-010-VALIDATOR.log
+ai/logs/step-002-SENIOR_JUDGMENTAL_ENGINEER.log
+ai/logs/step-003-REVIEWER.log
+ai/logs/baton.log
+ai/logs/step-005-DEV.log
+ai/logs/step-006-PLANNER.log
+ai/logs/step-004-PLANNER.log
+ai/logs/step-001-REVIEWER.log
+ai/logs/step-004-VALIDATOR.log
+ai/logs/step-003-DEV.log
+ai/logs/step-008-VALIDATOR.log[0m
+[35m[3mexec[0m[0m
+[1m/bin/bash -lc "sed -n '1,220p' AGENTS.md"[0m in /home/sundaram/code/temp/test[31m exited 2 in 0ms:[0m
+[2msed: can't read AGENTS.md: No such file or directory[0m
+[35m[3mexec[0m[0m
+[1m/bin/bash -lc "sed -n '1,260p' ai/next_agent.yaml"[0m in /home/sundaram/code/temp/test[32m succeeded in 0ms:[0m
+[2mnext_role: REVIEWER
+prompt_file: ai/prompts/06-reviewer.md
+read:
+  - ai/active_item.yaml
+  - ai/backlog.yaml
+  - ai/review.md
+  - ai/decision-lock.yaml
+  - ai/constitution.yaml
+  - ai/goal.yaml
+  - ai/active_agent.txt
+  - ai/next_agent.md
+  - ai/user-questions.yaml
+allowed_edits:
+  - ai/review.md
+  - ai/backlog.yaml
+  - ai/active_item.yaml
+  - ai/decision-lock.yaml
+  - ai/user-questions.yaml
+  - ai/iterations/ITER-0001.md
+  - ai/active_agent.txt[0m
+[35m[3mcodex[0m[0m
+`ai/next_agent.yaml` routes this turn to the `REVIEWER` workflow. I’m loading the specified prompt and inputs now, then I’ll make the required review decision and update only the allowed files.
+[35m[3mexec[0m[0m
+[1m/bin/bash -lc "sed -n '1,260p' ai/prompts/06-reviewer.md"[0m in /home/sundaram/code/temp/test[32m succeeded in 0ms:[0m
+[2m# ROLE: REVIEWER
+
+## 1) Baton check
+- Read `ai/active_agent.txt`.
+- If value is not exactly `REVIEWER`, output exactly:
+`WAITING FOR BATON`
+- Stop.
+
+## 2) Required reads
+- `ai/goal.yaml`
+- `ai/active_item.yaml`
+- `ai/backlog.yaml`
+- `ai/review.md`
+- `ai/decision-lock.yaml`
+- `ai/user-questions.yaml`
+- `ai/constitution.yaml`
+- `ai/next_agent.md`
+
+## 3) Allowed edits (only)
+- `ai/review.md`[0m
+[35m[3mexec[0m[0m
+[1m/bin/bash -lc 'for f in ai/active_item.yaml ai/backlog.yaml ai/review.md ai/decision-lock.yaml ai/constitution.yaml ai/goal.yaml ai/active_agent.txt ai/next_agent.md ai/user-questions.yaml; do echo "FILE:$f"; sed -n '"'1,260p' \""'$f"; echo; done'[0m in /home/sundaram/code/temp/test[32m succeeded in 0ms:[0m
+[2mFILE:ai/active_item.yaml
+id: ITEM-0005
+title: Add no-reload task CRUD interactions
+goal: "Implement async create, update, and delete flows for tasks from project detail pages using HTML partial responses and small vanilla JS fetch handlers."
+status: ready
+owner_role: DEV
+related_files:
+  - apps/project-tracker/tracker/models.py
+  - apps/project-tracker/tracker/views.py
+  - apps/project-tracker/tracker/urls.py
+  - apps/project-tracker/tracker/forms.py
+  - apps/project-tracker/templates/tracker/project_detail.html
+  - apps/project-tracker/templates/tracker/partials/
+  - apps/project-tracker/static/tracker/app.js
+  - apps/project-tracker/static/tracker/app.css
+  - apps/project-tracker/tracker/tests/test_views.py
+acceptance_criteria:
+  - "Users can create a task from a project detail page and see the task list and supporting project summary update without a full page reload."
+  - "Users can edit an existing task from a project detail page and see the updated task content render via returned HTML partials."
+  - "Users can delete an existing task from a project detail page and the affected task list and project summary update without a full page reload."[0m
+[35m[3mcodex[0m[0m
+The baton is valid and the prior validation already points to a concrete regression, so I’m verifying the handoff mechanics and iteration log format before I record a `REVISE` decision back to the fixing role.
+[35m[3mexec[0m[0m
+[1m/bin/bash -lc "sed -n '1,240p' ai/iterations/ITER-0001.md"[0m in /home/sundaram/code/temp/test[32m succeeded in 0ms:[0m
+[2m# ITER-0001 Decision Log
+
+| Timestamp | Role | Decision | Why |
+|-----------|------|----------|-----|
+| 2026-03-11 | PRODUCT_OWNER | Defined the one-page product requirements from the project goal and handed off for engineering judgment review | The workflow needs a concrete scope and acceptance baseline before architecture and planning can proceed |
+| 2026-03-11 | SENIOR_JUDGMENTAL_ENGINEER | Locked simplification guardrails around a single Django + SQLite + vanilla JS modular monolith and warned against framework/platform drift | The architect needs explicit constraints so the design stays aligned with the product goal instead of inheriting conflicting default stack preferences |
+| 2026-03-11 | ARCHITECT | Defined a single-project Django architecture centered on one product app, server-rendered templates, and HTML-partial based no-reload CRUD flows | The planner and developer need concrete boundaries, file targets, and implementation tradeoffs before breaking work into execution items |
+| 2026-03-11 | PLANNER | Broke delivery into scaffold, domain, page, async CRUD, and test slices and activated the scaffold item for development | The developer needs a small implementation-ready first step with explicit file targets before starting code changes |
+| 2026-03-12 | DEV | Scaffolded the Django project baseline with one tracker app, routed a rendered dashboard page, and added a smoke test for the root view | ITEM-0001 required an end-to-end project skeleton before later slices can add models, pages, and async CRUD behavior |
+| 2026-03-12 | VALIDATOR | Accepted the scaffold baseline as meeting ITEM-0001 acceptance criteria and handed off to review with an environment caveat on Django-dependent tests | The slice is structurally correct and free of scope drift, but full runtime validation remains blocked until Django is installed in the workspace |
+| 2026-03-12 | REVIEWER | Marked ITEM-0001 done and returned the baton to planning for the next implementation slice | The scaffold meets the locked architecture and acceptance criteria, and the blocked Django test run is an environment limitation rather than a gap in the delivered slice |
+| 2026-03-12 | PLANNER | Activated ITEM-0002 for domain model, form, admin, and migration work and handed off implementation to DEV | The scaffold is complete, and the domain layer is the next dependency needed before server-rendered pages and no-reload CRUD flows can be built |
+| 2026-03-12 | DEV | Implemented tracker domain models, forms, admin registration, a manual initial migration, and domain-focused tests for ITEM-0002 | The next slices depend on concrete project, task, and tag persistence plus validated form surfaces inside the existing Django app |
+| 2026-03-12 | VALIDATOR | Accepted the domain model slice for ITEM-0002 and handed off to review with a documented Django-environment caveat | The implemented models, forms, admin wiring, and manual migration align with the locked requirements, and the remaining verification gap is limited to missing Django in the workspace |
+| 2026-03-12 | REVIEWER | Marked ITEM-0002 done and returned the baton to planning for the next implementation slice | The domain models, forms, admin wiring, and initial migration satisfy the locked slice, and the blocked Django runtime checks remain an environment caveat rather than a delivered-code gap |
+| 2026-03-12 | PLANNER | Activated ITEM-0003 for server-rendered dashboard, project list/detail, and tag detail page implementation and handed off to DEV | The domain layer is accepted, so the next dependency-ready slice is the read-only page surface that prepares the app for later no-reload CRUD work |
+| 2026-03-11 | DEV | Implemented ORM-backed dashboard aggregates, project list/detail and tag detail pages, and focused view tests for ITEM-0003 | The read-only server-rendered page slice now uses the accepted domain models directly and is ready for validator review, with Django runtime execution still blocked by the missing package in the workspace |
+| 2026-03-12 | VALIDATOR | Accepted the read-only page slice for ITEM-0003 and handed off to review with the Django-environment caveat preserved | Static validation passed, acceptance criteria are met by inspection, and the only blocked verification step is the missing Django package in the workspace |
+| 2026-03-12 | REVIEWER | Marked ITEM-0003 done and returned the baton to planning for the next implementation slice | The read-only tracker pages satisfy the locked acceptance criteria without scope drift, and the blocked Django runtime checks remain an environment caveat rather than a delivered-code gap |
+| 2026-03-12 | PLANNER | Split the async CRUD epic into project and task/tag mutation slices, activated ITEM-0004, and handed implementation to DEV | The original no-reload CRUD item was too large for one safe pass, and project mutations are the smallest vertical slice that builds directly on the accepted read-only pages |[0m
+[35m[3mexec[0m[0m
+[1m/bin/bash -lc "nl -ba apps/project-tracker/templates/tracker/project_detail.html | sed -n '1,260p'"[0m in /home/sundaram/code/temp/test[35m[3mexec[0m[0m
+[1m/bin/bash -lc "sed -n '1,240p' scripts/generate-next-agent.sh"[0m in /home/sundaram/code/temp/test[32m succeeded in 0ms:[0m
+[2m     1	{% extends "tracker/base.html" %}
+     2	
+     3	{% block title %}{{ project.name }}{% endblock %}
+     4	
+     5	{% block content %}
+     6	  <div id="project-detail-region">
+     7	    {% include "tracker/partials/project_detail_panel.html" %}
+     8	  </div>
+     9	
+    10	  {% include "tracker/partials/project_edit_placeholder.html" %}
+    11	  <div id="task-create-form-region">
+    12	    {% include "tracker/partials/task_form_panel.html" with form=task_form form_action=task_create_url form_heading="Add a task" form_submit_label="Create task" %}
+    13	  </div>
+    14	  <div id="task-edit-form-region"></div>
+    15	  <div id="task-list-region">
+    16	    {% include "tracker/partials/task_list_panel.html" %}
+    17	  </div>
+    18	{% endblock %}[0m
+[32m succeeded in 0ms:[0m
+[2m#!/usr/bin/env bash
+set -euo pipefail
+#
+# Usage: ./scripts/generate-next-agent.sh <ROLE> [--notes "context"] [--return-to "ROLE"]
+#
+# Generates ai/next_agent.yaml with the correct config for the given role.
+# Pass --notes to include handoff context (what was done, what to watch for).
+# Pass --return-to to specify which role the baton returns to (used with HUMAN).
+# Called by each role prompt at handoff time so agents don't hand-write YAML.
+
+ROOT="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)"
+cd "$ROOT"
+
+ROLE=""
+NOTES=""
+RETURN_TO=""
+
+# Parse args
+while [[ $# -gt 0 ]]; do
+  case "$1" in[0m
+[35m[3mexec[0m[0m
+[1m/bin/bash -lc "nl -ba apps/project-tracker/tracker/views.py | sed -n '1,320p'"[0m in /home/sundaram/code/temp/test[32m succeeded in 0ms:[0m
+[2m     1	from django.db.models import Count, Prefetch, Q
+     2	from django.http import HttpResponseNotAllowed
+     3	from django.shortcuts import get_object_or_404, render
+     4	from django.template.loader import render_to_string
+     5	from django.urls import reverse
+     6	from django.utils import timezone
+     7	
+     8	from .forms import ProjectForm, TaskForm
+     9	from .models import Project, Tag, Task
+    10	
+    11	
+    12	def _project_list_queryset():
+    13	    return (
+    14	        Project.objects.annotate(
+    15	            task_count=Count("tasks", distinct=True),
+    16	            open_task_count=Count(
+    17	                "tasks",
+    18	                filter=~Q(tasks__status=Task.STATUS_DONE),
+    19	                distinct=True,
+    20	            ),[0m
+[35m[3mexec[0m[0m
+[1m/bin/bash -lc "nl -ba apps/project-tracker/tracker/views.py | sed -n '320,420p'"[0m in /home/sundaram/code/temp/test[32m succeeded in 0ms:[0m
+[2m   320	    project_name = project.name
+   321	    project.delete()
+   322	
+   323	    if source_page == "dashboard":
+   324	        dashboard_context = _dashboard_context()
+   325	        return _render_mutation_response(
+   326	            request,
+   327	            [
+   328	                (
+   329	                    "#dashboard-stats-region",
+   330	                    "tracker/partials/dashboard_stats_panel.html",
+   331	                    dashboard_context,
+   332	                ),
+   333	                (
+   334	                    "#dashboard-recent-projects-region",
+   335	                    "tracker/partials/dashboard_recent_projects_panel.html",
+   336	                    dashboard_context,
+   337	                ),
+   338	            ],
+   339	        )[0m
+[35m[3mcodex[0m[0m
+I’ve confirmed the regression in the code path itself: the task regions sit outside `#project-detail-region`, while `project_delete()` only replaces the project/detail regions. I’m recording a `REVISE` decision and handing the baton back to `DEV` with the specific fix and test requirement.
+[3m[35mfile update[0m[0m
+[35mM /home/sundaram/code/temp/test/ai/next_agent.md[0m
+@@ -2,4 +2,4 @@
+ 
+[31m-- Current role: `REVIEWER`[0m
+[31m-- Prompt: `ai/prompts/06-reviewer.md`[0m
+[32m+- Current role: `DEV`[0m
+[32m+- Prompt: `ai/prompts/04-dev.md`[0m
+ - Execution command for Codex sessions: **Follow `ai/next_agent.yaml` exactly.**
+@@ -9,16 +9,15 @@
+ 
+[31m-- Validator decision for `ITEM-0005`: `FAIL`.[0m
+[31m-- Validation evidence:[0m
+[32m+- Reviewer decision for `ITEM-0005`: `REVISE`.[0m
+[32m+- Fix the confirmed regression on project deletion from the detail page:[0m
+[32m+  - `apps/project-tracker/templates/tracker/project_detail.html` renders `#task-create-form-region`, `#task-edit-form-region`, and `#task-list-region` outside `#project-detail-region`.[0m
+[32m+  - `apps/project-tracker/tracker/views.py` `project_delete()` currently replaces only `#project-detail-region` and `#project-edit-form-region` when `source_page == "project_detail"`.[0m
+[32m+  - Result: deleting a project from its detail page leaves stale task create/edit/list UI on screen, including actions targeting a deleted project.[0m
+[32m+- Required changes:[0m
+[32m+  - Update the project-detail delete response so it also clears or replaces the task regions consistently with the established partial-swap contract.[0m
+[32m+  - Add a focused regression test for deleting a project from the detail page that asserts the async response does not leave stale task CRUD regions behind.[0m
+[32m+- Preserve the accepted parts of the slice:[0m
+[32m+  - Keep task CRUD scoped to the existing tracker app and the established HTML-partial plus vanilla JS pattern.[0m
+[32m+  - Keep `TaskForm` project ownership fixed by the URL-driven project context.[0m
+[32m+- Validation caveat remains:[0m
+   - `python3 -m py_compile $(find apps/project-tracker -name '*.py' | sort)` passed.
+[31m-  - `python3 apps/project-tracker/manage.py test tracker.tests.test_views` is still blocked by `ModuleNotFoundError: No module named 'django'`.[0m
+[31m-- Accepted parts of the slice:[0m
+[31m-  - Task create, update, and delete endpoints were added under project detail routes inside the existing Django app.[0m
+[31m-  - `TaskForm` no longer exposes the `project` field, so async task mutations cannot reassign a task across projects through the form.[0m
+[31m-  - The new task partials and `project_detail.html` use stable swap regions that match the task mutation response helper.[0m
+[31m-- Blocking regression found:[0m
+[31m-  - `apps/project-tracker/templates/tracker/project_detail.html` now renders `#task-create-form-region`, `#task-edit-form-region`, and `#task-list-region` outside `#project-detail-region`.[0m
+[31m-  - `apps/project-tracker/tracker/views.py` `project_delete()` still only swaps `#project-detail-region` and `#project-edit-form-region` for the `project_detail` source-page response.[0m
+[31m-  - Result: after deleting a project from its detail page, the page can still show task CRUD UI for the deleted project, including stale form actions and edit/delete controls.[0m
+[31m-- Review should focus on:[0m
+[31m-  - Routing this back for a concrete fix to clear or replace the task regions during project deletion from the detail page.[0m
+[31m-  - Requiring a focused regression test so this stale-UI case is covered once Django is available.[0m
+[32m+  - `python3 apps/project-tracker/manage.py test tracker.tests.test_views` is still blocked here by `ModuleNotFoundError: No module named 'django'`.[0m
+[35mM /home/sundaram/code/temp/test/ai/iterations/ITER-0001.md[0m
+@@ -26 +26,2 @@
+ | 2026-03-12 | VALIDATOR | Rejected ITEM-0005 for reviewer follow-up after finding a project-detail delete regression that leaves stale task CRUD regions behind | The new task layout moved the task regions outside `#project-detail-region`, but the existing project-delete response does not clear them, so the detail page can still show controls for a deleted project |
+[32m+| 2026-03-12 | REVIEWER | Routed ITEM-0005 back to DEV for revision after confirming the project-detail delete response leaves stale task CRUD regions behind | Acceptance is blocked by a concrete UI regression on project deletion from the detail surface, and the next pass must also add a focused regression test for that async response |[0m
+[35mM /home/sundaram/code/temp/test/ai/review.md[0m
+@@ -219 +219,10 @@
+ - The regression on project deletion from the detail page should be fixed before acceptance, and a focused test should assert that the task regions are cleared or replaced when the parent project is deleted from that surface.
+[32m+[0m
+[32m+## Reviewer Decision[0m
+[32m+[0m
+[32m+- Decision: REVISE for `ITEM-0005`.[0m
+[32m+- Rejected because deleting a project from its detail page leaves stale task CRUD UI behind: `project_detail.html` renders `#task-create-form-region`, `#task-edit-form-region`, and `#task-list-region` outside `#project-detail-region`, but `project_delete()` still only swaps `#project-detail-region` and `#project-edit-form-region` for the `project_detail` response.[0m
+[32m+- Required fix for the next pass:[0m
+[32m+  - Update the detail-page project delete response so all task regions are cleared or replaced along with the deleted-project panel.[0m
+[32m+  - Add a focused regression test covering project deletion from the detail page and asserting the stale task regions are not left behind in the async response.[0m
+[32m+- Environment caveat remains unchanged: `python3 apps/project-tracker/manage.py test tracker.tests.test_views` is still blocked in this workspace by `ModuleNotFoundError: No module named 'django'`, so the reviewer decision is based on code inspection plus py-compile evidence.[0m
+[35mM /home/sundaram/code/temp/test/ai/active_agent.txt[0m
+@@ -1 +1 @@
+[31m-REVIEWER[0m
+[32m+DEV[0m
+[32mapply_patch(auto_approved=true) exited 0 in 7ms:[0m
+[2mSuccess. Updated the following files:[0m
+[2mM /home/sundaram/code/temp/test/ai/review.md[0m
+[2mM /home/sundaram/code/temp/test/ai/iterations/ITER-0001.md[0m
+[2mM /home/sundaram/code/temp/test/ai/active_agent.txt[0m
+[2mM /home/sundaram/code/temp/test/ai/next_agent.md[0m
+[3m[35mfile update:[0m[0m
+diff --git a/ai/active_agent.txt b/ai/active_agent.txt
+index 9b1cdc0e7e5ff55ba45e80b0786b46c37c9c32ac..a8b82c6896062c7b336ccc8bf7533a20fac54932
+--- a/ai/active_agent.txt
++++ b/ai/active_agent.txt
+@@ -1 +1 @@
+-REVIEWER
++DEV
+diff --git a/ai/iterations/ITER-0001.md b/ai/iterations/ITER-0001.md
+index 5ec1b261cd17cf14fbb558b05721732d593a9112..72ad1a51258b6a356fc902c97ce7edc4f34fc366
+--- a/ai/iterations/ITER-0001.md
++++ b/ai/iterations/ITER-0001.md
+@@ -24,3 +24,4 @@
+ | 2026-03-12 | PLANNER | Split the remaining async CRUD work into task and tag slices, activated ITEM-0005 for project-detail task mutations, and handed off to DEV | The combined task-and-tag item was oversized, and task CRUD on the existing project detail surface is the smallest implementation-ready next step that preserves the established partial-response pattern |
+ | 2026-03-12 | DEV | Implemented the task-only no-reload CRUD slice with project-detail task mutation views, reusable task partials, and focused mutation view coverage for ITEM-0005 | This vertical cut adds task create, update, and delete on the project detail page using the existing HTML partial swap contract while preserving the blocked Django runtime caveat for validator follow-up |
+ | 2026-03-12 | VALIDATOR | Rejected ITEM-0005 for reviewer follow-up after finding a project-detail delete regression that leaves stale task CRUD regions behind | The new task layout moved the task regions outside `#project-detail-region`, but the existing project-delete response does not clear them, so the detail page can still show controls for a deleted project |
++| 2026-03-12 | REVIEWER | Routed ITEM-0005 back to DEV for revision after confirming the project-detail delete response leaves stale task CRUD regions behind | Acceptance is blocked by a concrete UI regression on project deletion from the detail surface, and the next pass must also add a focused regression test for that async response |
+diff --git a/ai/next_agent.md b/ai/next_agent.md
+index 9b74d7c66d7480b07d330afd322e08b04245b4d1..c22147128c1a7b054bd5ab260a5bc13cc2a8c0cb
+--- a/ai/next_agent.md
++++ b/ai/next_agent.md
+@@ -1,24 +1,23 @@
+ # Next Agent
+ 
+-- Current role: `REVIEWER`
+-- Prompt: `ai/prompts/06-reviewer.md`
++- Current role: `DEV`
++- Prompt: `ai/prompts/04-dev.md`
+ - Execution command for Codex sessions: **Follow `ai/next_agent.yaml` exactly.**
+ - If role mismatch with `ai/active_agent.txt`, print: `WAITING FOR BATON`
+ 
+ ## Handoff Notes
+ 
+-- Validator decision for `ITEM-0005`: `FAIL`.
+-- Validation evidence:
++- Reviewer decision for `ITEM-0005`: `REVISE`.
++- Fix the confirmed regression on project deletion from the detail page:
++  - `apps/project-tracker/templates/tracker/project_detail.html` renders `#task-create-form-region`, `#task-edit-form-region`, and `#task-list-region` outside `#project-detail-region`.
++  - `apps/project-tracker/tracker/views.py` `project_delete()` currently replaces only `#project-detail-region` and `#project-edit-form-region` when `source_page == "project_detail"`.
++  - Result: deleting a project from its detail page leaves stale task create/edit/list UI on screen, including actions targeting a deleted project.
++- Required changes:
++  - Update the project-detail delete response so it also clears or replaces the task regions consistently with the established partial-swap contract.
++  - Add a focused regression test for deleting a project from the detail page that asserts the async response does not leave stale task CRUD regions behind.
++- Preserve the accepted parts of the slice:
++  - Keep task CRUD scoped to the existing tracker app and the established HTML-partial plus vanilla JS pattern.
++  - Keep `TaskForm` project ownership fixed by the URL-driven project context.
++- Validation caveat remains:
+   - `python3 -m py_compile $(find apps/project-tracker -name '*.py' | sort)` passed.
+-  - `python3 apps/project-tracker/manage.py test tracker.tests.test_views` is still blocked by `ModuleNotFoundError: No module named 'django'`.
+-- Accepted parts of the slice:
+-  - Task create, update, and delete endpoints were added under project detail routes inside the existing Django app.
+-  - `TaskForm` no longer exposes the `project` field, so async task mutations cannot reassign a task across projects through the form.
+-  - The new task partials and `project_detail.html` use stable swap regions that match the task mutation response helper.
+-- Blocking regression found:
+-  - `apps/project-tracker/templates/tracker/project_detail.html` now renders `#task-create-form-region`, `#task-edit-form-region`, and `#task-list-region` outside `#project-detail-region`.
+-  - `apps/project-tracker/tracker/views.py` `project_delete()` still only swaps `#project-detail-region` and `#project-edit-form-region` for the `project_detail` source-page response.
+-  - Result: after deleting a project from its detail page, the page can still show task CRUD UI for the deleted project, including stale form actions and edit/delete controls.
+-- Review should focus on:
+-  - Routing this back for a concrete fix to clear or replace the task regions during project deletion from the detail page.
+-  - Requiring a focused regression test so this stale-UI case is covered once Django is available.
++  - `python3 apps/project-tracker/manage.py test tracker.tests.test_views` is still blocked here by `ModuleNotFoundError: No module named 'django'`.
+diff --git a/ai/review.md b/ai/review.md
+index e1b9d6ac434d0be93870517c5ed6b040112c23f9..bd460c6ebc756105d8d14afda34266c86411f508
+--- a/ai/review.md
++++ b/ai/review.md
+@@ -217,3 +217,12 @@
+ 
+ - Runtime validation of the new task mutation views and templates is still blocked until Django is installed in the workspace.
+ - The regression on project deletion from the detail page should be fixed before acceptance, and a focused test should assert that the task regions are cleared or replaced when the parent project is deleted from that surface.
++
++## Reviewer Decision
++
++- Decision: REVISE for `ITEM-0005`.
++- Rejected because deleting a project from its detail page leaves stale task CRUD UI behind: `project_detail.html` renders `#task-create-form-region`, `#task-edit-form-region`, and `#task-list-region` outside `#project-detail-region`, but `project_delete()` still only swaps `#project-detail-region` and `#project-edit-form-region` for the `project_detail` response.
++- Required fix for the next pass:
++  - Update the detail-page project delete response so all task regions are cleared or replaced along with the deleted-project panel.
++  - Add a focused regression test covering project deletion from the detail page and asserting the stale task regions are not left behind in the async response.
++- Environment caveat remains unchanged: `python3 apps/project-tracker/manage.py test tracker.tests.test_views` is still blocked in this workspace by `ModuleNotFoundError: No module named 'django'`, so the reviewer decision is based on code inspection plus py-compile evidence.
+
+[3m[35mfile update:[0m[0m
+diff --git a/ai/active_agent.txt b/ai/active_agent.txt
+index 9b1cdc0e7e5ff55ba45e80b0786b46c37c9c32ac..a8b82c6896062c7b336ccc8bf7533a20fac54932
+--- a/ai/active_agent.txt
++++ b/ai/active_agent.txt
+@@ -1 +1 @@
+-REVIEWER
++DEV
+diff --git a/ai/iterations/ITER-0001.md b/ai/iterations/ITER-0001.md
+index 5ec1b261cd17cf14fbb558b05721732d593a9112..72ad1a51258b6a356fc902c97ce7edc4f34fc366
+--- a/ai/iterations/ITER-0001.md
++++ b/ai/iterations/ITER-0001.md
+@@ -24,3 +24,4 @@
+ | 2026-03-12 | PLANNER | Split the remaining async CRUD work into task and tag slices, activated ITEM-0005 for project-detail task mutations, and handed off to DEV | The combined task-and-tag item was oversized, and task CRUD on the existing project detail surface is the smallest implementation-ready next step that preserves the established partial-response pattern |
+ | 2026-03-12 | DEV | Implemented the task-only no-reload CRUD slice with project-detail task mutation views, reusable task partials, and focused mutation view coverage for ITEM-0005 | This vertical cut adds task create, update, and delete on the project detail page using the existing HTML partial swap contract while preserving the blocked Django runtime caveat for validator follow-up |
+ | 2026-03-12 | VALIDATOR | Rejected ITEM-0005 for reviewer follow-up after finding a project-detail delete regression that leaves stale task CRUD regions behind | The new task layout moved the task regions outside `#project-detail-region`, but the existing project-delete response does not clear them, so the detail page can still show controls for a deleted project |
++| 2026-03-12 | REVIEWER | Routed ITEM-0005 back to DEV for revision after confirming the project-detail delete response leaves stale task CRUD regions behind | Acceptance is blocked by a concrete UI regression on project deletion from the detail surface, and the next pass must also add a focused regression test for that async response |
+diff --git a/ai/next_agent.md b/ai/next_agent.md
+index 9b74d7c66d7480b07d330afd322e08b04245b4d1..c22147128c1a7b054bd5ab260a5bc13cc2a8c0cb
+--- a/ai/next_agent.md
++++ b/ai/next_agent.md
+@@ -1,24 +1,23 @@
+ # Next Agent
+ 
+-- Current role: `REVIEWER`
+-- Prompt: `ai/prompts/06-reviewer.md`
++- Current role: `DEV`
++- Prompt: `ai/prompts/04-dev.md`
+ - Execution command for Codex sessions: **Follow `ai/next_agent.yaml` exactly.**
+ - If role mismatch with `ai/active_agent.txt`, print: `WAITING FOR BATON`
+ 
+ ## Handoff Notes
+ 
+-- Validator decision for `ITEM-0005`: `FAIL`.
+-- Validation evidence:
++- Reviewer decision for `ITEM-0005`: `REVISE`.
++- Fix the confirmed regression on project deletion from the detail page:
++  - `apps/project-tracker/templates/tracker/project_detail.html` renders `#task-create-form-region`, `#task-edit-form-region`, and `#task-list-region` outside `#project-detail-region`.
++  - `apps/project-tracker/tracker/views.py` `project_delete()` currently replaces only `#project-detail-region` and `#project-edit-form-region` when `source_page == "project_detail"`.
++  - Result: deleting a project from its detail page leaves stale task create/edit/list UI on screen, including actions targeting a deleted project.
++- Required changes:
++  - Update the project-detail delete response so it also clears or replaces the task regions consistently with the established partial-swap contract.
++  - Add a focused regression test for deleting a project from the detail page that asserts the async response does not leave stale task CRUD regions behind.
++- Preserve the accepted parts of the slice:
++  - Keep task CRUD scoped to the existing tracker app and the established HTML-partial plus vanilla JS pattern.
++  - Keep `TaskForm` project ownership fixed by the URL-driven project context.
++- Validation caveat remains:
+   - `python3 -m py_compile $(find apps/project-tracker -name '*.py' | sort)` passed.
+-  - `python3 apps/project-tracker/manage.py test tracker.tests.test_views` is still blocked by `ModuleNotFoundError: No module named 'django'`.
+-- Accepted parts of the slice:
+-  - Task create, update, and delete endpoints were added under project detail routes inside the existing Django app.
+-  - `TaskForm` no longer exposes the `project` field, so async task mutations cannot reassign a task across projects through the form.
+-  - The new task partials and `project_detail.html` use stable swap regions that match the task mutation response helper.
+-- Blocking regression found:
+-  - `apps/project-tracker/templates/tracker/project_detail.html` now renders `#task-create-form-region`, `#task-edit-form-region`, and `#task-list-region` outside `#project-detail-region`.
+-  - `apps/project-tracker/tracker/views.py` `project_delete()` still only swaps `#project-detail-region` and `#project-edit-form-region` for the `project_detail` source-page response.
+-  - Result: after deleting a project from its detail page, the page can still show task CRUD UI for the deleted project, including stale form actions and edit/delete controls.
+-- Review should focus on:
+-  - Routing this back for a concrete fix to clear or replace the task regions during project deletion from the detail page.
+-  - Requiring a focused regression test so this stale-UI case is covered once Django is available.
++  - `python3 apps/project-tracker/manage.py test tracker.tests.test_views` is still blocked here by `ModuleNotFoundError: No module named 'django'`.
+diff --git a/ai/review.md b/ai/review.md
+index e1b9d6ac434d0be93870517c5ed6b040112c23f9..bd460c6ebc756105d8d14afda34266c86411f508
+--- a/ai/review.md
++++ b/ai/review.md
+@@ -217,3 +217,12 @@
+ 
+ - Runtime validation of the new task mutation views and templates is still blocked until Django is installed in the workspace.
+ - The regression on project deletion from the detail page should be fixed before acceptance, and a focused test should assert that the task regions are cleared or replaced when the parent project is deleted from that surface.
++
++## Reviewer Decision
++
++- Decision: REVISE for `ITEM-0005`.
++- Rejected because deleting a project from its detail page leaves stale task CRUD UI behind: `project_detail.html` renders `#task-create-form-region`, `#task-edit-form-region`, and `#task-list-region` outside `#project-detail-region`, but `project_delete()` still only swaps `#project-detail-region` and `#project-edit-form-region` for the `project_detail` response.
++- Required fix for the next pass:
++  - Update the detail-page project delete response so all task regions are cleared or replaced along with the deleted-project panel.
++  - Add a focused regression test covering project deletion from the detail page and asserting the stale task regions are not left behind in the async response.
++- Environment caveat remains unchanged: `python3 apps/project-tracker/manage.py test tracker.tests.test_views` is still blocked in this workspace by `ModuleNotFoundError: No module named 'django'`, so the reviewer decision is based on code inspection plus py-compile evidence.
+
+[35m[3mexec[0m[0m
+[1m/bin/bash -lc "sed -n '1,260p' ai/next_agent.yaml"[0m in /home/sundaram/code/temp/test[32m succeeded in 0ms:[0m
+[2mnext_role: REVIEWER
+prompt_file: ai/prompts/06-reviewer.md
+read:
+  - ai/active_item.yaml
+  - ai/backlog.yaml
+  - ai/review.md
+  - ai/decision-lock.yaml
+  - ai/constitution.yaml
+  - ai/goal.yaml
+  - ai/active_agent.txt
+  - ai/next_agent.md
+  - ai/user-questions.yaml
+allowed_edits:
+  - ai/review.md
+  - ai/backlog.yaml
+  - ai/active_item.yaml
+  - ai/decision-lock.yaml
+  - ai/user-questions.yaml
+  - ai/iterations/ITER-0001.md
+  - ai/active_agent.txt[0m
+[35m[3mexec[0m[0m
+[1m/bin/bash -lc './scripts/generate-next-agent.sh DEV --notes "review decision REVISE | fix project-detail delete regression by clearing/replacing stale task CRUD regions after project deletion | add focused regression test for detail-page delete response | accepted: task CRUD endpoints and URL-scoped TaskForm ownership remain sound"'[0m in /home/sundaram/code/temp/test[32m succeeded in 0ms:[0m
+[2mGenerated ai/next_agent.yaml for DEV (next: VALIDATOR)[0m
+[3m[35mfile update:[0m[0m
+diff --git a/ai/active_agent.txt b/ai/active_agent.txt
+index 9b1cdc0e7e5ff55ba45e80b0786b46c37c9c32ac..a8b82c6896062c7b336ccc8bf7533a20fac54932
+--- a/ai/active_agent.txt
++++ b/ai/active_agent.txt
+@@ -1 +1 @@
+-REVIEWER
++DEV
+diff --git a/ai/iterations/ITER-0001.md b/ai/iterations/ITER-0001.md
+index 5ec1b261cd17cf14fbb558b05721732d593a9112..72ad1a51258b6a356fc902c97ce7edc4f34fc366
+--- a/ai/iterations/ITER-0001.md
++++ b/ai/iterations/ITER-0001.md
+@@ -24,3 +24,4 @@
+ | 2026-03-12 | PLANNER | Split the remaining async CRUD work into task and tag slices, activated ITEM-0005 for project-detail task mutations, and handed off to DEV | The combined task-and-tag item was oversized, and task CRUD on the existing project detail surface is the smallest implementation-ready next step that preserves the established partial-response pattern |
+ | 2026-03-12 | DEV | Implemented the task-only no-reload CRUD slice with project-detail task mutation views, reusable task partials, and focused mutation view coverage for ITEM-0005 | This vertical cut adds task create, update, and delete on the project detail page using the existing HTML partial swap contract while preserving the blocked Django runtime caveat for validator follow-up |
+ | 2026-03-12 | VALIDATOR | Rejected ITEM-0005 for reviewer follow-up after finding a project-detail delete regression that leaves stale task CRUD regions behind | The new task layout moved the task regions outside `#project-detail-region`, but the existing project-delete response does not clear them, so the detail page can still show controls for a deleted project |
++| 2026-03-12 | REVIEWER | Routed ITEM-0005 back to DEV for revision after confirming the project-detail delete response leaves stale task CRUD regions behind | Acceptance is blocked by a concrete UI regression on project deletion from the detail surface, and the next pass must also add a focused regression test for that async response |
+diff --git a/ai/next_agent.md b/ai/next_agent.md
+index 9b74d7c66d7480b07d330afd322e08b04245b4d1..c22147128c1a7b054bd5ab260a5bc13cc2a8c0cb
+--- a/ai/next_agent.md
++++ b/ai/next_agent.md
+@@ -1,24 +1,23 @@
+ # Next Agent
+ 
+-- Current role: `REVIEWER`
+-- Prompt: `ai/prompts/06-reviewer.md`
++- Current role: `DEV`
++- Prompt: `ai/prompts/04-dev.md`
+ - Execution command for Codex sessions: **Follow `ai/next_agent.yaml` exactly.**
+ - If role mismatch with `ai/active_agent.txt`, print: `WAITING FOR BATON`
+ 
+ ## Handoff Notes
+ 
+-- Validator decision for `ITEM-0005`: `FAIL`.
+-- Validation evidence:
++- Reviewer decision for `ITEM-0005`: `REVISE`.
++- Fix the confirmed regression on project deletion from the detail page:
++  - `apps/project-tracker/templates/tracker/project_detail.html` renders `#task-create-form-region`, `#task-edit-form-region`, and `#task-list-region` outside `#project-detail-region`.
++  - `apps/project-tracker/tracker/views.py` `project_delete()` currently replaces only `#project-detail-region` and `#project-edit-form-region` when `source_page == "project_detail"`.
++  - Result: deleting a project from its detail page leaves stale task create/edit/list UI on screen, including actions targeting a deleted project.
++- Required changes:
++  - Update the project-detail delete response so it also clears or replaces the task regions consistently with the established partial-swap contract.
++  - Add a focused regression test for deleting a project from the detail page that asserts the async response does not leave stale task CRUD regions behind.
++- Preserve the accepted parts of the slice:
++  - Keep task CRUD scoped to the existing tracker app and the established HTML-partial plus vanilla JS pattern.
++  - Keep `TaskForm` project ownership fixed by the URL-driven project context.
++- Validation caveat remains:
+   - `python3 -m py_compile $(find apps/project-tracker -name '*.py' | sort)` passed.
+-  - `python3 apps/project-tracker/manage.py test tracker.tests.test_views` is still blocked by `ModuleNotFoundError: No module named 'django'`.
+-- Accepted parts of the slice:
+-  - Task create, update, and delete endpoints were added under project detail routes inside the existing Django app.
+-  - `TaskForm` no longer exposes the `project` field, so async task mutations cannot reassign a task across projects through the form.
+-  - The new task partials and `project_detail.html` use stable swap regions that match the task mutation response helper.
+-- Blocking regression found:
+-  - `apps/project-tracker/templates/tracker/project_detail.html` now renders `#task-create-form-region`, `#task-edit-form-region`, and `#task-list-region` outside `#project-detail-region`.
+-  - `apps/project-tracker/tracker/views.py` `project_delete()` still only swaps `#project-detail-region` and `#project-edit-form-region` for the `project_detail` source-page response.
+-  - Result: after deleting a project from its detail page, the page can still show task CRUD UI for the deleted project, including stale form actions and edit/delete controls.
+-- Review should focus on:
+-  - Routing this back for a concrete fix to clear or replace the task regions during project deletion from the detail page.
+-  - Requiring a focused regression test so this stale-UI case is covered once Django is available.
++  - `python3 apps/project-tracker/manage.py test tracker.tests.test_views` is still blocked here by `ModuleNotFoundError: No module named 'django'`.
+diff --git a/ai/review.md b/ai/review.md
+index e1b9d6ac434d0be93870517c5ed6b040112c23f9..bd460c6ebc756105d8d14afda34266c86411f508
+--- a/ai/review.md
++++ b/ai/review.md
+@@ -217,3 +217,12 @@
+ 
+ - Runtime validation of the new task mutation views and templates is still blocked until Django is installed in the workspace.
+ - The regression on project deletion from the detail page should be fixed before acceptance, and a focused test should assert that the task regions are cleared or replaced when the parent project is deleted from that surface.
++
++## Reviewer Decision
++
++- Decision: REVISE for `ITEM-0005`.
++- Rejected because deleting a project from its detail page leaves stale task CRUD UI behind: `project_detail.html` renders `#task-create-form-region`, `#task-edit-form-region`, and `#task-list-region` outside `#project-detail-region`, but `project_delete()` still only swaps `#project-detail-region` and `#project-edit-form-region` for the `project_detail` response.
++- Required fix for the next pass:
++  - Update the detail-page project delete response so all task regions are cleared or replaced along with the deleted-project panel.
++  - Add a focused regression test covering project deletion from the detail page and asserting the stale task regions are not left behind in the async response.
++- Environment caveat remains unchanged: `python3 apps/project-tracker/manage.py test tracker.tests.test_views` is still blocked in this workspace by `ModuleNotFoundError: No module named 'django'`, so the reviewer decision is based on code inspection plus py-compile evidence.
+
+[35m[3mcodex[0m[0m
+The baton files are updated; I’m re-reading the generated `ai/next_agent.yaml` once more to confirm the handoff now points at `DEV` rather than the stale reviewer config from the parallel read.
+[35m[3mexec[0m[0m
+[1m/bin/bash -lc "sed -n '1,260p' ai/next_agent.yaml"[0m in /home/sundaram/code/temp/test[32m succeeded in 0ms:[0m
+[2mnext_role: DEV
+prompt_file: ai/prompts/04-dev.md
+read:
+  - ai/active_item.yaml
+  - ai/requirements.md
+  - ai/judgment.yaml
+  - ai/simplification.md
+  - ai/decision-lock.yaml
+  - ai/goal.yaml
+  - ai/constitution.yaml
+  - ai/active_agent.txt
+  - ai/next_agent.md
+  - ai/user-questions.yaml
+allowed_edits:
+  - apps/
+  - infra/
+  - ai/review.md
+  - ai/decision-lock.yaml
+  - ai/user-questions.yaml
+  - ai/iterations/ITER-0001.md[0m
+[3m[35mfile update:[0m[0m
+diff --git a/ai/active_agent.txt b/ai/active_agent.txt
+index 9b1cdc0e7e5ff55ba45e80b0786b46c37c9c32ac..a8b82c6896062c7b336ccc8bf7533a20fac54932
+--- a/ai/active_agent.txt
++++ b/ai/active_agent.txt
+@@ -1 +1 @@
+-REVIEWER
++DEV
+diff --git a/ai/iterations/ITER-0001.md b/ai/iterations/ITER-0001.md
+index 5ec1b261cd17cf14fbb558b05721732d593a9112..72ad1a51258b6a356fc902c97ce7edc4f34fc366
+--- a/ai/iterations/ITER-0001.md
++++ b/ai/iterations/ITER-0001.md
+@@ -24,3 +24,4 @@
+ | 2026-03-12 | PLANNER | Split the remaining async CRUD work into task and tag slices, activated ITEM-0005 for project-detail task mutations, and handed off to DEV | The combined task-and-tag item was oversized, and task CRUD on the existing project detail surface is the smallest implementation-ready next step that preserves the established partial-response pattern |
+ | 2026-03-12 | DEV | Implemented the task-only no-reload CRUD slice with project-detail task mutation views, reusable task partials, and focused mutation view coverage for ITEM-0005 | This vertical cut adds task create, update, and delete on the project detail page using the existing HTML partial swap contract while preserving the blocked Django runtime caveat for validator follow-up |
+ | 2026-03-12 | VALIDATOR | Rejected ITEM-0005 for reviewer follow-up after finding a project-detail delete regression that leaves stale task CRUD regions behind | The new task layout moved the task regions outside `#project-detail-region`, but the existing project-delete response does not clear them, so the detail page can still show controls for a deleted project |
++| 2026-03-12 | REVIEWER | Routed ITEM-0005 back to DEV for revision after confirming the project-detail delete response leaves stale task CRUD regions behind | Acceptance is blocked by a concrete UI regression on project deletion from the detail surface, and the next pass must also add a focused regression test for that async response |
+diff --git a/ai/next_agent.md b/ai/next_agent.md
+index 9b74d7c66d7480b07d330afd322e08b04245b4d1..c22147128c1a7b054bd5ab260a5bc13cc2a8c0cb
+--- a/ai/next_agent.md
++++ b/ai/next_agent.md
+@@ -1,24 +1,23 @@
+ # Next Agent
+ 
+-- Current role: `REVIEWER`
+-- Prompt: `ai/prompts/06-reviewer.md`
++- Current role: `DEV`
++- Prompt: `ai/prompts/04-dev.md`
+ - Execution command for Codex sessions: **Follow `ai/next_agent.yaml` exactly.**
+ - If role mismatch with `ai/active_agent.txt`, print: `WAITING FOR BATON`
+ 
+ ## Handoff Notes
+ 
+-- Validator decision for `ITEM-0005`: `FAIL`.
+-- Validation evidence:
++- Reviewer decision for `ITEM-0005`: `REVISE`.
++- Fix the confirmed regression on project deletion from the detail page:
++  - `apps/project-tracker/templates/tracker/project_detail.html` renders `#task-create-form-region`, `#task-edit-form-region`, and `#task-list-region` outside `#project-detail-region`.
++  - `apps/project-tracker/tracker/views.py` `project_delete()` currently replaces only `#project-detail-region` and `#project-edit-form-region` when `source_page == "project_detail"`.
++  - Result: deleting a project from its detail page leaves stale task create/edit/list UI on screen, including actions targeting a deleted project.
++- Required changes:
++  - Update the project-detail delete response so it also clears or replaces the task regions consistently with the established partial-swap contract.
++  - Add a focused regression test for deleting a project from the detail page that asserts the async response does not leave stale task CRUD regions behind.
++- Preserve the accepted parts of the slice:
++  - Keep task CRUD scoped to the existing tracker app and the established HTML-partial plus vanilla JS pattern.
++  - Keep `TaskForm` project ownership fixed by the URL-driven project context.
++- Validation caveat remains:
+   - `python3 -m py_compile $(find apps/project-tracker -name '*.py' | sort)` passed.
+-  - `python3 apps/project-tracker/manage.py test tracker.tests.test_views` is still blocked by `ModuleNotFoundError: No module named 'django'`.
+-- Accepted parts of the slice:
+-  - Task create, update, and delete endpoints were added under project detail routes inside the existing Django app.
+-  - `TaskForm` no longer exposes the `project` field, so async task mutations cannot reassign a task across projects through the form.
+-  - The new task partials and `project_detail.html` use stable swap regions that match the task mutation response helper.
+-- Blocking regression found:
+-  - `apps/project-tracker/templates/tracker/project_detail.html` now renders `#task-create-form-region`, `#task-edit-form-region`, and `#task-list-region` outside `#project-detail-region`.
+-  - `apps/project-tracker/tracker/views.py` `project_delete()` still only swaps `#project-detail-region` and `#project-edit-form-region` for the `project_detail` source-page response.
+-  - Result: after deleting a project from its detail page, the page can still show task CRUD UI for the deleted project, including stale form actions and edit/delete controls.
+-- Review should focus on:
+-  - Routing this back for a concrete fix to clear or replace the task regions during project deletion from the detail page.
+-  - Requiring a focused regression test so this stale-UI case is covered once Django is available.
++  - `python3 apps/project-tracker/manage.py test tracker.tests.test_views` is still blocked here by `ModuleNotFoundError: No module named 'django'`.
+diff --git a/ai/review.md b/ai/review.md
+index e1b9d6ac434d0be93870517c5ed6b040112c23f9..bd460c6ebc756105d8d14afda34266c86411f508
+--- a/ai/review.md
++++ b/ai/review.md
+@@ -217,3 +217,12 @@
+ 
+ - Runtime validation of the new task mutation views and templates is still blocked until Django is installed in the workspace.
+ - The regression on project deletion from the detail page should be fixed before acceptance, and a focused test should assert that the task regions are cleared or replaced when the parent project is deleted from that surface.
++
++## Reviewer Decision
++
++- Decision: REVISE for `ITEM-0005`.
++- Rejected because deleting a project from its detail page leaves stale task CRUD UI behind: `project_detail.html` renders `#task-create-form-region`, `#task-edit-form-region`, and `#task-list-region` outside `#project-detail-region`, but `project_delete()` still only swaps `#project-detail-region` and `#project-edit-form-region` for the `project_detail` response.
++- Required fix for the next pass:
++  - Update the detail-page project delete response so all task regions are cleared or replaced along with the deleted-project panel.
++  - Add a focused regression test covering project deletion from the detail page and asserting the stale task regions are not left behind in the async response.
++- Environment caveat remains unchanged: `python3 apps/project-tracker/manage.py test tracker.tests.test_views` is still blocked in this workspace by `ModuleNotFoundError: No module named 'django'`, so the reviewer decision is based on code inspection plus py-compile evidence.
+
+[35m[3mcodex[0m[0m
+HANDOFF TO DEV
+[3m[35mfile update:[0m[0m
+diff --git a/ai/active_agent.txt b/ai/active_agent.txt
+index 9b1cdc0e7e5ff55ba45e80b0786b46c37c9c32ac..a8b82c6896062c7b336ccc8bf7533a20fac54932
+--- a/ai/active_agent.txt
++++ b/ai/active_agent.txt
+@@ -1 +1 @@
+-REVIEWER
++DEV
+diff --git a/ai/iterations/ITER-0001.md b/ai/iterations/ITER-0001.md
+index 5ec1b261cd17cf14fbb558b05721732d593a9112..72ad1a51258b6a356fc902c97ce7edc4f34fc366
+--- a/ai/iterations/ITER-0001.md
++++ b/ai/iterations/ITER-0001.md
+@@ -24,3 +24,4 @@
+ | 2026-03-12 | PLANNER | Split the remaining async CRUD work into task and tag slices, activated ITEM-0005 for project-detail task mutations, and handed off to DEV | The combined task-and-tag item was oversized, and task CRUD on the existing project detail surface is the smallest implementation-ready next step that preserves the established partial-response pattern |
+ | 2026-03-12 | DEV | Implemented the task-only no-reload CRUD slice with project-detail task mutation views, reusable task partials, and focused mutation view coverage for ITEM-0005 | This vertical cut adds task create, update, and delete on the project detail page using the existing HTML partial swap contract while preserving the blocked Django runtime caveat for validator follow-up |
+ | 2026-03-12 | VALIDATOR | Rejected ITEM-0005 for reviewer follow-up after finding a project-detail delete regression that leaves stale task CRUD regions behind | The new task layout moved the task regions outside `#project-detail-region`, but the existing project-delete response does not clear them, so the detail page can still show controls for a deleted project |
++| 2026-03-12 | REVIEWER | Routed ITEM-0005 back to DEV for revision after confirming the project-detail delete response leaves stale task CRUD regions behind | Acceptance is blocked by a concrete UI regression on project deletion from the detail surface, and the next pass must also add a focused regression test for that async response |
+diff --git a/ai/next_agent.md b/ai/next_agent.md
+index 9b74d7c66d7480b07d330afd322e08b04245b4d1..c22147128c1a7b054bd5ab260a5bc13cc2a8c0cb
+--- a/ai/next_agent.md
++++ b/ai/next_agent.md
+@@ -1,24 +1,23 @@
+ # Next Agent
+ 
+-- Current role: `REVIEWER`
+-- Prompt: `ai/prompts/06-reviewer.md`
++- Current role: `DEV`
++- Prompt: `ai/prompts/04-dev.md`
+ - Execution command for Codex sessions: **Follow `ai/next_agent.yaml` exactly.**
+ - If role mismatch with `ai/active_agent.txt`, print: `WAITING FOR BATON`
+ 
+ ## Handoff Notes
+ 
+-- Validator decision for `ITEM-0005`: `FAIL`.
+-- Validation evidence:
++- Reviewer decision for `ITEM-0005`: `REVISE`.
++- Fix the confirmed regression on project deletion from the detail page:
++  - `apps/project-tracker/templates/tracker/project_detail.html` renders `#task-create-form-region`, `#task-edit-form-region`, and `#task-list-region` outside `#project-detail-region`.
++  - `apps/project-tracker/tracker/views.py` `project_delete()` currently replaces only `#project-detail-region` and `#project-edit-form-region` when `source_page == "project_detail"`.
++  - Result: deleting a project from its detail page leaves stale task create/edit/list UI on screen, including actions targeting a deleted project.
++- Required changes:
++  - Update the project-detail delete response so it also clears or replaces the task regions consistently with the established partial-swap contract.
++  - Add a focused regression test for deleting a project from the detail page that asserts the async response does not leave stale task CRUD regions behind.
++- Preserve the accepted parts of the slice:
++  - Keep task CRUD scoped to the existing tracker app and the established HTML-partial plus vanilla JS pattern.
++  - Keep `TaskForm` project ownership fixed by the URL-driven project context.
++- Validation caveat remains:
+   - `python3 -m py_compile $(find apps/project-tracker -name '*.py' | sort)` passed.
+-  - `python3 apps/project-tracker/manage.py test tracker.tests.test_views` is still blocked by `ModuleNotFoundError: No module named 'django'`.
+-- Accepted parts of the slice:
+-  - Task create, update, and delete endpoints were added under project detail routes inside the existing Django app.
+-  - `TaskForm` no longer exposes the `project` field, so async task mutations cannot reassign a task across projects through the form.
+-  - The new task partials and `project_detail.html` use stable swap regions that match the task mutation response helper.
+-- Blocking regression found:
+-  - `apps/project-tracker/templates/tracker/project_detail.html` now renders `#task-create-form-region`, `#task-edit-form-region`, and `#task-list-region` outside `#project-detail-region`.
+-  - `apps/project-tracker/tracker/views.py` `project_delete()` still only swaps `#project-detail-region` and `#project-edit-form-region` for the `project_detail` source-page response.
+-  - Result: after deleting a project from its detail page, the page can still show task CRUD UI for the deleted project, including stale form actions and edit/delete controls.
+-- Review should focus on:
+-  - Routing this back for a concrete fix to clear or replace the task regions during project deletion from the detail page.
+-  - Requiring a focused regression test so this stale-UI case is covered once Django is available.
++  - `python3 apps/project-tracker/manage.py test tracker.tests.test_views` is still blocked here by `ModuleNotFoundError: No module named 'django'`.
+diff --git a/ai/review.md b/ai/review.md
+index e1b9d6ac434d0be93870517c5ed6b040112c23f9..bd460c6ebc756105d8d14afda34266c86411f508
+--- a/ai/review.md
++++ b/ai/review.md
+@@ -217,3 +217,12 @@
+ 
+ - Runtime validation of the new task mutation views and templates is still blocked until Django is installed in the workspace.
+ - The regression on project deletion from the detail page should be fixed before acceptance, and a focused test should assert that the task regions are cleared or replaced when the parent project is deleted from that surface.
++
++## Reviewer Decision
++
++- Decision: REVISE for `ITEM-0005`.
++- Rejected because deleting a project from its detail page leaves stale task CRUD UI behind: `project_detail.html` renders `#task-create-form-region`, `#task-edit-form-region`, and `#task-list-region` outside `#project-detail-region`, but `project_delete()` still only swaps `#project-detail-region` and `#project-edit-form-region` for the `project_detail` response.
++- Required fix for the next pass:
++  - Update the detail-page project delete response so all task regions are cleared or replaced along with the deleted-project panel.
++  - Add a focused regression test covering project deletion from the detail page and asserting the stale task regions are not left behind in the async response.
++- Environment caveat remains unchanged: `python3 apps/project-tracker/manage.py test tracker.tests.test_views` is still blocked in this workspace by `ModuleNotFoundError: No module named 'django'`, so the reviewer decision is based on code inspection plus py-compile evidence.
+
+[3m[35mtokens used[0m[0m
+21,419
+
+Script done on 2026-03-11 22:44:22-05:00 [COMMAND_EXIT_CODE="0"]

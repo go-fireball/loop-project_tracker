@@ -29,7 +29,6 @@ success_criteria:
 handoff_on_success:
   print_exact: HANDOFF TO VALIDATOR
 notes:
-  - ITEM-0004 active: no-reload project CRUD only
-  - add project mutation routes/views/templates/partials and minimal fetch handlers
-  - update focused view tests
-  - preserve missing Django runtime caveat
+  - ITEM-0008 active
+  - add apps/project-tracker/README.md with local Django setup, migration, runserver, py_compile, and focused test commands
+  - preserve the missing-Django environment caveat and avoid product-code changes unless needed for documentation accuracy

@@ -1,28 +1,18 @@
-id: ITEM-0004
-title: Add no-reload project CRUD interactions
-goal: "Implement async create, update, and delete flows for projects using HTML partial responses and small vanilla JS fetch handlers."
+id: ITEM-0008
+title: Document local setup and verification workflow
+goal: "Add concise project-local documentation under `apps/project-tracker/` covering Django setup, test commands, and the known workspace limitation blocking runtime verification."
 status: in_progress
 owner_role: DEV
 related_files:
-  - apps/project-tracker/tracker/views.py
-  - apps/project-tracker/tracker/urls.py
-  - apps/project-tracker/tracker/forms.py
-  - apps/project-tracker/templates/tracker/dashboard.html
-  - apps/project-tracker/templates/tracker/project_list.html
-  - apps/project-tracker/templates/tracker/project_detail.html
-  - apps/project-tracker/templates/tracker/
-  - apps/project-tracker/static/tracker/app.js
-  - apps/project-tracker/static/tracker/app.css
-  - apps/project-tracker/tracker/tests/test_views.py
+  - apps/project-tracker/README.md
+  - apps/project-tracker/manage.py
+  - apps/project-tracker/project_tracker/settings.py
 acceptance_criteria:
-  - "Users can create a project from a server-rendered page and see the relevant UI update without a full page reload."
-  - "Users can edit an existing project from a server-rendered page and see the updated project content render via returned HTML partials."
-  - "Users can delete an existing project from a server-rendered page and the affected list/detail UI updates without a full page reload."
-  - "Invalid project submissions render inline form errors through partial HTML responses rather than forcing a full-page workflow."
-  - "The implementation stays inside the existing Django tracker app with plain HTML, CSS, and vanilla JS fetch handlers only."
+  - "A project-local README or equivalent doc is added under `apps/project-tracker/` with concrete setup steps for creating a Python environment, installing Django, applying migrations, and running the development server."
+  - "The documentation lists the focused verification commands for `py_compile` and the Django test modules currently used by the project."
+  - "The known workspace limitation is documented explicitly as `ModuleNotFoundError: No module named 'django'`, framed as an environment/setup issue rather than a tracker application defect."
+  - "The documentation stays aligned with the locked stack: Django, SQLite, and vanilla HTML/CSS/JS only."
 done_definition:
-  - "Django views and URLs handle project create, update, and delete flows without introducing DRF, extra apps, or service/repository layers."
-  - "Templates include reusable project form or list/detail partials so async mutations can replace targeted DOM regions cleanly."
-  - "Client-side JS remains small and framework-free, intercepting mutation forms with fetch and swapping returned HTML into the current page."
-  - "Focused Django tests cover successful and invalid project mutation responses if Django is available, or the handoff documents the blocking limitation."
-  - "The existing Django-missing runtime caveat remains documented until the workspace can execute manage.py commands."
+  - "The new documentation reflects the current repository layout and existing `manage.py` entrypoint without inventing new tooling."
+  - "The listed commands are specific enough for a fresh local checkout to reproduce migrations, server startup, and focused test execution once Django is installed."
+  - "If DEV cannot run Django commands in the workspace, the handoff and review artifacts keep that runtime limitation visible."

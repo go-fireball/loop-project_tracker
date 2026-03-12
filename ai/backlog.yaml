@@ -38,7 +38,7 @@ items:
     title: Add no-reload project CRUD interactions
     goal: Implement async create, update, and delete flows for projects using HTML partial responses and small vanilla JS fetch handlers.
     type: feature
-    status: in_progress
+    status: done
     priority: high
     dependencies:
       - ITEM-0003
@@ -47,25 +47,50 @@ items:
       - Default mutation responses to HTML partials and inline form-error rendering.
       - Keep the JS small and framework-free, using fetch against Django views inside the existing tracker app.
   - id: ITEM-0005
-    title: Add no-reload task and tag CRUD interactions
-    goal: Implement async create, update, and delete flows for tasks and tags using HTML partial responses and small vanilla JS fetch handlers.
+    title: Add no-reload task CRUD interactions
+    goal: Implement async create, update, and delete flows for tasks from project detail pages using HTML partial responses and small vanilla JS fetch handlers.
     type: feature
-    status: todo
+    status: done
     priority: high
     dependencies:
       - ITEM-0004
     notes:
       - Reuse the async interaction pattern established for project mutations instead of inventing a second approach.
-      - Support task mutations from project detail views and tag mutations where they are created or managed.
+      - Support task mutations directly from project detail views.
       - Keep responses partial-first and use JSON only when HTML is clearly awkward.
+      - Scope this slice to tasks only so the mutation surface stays small and validator can inspect one interaction family at a time.
   - id: ITEM-0006
-    title: Add automated coverage and final validation
-    goal: Cover the tracker with Django tests for models, views, and no-reload mutation behavior, then validate the full acceptance path.
+    title: Add no-reload tag CRUD interactions
+    goal: Implement async create, update, and delete flows for tags using HTML partial responses and small vanilla JS fetch handlers on a server-rendered tag management surface.
     type: feature
-    status: todo
-    priority: medium
+    status: done
+    priority: high
     dependencies:
       - ITEM-0005
     notes:
+      - Reuse the same partial swap contract used for project and task mutations.
+      - Add a small server-rendered management surface for tags rather than introducing a new UI architecture.
+      - Keep project and task tag assignment inside existing forms; this slice is about tag entity CRUD.
+  - id: ITEM-0007
+    title: Add automated coverage and final validation
+    goal: Cover the tracker with Django tests for models, views, and no-reload mutation behavior, then validate the full acceptance path.
+    type: feature
+    status: done
+    priority: medium
+    dependencies:
+      - ITEM-0006
+    notes:
       - Focus tests on domain rules, page rendering, and async CRUD behavior.
       - Keep tooling inside Django and the Python standard library only.
+  - id: ITEM-0008
+    title: Document local setup and verification workflow
+    goal: Add concise project-local documentation under `apps/project-tracker/` covering Django setup, test commands, and the known workspace limitation blocking runtime verification.
+    type: chore
+    status: in_progress
+    priority: low
+    dependencies:
+      - ITEM-0007
+    notes:
+      - Keep the documentation close to the Django app so DEV can edit inside allowed paths.
+      - Capture the exact `manage.py` commands for running the server, migrations, and focused tests once Django is installed.
+      - Preserve the current `ModuleNotFoundError: No module named 'django'` caveat as an environment issue, not a product-code defect.

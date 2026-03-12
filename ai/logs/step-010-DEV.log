@@ -1,0 +1,1744 @@
+Script started on 2026-03-11 22:44:22-05:00 [COMMAND="codex exec --model gpt-5.4 --full-auto Follow\ ai/next_agent.yaml\ exactly. " TERM="xterm-256color" TTY="/dev/pts/0" COLUMNS="184" LINES="43"]
+OpenAI Codex v0.114.0 (research preview)
+--------
+[1mworkdir:[0m /home/sundaram/code/temp/test
+[1mmodel:[0m gpt-5.4
+[1mprovider:[0m openai
+[1mapproval:[0m never
+[1msandbox:[0m workspace-write [workdir, /tmp, $TMPDIR, /home/sundaram/.codex/memories]
+[1mreasoning effort:[0m medium
+[1mreasoning summaries:[0m none
+[1msession id:[0m 019ce025-3da0-7451-b98a-3e0f085bc70c
+--------
+[36muser[0m
+Follow ai/next_agent.yaml exactly.
+[36mmcp startup:[0m no servers
+[35m[3mcodex[0m[0m
+I’m checking the repository instructions and opening `ai/next_agent.yaml` so I can follow it exactly before making any changes.
+[35m[3mexec[0m[0m
+[1m/bin/bash -lc pwd[0m in /home/sundaram/code/temp/test[32m succeeded in 0ms:[0m
+[2m/home/sundaram/code/temp/test[0m
+[35m[3mexec[0m[0m
+[1m/bin/bash -lc "rg --files -g 'AGENTS.md' -g 'ai/next_agent.yaml' -g 'ai/**'"[0m in /home/sundaram/code/temp/test[32m succeeded in 0ms:[0m
+[2mai/logs/step-003-ARCHITECT.log
+ai/logs/step-008-PLANNER.log
+ai/logs/step-006-VALIDATOR.log
+ai/logs/step-002-VALIDATOR.log
+ai/logs/step-009-REVIEWER.log
+ai/logs/step-007-REVIEWER.log
+ai/logs/step-007-DEV.log
+ai/logs/step-009-DEV.log
+ai/logs/step-001-DEV.log
+ai/logs/step-002-PLANNER.log
+ai/logs/step-010-VALIDATOR.log
+ai/logs/step-002-SENIOR_JUDGMENTAL_ENGINEER.log
+ai/logs/step-003-REVIEWER.log
+ai/logs/baton.log
+ai/logs/step-005-DEV.log
+ai/logs/step-006-PLANNER.log
+ai/logs/step-004-PLANNER.log
+ai/logs/step-004-VALIDATOR.log
+ai/logs/step-003-DEV.log
+ai/logs/step-008-VALIDATOR.log[0m
+[35m[3mexec[0m[0m
+[1m/bin/bash -lc "sed -n '1,220p' ai/next_agent.yaml"[0m in /home/sundaram/code/temp/test[32m succeeded in 0ms:[0m
+[2mnext_role: DEV
+prompt_file: ai/prompts/04-dev.md
+read:
+  - ai/active_item.yaml
+  - ai/requirements.md
+  - ai/judgment.yaml
+  - ai/simplification.md
+  - ai/decision-lock.yaml
+  - ai/goal.yaml
+  - ai/constitution.yaml
+  - ai/active_agent.txt
+  - ai/next_agent.md
+  - ai/user-questions.yaml
+allowed_edits:
+  - apps/
+  - infra/
+  - ai/review.md
+  - ai/decision-lock.yaml
+  - ai/user-questions.yaml
+  - ai/iterations/ITER-0001.md[0m
+[35m[3mcodex[0m[0m
+`ai/next_agent.yaml` puts this turn in the `DEV` role. I’m loading the required context files now, then I’ll fix the delete regression and add the focused regression test it calls for.
+[35m[3mexec[0m[0m
+[1m/bin/bash -lc "sed -n '1,260p' ai/active_item.yaml"[0m in /home/sundaram/code/temp/test[35m[3mexec[0m[0m
+[1m/bin/bash -lc "sed -n '1,220p' ai/active_agent.txt"[0m in /home/sundaram/code/temp/test[35m[3mexec[0m[0m
+[1m/bin/bash -lc "sed -n '1,260p' ai/judgment.yaml"[0m in /home/sundaram/code/temp/test[32m succeeded in 0ms:[0m
+[2mDEV[0m
+[32m succeeded in 0ms:[0m
+[2mid: ITEM-0005
+title: Add no-reload task CRUD interactions
+goal: "Implement async create, update, and delete flows for tasks from project detail pages using HTML partial responses and small vanilla JS fetch handlers."
+status: ready
+owner_role: DEV
+related_files:
+  - apps/project-tracker/tracker/models.py
+  - apps/project-tracker/tracker/views.py
+  - apps/project-tracker/tracker/urls.py
+  - apps/project-tracker/tracker/forms.py
+  - apps/project-tracker/templates/tracker/project_detail.html
+  - apps/project-tracker/templates/tracker/partials/
+  - apps/project-tracker/static/tracker/app.js
+  - apps/project-tracker/static/tracker/app.css
+  - apps/project-tracker/tracker/tests/test_views.py
+acceptance_criteria:
+  - "Users can create a task from a project detail page and see the task list and supporting project summary update without a full page reload."
+  - "Users can edit an existing task from a project detail page and see the updated task content render via returned HTML partials."
+  - "Users can delete an existing task from a project detail page and the affected task list and project summary update without a full page reload."
+  - "Invalid task submissions render inline form errors through partial HTML responses rather than forcing a full-page workflow."[0m
+[32m succeeded in 0ms:[0m
+[2mbackend_default: aspnet_core
+frontend_default: react_nextjs
+frontend_alternative: nuxt_if_explicitly_requested
+database_default: postgresql
+architecture_default: modular_monolith
+coding_style: functional_testable_pragmatic
+preserve_business_behavior: true
+avoid_unnecessary_microservices: true
+avoid_clever_abstractions: true
+cloud_default: aws
+iac_default: cdk
+container_default: fargate
+static_assets_default: s3_cloudfront
+auth_default: cognito
+python_only_for_data_workloads: true
+nosql_only_when_justified: true
+relational_bias: true
+human_for_high_level_decisions_only: true[0m
+[35m[3mexec[0m[0m
+[1m/bin/bash -lc "sed -n '1,260p' ai/requirements.md"[0m in /home/sundaram/code/temp/test[32m succeeded in 0ms:[0m
+[2m# Requirements (One Pager)
+
+## Objective
+
+Build a personal project tracker web app in Django that lets a single user manage projects, tasks, and tags through a server-rendered HTML/JavaScript frontend backed by a SQLite database. The product must support fast CRUD workflows without full page reloads and provide a dashboard summarizing project and task status.
+
+## In Scope
+
+- Django models for projects, tasks, and tags with the relationships defined in `ai/goal.yaml`
+- HTTP endpoints for create, read, update, and delete operations on projects, tasks, and tags
+- Project list view, project detail view with related tasks, tag filter view, and dashboard summary view
+- Plain HTML, CSS, and vanilla JavaScript frontend served by Django
+- Partial page updates or asynchronous requests so add/edit/delete flows do not require full page reloads
+- SQLite-backed persistence for all project data
+
+## Out of Scope
+
+- Governance loop internals (already bootstrapped)
+- Multi-user accounts, authentication, or permissions
+- External APIs, background jobs, or real-time collaboration[0m
+[35m[3mexec[0m[0m
+[1m/bin/bash -lc "sed -n '1,260p' ai/decision-lock.yaml"[0m in /home/sundaram/code/temp/test[32m succeeded in 0ms:[0m
+[2mconfirmed_by_user: false
+blocked_on_user: false
+last_user_decision: null
+approved_exceptions: []
+approved_decisions: [][0m
+[35m[3mexec[0m[0m
+[1m/bin/bash -lc "sed -n '1,260p' ai/constitution.yaml"[0m in /home/sundaram/code/temp/test[35m[3mexec[0m[0m
+[1m/bin/bash -lc "sed -n '1,260p' ai/simplification.md"[0m in /home/sundaram/code/temp/test[32m succeeded in 0ms:[0m
+[2mcore_rules:
+  - state lives in files, not chat memory
+  - baton ownership is authoritative
+  - roles must not edit outside allowed files
+baton_rules:
+  - if active agent mismatch, print exactly WAITING FOR BATON
+  - baton must be handed off explicitly
+edit_rules:
+  - only edit allowed files listed in the current role prompt
+stop_rules:
+  - if human clarification is needed, print exactly WAITING FOR USER
+  - always append an iteration log entry before handoff[0m
+[32m succeeded in 0ms:[0m
+[2m# Simplification Guidance
+
+1. Keep the system as a single Django project under `apps/project-tracker/`, with a straightforward modular monolith structure.
+2. Prefer Django built-ins first: ORM models, forms where useful, template rendering, URL routing, migrations, and standard views before introducing custom infrastructure.
+3. Treat the HTML/vanilla-JS UI as the product surface. Use small asynchronous endpoints or partial-template responses only to avoid full page reloads.
+4. Do not introduce a separate SPA, frontend framework, public REST platform, or client-state architecture. The goal is fast CRUD, not a reusable API product.
+5. Use SQLite-specific pragmatism. Avoid designs that require database features, concurrency assumptions, or deployment topology beyond a local Django app with SQLite.
+6. Keep the domain model direct: projects, tasks, and tags only. Add helper services or abstraction layers only when duplication is concrete and repeated.
+7. Favor one Django app unless a second app is clearly required by code boundaries that already exist. Do not split by speculative future scale.
+8. Keep interfaces small and explicit. Prefer clear view/template/form boundaries over generic repositories, command buses, or plugin systems.
+9. Preserve required business behavior exactly, especially statuses, priorities, relationships, dashboard counts, and no-reload CRUD interactions.
+10. Record tradeoffs in design docs when choosing between template-partial updates and JSON responses, but default to the simpler implementation that satisfies the acceptance criteria.
+
+## Judgment Guardrails
+
+- Override conflicting defaults from `ai/judgment.yaml`: this project is Django, SQLite, plain HTML/CSS/JS, and a single deployable app, not ASP.NET, React/Next.js, PostgreSQL, or AWS-first infrastructure.
+- Avoid cloud, container, auth, queueing, CDN, object storage, and microservice concerns unless the requirements explicitly add them later.
+- Keep human escalation reserved for genuine product tradeoffs. Routine engineering choices should be resolved in favor of the simplest maintainable implementation.
+- Architecture should optimize for easy local development, readable server-rendered flows, and testable CRUD behavior, not for hypothetical multi-user or distributed futures.
+[0m
+[35m[3mexec[0m[0m
+[1m/bin/bash -lc "sed -n '1,260p' ai/goal.yaml"[0m in /home/sundaram/code/temp/test[32m succeeded in 0ms:[0m
+[2mproject_goal: Build a personal project tracker web app using Django with a SQLite database and HTML/JS frontend
+success_criteria:
+  - Django REST endpoints for CRUD operations on projects, tasks, and tags
+  - Each project has a name, description, status (active/completed/archived), and created date
+  - Each task belongs to a project and has a title, status (todo/in_progress/done), priority (low/medium/high), and due date
+  - Tags can be assigned to both projects and tasks (many-to-many)
+  - Frontend has separate views for projects list, project detail (showing its tasks), and a tag filter view
+  - Adding/editing/deleting entities works without full page reload
+  - Dashboard view showing summary stats (total projects, tasks by status, overdue tasks)
+  - Data persists in SQLite database
+context_notes:
+  - Use Django with SQLite backend
+  - Frontend is plain HTML, CSS, and vanilla JS (no React/Vue/Angular)
+  - Django serves both the API and static/template files
+  - All code lives in apps/project-tracker/
+  - Use Django models with proper foreign key and many-to-many relationships
+constraints:
+  - Django and its built-in dependencies only, no additional pip packages (no DRF, no celery, etc.)
+  - No frontend JS frameworks
+  - Single Django project, no microservices[0m
+[35m[3mexec[0m[0m
+[1m/bin/bash -lc "sed -n '1,260p' ai/user-questions.yaml"[0m in /home/sundaram/code/temp/test[35m[3mexec[0m[0m
+[1m/bin/bash -lc "sed -n '1,260p' ai/next_agent.md"[0m in /home/sundaram/code/temp/test[32m succeeded in 0ms:[0m
+[2mstatus: none
+return_to_role: null
+questions: [][0m
+[32m succeeded in 0ms:[0m
+[2m# Next Agent
+
+- Current role: `DEV`
+- Prompt: `ai/prompts/04-dev.md`
+- Execution command for Codex sessions: **Follow `ai/next_agent.yaml` exactly.**
+- If role mismatch with `ai/active_agent.txt`, print: `WAITING FOR BATON`
+
+## Handoff Notes
+
+- Reviewer decision for `ITEM-0005`: `REVISE`.
+- Fix the confirmed regression on project deletion from the detail page:
+  - `apps/project-tracker/templates/tracker/project_detail.html` renders `#task-create-form-region`, `#task-edit-form-region`, and `#task-list-region` outside `#project-detail-region`.
+  - `apps/project-tracker/tracker/views.py` `project_delete()` currently replaces only `#project-detail-region` and `#project-edit-form-region` when `source_page == "project_detail"`.
+  - Result: deleting a project from its detail page leaves stale task create/edit/list UI on screen, including actions targeting a deleted project.
+- Required changes:
+  - Update the project-detail delete response so it also clears or replaces the task regions consistently with the established partial-swap contract.
+  - Add a focused regression test for deleting a project from the detail page that asserts the async response does not leave stale task CRUD regions behind.
+- Preserve the accepted parts of the slice:
+  - Keep task CRUD scoped to the existing tracker app and the established HTML-partial plus vanilla JS pattern.
+  - Keep `TaskForm` project ownership fixed by the URL-driven project context.[0m
+[35m[3mcodex[0m[0m
+I’ve confirmed baton ownership is valid and the task is narrowly scoped: fix the project-detail delete response so it clears task regions, then cover that with a regression test and append the iteration log before handoff.
+[35m[3mexec[0m[0m
+[1m/bin/bash -lc "sed -n '1,260p' ai/prompts/04-dev.md"[0m in /home/sundaram/code/temp/test[35m[3mexec[0m[0m
+[1m/bin/bash -lc "sed -n '1,260p' apps/project-tracker/tracker/views.py"[0m in /home/sundaram/code/temp/test[32m succeeded in 0ms:[0m
+[2m# ROLE: DEV
+
+## 1) Baton check
+- Read `ai/active_agent.txt`.
+- If value is not exactly `DEV`, output exactly:
+`WAITING FOR BATON`
+- Stop.
+
+## 2) Required reads
+- `ai/goal.yaml`
+- `ai/active_item.yaml`
+- `ai/requirements.md`
+- `ai/judgment.yaml`
+- `ai/simplification.md`
+- `ai/decision-lock.yaml`
+- `ai/user-questions.yaml`
+- `ai/constitution.yaml`
+- `ai/next_agent.md`
+- Relevant files in `apps/`, `infra/`, `context/repo/`
+[0m
+[32m succeeded in 0ms:[0m
+[2mfrom django.db.models import Count, Prefetch, Q
+from django.http import HttpResponseNotAllowed
+from django.shortcuts import get_object_or_404, render
+from django.template.loader import render_to_string
+from django.urls import reverse
+from django.utils import timezone
+
+from .forms import ProjectForm, TaskForm
+from .models import Project, Tag, Task
+
+
+def _project_list_queryset():
+    return (
+        Project.objects.annotate(
+            task_count=Count("tasks", distinct=True),
+            open_task_count=Count(
+                "tasks",
+                filter=~Q(tasks__status=Task.STATUS_DONE),
+                distinct=True,
+            ),[0m
+[35m[3mexec[0m[0m
+[1m/bin/bash -lc "sed -n '1,260p' apps/project-tracker/templates/tracker/project_detail.html"[0m in /home/sundaram/code/temp/test[32m succeeded in 0ms:[0m
+[2m{% extends "tracker/base.html" %}
+
+{% block title %}{{ project.name }}{% endblock %}
+
+{% block content %}
+  <div id="project-detail-region">
+    {% include "tracker/partials/project_detail_panel.html" %}
+  </div>
+
+  {% include "tracker/partials/project_edit_placeholder.html" %}
+  <div id="task-create-form-region">
+    {% include "tracker/partials/task_form_panel.html" with form=task_form form_action=task_create_url form_heading="Add a task" form_submit_label="Create task" %}
+  </div>
+  <div id="task-edit-form-region"></div>
+  <div id="task-list-region">
+    {% include "tracker/partials/task_list_panel.html" %}
+  </div>
+{% endblock %}[0m
+[35m[3mexec[0m[0m
+[1m/bin/bash -lc "sed -n '1,320p' apps/project-tracker/tracker/tests/test_views.py"[0m in /home/sundaram/code/temp/test[32m succeeded in 0ms:[0m
+[2mfrom datetime import timedelta
+
+from django.test import TestCase
+from django.urls import reverse
+from django.utils import timezone
+
+from tracker.models import Project, Tag, Task
+
+
+class TrackerViewTests(TestCase):
+    def setUp(self):
+        self.project = Project.objects.create(
+            name="Launch site",
+            description="Ship the marketing site.",
+            status=Project.STATUS_ACTIVE,
+        )
+        self.other_project = Project.objects.create(
+            name="Archive docs",
+            description="Tidy older project notes.",
+            status=Project.STATUS_ARCHIVED,[0m
+[35m[3mexec[0m[0m
+[1m/bin/bash -lc 'ls -1 ai/iterations'[0m in /home/sundaram/code/temp/test[32m succeeded in 0ms:[0m
+[2mITER-0001.md[0m
+[35m[3mexec[0m[0m
+[1m/bin/bash -lc 'rg -n "project_delete|task-create-form-region|task-edit-form-region|task-list-region|project_detail" apps/project-tracker -S'[0m in /home/sundaram/code/temp/test[32m succeeded in 0ms:[0m
+[2mapps/project-tracker/tracker/views.py:31:def _project_detail_queryset():
+apps/project-tracker/tracker/views.py:38:def _project_detail_context(project, task_form=None):
+apps/project-tracker/tracker/views.py:124:                "tracker/partials/project_detail_panel.html",
+apps/project-tracker/tracker/views.py:128:                "#task-create-form-region",
+apps/project-tracker/tracker/views.py:138:                "#task-list-region",
+apps/project-tracker/tracker/views.py:143:                "#task-edit-form-region",
+apps/project-tracker/tracker/views.py:159:def project_detail(request, project_id):
+apps/project-tracker/tracker/views.py:161:        _project_detail_queryset(),
+apps/project-tracker/tracker/views.py:164:    return render(request, "tracker/project_detail.html", _project_detail_context(project))
+apps/project-tracker/tracker/views.py:263:                        "project_detail",
+apps/project-tracker/tracker/views.py:278:        project = get_object_or_404(_project_detail_queryset(), pk=project.pk)
+apps/project-tracker/tracker/views.py:284:                    "tracker/partials/project_detail_panel.html",
+apps/project-tracker/tracker/views.py:303:                    "project_detail",
+apps/project-tracker/tracker/views.py:314:def project_delete(request, project_id):
+apps/project-tracker/tracker/views.py:319:    source_page = request.POST.get("source_page", "project_detail")
+apps/project-tracker/tracker/views.py:358:                "tracker/partials/project_deleted_panel.html",
+apps/project-tracker/tracker/views.py:381:        project = get_object_or_404(_project_detail_queryset(), pk=project_id)
+apps/project-tracker/tracker/views.py:384:    project = get_object_or_404(_project_detail_queryset(), pk=project_id)
+apps/project-tracker/tracker/views.py:389:                "#task-create-form-region",
+apps/project-tracker/tracker/views.py:411:                    "#task-edit-form-region",[0m
+[35m[3mcodex[0m[0m
+I’ve narrowed the defect to `project_delete()`: the detail-page branch only swaps the project panel and edit placeholder, so the task create/edit/list regions never get cleared. I’m reading the exact delete response and placeholder partials before patching it.
+[35m[3mexec[0m[0m
+[1m/bin/bash -lc "sed -n '1,200p' apps/project-tracker/templates/tracker/partials/project_deleted_panel.html"[0m in /home/sundaram/code/temp/test[32m succeeded in 0ms:[0m
+[2m<section class="panel">
+  <div class="panel-heading">
+    <div>
+      <h2>Project deleted</h2>
+      <p class="section-copy">{{ project_name }} was removed without leaving the current page.</p>
+    </div>
+    <a class="inline-link" href="{% url 'tracker:project_list' %}">Back to projects</a>
+  </div>
+</section>[0m
+[35m[3mexec[0m[0m
+[1m/bin/bash -lc "sed -n '300,390p' apps/project-tracker/tracker/views.py"[0m in /home/sundaram/code/temp/test[32m succeeded in 0ms:[0m
+[2m                "tracker/partials/project_form_panel.html",
+                _project_form_context(
+                    form,
+                    "project_detail",
+                    request.path,
+                    f"Edit {project.name}",
+                    "Save changes",
+                ),
+            )
+        ],
+        status=400,
+    )
+
+
+def project_delete(request, project_id):
+    if request.method != "POST":
+        return HttpResponseNotAllowed(["POST"])
+
+    project = get_object_or_404(Project, pk=project_id)
+    source_page = request.POST.get("source_page", "project_detail")[0m
+[35m[3mexec[0m[0m
+[1m/bin/bash -lc "sed -n '1,200p' apps/project-tracker/templates/tracker/partials/project_edit_placeholder.html"[0m in /home/sundaram/code/temp/test[32m succeeded in 0ms:[0m
+[2m<div id="project-edit-form-region"></div>[0m
+[35m[3mexec[0m[0m
+[1m/bin/bash -lc 'ls -1 apps/project-tracker/templates/tracker/partials'[0m in /home/sundaram/code/temp/test[32m succeeded in 0ms:[0m
+[2mdashboard_recent_projects_panel.html
+dashboard_stats_panel.html
+project_card.html
+project_deleted_panel.html
+project_detail_panel.html
+project_edit_placeholder.html
+project_form_panel.html
+project_list_panel.html
+project_mutation_response.html
+task_edit_placeholder.html
+task_form_panel.html
+task_list_panel.html[0m
+[35m[3mexec[0m[0m
+[1m/bin/bash -lc "sed -n '1,200p' apps/project-tracker/templates/tracker/partials/task_edit_placeholder.html"[0m in /home/sundaram/code/temp/test[32m succeeded in 0ms:[0m
+[2m<div id="task-edit-form-region"></div>[0m
+[35m[3mcodex[0m[0m
+I have the exact response contract now. The cleanest fix is to return empty content for `#task-create-form-region` and `#task-list-region`, and keep using the existing placeholder for `#task-edit-form-region` so the DOM is left in a valid cleared state after deletion.
+[35m[3mexec[0m[0m
+[1m/bin/bash -lc "sed -n '1,220p' apps/project-tracker/templates/tracker/partials/project_mutation_response.html"[0m in /home/sundaram/code/temp/test[35m[3mexec[0m[0m
+[1m/bin/bash -lc "sed -n '1,220p' apps/project-tracker/static/tracker/app.js"[0m in /home/sundaram/code/temp/test[35m[3mexec[0m[0m
+[1m/bin/bash -lc "sed -n '1,220p' ai/iterations/ITER-0001.md"[0m in /home/sundaram/code/temp/test[32m succeeded in 0ms:[0m
+[2mdocument.documentElement.dataset.app = "project-tracker";
+
+const parseAndSwap = async (response) => {
+  const html = await response.text();
+  const doc = new DOMParser().parseFromString(html, "text/html");
+  const swaps = doc.querySelectorAll("template[data-swap-target]");
+
+  swaps.forEach((swap) => {
+    const selector = swap.dataset.swapTarget;
+    const target = document.querySelector(selector);
+    if (!target) {
+      return;
+    }
+
+    target.outerHTML = swap.innerHTML.trim();
+  });
+};
+
+const submitAsyncForm = async (form) => {
+  const confirmMessage = form.dataset.confirm;[0m
+[32m succeeded in 0ms:[0m
+[2m{% for replacement in replacements %}
+  <template data-swap-target="{{ replacement.selector }}">{{ replacement.html|safe }}</template>
+{% endfor %}[0m
+[32m succeeded in 0ms:[0m
+[2m# ITER-0001 Decision Log
+
+| Timestamp | Role | Decision | Why |
+|-----------|------|----------|-----|
+| 2026-03-11 | PRODUCT_OWNER | Defined the one-page product requirements from the project goal and handed off for engineering judgment review | The workflow needs a concrete scope and acceptance baseline before architecture and planning can proceed |
+| 2026-03-11 | SENIOR_JUDGMENTAL_ENGINEER | Locked simplification guardrails around a single Django + SQLite + vanilla JS modular monolith and warned against framework/platform drift | The architect needs explicit constraints so the design stays aligned with the product goal instead of inheriting conflicting default stack preferences |
+| 2026-03-11 | ARCHITECT | Defined a single-project Django architecture centered on one product app, server-rendered templates, and HTML-partial based no-reload CRUD flows | The planner and developer need concrete boundaries, file targets, and implementation tradeoffs before breaking work into execution items |
+| 2026-03-11 | PLANNER | Broke delivery into scaffold, domain, page, async CRUD, and test slices and activated the scaffold item for development | The developer needs a small implementation-ready first step with explicit file targets before starting code changes |
+| 2026-03-12 | DEV | Scaffolded the Django project baseline with one tracker app, routed a rendered dashboard page, and added a smoke test for the root view | ITEM-0001 required an end-to-end project skeleton before later slices can add models, pages, and async CRUD behavior |
+| 2026-03-12 | VALIDATOR | Accepted the scaffold baseline as meeting ITEM-0001 acceptance criteria and handed off to review with an environment caveat on Django-dependent tests | The slice is structurally correct and free of scope drift, but full runtime validation remains blocked until Django is installed in the workspace |
+| 2026-03-12 | REVIEWER | Marked ITEM-0001 done and returned the baton to planning for the next implementation slice | The scaffold meets the locked architecture and acceptance criteria, and the blocked Django test run is an environment limitation rather than a gap in the delivered slice |
+| 2026-03-12 | PLANNER | Activated ITEM-0002 for domain model, form, admin, and migration work and handed off implementation to DEV | The scaffold is complete, and the domain layer is the next dependency needed before server-rendered pages and no-reload CRUD flows can be built |
+| 2026-03-12 | DEV | Implemented tracker domain models, forms, admin registration, a manual initial migration, and domain-focused tests for ITEM-0002 | The next slices depend on concrete project, task, and tag persistence plus validated form surfaces inside the existing Django app |
+| 2026-03-12 | VALIDATOR | Accepted the domain model slice for ITEM-0002 and handed off to review with a documented Django-environment caveat | The implemented models, forms, admin wiring, and manual migration align with the locked requirements, and the remaining verification gap is limited to missing Django in the workspace |
+| 2026-03-12 | REVIEWER | Marked ITEM-0002 done and returned the baton to planning for the next implementation slice | The domain models, forms, admin wiring, and initial migration satisfy the locked slice, and the blocked Django runtime checks remain an environment caveat rather than a delivered-code gap |
+| 2026-03-12 | PLANNER | Activated ITEM-0003 for server-rendered dashboard, project list/detail, and tag detail page implementation and handed off to DEV | The domain layer is accepted, so the next dependency-ready slice is the read-only page surface that prepares the app for later no-reload CRUD work |
+| 2026-03-11 | DEV | Implemented ORM-backed dashboard aggregates, project list/detail and tag detail pages, and focused view tests for ITEM-0003 | The read-only server-rendered page slice now uses the accepted domain models directly and is ready for validator review, with Django runtime execution still blocked by the missing package in the workspace |
+| 2026-03-12 | VALIDATOR | Accepted the read-only page slice for ITEM-0003 and handed off to review with the Django-environment caveat preserved | Static validation passed, acceptance criteria are met by inspection, and the only blocked verification step is the missing Django package in the workspace |
+| 2026-03-12 | REVIEWER | Marked ITEM-0003 done and returned the baton to planning for the next implementation slice | The read-only tracker pages satisfy the locked acceptance criteria without scope drift, and the blocked Django runtime checks remain an environment caveat rather than a delivered-code gap |
+| 2026-03-12 | PLANNER | Split the async CRUD epic into project and task/tag mutation slices, activated ITEM-0004, and handed implementation to DEV | The original no-reload CRUD item was too large for one safe pass, and project mutations are the smallest vertical slice that builds directly on the accepted read-only pages |[0m
+[35m[3mexec[0m[0m
+[1m/bin/bash -lc "test -f ai/review.md && sed -n '1,220p' ai/review.md || true"[0m in /home/sundaram/code/temp/test[32m succeeded in 0ms:[0m
+[2m# Review Notes
+
+Use this file for reviewer outcomes:
+
+- **DONE**: item accepted and loop returns to PLANNER for next item.
+- **REVISE**: route back to specific role with explicit gap list.
+- **ESCALATE**: WAITING FOR USER only for approved escalation categories.
+
+## Judgment Warnings
+
+- Flag any introduction of React, Next.js, DRF, extra pip packages, or cloud/deployment scaffolding as scope drift unless requirements are updated.
+- Flag architecture that splits the app into speculative layers, services, or multiple Django apps without a demonstrated need.
+- Flag CRUD implementations that require full page reloads, since no-reload interactions are part of acceptance.
+
+## Architecture Decisions
+
+- Use a single Django project under `apps/project-tracker/` with one main product app for projects, tasks, and tags.
+- Treat server-rendered templates as the primary UI and use small async `fetch` flows for no-reload CRUD interactions.
+- Prefer HTML partial responses for mutations; allow narrow JSON responses only when HTML would be more awkward for the specific interaction.
+- Keep domain logic in models, forms, and views; reject speculative service, repository, command-bus, or multi-app splits.[0m
+[35m[3mcodex[0m[0m
+I’m applying the fix in the delete response now. The patch will add explicit placeholder swaps for the task create and task list regions, update the detail-page delete test to assert those regions are cleared, and then I’ll refresh the handoff files required by the workflow.
+[3m[35mfile update[0m[0m
+[35mM /home/sundaram/code/temp/test/apps/project-tracker/tracker/views.py[0m
+@@ -365,2 +365,17 @@
+             ),
+[32m+            ([0m
+[32m+                "#task-create-form-region",[0m
+[32m+                "tracker/partials/task_create_placeholder.html",[0m
+[32m+                {},[0m
+[32m+            ),[0m
+[32m+            ([0m
+[32m+                "#task-edit-form-region",[0m
+[32m+                "tracker/partials/task_edit_placeholder.html",[0m
+[32m+                {},[0m
+[32m+            ),[0m
+[32m+            ([0m
+[32m+                "#task-list-region",[0m
+[32m+                "tracker/partials/task_list_placeholder.html",[0m
+[32m+                {},[0m
+[32m+            ),[0m
+         ],
+[35mA /home/sundaram/code/temp/test/apps/project-tracker/templates/tracker/partials/task_create_placeholder.html[0m
+[32m<div id="task-create-form-region"></div>[0m
+[35mA /home/sundaram/code/temp/test/apps/project-tracker/templates/tracker/partials/task_list_placeholder.html[0m
+[32m<div id="task-list-region"></div>[0m
+[35mM /home/sundaram/code/temp/test/apps/project-tracker/tracker/tests/test_views.py[0m
+@@ -166,3 +166,8 @@
+         self.assertContains(response, 'data-swap-target="#project-detail-region"')
+[32m+        self.assertContains(response, 'data-swap-target="#task-create-form-region"')[0m
+[32m+        self.assertContains(response, 'data-swap-target="#task-edit-form-region"')[0m
+[32m+        self.assertContains(response, 'data-swap-target="#task-list-region"')[0m
+         self.assertContains(response, "Project deleted")
+[32m+        self.assertNotContains(response, "Create task")[0m
+[32m+        self.assertNotContains(response, "Write copy")[0m
+         self.assertFalse(Project.objects.filter(id=self.project.id).exists())
+[32mapply_patch(auto_approved=true) exited 0 in 6ms:[0m
+[2mSuccess. Updated the following files:[0m
+[2mA /home/sundaram/code/temp/test/apps/project-tracker/templates/tracker/partials/task_create_placeholder.html[0m
+[2mA /home/sundaram/code/temp/test/apps/project-tracker/templates/tracker/partials/task_list_placeholder.html[0m
+[2mM /home/sundaram/code/temp/test/apps/project-tracker/tracker/views.py[0m
+[2mM /home/sundaram/code/temp/test/apps/project-tracker/tracker/tests/test_views.py[0m
+[3m[35mfile update:[0m[0m
+diff --git a/apps/project-tracker/templates/tracker/partials/task_create_placeholder.html b/apps/project-tracker/templates/tracker/partials/task_create_placeholder.html
+new file mode 100644
+index 0000000000000000000000000000000000000000..5591ea5a07a8dbc1fe561e6d88d5599b04f2cea9
+--- /dev/null
++++ b/apps/project-tracker/templates/tracker/partials/task_create_placeholder.html
+@@ -0,0 +1 @@
++<div id="task-create-form-region"></div>
+diff --git a/apps/project-tracker/templates/tracker/partials/task_list_placeholder.html b/apps/project-tracker/templates/tracker/partials/task_list_placeholder.html
+new file mode 100644
+index 0000000000000000000000000000000000000000..c4b4513f220a1865a4539a999d06640212345904
+--- /dev/null
++++ b/apps/project-tracker/templates/tracker/partials/task_list_placeholder.html
+@@ -0,0 +1 @@
++<div id="task-list-region"></div>
+diff --git a/apps/project-tracker/tracker/tests/test_views.py b/apps/project-tracker/tracker/tests/test_views.py
+index 9f0915cab99a4bfb7e6b821266d490c322f1545e..e5f1b7f01d1688f561ab490ecff55545c92b9319
+--- a/apps/project-tracker/tracker/tests/test_views.py
++++ b/apps/project-tracker/tracker/tests/test_views.py
+@@ -164,7 +164,12 @@
+ 
+         self.assertEqual(response.status_code, 200)
+         self.assertContains(response, 'data-swap-target="#project-detail-region"')
++        self.assertContains(response, 'data-swap-target="#task-create-form-region"')
++        self.assertContains(response, 'data-swap-target="#task-edit-form-region"')
++        self.assertContains(response, 'data-swap-target="#task-list-region"')
+         self.assertContains(response, "Project deleted")
++        self.assertNotContains(response, "Create task")
++        self.assertNotContains(response, "Write copy")
+         self.assertFalse(Project.objects.filter(id=self.project.id).exists())
+ 
+     def test_project_delete_from_dashboard_updates_recent_projects_partial(self):
+diff --git a/apps/project-tracker/tracker/views.py b/apps/project-tracker/tracker/views.py
+index 77ff43b62e5e75240786ce494fea20a53fffc628..443f4ad4a990cffe6527b3081a28227a15414b1b
+--- a/apps/project-tracker/tracker/views.py
++++ b/apps/project-tracker/tracker/views.py
+@@ -363,6 +363,21 @@
+                 "tracker/partials/project_edit_placeholder.html",
+                 {},
+             ),
++            (
++                "#task-create-form-region",
++                "tracker/partials/task_create_placeholder.html",
++                {},
++            ),
++            (
++                "#task-edit-form-region",
++                "tracker/partials/task_edit_placeholder.html",
++                {},
++            ),
++            (
++                "#task-list-region",
++                "tracker/partials/task_list_placeholder.html",
++                {},
++            ),
+         ],
+     )
+ 
+
+[3m[35mfile update:[0m[0m
+diff --git a/apps/project-tracker/templates/tracker/partials/task_create_placeholder.html b/apps/project-tracker/templates/tracker/partials/task_create_placeholder.html
+new file mode 100644
+index 0000000000000000000000000000000000000000..5591ea5a07a8dbc1fe561e6d88d5599b04f2cea9
+--- /dev/null
++++ b/apps/project-tracker/templates/tracker/partials/task_create_placeholder.html
+@@ -0,0 +1 @@
++<div id="task-create-form-region"></div>
+diff --git a/apps/project-tracker/templates/tracker/partials/task_list_placeholder.html b/apps/project-tracker/templates/tracker/partials/task_list_placeholder.html
+new file mode 100644
+index 0000000000000000000000000000000000000000..c4b4513f220a1865a4539a999d06640212345904
+--- /dev/null
++++ b/apps/project-tracker/templates/tracker/partials/task_list_placeholder.html
+@@ -0,0 +1 @@
++<div id="task-list-region"></div>
+diff --git a/apps/project-tracker/tracker/tests/test_views.py b/apps/project-tracker/tracker/tests/test_views.py
+index 9f0915cab99a4bfb7e6b821266d490c322f1545e..e5f1b7f01d1688f561ab490ecff55545c92b9319
+--- a/apps/project-tracker/tracker/tests/test_views.py
++++ b/apps/project-tracker/tracker/tests/test_views.py
+@@ -164,7 +164,12 @@
+ 
+         self.assertEqual(response.status_code, 200)
+         self.assertContains(response, 'data-swap-target="#project-detail-region"')
++        self.assertContains(response, 'data-swap-target="#task-create-form-region"')
++        self.assertContains(response, 'data-swap-target="#task-edit-form-region"')
++        self.assertContains(response, 'data-swap-target="#task-list-region"')
+         self.assertContains(response, "Project deleted")
++        self.assertNotContains(response, "Create task")
++        self.assertNotContains(response, "Write copy")
+         self.assertFalse(Project.objects.filter(id=self.project.id).exists())
+ 
+     def test_project_delete_from_dashboard_updates_recent_projects_partial(self):
+diff --git a/apps/project-tracker/tracker/views.py b/apps/project-tracker/tracker/views.py
+index 77ff43b62e5e75240786ce494fea20a53fffc628..443f4ad4a990cffe6527b3081a28227a15414b1b
+--- a/apps/project-tracker/tracker/views.py
++++ b/apps/project-tracker/tracker/views.py
+@@ -363,6 +363,21 @@
+                 "tracker/partials/project_edit_placeholder.html",
+                 {},
+             ),
++            (
++                "#task-create-form-region",
++                "tracker/partials/task_create_placeholder.html",
++                {},
++            ),
++            (
++                "#task-edit-form-region",
++                "tracker/partials/task_edit_placeholder.html",
++                {},
++            ),
++            (
++                "#task-list-region",
++                "tracker/partials/task_list_placeholder.html",
++                {},
++            ),
+         ],
+     )
+ 
+
+[35m[3mcodex[0m[0m
+The code fix is in place. I’m verifying the touched files and refreshing the review/handoff artifacts next, including a note that Django test execution is still blocked by the environment.
+[35m[3mexec[0m[0m
+[1m/bin/bash -lc "sed -n '330,390p' apps/project-tracker/tracker/views.py"[0m in /home/sundaram/code/temp/test[35m[3mexec[0m[0m
+[1m/bin/bash -lc "sed -n '150,182p' apps/project-tracker/tracker/tests/test_views.py"[0m in /home/sundaram/code/temp/test[32m succeeded in 0ms:[0m
+[2m
+        self.assertEqual(response.status_code, 200)
+        self.assertEqual(self.project.name, "Launch site v2")
+        self.assertEqual(self.project.status, Project.STATUS_COMPLETED)
+        self.assertContains(response, 'data-swap-target="#project-detail-region"')
+        self.assertContains(response, "Launch site v2")
+        self.assertContains(response, "Completed")
+
+    def test_project_delete_from_detail_returns_deleted_panel(self):
+        response = self.client.post(
+            reverse("tracker:project_delete", args=[self.project.id]),
+            {"source_page": "project_detail"},
+            HTTP_X_REQUESTED_WITH="XMLHttpRequest",
+        )
+
+        self.assertEqual(response.status_code, 200)
+        self.assertContains(response, 'data-swap-target="#project-detail-region"')
+        self.assertContains(response, 'data-swap-target="#task-create-form-region"')
+        self.assertContains(response, 'data-swap-target="#task-edit-form-region"')
+        self.assertContains(response, 'data-swap-target="#task-list-region"')[0m
+[32m succeeded in 0ms:[0m
+[2m                    "tracker/partials/dashboard_stats_panel.html",
+                    dashboard_context,
+                ),
+                (
+                    "#dashboard-recent-projects-region",
+                    "tracker/partials/dashboard_recent_projects_panel.html",
+                    dashboard_context,
+                ),
+            ],
+        )
+
+    if source_page == "project_list":
+        return _render_mutation_response(
+            request,
+            [
+                (
+                    "#project-list-region",
+                    "tracker/partials/project_list_panel.html",
+                    _project_list_context(),
+                )[0m
+[35m[3mexec[0m[0m
+[1m/bin/bash -lc 'python3 -m py_compile $(find apps/project-tracker -name '"'*.py' | sort)"[0m in /home/sundaram/code/temp/test[32m succeeded in 0ms:[0m
+[2m[0m
+[35m[3mexec[0m[0m
+[1m/bin/bash -lc 'python3 apps/project-tracker/manage.py test tracker.tests.test_views'[0m in /home/sundaram/code/temp/test[31m exited 1 in 0ms:[0m
+[2mTraceback (most recent call last):
+  File "/home/sundaram/code/temp/test/apps/project-tracker/manage.py", line 14, in <module>
+    main()
+  File "/home/sundaram/code/temp/test/apps/project-tracker/manage.py", line 8, in main
+    from django.core.management import execute_from_command_line
+ModuleNotFoundError: No module named 'django'[0m
+[3m[35mfile update:[0m[0m
+diff --git a/apps/project-tracker/templates/tracker/partials/task_create_placeholder.html b/apps/project-tracker/templates/tracker/partials/task_create_placeholder.html
+new file mode 100644
+index 0000000000000000000000000000000000000000..5591ea5a07a8dbc1fe561e6d88d5599b04f2cea9
+--- /dev/null
++++ b/apps/project-tracker/templates/tracker/partials/task_create_placeholder.html
+@@ -0,0 +1 @@
++<div id="task-create-form-region"></div>
+diff --git a/apps/project-tracker/templates/tracker/partials/task_list_placeholder.html b/apps/project-tracker/templates/tracker/partials/task_list_placeholder.html
+new file mode 100644
+index 0000000000000000000000000000000000000000..c4b4513f220a1865a4539a999d06640212345904
+--- /dev/null
++++ b/apps/project-tracker/templates/tracker/partials/task_list_placeholder.html
+@@ -0,0 +1 @@
++<div id="task-list-region"></div>
+diff --git a/apps/project-tracker/tracker/tests/test_views.py b/apps/project-tracker/tracker/tests/test_views.py
+index 9f0915cab99a4bfb7e6b821266d490c322f1545e..e5f1b7f01d1688f561ab490ecff55545c92b9319
+--- a/apps/project-tracker/tracker/tests/test_views.py
++++ b/apps/project-tracker/tracker/tests/test_views.py
+@@ -164,7 +164,12 @@
+ 
+         self.assertEqual(response.status_code, 200)
+         self.assertContains(response, 'data-swap-target="#project-detail-region"')
++        self.assertContains(response, 'data-swap-target="#task-create-form-region"')
++        self.assertContains(response, 'data-swap-target="#task-edit-form-region"')
++        self.assertContains(response, 'data-swap-target="#task-list-region"')
+         self.assertContains(response, "Project deleted")
++        self.assertNotContains(response, "Create task")
++        self.assertNotContains(response, "Write copy")
+         self.assertFalse(Project.objects.filter(id=self.project.id).exists())
+ 
+     def test_project_delete_from_dashboard_updates_recent_projects_partial(self):
+diff --git a/apps/project-tracker/tracker/views.py b/apps/project-tracker/tracker/views.py
+index 77ff43b62e5e75240786ce494fea20a53fffc628..443f4ad4a990cffe6527b3081a28227a15414b1b
+--- a/apps/project-tracker/tracker/views.py
++++ b/apps/project-tracker/tracker/views.py
+@@ -363,6 +363,21 @@
+                 "tracker/partials/project_edit_placeholder.html",
+                 {},
+             ),
++            (
++                "#task-create-form-region",
++                "tracker/partials/task_create_placeholder.html",
++                {},
++            ),
++            (
++                "#task-edit-form-region",
++                "tracker/partials/task_edit_placeholder.html",
++                {},
++            ),
++            (
++                "#task-list-region",
++                "tracker/partials/task_list_placeholder.html",
++                {},
++            ),
+         ],
+     )
+ 
+
+[35m[3mcodex[0m[0m
+Verification is consistent with the intended fix: the delete response now swaps all stale task regions, `py_compile` still passes, and Django tests remain blocked by `ModuleNotFoundError: No module named 'django'`. I’m updating the review and baton files now.
+[35m[3mexec[0m[0m
+[1m/bin/bash -lc "sed -n '220,340p' ai/review.md"[0m in /home/sundaram/code/temp/test[35m[3mexec[0m[0m
+[1m/bin/bash -lc 'git status --short'[0m in /home/sundaram/code/temp/test[32m succeeded in 0ms:[0m
+[2m
+## Reviewer Decision
+
+- Decision: REVISE for `ITEM-0005`.
+- Rejected because deleting a project from its detail page leaves stale task CRUD UI behind: `project_detail.html` renders `#task-create-form-region`, `#task-edit-form-region`, and `#task-list-region` outside `#project-detail-region`, but `project_delete()` still only swaps `#project-detail-region` and `#project-edit-form-region` for the `project_detail` response.
+- Required fix for the next pass:
+  - Update the detail-page project delete response so all task regions are cleared or replaced along with the deleted-project panel.
+  - Add a focused regression test covering project deletion from the detail page and asserting the stale task regions are not left behind in the async response.
+- Environment caveat remains unchanged: `python3 apps/project-tracker/manage.py test tracker.tests.test_views` is still blocked in this workspace by `ModuleNotFoundError: No module named 'django'`, so the reviewer decision is based on code inspection plus py-compile evidence.[0m
+[32m succeeded in 0ms:[0m
+[2m M ai/active_item.yaml
+ M ai/backlog.yaml
+ M ai/iterations/ITER-0001.md
+ M ai/logs/baton.log
+ M ai/next_agent.md
+ M ai/next_agent.yaml
+ M ai/review.md
+ M apps/project-tracker/static/tracker/app.css
+ M apps/project-tracker/static/tracker/app.js
+ M apps/project-tracker/templates/tracker/dashboard.html
+ M apps/project-tracker/templates/tracker/partials/project_detail_panel.html
+ M apps/project-tracker/templates/tracker/project_detail.html
+ M apps/project-tracker/templates/tracker/project_list.html
+ M apps/project-tracker/tracker/__pycache__/forms.cpython-312.pyc
+ M apps/project-tracker/tracker/__pycache__/urls.cpython-312.pyc
+ M apps/project-tracker/tracker/__pycache__/views.cpython-312.pyc
+ M apps/project-tracker/tracker/forms.py
+ M apps/project-tracker/tracker/tests/__pycache__/test_views.cpython-312.pyc
+ M apps/project-tracker/tracker/tests/test_views.py
+ M apps/project-tracker/tracker/urls.py[0m
+[35m[3mexec[0m[0m
+[1m/bin/bash -lc "sed -n '1,220p' scripts/generate-next-agent.sh"[0m in /home/sundaram/code/temp/test[32m succeeded in 0ms:[0m
+[2m#!/usr/bin/env bash
+set -euo pipefail
+#
+# Usage: ./scripts/generate-next-agent.sh <ROLE> [--notes "context"] [--return-to "ROLE"]
+#
+# Generates ai/next_agent.yaml with the correct config for the given role.
+# Pass --notes to include handoff context (what was done, what to watch for).
+# Pass --return-to to specify which role the baton returns to (used with HUMAN).
+# Called by each role prompt at handoff time so agents don't hand-write YAML.
+
+ROOT="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)"
+cd "$ROOT"
+
+ROLE=""
+NOTES=""
+RETURN_TO=""
+
+# Parse args
+while [[ $# -gt 0 ]]; do
+  case "$1" in[0m
+[3m[35mfile update:[0m[0m
+diff --git a/apps/project-tracker/templates/tracker/partials/task_create_placeholder.html b/apps/project-tracker/templates/tracker/partials/task_create_placeholder.html
+new file mode 100644
+index 0000000000000000000000000000000000000000..5591ea5a07a8dbc1fe561e6d88d5599b04f2cea9
+--- /dev/null
++++ b/apps/project-tracker/templates/tracker/partials/task_create_placeholder.html
+@@ -0,0 +1 @@
++<div id="task-create-form-region"></div>
+diff --git a/apps/project-tracker/templates/tracker/partials/task_list_placeholder.html b/apps/project-tracker/templates/tracker/partials/task_list_placeholder.html
+new file mode 100644
+index 0000000000000000000000000000000000000000..c4b4513f220a1865a4539a999d06640212345904
+--- /dev/null
++++ b/apps/project-tracker/templates/tracker/partials/task_list_placeholder.html
+@@ -0,0 +1 @@
++<div id="task-list-region"></div>
+diff --git a/apps/project-tracker/tracker/tests/test_views.py b/apps/project-tracker/tracker/tests/test_views.py
+index 9f0915cab99a4bfb7e6b821266d490c322f1545e..e5f1b7f01d1688f561ab490ecff55545c92b9319
+--- a/apps/project-tracker/tracker/tests/test_views.py
++++ b/apps/project-tracker/tracker/tests/test_views.py
+@@ -164,7 +164,12 @@
+ 
+         self.assertEqual(response.status_code, 200)
+         self.assertContains(response, 'data-swap-target="#project-detail-region"')
++        self.assertContains(response, 'data-swap-target="#task-create-form-region"')
++        self.assertContains(response, 'data-swap-target="#task-edit-form-region"')
++        self.assertContains(response, 'data-swap-target="#task-list-region"')
+         self.assertContains(response, "Project deleted")
++        self.assertNotContains(response, "Create task")
++        self.assertNotContains(response, "Write copy")
+         self.assertFalse(Project.objects.filter(id=self.project.id).exists())
+ 
+     def test_project_delete_from_dashboard_updates_recent_projects_partial(self):
+diff --git a/apps/project-tracker/tracker/views.py b/apps/project-tracker/tracker/views.py
+index 77ff43b62e5e75240786ce494fea20a53fffc628..443f4ad4a990cffe6527b3081a28227a15414b1b
+--- a/apps/project-tracker/tracker/views.py
++++ b/apps/project-tracker/tracker/views.py
+@@ -363,6 +363,21 @@
+                 "tracker/partials/project_edit_placeholder.html",
+                 {},
+             ),
++            (
++                "#task-create-form-region",
++                "tracker/partials/task_create_placeholder.html",
++                {},
++            ),
++            (
++                "#task-edit-form-region",
++                "tracker/partials/task_edit_placeholder.html",
++                {},
++            ),
++            (
++                "#task-list-region",
++                "tracker/partials/task_list_placeholder.html",
++                {},
++            ),
+         ],
+     )
+ 
+
+[35m[3mcodex[0m[0m
+I’ve checked the workspace state to avoid trampling unrelated edits. I’m only updating the files this role owns now: the decision log, review notes, and the baton files for the validator handoff.
+[3m[35mfile update[0m[0m
+[35mM /home/sundaram/code/temp/test/ai/iterations/ITER-0001.md[0m
+@@ -27 +27,2 @@
+ | 2026-03-12 | REVIEWER | Routed ITEM-0005 back to DEV for revision after confirming the project-detail delete response leaves stale task CRUD regions behind | Acceptance is blocked by a concrete UI regression on project deletion from the detail surface, and the next pass must also add a focused regression test for that async response |
+[32m+| 2026-03-12 | DEV | Revised ITEM-0005 by clearing the stale task CRUD regions in the project-detail delete response and extending the focused delete regression test | The reviewer-confirmed regression was limited to the async project delete response on the detail page, so the fix preserves the accepted task CRUD slice while restoring the DOM swap contract for deleted projects |[0m
+[35mM /home/sundaram/code/temp/test/ai/review.md[0m
+@@ -228 +228,16 @@
+ - Environment caveat remains unchanged: `python3 apps/project-tracker/manage.py test tracker.tests.test_views` is still blocked in this workspace by `ModuleNotFoundError: No module named 'django'`, so the reviewer decision is based on code inspection plus py-compile evidence.
+[32m+[0m
+[32m+## DEV Revision Notes[0m
+[32m+[0m
+[32m+- Updated `tracker/views.py` so the `project_detail` branch of `project_delete()` now swaps all task regions, not just the deleted project panel and project edit placeholder.[0m
+[32m+- Added explicit empty placeholder partials for `#task-create-form-region` and `#task-list-region` so the async response clears those DOM regions without leaving stale task CRUD controls behind.[0m
+[32m+- Tightened `tracker/tests/test_views.py::test_project_delete_from_detail_returns_deleted_panel` to assert the delete response now includes swap instructions for all task regions and no longer returns stale task form/list content.[0m
+[32m+[0m
+[32m+## Validation Evidence[0m
+[32m+[0m
+[32m+- `python3 -m py_compile $(find apps/project-tracker -name '*.py' | sort)` passed.[0m
+[32m+- `python3 apps/project-tracker/manage.py test tracker.tests.test_views` still fails in the workspace with `ModuleNotFoundError: No module named 'django'`.[0m
+[32m+[0m
+[32m+## Known Risks[0m
+[32m+[0m
+[32m+- Runtime validation of the revised delete-response path is still blocked until Django is installed in the workspace.[0m
+[32mapply_patch(auto_approved=true) exited 0 in 7ms:[0m
+[2mSuccess. Updated the following files:[0m
+[2mM /home/sundaram/code/temp/test/ai/review.md[0m
+[2mM /home/sundaram/code/temp/test/ai/iterations/ITER-0001.md[0m
+[3m[35mfile update:[0m[0m
+diff --git a/ai/iterations/ITER-0001.md b/ai/iterations/ITER-0001.md
+index 72ad1a51258b6a356fc902c97ce7edc4f34fc366..a9d50a5e6f01e598f0753ab3994d6c9a17334b56
+--- a/ai/iterations/ITER-0001.md
++++ b/ai/iterations/ITER-0001.md
+@@ -25,3 +25,4 @@
+ | 2026-03-12 | DEV | Implemented the task-only no-reload CRUD slice with project-detail task mutation views, reusable task partials, and focused mutation view coverage for ITEM-0005 | This vertical cut adds task create, update, and delete on the project detail page using the existing HTML partial swap contract while preserving the blocked Django runtime caveat for validator follow-up |
+ | 2026-03-12 | VALIDATOR | Rejected ITEM-0005 for reviewer follow-up after finding a project-detail delete regression that leaves stale task CRUD regions behind | The new task layout moved the task regions outside `#project-detail-region`, but the existing project-delete response does not clear them, so the detail page can still show controls for a deleted project |
+ | 2026-03-12 | REVIEWER | Routed ITEM-0005 back to DEV for revision after confirming the project-detail delete response leaves stale task CRUD regions behind | Acceptance is blocked by a concrete UI regression on project deletion from the detail surface, and the next pass must also add a focused regression test for that async response |
++| 2026-03-12 | DEV | Revised ITEM-0005 by clearing the stale task CRUD regions in the project-detail delete response and extending the focused delete regression test | The reviewer-confirmed regression was limited to the async project delete response on the detail page, so the fix preserves the accepted task CRUD slice while restoring the DOM swap contract for deleted projects |
+diff --git a/ai/review.md b/ai/review.md
+index bd460c6ebc756105d8d14afda34266c86411f508..8232588d776970d175ad6600aaaed83811637f27
+--- a/ai/review.md
++++ b/ai/review.md
+@@ -226,3 +226,18 @@
+   - Update the detail-page project delete response so all task regions are cleared or replaced along with the deleted-project panel.
+   - Add a focused regression test covering project deletion from the detail page and asserting the stale task regions are not left behind in the async response.
+ - Environment caveat remains unchanged: `python3 apps/project-tracker/manage.py test tracker.tests.test_views` is still blocked in this workspace by `ModuleNotFoundError: No module named 'django'`, so the reviewer decision is based on code inspection plus py-compile evidence.
++
++## DEV Revision Notes
++
++- Updated `tracker/views.py` so the `project_detail` branch of `project_delete()` now swaps all task regions, not just the deleted project panel and project edit placeholder.
++- Added explicit empty placeholder partials for `#task-create-form-region` and `#task-list-region` so the async response clears those DOM regions without leaving stale task CRUD controls behind.
++- Tightened `tracker/tests/test_views.py::test_project_delete_from_detail_returns_deleted_panel` to assert the delete response now includes swap instructions for all task regions and no longer returns stale task form/list content.
++
++## Validation Evidence
++
++- `python3 -m py_compile $(find apps/project-tracker -name '*.py' | sort)` passed.
++- `python3 apps/project-tracker/manage.py test tracker.tests.test_views` still fails in the workspace with `ModuleNotFoundError: No module named 'django'`.
++
++## Known Risks
++
++- Runtime validation of the revised delete-response path is still blocked until Django is installed in the workspace.
+diff --git a/apps/project-tracker/templates/tracker/partials/task_create_placeholder.html b/apps/project-tracker/templates/tracker/partials/task_create_placeholder.html
+new file mode 100644
+index 0000000000000000000000000000000000000000..5591ea5a07a8dbc1fe561e6d88d5599b04f2cea9
+--- /dev/null
++++ b/apps/project-tracker/templates/tracker/partials/task_create_placeholder.html
+@@ -0,0 +1 @@
++<div id="task-create-form-region"></div>
+diff --git a/apps/project-tracker/templates/tracker/partials/task_list_placeholder.html b/apps/project-tracker/templates/tracker/partials/task_list_placeholder.html
+new file mode 100644
+index 0000000000000000000000000000000000000000..c4b4513f220a1865a4539a999d06640212345904
+--- /dev/null
++++ b/apps/project-tracker/templates/tracker/partials/task_list_placeholder.html
+@@ -0,0 +1 @@
++<div id="task-list-region"></div>
+diff --git a/apps/project-tracker/tracker/tests/test_views.py b/apps/project-tracker/tracker/tests/test_views.py
+index 9f0915cab99a4bfb7e6b821266d490c322f1545e..e5f1b7f01d1688f561ab490ecff55545c92b9319
+--- a/apps/project-tracker/tracker/tests/test_views.py
++++ b/apps/project-tracker/tracker/tests/test_views.py
+@@ -164,7 +164,12 @@
+ 
+         self.assertEqual(response.status_code, 200)
+         self.assertContains(response, 'data-swap-target="#project-detail-region"')
++        self.assertContains(response, 'data-swap-target="#task-create-form-region"')
++        self.assertContains(response, 'data-swap-target="#task-edit-form-region"')
++        self.assertContains(response, 'data-swap-target="#task-list-region"')
+         self.assertContains(response, "Project deleted")
++        self.assertNotContains(response, "Create task")
++        self.assertNotContains(response, "Write copy")
+         self.assertFalse(Project.objects.filter(id=self.project.id).exists())
+ 
+     def test_project_delete_from_dashboard_updates_recent_projects_partial(self):
+diff --git a/apps/project-tracker/tracker/views.py b/apps/project-tracker/tracker/views.py
+index 77ff43b62e5e75240786ce494fea20a53fffc628..443f4ad4a990cffe6527b3081a28227a15414b1b
+--- a/apps/project-tracker/tracker/views.py
++++ b/apps/project-tracker/tracker/views.py
+@@ -363,6 +363,21 @@
+                 "tracker/partials/project_edit_placeholder.html",
+                 {},
+             ),
++            (
++                "#task-create-form-region",
++                "tracker/partials/task_create_placeholder.html",
++                {},
++            ),
++            (
++                "#task-edit-form-region",
++                "tracker/partials/task_edit_placeholder.html",
++                {},
++            ),
++            (
++                "#task-list-region",
++                "tracker/partials/task_list_placeholder.html",
++                {},
++            ),
+         ],
+     )
+ 
+
+[3m[35mfile update:[0m[0m
+diff --git a/ai/iterations/ITER-0001.md b/ai/iterations/ITER-0001.md
+index 72ad1a51258b6a356fc902c97ce7edc4f34fc366..a9d50a5e6f01e598f0753ab3994d6c9a17334b56
+--- a/ai/iterations/ITER-0001.md
++++ b/ai/iterations/ITER-0001.md
+@@ -25,3 +25,4 @@
+ | 2026-03-12 | DEV | Implemented the task-only no-reload CRUD slice with project-detail task mutation views, reusable task partials, and focused mutation view coverage for ITEM-0005 | This vertical cut adds task create, update, and delete on the project detail page using the existing HTML partial swap contract while preserving the blocked Django runtime caveat for validator follow-up |
+ | 2026-03-12 | VALIDATOR | Rejected ITEM-0005 for reviewer follow-up after finding a project-detail delete regression that leaves stale task CRUD regions behind | The new task layout moved the task regions outside `#project-detail-region`, but the existing project-delete response does not clear them, so the detail page can still show controls for a deleted project |
+ | 2026-03-12 | REVIEWER | Routed ITEM-0005 back to DEV for revision after confirming the project-detail delete response leaves stale task CRUD regions behind | Acceptance is blocked by a concrete UI regression on project deletion from the detail surface, and the next pass must also add a focused regression test for that async response |
++| 2026-03-12 | DEV | Revised ITEM-0005 by clearing the stale task CRUD regions in the project-detail delete response and extending the focused delete regression test | The reviewer-confirmed regression was limited to the async project delete response on the detail page, so the fix preserves the accepted task CRUD slice while restoring the DOM swap contract for deleted projects |
+diff --git a/ai/review.md b/ai/review.md
+index bd460c6ebc756105d8d14afda34266c86411f508..8232588d776970d175ad6600aaaed83811637f27
+--- a/ai/review.md
++++ b/ai/review.md
+@@ -226,3 +226,18 @@
+   - Update the detail-page project delete response so all task regions are cleared or replaced along with the deleted-project panel.
+   - Add a focused regression test covering project deletion from the detail page and asserting the stale task regions are not left behind in the async response.
+ - Environment caveat remains unchanged: `python3 apps/project-tracker/manage.py test tracker.tests.test_views` is still blocked in this workspace by `ModuleNotFoundError: No module named 'django'`, so the reviewer decision is based on code inspection plus py-compile evidence.
++
++## DEV Revision Notes
++
++- Updated `tracker/views.py` so the `project_detail` branch of `project_delete()` now swaps all task regions, not just the deleted project panel and project edit placeholder.
++- Added explicit empty placeholder partials for `#task-create-form-region` and `#task-list-region` so the async response clears those DOM regions without leaving stale task CRUD controls behind.
++- Tightened `tracker/tests/test_views.py::test_project_delete_from_detail_returns_deleted_panel` to assert the delete response now includes swap instructions for all task regions and no longer returns stale task form/list content.
++
++## Validation Evidence
++
++- `python3 -m py_compile $(find apps/project-tracker -name '*.py' | sort)` passed.
++- `python3 apps/project-tracker/manage.py test tracker.tests.test_views` still fails in the workspace with `ModuleNotFoundError: No module named 'django'`.
++
++## Known Risks
++
++- Runtime validation of the revised delete-response path is still blocked until Django is installed in the workspace.
+diff --git a/apps/project-tracker/templates/tracker/partials/task_create_placeholder.html b/apps/project-tracker/templates/tracker/partials/task_create_placeholder.html
+new file mode 100644
+index 0000000000000000000000000000000000000000..5591ea5a07a8dbc1fe561e6d88d5599b04f2cea9
+--- /dev/null
++++ b/apps/project-tracker/templates/tracker/partials/task_create_placeholder.html
+@@ -0,0 +1 @@
++<div id="task-create-form-region"></div>
+diff --git a/apps/project-tracker/templates/tracker/partials/task_list_placeholder.html b/apps/project-tracker/templates/tracker/partials/task_list_placeholder.html
+new file mode 100644
+index 0000000000000000000000000000000000000000..c4b4513f220a1865a4539a999d06640212345904
+--- /dev/null
++++ b/apps/project-tracker/templates/tracker/partials/task_list_placeholder.html
+@@ -0,0 +1 @@
++<div id="task-list-region"></div>
+diff --git a/apps/project-tracker/tracker/tests/test_views.py b/apps/project-tracker/tracker/tests/test_views.py
+index 9f0915cab99a4bfb7e6b821266d490c322f1545e..e5f1b7f01d1688f561ab490ecff55545c92b9319
+--- a/apps/project-tracker/tracker/tests/test_views.py
++++ b/apps/project-tracker/tracker/tests/test_views.py
+@@ -164,7 +164,12 @@
+ 
+         self.assertEqual(response.status_code, 200)
+         self.assertContains(response, 'data-swap-target="#project-detail-region"')
++        self.assertContains(response, 'data-swap-target="#task-create-form-region"')
++        self.assertContains(response, 'data-swap-target="#task-edit-form-region"')
++        self.assertContains(response, 'data-swap-target="#task-list-region"')
+         self.assertContains(response, "Project deleted")
++        self.assertNotContains(response, "Create task")
++        self.assertNotContains(response, "Write copy")
+         self.assertFalse(Project.objects.filter(id=self.project.id).exists())
+ 
+     def test_project_delete_from_dashboard_updates_recent_projects_partial(self):
+diff --git a/apps/project-tracker/tracker/views.py b/apps/project-tracker/tracker/views.py
+index 77ff43b62e5e75240786ce494fea20a53fffc628..443f4ad4a990cffe6527b3081a28227a15414b1b
+--- a/apps/project-tracker/tracker/views.py
++++ b/apps/project-tracker/tracker/views.py
+@@ -363,6 +363,21 @@
+                 "tracker/partials/project_edit_placeholder.html",
+                 {},
+             ),
++            (
++                "#task-create-form-region",
++                "tracker/partials/task_create_placeholder.html",
++                {},
++            ),
++            (
++                "#task-edit-form-region",
++                "tracker/partials/task_edit_placeholder.html",
++                {},
++            ),
++            (
++                "#task-list-region",
++                "tracker/partials/task_list_placeholder.html",
++                {},
++            ),
+         ],
+     )
+ 
+
+[35m[3mexec[0m[0m
+[1m/bin/bash -lc './scripts/generate-next-agent.sh VALIDATOR --notes "fixed project-detail delete response to clear task create/edit/list regions | changed apps/project-tracker/tracker/views.py, apps/project-tracker/tracker/tests/test_views.py, apps/project-tracker/templates/tracker/partials/task_create_placeholder.html, apps/project-tracker/templates/tracker/partials/task_list_placeholder.html, ai/review.md, ai/iterations/ITER-0001.md | py_compile passed; manage.py test still blocked by missing django"'[0m in /home/sundaram/code/temp/test[32m succeeded in 0ms:[0m
+[2mGenerated ai/next_agent.yaml for VALIDATOR (next: REVIEWER)[0m
+[3m[35mfile update:[0m[0m
+diff --git a/ai/iterations/ITER-0001.md b/ai/iterations/ITER-0001.md
+index 72ad1a51258b6a356fc902c97ce7edc4f34fc366..a9d50a5e6f01e598f0753ab3994d6c9a17334b56
+--- a/ai/iterations/ITER-0001.md
++++ b/ai/iterations/ITER-0001.md
+@@ -25,3 +25,4 @@
+ | 2026-03-12 | DEV | Implemented the task-only no-reload CRUD slice with project-detail task mutation views, reusable task partials, and focused mutation view coverage for ITEM-0005 | This vertical cut adds task create, update, and delete on the project detail page using the existing HTML partial swap contract while preserving the blocked Django runtime caveat for validator follow-up |
+ | 2026-03-12 | VALIDATOR | Rejected ITEM-0005 for reviewer follow-up after finding a project-detail delete regression that leaves stale task CRUD regions behind | The new task layout moved the task regions outside `#project-detail-region`, but the existing project-delete response does not clear them, so the detail page can still show controls for a deleted project |
+ | 2026-03-12 | REVIEWER | Routed ITEM-0005 back to DEV for revision after confirming the project-detail delete response leaves stale task CRUD regions behind | Acceptance is blocked by a concrete UI regression on project deletion from the detail surface, and the next pass must also add a focused regression test for that async response |
++| 2026-03-12 | DEV | Revised ITEM-0005 by clearing the stale task CRUD regions in the project-detail delete response and extending the focused delete regression test | The reviewer-confirmed regression was limited to the async project delete response on the detail page, so the fix preserves the accepted task CRUD slice while restoring the DOM swap contract for deleted projects |
+diff --git a/ai/review.md b/ai/review.md
+index bd460c6ebc756105d8d14afda34266c86411f508..8232588d776970d175ad6600aaaed83811637f27
+--- a/ai/review.md
++++ b/ai/review.md
+@@ -226,3 +226,18 @@
+   - Update the detail-page project delete response so all task regions are cleared or replaced along with the deleted-project panel.
+   - Add a focused regression test covering project deletion from the detail page and asserting the stale task regions are not left behind in the async response.
+ - Environment caveat remains unchanged: `python3 apps/project-tracker/manage.py test tracker.tests.test_views` is still blocked in this workspace by `ModuleNotFoundError: No module named 'django'`, so the reviewer decision is based on code inspection plus py-compile evidence.
++
++## DEV Revision Notes
++
++- Updated `tracker/views.py` so the `project_detail` branch of `project_delete()` now swaps all task regions, not just the deleted project panel and project edit placeholder.
++- Added explicit empty placeholder partials for `#task-create-form-region` and `#task-list-region` so the async response clears those DOM regions without leaving stale task CRUD controls behind.
++- Tightened `tracker/tests/test_views.py::test_project_delete_from_detail_returns_deleted_panel` to assert the delete response now includes swap instructions for all task regions and no longer returns stale task form/list content.
++
++## Validation Evidence
++
++- `python3 -m py_compile $(find apps/project-tracker -name '*.py' | sort)` passed.
++- `python3 apps/project-tracker/manage.py test tracker.tests.test_views` still fails in the workspace with `ModuleNotFoundError: No module named 'django'`.
++
++## Known Risks
++
++- Runtime validation of the revised delete-response path is still blocked until Django is installed in the workspace.
+diff --git a/apps/project-tracker/templates/tracker/partials/task_create_placeholder.html b/apps/project-tracker/templates/tracker/partials/task_create_placeholder.html
+new file mode 100644
+index 0000000000000000000000000000000000000000..5591ea5a07a8dbc1fe561e6d88d5599b04f2cea9
+--- /dev/null
++++ b/apps/project-tracker/templates/tracker/partials/task_create_placeholder.html
+@@ -0,0 +1 @@
++<div id="task-create-form-region"></div>
+diff --git a/apps/project-tracker/templates/tracker/partials/task_list_placeholder.html b/apps/project-tracker/templates/tracker/partials/task_list_placeholder.html
+new file mode 100644
+index 0000000000000000000000000000000000000000..c4b4513f220a1865a4539a999d06640212345904
+--- /dev/null
++++ b/apps/project-tracker/templates/tracker/partials/task_list_placeholder.html
+@@ -0,0 +1 @@
++<div id="task-list-region"></div>
+diff --git a/apps/project-tracker/tracker/tests/test_views.py b/apps/project-tracker/tracker/tests/test_views.py
+index 9f0915cab99a4bfb7e6b821266d490c322f1545e..e5f1b7f01d1688f561ab490ecff55545c92b9319
+--- a/apps/project-tracker/tracker/tests/test_views.py
++++ b/apps/project-tracker/tracker/tests/test_views.py
+@@ -164,7 +164,12 @@
+ 
+         self.assertEqual(response.status_code, 200)
+         self.assertContains(response, 'data-swap-target="#project-detail-region"')
++        self.assertContains(response, 'data-swap-target="#task-create-form-region"')
++        self.assertContains(response, 'data-swap-target="#task-edit-form-region"')
++        self.assertContains(response, 'data-swap-target="#task-list-region"')
+         self.assertContains(response, "Project deleted")
++        self.assertNotContains(response, "Create task")
++        self.assertNotContains(response, "Write copy")
+         self.assertFalse(Project.objects.filter(id=self.project.id).exists())
+ 
+     def test_project_delete_from_dashboard_updates_recent_projects_partial(self):
+diff --git a/apps/project-tracker/tracker/views.py b/apps/project-tracker/tracker/views.py
+index 77ff43b62e5e75240786ce494fea20a53fffc628..443f4ad4a990cffe6527b3081a28227a15414b1b
+--- a/apps/project-tracker/tracker/views.py
++++ b/apps/project-tracker/tracker/views.py
+@@ -363,6 +363,21 @@
+                 "tracker/partials/project_edit_placeholder.html",
+                 {},
+             ),
++            (
++                "#task-create-form-region",
++                "tracker/partials/task_create_placeholder.html",
++                {},
++            ),
++            (
++                "#task-edit-form-region",
++                "tracker/partials/task_edit_placeholder.html",
++                {},
++            ),
++            (
++                "#task-list-region",
++                "tracker/partials/task_list_placeholder.html",
++                {},
++            ),
+         ],
+     )
+ 
+
+[35m[3mcodex[0m[0m
+The validator handoff YAML is generated. I’m writing the detailed handoff note and flipping `ai/active_agent.txt` to `VALIDATOR` to finish this turn according to the baton rules.
+[35m[3mexec[0m[0m
+[1m/bin/bash -lc "sed -n '1,220p' ai/next_agent.yaml"[0m in /home/sundaram/code/temp/test[32m succeeded in 0ms:[0m
+[2mnext_role: VALIDATOR
+prompt_file: ai/prompts/05-validator.md
+read:
+  - ai/active_item.yaml
+  - ai/review.md
+  - ai/decision-lock.yaml
+  - ai/goal.yaml
+  - ai/constitution.yaml
+  - ai/active_agent.txt
+  - ai/next_agent.md
+  - ai/user-questions.yaml
+allowed_edits:
+  - ai/review.md
+  - ai/decision-lock.yaml
+  - ai/user-questions.yaml
+  - ai/iterations/ITER-0001.md
+  - ai/active_agent.txt
+  - ai/next_agent.yaml
+  - ai/next_agent.md
+stop_conditions:[0m
+[35m[3mexec[0m[0m
+[1m/bin/bash -lc 'date +%F'[0m in /home/sundaram/code/temp/test[32m succeeded in 0ms:[0m
+[2m2026-03-11[0m
+[3m[35mfile update:[0m[0m
+diff --git a/ai/iterations/ITER-0001.md b/ai/iterations/ITER-0001.md
+index 72ad1a51258b6a356fc902c97ce7edc4f34fc366..a9d50a5e6f01e598f0753ab3994d6c9a17334b56
+--- a/ai/iterations/ITER-0001.md
++++ b/ai/iterations/ITER-0001.md
+@@ -25,3 +25,4 @@
+ | 2026-03-12 | DEV | Implemented the task-only no-reload CRUD slice with project-detail task mutation views, reusable task partials, and focused mutation view coverage for ITEM-0005 | This vertical cut adds task create, update, and delete on the project detail page using the existing HTML partial swap contract while preserving the blocked Django runtime caveat for validator follow-up |
+ | 2026-03-12 | VALIDATOR | Rejected ITEM-0005 for reviewer follow-up after finding a project-detail delete regression that leaves stale task CRUD regions behind | The new task layout moved the task regions outside `#project-detail-region`, but the existing project-delete response does not clear them, so the detail page can still show controls for a deleted project |
+ | 2026-03-12 | REVIEWER | Routed ITEM-0005 back to DEV for revision after confirming the project-detail delete response leaves stale task CRUD regions behind | Acceptance is blocked by a concrete UI regression on project deletion from the detail surface, and the next pass must also add a focused regression test for that async response |
++| 2026-03-12 | DEV | Revised ITEM-0005 by clearing the stale task CRUD regions in the project-detail delete response and extending the focused delete regression test | The reviewer-confirmed regression was limited to the async project delete response on the detail page, so the fix preserves the accepted task CRUD slice while restoring the DOM swap contract for deleted projects |
+diff --git a/ai/review.md b/ai/review.md
+index bd460c6ebc756105d8d14afda34266c86411f508..8232588d776970d175ad6600aaaed83811637f27
+--- a/ai/review.md
++++ b/ai/review.md
+@@ -226,3 +226,18 @@
+   - Update the detail-page project delete response so all task regions are cleared or replaced along with the deleted-project panel.
+   - Add a focused regression test covering project deletion from the detail page and asserting the stale task regions are not left behind in the async response.
+ - Environment caveat remains unchanged: `python3 apps/project-tracker/manage.py test tracker.tests.test_views` is still blocked in this workspace by `ModuleNotFoundError: No module named 'django'`, so the reviewer decision is based on code inspection plus py-compile evidence.
++
++## DEV Revision Notes
++
++- Updated `tracker/views.py` so the `project_detail` branch of `project_delete()` now swaps all task regions, not just the deleted project panel and project edit placeholder.
++- Added explicit empty placeholder partials for `#task-create-form-region` and `#task-list-region` so the async response clears those DOM regions without leaving stale task CRUD controls behind.
++- Tightened `tracker/tests/test_views.py::test_project_delete_from_detail_returns_deleted_panel` to assert the delete response now includes swap instructions for all task regions and no longer returns stale task form/list content.
++
++## Validation Evidence
++
++- `python3 -m py_compile $(find apps/project-tracker -name '*.py' | sort)` passed.
++- `python3 apps/project-tracker/manage.py test tracker.tests.test_views` still fails in the workspace with `ModuleNotFoundError: No module named 'django'`.
++
++## Known Risks
++
++- Runtime validation of the revised delete-response path is still blocked until Django is installed in the workspace.
+diff --git a/apps/project-tracker/templates/tracker/partials/task_create_placeholder.html b/apps/project-tracker/templates/tracker/partials/task_create_placeholder.html
+new file mode 100644
+index 0000000000000000000000000000000000000000..5591ea5a07a8dbc1fe561e6d88d5599b04f2cea9
+--- /dev/null
++++ b/apps/project-tracker/templates/tracker/partials/task_create_placeholder.html
+@@ -0,0 +1 @@
++<div id="task-create-form-region"></div>
+diff --git a/apps/project-tracker/templates/tracker/partials/task_list_placeholder.html b/apps/project-tracker/templates/tracker/partials/task_list_placeholder.html
+new file mode 100644
+index 0000000000000000000000000000000000000000..c4b4513f220a1865a4539a999d06640212345904
+--- /dev/null
++++ b/apps/project-tracker/templates/tracker/partials/task_list_placeholder.html
+@@ -0,0 +1 @@
++<div id="task-list-region"></div>
+diff --git a/apps/project-tracker/tracker/tests/test_views.py b/apps/project-tracker/tracker/tests/test_views.py
+index 9f0915cab99a4bfb7e6b821266d490c322f1545e..e5f1b7f01d1688f561ab490ecff55545c92b9319
+--- a/apps/project-tracker/tracker/tests/test_views.py
++++ b/apps/project-tracker/tracker/tests/test_views.py
+@@ -164,7 +164,12 @@
+ 
+         self.assertEqual(response.status_code, 200)
+         self.assertContains(response, 'data-swap-target="#project-detail-region"')
++        self.assertContains(response, 'data-swap-target="#task-create-form-region"')
++        self.assertContains(response, 'data-swap-target="#task-edit-form-region"')
++        self.assertContains(response, 'data-swap-target="#task-list-region"')
+         self.assertContains(response, "Project deleted")
++        self.assertNotContains(response, "Create task")
++        self.assertNotContains(response, "Write copy")
+         self.assertFalse(Project.objects.filter(id=self.project.id).exists())
+ 
+     def test_project_delete_from_dashboard_updates_recent_projects_partial(self):
+diff --git a/apps/project-tracker/tracker/views.py b/apps/project-tracker/tracker/views.py
+index 77ff43b62e5e75240786ce494fea20a53fffc628..443f4ad4a990cffe6527b3081a28227a15414b1b
+--- a/apps/project-tracker/tracker/views.py
++++ b/apps/project-tracker/tracker/views.py
+@@ -363,6 +363,21 @@
+                 "tracker/partials/project_edit_placeholder.html",
+                 {},
+             ),
++            (
++                "#task-create-form-region",
++                "tracker/partials/task_create_placeholder.html",
++                {},
++            ),
++            (
++                "#task-edit-form-region",
++                "tracker/partials/task_edit_placeholder.html",
++                {},
++            ),
++            (
++                "#task-list-region",
++                "tracker/partials/task_list_placeholder.html",
++                {},
++            ),
+         ],
+     )
+ 
+
+[3m[35mfile update[0m[0m
+[35mM /home/sundaram/code/temp/test/ai/next_agent.md[0m
+@@ -2,4 +2,4 @@
+ 
+[31m-- Current role: `DEV`[0m
+[31m-- Prompt: `ai/prompts/04-dev.md`[0m
+[32m+- Current role: `VALIDATOR`[0m
+[32m+- Prompt: `ai/prompts/05-validator.md`[0m
+ - Execution command for Codex sessions: **Follow `ai/next_agent.yaml` exactly.**
+@@ -9,15 +9,12 @@
+ 
+[31m-- Reviewer decision for `ITEM-0005`: `REVISE`.[0m
+[31m-- Fix the confirmed regression on project deletion from the detail page:[0m
+[31m-  - `apps/project-tracker/templates/tracker/project_detail.html` renders `#task-create-form-region`, `#task-edit-form-region`, and `#task-list-region` outside `#project-detail-region`.[0m
+[31m-  - `apps/project-tracker/tracker/views.py` `project_delete()` currently replaces only `#project-detail-region` and `#project-edit-form-region` when `source_page == "project_detail"`.[0m
+[31m-  - Result: deleting a project from its detail page leaves stale task create/edit/list UI on screen, including actions targeting a deleted project.[0m
+[31m-- Required changes:[0m
+[31m-  - Update the project-detail delete response so it also clears or replaces the task regions consistently with the established partial-swap contract.[0m
+[31m-  - Add a focused regression test for deleting a project from the detail page that asserts the async response does not leave stale task CRUD regions behind.[0m
+[31m-- Preserve the accepted parts of the slice:[0m
+[31m-  - Keep task CRUD scoped to the existing tracker app and the established HTML-partial plus vanilla JS pattern.[0m
+[31m-  - Keep `TaskForm` project ownership fixed by the URL-driven project context.[0m
+[31m-- Validation caveat remains:[0m
+[32m+- `ITEM-0005` remains the active item. This DEV revision only addresses the reviewer-confirmed regression on deleting a project from the detail page.[0m
+[32m+- Implemented fix:[0m
+[32m+  - `apps/project-tracker/tracker/views.py` `project_delete()` now swaps `#task-create-form-region`, `#task-edit-form-region`, and `#task-list-region` alongside the deleted-project panel for `source_page == "project_detail"`.[0m
+[32m+  - Added placeholder partials at `apps/project-tracker/templates/tracker/partials/task_create_placeholder.html` and `apps/project-tracker/templates/tracker/partials/task_list_placeholder.html` so the async delete response clears those regions without leaving stale task CRUD controls behind.[0m
+[32m+  - Extended `apps/project-tracker/tracker/tests/test_views.py::test_project_delete_from_detail_returns_deleted_panel` to assert the response includes swap instructions for all task regions and omits stale task UI content.[0m
+[32m+- Requested validator focus:[0m
+[32m+  - Confirm the detail-page delete response now preserves the selector-swap contract for all four relevant regions: project detail, project edit, task create, task edit, and task list.[0m
+[32m+  - Confirm the revision does not change the already-accepted task CRUD ownership pattern or introduce scope drift outside the delete regression.[0m
+[32m+- Verification status:[0m
+   - `python3 -m py_compile $(find apps/project-tracker -name '*.py' | sort)` passed.
+[31m-  - `python3 apps/project-tracker/manage.py test tracker.tests.test_views` is still blocked here by `ModuleNotFoundError: No module named 'django'`.[0m
+[32m+  - `python3 apps/project-tracker/manage.py test tracker.tests.test_views` is still blocked in this workspace by `ModuleNotFoundError: No module named 'django'`.[0m
+[35mM /home/sundaram/code/temp/test/ai/active_agent.txt[0m
+@@ -1 +1 @@
+[31m-DEV[0m
+[32m+VALIDATOR[0m
+[32mapply_patch(auto_approved=true) exited 0 in 9ms:[0m
+[2mSuccess. Updated the following files:[0m
+[2mM /home/sundaram/code/temp/test/ai/next_agent.md[0m
+[2mM /home/sundaram/code/temp/test/ai/active_agent.txt[0m
+[3m[35mfile update:[0m[0m
+diff --git a/ai/active_agent.txt b/ai/active_agent.txt
+index a8b82c6896062c7b336ccc8bf7533a20fac54932..925a277add2e0889531e063e180e94c062e5dbb6
+--- a/ai/active_agent.txt
++++ b/ai/active_agent.txt
+@@ -1 +1 @@
+-DEV
++VALIDATOR
+diff --git a/ai/iterations/ITER-0001.md b/ai/iterations/ITER-0001.md
+index 72ad1a51258b6a356fc902c97ce7edc4f34fc366..a9d50a5e6f01e598f0753ab3994d6c9a17334b56
+--- a/ai/iterations/ITER-0001.md
++++ b/ai/iterations/ITER-0001.md
+@@ -25,3 +25,4 @@
+ | 2026-03-12 | DEV | Implemented the task-only no-reload CRUD slice with project-detail task mutation views, reusable task partials, and focused mutation view coverage for ITEM-0005 | This vertical cut adds task create, update, and delete on the project detail page using the existing HTML partial swap contract while preserving the blocked Django runtime caveat for validator follow-up |
+ | 2026-03-12 | VALIDATOR | Rejected ITEM-0005 for reviewer follow-up after finding a project-detail delete regression that leaves stale task CRUD regions behind | The new task layout moved the task regions outside `#project-detail-region`, but the existing project-delete response does not clear them, so the detail page can still show controls for a deleted project |
+ | 2026-03-12 | REVIEWER | Routed ITEM-0005 back to DEV for revision after confirming the project-detail delete response leaves stale task CRUD regions behind | Acceptance is blocked by a concrete UI regression on project deletion from the detail surface, and the next pass must also add a focused regression test for that async response |
++| 2026-03-12 | DEV | Revised ITEM-0005 by clearing the stale task CRUD regions in the project-detail delete response and extending the focused delete regression test | The reviewer-confirmed regression was limited to the async project delete response on the detail page, so the fix preserves the accepted task CRUD slice while restoring the DOM swap contract for deleted projects |
+diff --git a/ai/next_agent.md b/ai/next_agent.md
+index c22147128c1a7b054bd5ab260a5bc13cc2a8c0cb..a00710f3c6da17396712ac73af3e505afb375f4e
+--- a/ai/next_agent.md
++++ b/ai/next_agent.md
+@@ -1,23 +1,20 @@
+ # Next Agent
+ 
+-- Current role: `DEV`
+-- Prompt: `ai/prompts/04-dev.md`
++- Current role: `VALIDATOR`
++- Prompt: `ai/prompts/05-validator.md`
+ - Execution command for Codex sessions: **Follow `ai/next_agent.yaml` exactly.**
+ - If role mismatch with `ai/active_agent.txt`, print: `WAITING FOR BATON`
+ 
+ ## Handoff Notes
+ 
+-- Reviewer decision for `ITEM-0005`: `REVISE`.
+-- Fix the confirmed regression on project deletion from the detail page:
+-  - `apps/project-tracker/templates/tracker/project_detail.html` renders `#task-create-form-region`, `#task-edit-form-region`, and `#task-list-region` outside `#project-detail-region`.
+-  - `apps/project-tracker/tracker/views.py` `project_delete()` currently replaces only `#project-detail-region` and `#project-edit-form-region` when `source_page == "project_detail"`.
+-  - Result: deleting a project from its detail page leaves stale task create/edit/list UI on screen, including actions targeting a deleted project.
+-- Required changes:
+-  - Update the project-detail delete response so it also clears or replaces the task regions consistently with the established partial-swap contract.
+-  - Add a focused regression test for deleting a project from the detail page that asserts the async response does not leave stale task CRUD regions behind.
+-- Preserve the accepted parts of the slice:
+-  - Keep task CRUD scoped to the existing tracker app and the established HTML-partial plus vanilla JS pattern.
+-  - Keep `TaskForm` project ownership fixed by the URL-driven project context.
+-- Validation caveat remains:
++- `ITEM-0005` remains the active item. This DEV revision only addresses the reviewer-confirmed regression on deleting a project from the detail page.
++- Implemented fix:
++  - `apps/project-tracker/tracker/views.py` `project_delete()` now swaps `#task-create-form-region`, `#task-edit-form-region`, and `#task-list-region` alongside the deleted-project panel for `source_page == "project_detail"`.
++  - Added placeholder partials at `apps/project-tracker/templates/tracker/partials/task_create_placeholder.html` and `apps/project-tracker/templates/tracker/partials/task_list_placeholder.html` so the async delete response clears those regions without leaving stale task CRUD controls behind.
++  - Extended `apps/project-tracker/tracker/tests/test_views.py::test_project_delete_from_detail_returns_deleted_panel` to assert the response includes swap instructions for all task regions and omits stale task UI content.
++- Requested validator focus:
++  - Confirm the detail-page delete response now preserves the selector-swap contract for all four relevant regions: project detail, project edit, task create, task edit, and task list.
++  - Confirm the revision does not change the already-accepted task CRUD ownership pattern or introduce scope drift outside the delete regression.
++- Verification status:
+   - `python3 -m py_compile $(find apps/project-tracker -name '*.py' | sort)` passed.
+-  - `python3 apps/project-tracker/manage.py test tracker.tests.test_views` is still blocked here by `ModuleNotFoundError: No module named 'django'`.
++  - `python3 apps/project-tracker/manage.py test tracker.tests.test_views` is still blocked in this workspace by `ModuleNotFoundError: No module named 'django'`.
+diff --git a/ai/review.md b/ai/review.md
+index bd460c6ebc756105d8d14afda34266c86411f508..8232588d776970d175ad6600aaaed83811637f27
+--- a/ai/review.md
++++ b/ai/review.md
+@@ -226,3 +226,18 @@
+   - Update the detail-page project delete response so all task regions are cleared or replaced along with the deleted-project panel.
+   - Add a focused regression test covering project deletion from the detail page and asserting the stale task regions are not left behind in the async response.
+ - Environment caveat remains unchanged: `python3 apps/project-tracker/manage.py test tracker.tests.test_views` is still blocked in this workspace by `ModuleNotFoundError: No module named 'django'`, so the reviewer decision is based on code inspection plus py-compile evidence.
++
++## DEV Revision Notes
++
++- Updated `tracker/views.py` so the `project_detail` branch of `project_delete()` now swaps all task regions, not just the deleted project panel and project edit placeholder.
++- Added explicit empty placeholder partials for `#task-create-form-region` and `#task-list-region` so the async response clears those DOM regions without leaving stale task CRUD controls behind.
++- Tightened `tracker/tests/test_views.py::test_project_delete_from_detail_returns_deleted_panel` to assert the delete response now includes swap instructions for all task regions and no longer returns stale task form/list content.
++
++## Validation Evidence
++
++- `python3 -m py_compile $(find apps/project-tracker -name '*.py' | sort)` passed.
++- `python3 apps/project-tracker/manage.py test tracker.tests.test_views` still fails in the workspace with `ModuleNotFoundError: No module named 'django'`.
++
++## Known Risks
++
++- Runtime validation of the revised delete-response path is still blocked until Django is installed in the workspace.
+diff --git a/apps/project-tracker/templates/tracker/partials/task_create_placeholder.html b/apps/project-tracker/templates/tracker/partials/task_create_placeholder.html
+new file mode 100644
+index 0000000000000000000000000000000000000000..5591ea5a07a8dbc1fe561e6d88d5599b04f2cea9
+--- /dev/null
++++ b/apps/project-tracker/templates/tracker/partials/task_create_placeholder.html
+@@ -0,0 +1 @@
++<div id="task-create-form-region"></div>
+diff --git a/apps/project-tracker/templates/tracker/partials/task_list_placeholder.html b/apps/project-tracker/templates/tracker/partials/task_list_placeholder.html
+new file mode 100644
+index 0000000000000000000000000000000000000000..c4b4513f220a1865a4539a999d06640212345904
+--- /dev/null
++++ b/apps/project-tracker/templates/tracker/partials/task_list_placeholder.html
+@@ -0,0 +1 @@
++<div id="task-list-region"></div>
+diff --git a/apps/project-tracker/tracker/tests/test_views.py b/apps/project-tracker/tracker/tests/test_views.py
+index 9f0915cab99a4bfb7e6b821266d490c322f1545e..e5f1b7f01d1688f561ab490ecff55545c92b9319
+--- a/apps/project-tracker/tracker/tests/test_views.py
++++ b/apps/project-tracker/tracker/tests/test_views.py
+@@ -164,7 +164,12 @@
+ 
+         self.assertEqual(response.status_code, 200)
+         self.assertContains(response, 'data-swap-target="#project-detail-region"')
++        self.assertContains(response, 'data-swap-target="#task-create-form-region"')
++        self.assertContains(response, 'data-swap-target="#task-edit-form-region"')
++        self.assertContains(response, 'data-swap-target="#task-list-region"')
+         self.assertContains(response, "Project deleted")
++        self.assertNotContains(response, "Create task")
++        self.assertNotContains(response, "Write copy")
+         self.assertFalse(Project.objects.filter(id=self.project.id).exists())
+ 
+     def test_project_delete_from_dashboard_updates_recent_projects_partial(self):
+diff --git a/apps/project-tracker/tracker/views.py b/apps/project-tracker/tracker/views.py
+index 77ff43b62e5e75240786ce494fea20a53fffc628..443f4ad4a990cffe6527b3081a28227a15414b1b
+--- a/apps/project-tracker/tracker/views.py
++++ b/apps/project-tracker/tracker/views.py
+@@ -363,6 +363,21 @@
+                 "tracker/partials/project_edit_placeholder.html",
+                 {},
+             ),
++            (
++                "#task-create-form-region",
++                "tracker/partials/task_create_placeholder.html",
++                {},
++            ),
++            (
++                "#task-edit-form-region",
++                "tracker/partials/task_edit_placeholder.html",
++                {},
++            ),
++            (
++                "#task-list-region",
++                "tracker/partials/task_list_placeholder.html",
++                {},
++            ),
+         ],
+     )
+ 
+
+[3m[35mfile update:[0m[0m
+diff --git a/ai/active_agent.txt b/ai/active_agent.txt
+index a8b82c6896062c7b336ccc8bf7533a20fac54932..925a277add2e0889531e063e180e94c062e5dbb6
+--- a/ai/active_agent.txt
++++ b/ai/active_agent.txt
+@@ -1 +1 @@
+-DEV
++VALIDATOR
+diff --git a/ai/iterations/ITER-0001.md b/ai/iterations/ITER-0001.md
+index 72ad1a51258b6a356fc902c97ce7edc4f34fc366..a9d50a5e6f01e598f0753ab3994d6c9a17334b56
+--- a/ai/iterations/ITER-0001.md
++++ b/ai/iterations/ITER-0001.md
+@@ -25,3 +25,4 @@
+ | 2026-03-12 | DEV | Implemented the task-only no-reload CRUD slice with project-detail task mutation views, reusable task partials, and focused mutation view coverage for ITEM-0005 | This vertical cut adds task create, update, and delete on the project detail page using the existing HTML partial swap contract while preserving the blocked Django runtime caveat for validator follow-up |
+ | 2026-03-12 | VALIDATOR | Rejected ITEM-0005 for reviewer follow-up after finding a project-detail delete regression that leaves stale task CRUD regions behind | The new task layout moved the task regions outside `#project-detail-region`, but the existing project-delete response does not clear them, so the detail page can still show controls for a deleted project |
+ | 2026-03-12 | REVIEWER | Routed ITEM-0005 back to DEV for revision after confirming the project-detail delete response leaves stale task CRUD regions behind | Acceptance is blocked by a concrete UI regression on project deletion from the detail surface, and the next pass must also add a focused regression test for that async response |
++| 2026-03-12 | DEV | Revised ITEM-0005 by clearing the stale task CRUD regions in the project-detail delete response and extending the focused delete regression test | The reviewer-confirmed regression was limited to the async project delete response on the detail page, so the fix preserves the accepted task CRUD slice while restoring the DOM swap contract for deleted projects |
+diff --git a/ai/next_agent.md b/ai/next_agent.md
+index c22147128c1a7b054bd5ab260a5bc13cc2a8c0cb..a00710f3c6da17396712ac73af3e505afb375f4e
+--- a/ai/next_agent.md
++++ b/ai/next_agent.md
+@@ -1,23 +1,20 @@
+ # Next Agent
+ 
+-- Current role: `DEV`
+-- Prompt: `ai/prompts/04-dev.md`
++- Current role: `VALIDATOR`
++- Prompt: `ai/prompts/05-validator.md`
+ - Execution command for Codex sessions: **Follow `ai/next_agent.yaml` exactly.**
+ - If role mismatch with `ai/active_agent.txt`, print: `WAITING FOR BATON`
+ 
+ ## Handoff Notes
+ 
+-- Reviewer decision for `ITEM-0005`: `REVISE`.
+-- Fix the confirmed regression on project deletion from the detail page:
+-  - `apps/project-tracker/templates/tracker/project_detail.html` renders `#task-create-form-region`, `#task-edit-form-region`, and `#task-list-region` outside `#project-detail-region`.
+-  - `apps/project-tracker/tracker/views.py` `project_delete()` currently replaces only `#project-detail-region` and `#project-edit-form-region` when `source_page == "project_detail"`.
+-  - Result: deleting a project from its detail page leaves stale task create/edit/list UI on screen, including actions targeting a deleted project.
+-- Required changes:
+-  - Update the project-detail delete response so it also clears or replaces the task regions consistently with the established partial-swap contract.
+-  - Add a focused regression test for deleting a project from the detail page that asserts the async response does not leave stale task CRUD regions behind.
+-- Preserve the accepted parts of the slice:
+-  - Keep task CRUD scoped to the existing tracker app and the established HTML-partial plus vanilla JS pattern.
+-  - Keep `TaskForm` project ownership fixed by the URL-driven project context.
+-- Validation caveat remains:
++- `ITEM-0005` remains the active item. This DEV revision only addresses the reviewer-confirmed regression on deleting a project from the detail page.
++- Implemented fix:
++  - `apps/project-tracker/tracker/views.py` `project_delete()` now swaps `#task-create-form-region`, `#task-edit-form-region`, and `#task-list-region` alongside the deleted-project panel for `source_page == "project_detail"`.
++  - Added placeholder partials at `apps/project-tracker/templates/tracker/partials/task_create_placeholder.html` and `apps/project-tracker/templates/tracker/partials/task_list_placeholder.html` so the async delete response clears those regions without leaving stale task CRUD controls behind.
++  - Extended `apps/project-tracker/tracker/tests/test_views.py::test_project_delete_from_detail_returns_deleted_panel` to assert the response includes swap instructions for all task regions and omits stale task UI content.
++- Requested validator focus:
++  - Confirm the detail-page delete response now preserves the selector-swap contract for all four relevant regions: project detail, project edit, task create, task edit, and task list.
++  - Confirm the revision does not change the already-accepted task CRUD ownership pattern or introduce scope drift outside the delete regression.
++- Verification status:
+   - `python3 -m py_compile $(find apps/project-tracker -name '*.py' | sort)` passed.
+-  - `python3 apps/project-tracker/manage.py test tracker.tests.test_views` is still blocked here by `ModuleNotFoundError: No module named 'django'`.
++  - `python3 apps/project-tracker/manage.py test tracker.tests.test_views` is still blocked in this workspace by `ModuleNotFoundError: No module named 'django'`.
+diff --git a/ai/review.md b/ai/review.md
+index bd460c6ebc756105d8d14afda34266c86411f508..8232588d776970d175ad6600aaaed83811637f27
+--- a/ai/review.md
++++ b/ai/review.md
+@@ -226,3 +226,18 @@
+   - Update the detail-page project delete response so all task regions are cleared or replaced along with the deleted-project panel.
+   - Add a focused regression test covering project deletion from the detail page and asserting the stale task regions are not left behind in the async response.
+ - Environment caveat remains unchanged: `python3 apps/project-tracker/manage.py test tracker.tests.test_views` is still blocked in this workspace by `ModuleNotFoundError: No module named 'django'`, so the reviewer decision is based on code inspection plus py-compile evidence.
++
++## DEV Revision Notes
++
++- Updated `tracker/views.py` so the `project_detail` branch of `project_delete()` now swaps all task regions, not just the deleted project panel and project edit placeholder.
++- Added explicit empty placeholder partials for `#task-create-form-region` and `#task-list-region` so the async response clears those DOM regions without leaving stale task CRUD controls behind.
++- Tightened `tracker/tests/test_views.py::test_project_delete_from_detail_returns_deleted_panel` to assert the delete response now includes swap instructions for all task regions and no longer returns stale task form/list content.
++
++## Validation Evidence
++
++- `python3 -m py_compile $(find apps/project-tracker -name '*.py' | sort)` passed.
++- `python3 apps/project-tracker/manage.py test tracker.tests.test_views` still fails in the workspace with `ModuleNotFoundError: No module named 'django'`.
++
++## Known Risks
++
++- Runtime validation of the revised delete-response path is still blocked until Django is installed in the workspace.
+diff --git a/apps/project-tracker/templates/tracker/partials/task_create_placeholder.html b/apps/project-tracker/templates/tracker/partials/task_create_placeholder.html
+new file mode 100644
+index 0000000000000000000000000000000000000000..5591ea5a07a8dbc1fe561e6d88d5599b04f2cea9
+--- /dev/null
++++ b/apps/project-tracker/templates/tracker/partials/task_create_placeholder.html
+@@ -0,0 +1 @@
++<div id="task-create-form-region"></div>
+diff --git a/apps/project-tracker/templates/tracker/partials/task_list_placeholder.html b/apps/project-tracker/templates/tracker/partials/task_list_placeholder.html
+new file mode 100644
+index 0000000000000000000000000000000000000000..c4b4513f220a1865a4539a999d06640212345904
+--- /dev/null
++++ b/apps/project-tracker/templates/tracker/partials/task_list_placeholder.html
+@@ -0,0 +1 @@
++<div id="task-list-region"></div>
+diff --git a/apps/project-tracker/tracker/tests/test_views.py b/apps/project-tracker/tracker/tests/test_views.py
+index 9f0915cab99a4bfb7e6b821266d490c322f1545e..e5f1b7f01d1688f561ab490ecff55545c92b9319
+--- a/apps/project-tracker/tracker/tests/test_views.py
++++ b/apps/project-tracker/tracker/tests/test_views.py
+@@ -164,7 +164,12 @@
+ 
+         self.assertEqual(response.status_code, 200)
+         self.assertContains(response, 'data-swap-target="#project-detail-region"')
++        self.assertContains(response, 'data-swap-target="#task-create-form-region"')
++        self.assertContains(response, 'data-swap-target="#task-edit-form-region"')
++        self.assertContains(response, 'data-swap-target="#task-list-region"')
+         self.assertContains(response, "Project deleted")
++        self.assertNotContains(response, "Create task")
++        self.assertNotContains(response, "Write copy")
+         self.assertFalse(Project.objects.filter(id=self.project.id).exists())
+ 
+     def test_project_delete_from_dashboard_updates_recent_projects_partial(self):
+diff --git a/apps/project-tracker/tracker/views.py b/apps/project-tracker/tracker/views.py
+index 77ff43b62e5e75240786ce494fea20a53fffc628..443f4ad4a990cffe6527b3081a28227a15414b1b
+--- a/apps/project-tracker/tracker/views.py
++++ b/apps/project-tracker/tracker/views.py
+@@ -363,6 +363,21 @@
+                 "tracker/partials/project_edit_placeholder.html",
+                 {},
+             ),
++            (
++                "#task-create-form-region",
++                "tracker/partials/task_create_placeholder.html",
++                {},
++            ),
++            (
++                "#task-edit-form-region",
++                "tracker/partials/task_edit_placeholder.html",
++                {},
++            ),
++            (
++                "#task-list-region",
++                "tracker/partials/task_list_placeholder.html",
++                {},
++            ),
+         ],
+     )
+ 
+
+[35m[3mcodex[0m[0m
+HANDOFF TO VALIDATOR
+[3m[35mfile update:[0m[0m
+diff --git a/ai/active_agent.txt b/ai/active_agent.txt
+index a8b82c6896062c7b336ccc8bf7533a20fac54932..925a277add2e0889531e063e180e94c062e5dbb6
+--- a/ai/active_agent.txt
++++ b/ai/active_agent.txt
+@@ -1 +1 @@
+-DEV
++VALIDATOR
+diff --git a/ai/iterations/ITER-0001.md b/ai/iterations/ITER-0001.md
+index 72ad1a51258b6a356fc902c97ce7edc4f34fc366..a9d50a5e6f01e598f0753ab3994d6c9a17334b56
+--- a/ai/iterations/ITER-0001.md
++++ b/ai/iterations/ITER-0001.md
+@@ -25,3 +25,4 @@
+ | 2026-03-12 | DEV | Implemented the task-only no-reload CRUD slice with project-detail task mutation views, reusable task partials, and focused mutation view coverage for ITEM-0005 | This vertical cut adds task create, update, and delete on the project detail page using the existing HTML partial swap contract while preserving the blocked Django runtime caveat for validator follow-up |
+ | 2026-03-12 | VALIDATOR | Rejected ITEM-0005 for reviewer follow-up after finding a project-detail delete regression that leaves stale task CRUD regions behind | The new task layout moved the task regions outside `#project-detail-region`, but the existing project-delete response does not clear them, so the detail page can still show controls for a deleted project |
+ | 2026-03-12 | REVIEWER | Routed ITEM-0005 back to DEV for revision after confirming the project-detail delete response leaves stale task CRUD regions behind | Acceptance is blocked by a concrete UI regression on project deletion from the detail surface, and the next pass must also add a focused regression test for that async response |
++| 2026-03-12 | DEV | Revised ITEM-0005 by clearing the stale task CRUD regions in the project-detail delete response and extending the focused delete regression test | The reviewer-confirmed regression was limited to the async project delete response on the detail page, so the fix preserves the accepted task CRUD slice while restoring the DOM swap contract for deleted projects |
+diff --git a/ai/next_agent.md b/ai/next_agent.md
+index c22147128c1a7b054bd5ab260a5bc13cc2a8c0cb..a00710f3c6da17396712ac73af3e505afb375f4e
+--- a/ai/next_agent.md
++++ b/ai/next_agent.md
+@@ -1,23 +1,20 @@
+ # Next Agent
+ 
+-- Current role: `DEV`
+-- Prompt: `ai/prompts/04-dev.md`
++- Current role: `VALIDATOR`
++- Prompt: `ai/prompts/05-validator.md`
+ - Execution command for Codex sessions: **Follow `ai/next_agent.yaml` exactly.**
+ - If role mismatch with `ai/active_agent.txt`, print: `WAITING FOR BATON`
+ 
+ ## Handoff Notes
+ 
+-- Reviewer decision for `ITEM-0005`: `REVISE`.
+-- Fix the confirmed regression on project deletion from the detail page:
+-  - `apps/project-tracker/templates/tracker/project_detail.html` renders `#task-create-form-region`, `#task-edit-form-region`, and `#task-list-region` outside `#project-detail-region`.
+-  - `apps/project-tracker/tracker/views.py` `project_delete()` currently replaces only `#project-detail-region` and `#project-edit-form-region` when `source_page == "project_detail"`.
+-  - Result: deleting a project from its detail page leaves stale task create/edit/list UI on screen, including actions targeting a deleted project.
+-- Required changes:
+-  - Update the project-detail delete response so it also clears or replaces the task regions consistently with the established partial-swap contract.
+-  - Add a focused regression test for deleting a project from the detail page that asserts the async response does not leave stale task CRUD regions behind.
+-- Preserve the accepted parts of the slice:
+-  - Keep task CRUD scoped to the existing tracker app and the established HTML-partial plus vanilla JS pattern.
+-  - Keep `TaskForm` project ownership fixed by the URL-driven project context.
+-- Validation caveat remains:
++- `ITEM-0005` remains the active item. This DEV revision only addresses the reviewer-confirmed regression on deleting a project from the detail page.
++- Implemented fix:
++  - `apps/project-tracker/tracker/views.py` `project_delete()` now swaps `#task-create-form-region`, `#task-edit-form-region`, and `#task-list-region` alongside the deleted-project panel for `source_page == "project_detail"`.
++  - Added placeholder partials at `apps/project-tracker/templates/tracker/partials/task_create_placeholder.html` and `apps/project-tracker/templates/tracker/partials/task_list_placeholder.html` so the async delete response clears those regions without leaving stale task CRUD controls behind.
++  - Extended `apps/project-tracker/tracker/tests/test_views.py::test_project_delete_from_detail_returns_deleted_panel` to assert the response includes swap instructions for all task regions and omits stale task UI content.
++- Requested validator focus:
++  - Confirm the detail-page delete response now preserves the selector-swap contract for all four relevant regions: project detail, project edit, task create, task edit, and task list.
++  - Confirm the revision does not change the already-accepted task CRUD ownership pattern or introduce scope drift outside the delete regression.
++- Verification status:
+   - `python3 -m py_compile $(find apps/project-tracker -name '*.py' | sort)` passed.
+-  - `python3 apps/project-tracker/manage.py test tracker.tests.test_views` is still blocked here by `ModuleNotFoundError: No module named 'django'`.
++  - `python3 apps/project-tracker/manage.py test tracker.tests.test_views` is still blocked in this workspace by `ModuleNotFoundError: No module named 'django'`.
+diff --git a/ai/review.md b/ai/review.md
+index bd460c6ebc756105d8d14afda34266c86411f508..8232588d776970d175ad6600aaaed83811637f27
+--- a/ai/review.md
++++ b/ai/review.md
+@@ -226,3 +226,18 @@
+   - Update the detail-page project delete response so all task regions are cleared or replaced along with the deleted-project panel.
+   - Add a focused regression test covering project deletion from the detail page and asserting the stale task regions are not left behind in the async response.
+ - Environment caveat remains unchanged: `python3 apps/project-tracker/manage.py test tracker.tests.test_views` is still blocked in this workspace by `ModuleNotFoundError: No module named 'django'`, so the reviewer decision is based on code inspection plus py-compile evidence.
++
++## DEV Revision Notes
++
++- Updated `tracker/views.py` so the `project_detail` branch of `project_delete()` now swaps all task regions, not just the deleted project panel and project edit placeholder.
++- Added explicit empty placeholder partials for `#task-create-form-region` and `#task-list-region` so the async response clears those DOM regions without leaving stale task CRUD controls behind.
++- Tightened `tracker/tests/test_views.py::test_project_delete_from_detail_returns_deleted_panel` to assert the delete response now includes swap instructions for all task regions and no longer returns stale task form/list content.
++
++## Validation Evidence
++
++- `python3 -m py_compile $(find apps/project-tracker -name '*.py' | sort)` passed.
++- `python3 apps/project-tracker/manage.py test tracker.tests.test_views` still fails in the workspace with `ModuleNotFoundError: No module named 'django'`.
++
++## Known Risks
++
++- Runtime validation of the revised delete-response path is still blocked until Django is installed in the workspace.
+diff --git a/apps/project-tracker/templates/tracker/partials/task_create_placeholder.html b/apps/project-tracker/templates/tracker/partials/task_create_placeholder.html
+new file mode 100644
+index 0000000000000000000000000000000000000000..5591ea5a07a8dbc1fe561e6d88d5599b04f2cea9
+--- /dev/null
++++ b/apps/project-tracker/templates/tracker/partials/task_create_placeholder.html
+@@ -0,0 +1 @@
++<div id="task-create-form-region"></div>
+diff --git a/apps/project-tracker/templates/tracker/partials/task_list_placeholder.html b/apps/project-tracker/templates/tracker/partials/task_list_placeholder.html
+new file mode 100644
+index 0000000000000000000000000000000000000000..c4b4513f220a1865a4539a999d06640212345904
+--- /dev/null
++++ b/apps/project-tracker/templates/tracker/partials/task_list_placeholder.html
+@@ -0,0 +1 @@
++<div id="task-list-region"></div>
+diff --git a/apps/project-tracker/tracker/tests/test_views.py b/apps/project-tracker/tracker/tests/test_views.py
+index 9f0915cab99a4bfb7e6b821266d490c322f1545e..e5f1b7f01d1688f561ab490ecff55545c92b9319
+--- a/apps/project-tracker/tracker/tests/test_views.py
++++ b/apps/project-tracker/tracker/tests/test_views.py
+@@ -164,7 +164,12 @@
+ 
+         self.assertEqual(response.status_code, 200)
+         self.assertContains(response, 'data-swap-target="#project-detail-region"')
++        self.assertContains(response, 'data-swap-target="#task-create-form-region"')
++        self.assertContains(response, 'data-swap-target="#task-edit-form-region"')
++        self.assertContains(response, 'data-swap-target="#task-list-region"')
+         self.assertContains(response, "Project deleted")
++        self.assertNotContains(response, "Create task")
++        self.assertNotContains(response, "Write copy")
+         self.assertFalse(Project.objects.filter(id=self.project.id).exists())
+ 
+     def test_project_delete_from_dashboard_updates_recent_projects_partial(self):
+diff --git a/apps/project-tracker/tracker/views.py b/apps/project-tracker/tracker/views.py
+index 77ff43b62e5e75240786ce494fea20a53fffc628..443f4ad4a990cffe6527b3081a28227a15414b1b
+--- a/apps/project-tracker/tracker/views.py
++++ b/apps/project-tracker/tracker/views.py
+@@ -363,6 +363,21 @@
+                 "tracker/partials/project_edit_placeholder.html",
+                 {},
+             ),
++            (
++                "#task-create-form-region",
++                "tracker/partials/task_create_placeholder.html",
++                {},
++            ),
++            (
++                "#task-edit-form-region",
++                "tracker/partials/task_edit_placeholder.html",
++                {},
++            ),
++            (
++                "#task-list-region",
++                "tracker/partials/task_list_placeholder.html",
++                {},
++            ),
+         ],
+     )
+ 
+
+[3m[35mtokens used[0m[0m
+28,308
+
+Script done on 2026-03-11 22:46:28-05:00 [COMMAND_EXIT_CODE="0"]

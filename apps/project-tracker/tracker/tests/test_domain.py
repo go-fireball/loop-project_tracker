@@ -8,6 +8,14 @@ from tracker.models import Project, Tag, Task
 
 
 class TrackerModelTests(TestCase):
+    def test_project_and_task_defaults_use_locked_choice_values(self):
+        project = Project.objects.create(name="Defaulted", description="")
+        task = Task.objects.create(project=project, title="Default task")
+
+        self.assertEqual(project.status, Project.STATUS_ACTIVE)
+        self.assertEqual(task.status, Task.STATUS_TODO)
+        self.assertEqual(task.priority, Task.PRIORITY_MEDIUM)
+
     def test_project_and_task_support_tag_assignment(self):
         project = Project.objects.create(
             name="Launch site",
@@ -50,6 +58,11 @@ class TrackerModelTests(TestCase):
 
 
 class TrackerFormTests(TestCase):
+    def test_task_form_does_not_expose_project_reassignment(self):
+        form = TaskForm()
+
+        self.assertNotIn("project", form.fields)
+
     def test_project_form_accepts_locked_status_choices(self):
         form = ProjectForm(
             data={
@@ -61,6 +74,19 @@ class TrackerFormTests(TestCase):
         )
 
         self.assertTrue(form.is_valid(), form.errors)
+
+    def test_project_form_rejects_invalid_status_choice(self):
+        form = ProjectForm(
+            data={
+                "name": "Roadmap",
+                "description": "Quarterly plan",
+                "status": "paused",
+                "created_date": "2026-03-12",
+            }
+        )
+
+        self.assertFalse(form.is_valid())
+        self.assertIn("status", form.errors)
 
     def test_task_form_rejects_invalid_priority(self):
         project = Project.objects.create(name="Roadmap", description="")
@@ -76,6 +102,19 @@ class TrackerFormTests(TestCase):
 
         self.assertFalse(form.is_valid())
         self.assertIn("priority", form.errors)
+
+    def test_task_form_rejects_invalid_status(self):
+        form = TaskForm(
+            data={
+                "title": "Rank backlog",
+                "status": "blocked",
+                "priority": Task.PRIORITY_MEDIUM,
+                "due_date": "2026-03-20",
+            }
+        )
+
+        self.assertFalse(form.is_valid())
+        self.assertIn("status", form.errors)
 
     def test_tag_form_requires_name(self):
         form = TagForm(data={"name": ""})
