@@ -1,26 +1,37 @@
-# Handoff Notes — PRODUCT_OWNER → SENIOR_JUDGMENTAL_ENGINEER
+# Handoff Notes — SENIOR_JUDGMENTAL_ENGINEER → ARCHITECT
 
-- Current role: `SENIOR_JUDGMENTAL_ENGINEER`
-- Prompt: `ai/prompts/01-senior-judgmental-engineer.md`
+- Current role: `ARCHITECT`
+- Prompt: `ai/prompts/02-architect.md`
 - Execution command for Codex sessions: **Follow `ai/next_agent.yaml` exactly.**
 - If role mismatch with `ai/active_agent.txt`, print: `WAITING FOR BATON`
 
-## What was done
+## Judgment outcome
 
-`ai/requirements.md` has been fully written from `ai/goal.yaml`. The goal was unambiguous and complete — no open questions were raised and no user clarification was needed.
+The scope is valid as written. Nothing needs escalation and nothing important is missing for the stated personal-use tracker. The goal-level stack requirement overrides `judgment.yaml` defaults: use Django, SQLite, and vanilla JS only.
 
-## What to focus on
+## Guardrails now in force
 
-1. **Stack divergence from judgment.yaml defaults** — `judgment.yaml` defaults to `aspnet_core` backend and `react_nextjs` frontend, but the goal explicitly mandates Django + vanilla JS. This is a goal-level override; no exception entry is needed in `decision-lock.yaml` unless you disagree.
-2. **Constraint strictness** — "no additional pip packages" rules out DRF. The implementation must use plain Django views for the JSON API. Confirm this is achievable and flag if any hidden complexity makes it risky.
-3. **Scope tightness** — no auth, no file uploads, no email. The scope is deliberately narrow. Validate nothing important has been omitted that would make the tracker unusable for the stated personal-use goal.
-4. **Async mutation requirement** — add/edit/delete without full page reload using vanilla JS fetch. This is a firm UX requirement, not optional.
+1. Keep this as a small modular monolith inside `apps/project-tracker/`; do not split into multiple Django apps or invent services/repositories.
+2. Use plain Django views for JSON CRUD. No DRF, no class-heavy abstraction, no generic CRUD framework.
+3. Keep page-rendering views and JSON endpoints separate. Templates serve pages; fetch hits JSON routes.
+4. Use direct ORM queries plus simple aggregation for dashboard stats. No raw SQL unless architecture uncovers a real blocker.
+5. Tag filtering only needs a single selected tag to satisfy scope. Do not broaden to advanced search.
+6. Status/priority enums should be centralized with Django `TextChoices`.
 
-## Concerns / risks
+## What architecture needs to pin down
 
-- None blocking. The goal is explicit and the requirements are a direct translation.
-- Watch for scope creep: the dashboard and tag-filter view are included in scope — both must be covered.
+1. Django project/app layout under `apps/project-tracker/`, including where templates, static files, and URL modules live.
+2. Model design for `Project`, `Task`, and `Tag`, including the two many-to-many relationships for tags.
+3. URL boundary between HTML views and JSON endpoints, keeping the route map flat and readable.
+4. The minimum frontend data flow needed for async create/update/delete without full page reload.
+5. Dashboard query approach for total projects, task counts by status, and overdue tasks using timezone-aware date logic.
+
+## Risks to watch
+
+- The async mutation requirement is firm. Architecture should make the JS/API contract explicit enough that DEV does not fall back to form-post/full-refresh behavior.
+- The no-third-party-packages constraint means any admin-style convenience abstractions are out. Keep the design intentionally simple.
+- `ai/active_item.yaml` is still idle/null, so architecture should stay at whole-system design level and avoid pretending a narrower implementation slice has already been chosen.
 
 ## Next role after you
 
-ARCHITECT — who will design the Django project structure, model layout, URL routing, and view/API boundary.
+PLANNER — after the architecture and boundaries are defined.

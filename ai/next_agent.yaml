@@ -1,16 +1,17 @@
-next_role: SENIOR_JUDGMENTAL_ENGINEER
-prompt_file: ai/prompts/01-senior-judgmental-engineer.md
+next_role: ARCHITECT
+prompt_file: ai/prompts/02-architect.md
 read:
   - ai/requirements.md
-  - ai/simplification.md
-  - ai/judgment.yaml
   - ai/active_item.yaml
-  - ai/constitution.yaml
+  - ai/judgment.yaml
+  - ai/simplification.md
+  - ai/decision-lock.yaml
   - ai/goal.yaml
+  - ai/constitution.yaml
   - ai/active_agent.txt
   - ai/next_agent.md
 allowed_edits:
-  - ai/simplification.md
+  - context/repo/
   - ai/review.md
   - ai/iterations/ITER-0001.md
   - ai/active_agent.txt
@@ -20,10 +21,10 @@ stop_conditions:
   - WAITING FOR BATON when active agent mismatch
   - WAITING FOR USER when clarification is required
 success_criteria:
-  - judgment guardrails applied and scope validated
+  - architecture defined with boundaries and tradeoffs
 handoff_on_success:
-  print_exact: HANDOFF TO ARCHITECT
+  print_exact: HANDOFF TO PLANNER
 notes:
-  - requirements.md fully written from goal.yaml — projects/tasks/tags CRUD with many-to-many tags, dashboard stats, tag-filter view, vanilla JS async mutations, Django+SQLite only
-  - key items to review: scope is tight (no auth, no DRF), all CRUD must work without full page reload, Django built-ins only constraint
-  - risks: judgment.yaml defaults (aspnet_core, react_nextjs) diverge from goal-mandated stack (Django, vanilla JS) — goal takes precedence, no exception needed
+  - judgment summary complete
+  - guardrails added for single-app Django + plain JSON views + vanilla JS
+  - non-blocking risk flagged: async mutations and dashboard/tag-filter must stay in scope

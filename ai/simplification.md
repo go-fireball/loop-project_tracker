@@ -18,3 +18,8 @@
 13. **Timezone-aware overdue check** — use `django.utils.timezone.now().date()` when filtering overdue tasks; do not use `datetime.date.today()` if `USE_TZ=True`.
 14. **Flat URL structure** — no URL namespaces needed for a single-app project. Keep `urls.py` flat and readable.
 15. **Stack override in effect** — `judgment.yaml` defaults (aspnet_core, react_nextjs, postgresql) are superseded by the goal. No exception entry required.
+16. **Single Django app bias** — unless forced by an implementation constraint, keep the tracker in one Django app with models, views, URLs, templates, and static assets together. Do not split into multiple apps for "clean architecture".
+17. **No service/repository layer** — views should call Django ORM directly. The domain is simple CRUD plus a small dashboard aggregate; extra indirection would be ceremony.
+18. **Separate HTML pages from JSON endpoints** — templates render pages, JSON views handle async mutations/data fetches. Do not build a content-negotiation layer or hybrid "sometimes HTML, sometimes JSON" endpoints unless required.
+19. **Use Django `TextChoices` for enums** — status and priority fields should be defined once on the models, not duplicated across forms, views, and JS constants.
+20. **Simple tag filtering** — support filtering by a single selected tag to satisfy scope. Do not design a multi-filter search system unless the user explicitly expands scope.
