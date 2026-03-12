@@ -57,6 +57,28 @@ Use this file for reviewer outcomes:
 
 ## Known Risks
 
+## Validator Outcome
+
+- Result: PASS for idle completion handoff.
+- Acceptance criteria check:
+  - `ai/active_item.yaml` remains in the idle completion state with no remaining implementation slice selected.
+  - The current worktree has no changed files under `apps/` or `infra/`, so this DEV turn did not introduce unplanned implementation work.
+  - The baton handoff correctly preserves the project-complete state instead of inventing new backlog scope.
+- Regression check:
+  - No product regressions found because there is no application diff in the current turn.
+  - The accepted verification commands still pass in the current Poetry environment.
+
+## Validation Evidence
+
+- `git diff --name-only` shows changes only under `ai/`; there are no changed files under `apps/` or `infra/`.
+- `python3 -m py_compile $(find apps/project-tracker -name '*.py' | sort)` passed.
+- `poetry run python apps/project-tracker/manage.py test tracker.tests.test_domain tracker.tests.test_views` passed with 36 tests green.
+
+## Known Risks
+
+- No new code was introduced in this turn, so there are no new implementation risks to carry forward.
+- The standing caveat from prior handoffs still applies: rerunning `py_compile` can transiently regenerate local `__pycache__` directories under `apps/project-tracker/`.
+
 - Runtime and test validation remain partial until Django is installed in the workspace.
 - Current automated coverage is limited to a simple dashboard route smoke test, so later slices still need model, mutation, and no-reload interaction coverage.
 - The initial migration was authored manually because `manage.py makemigrations` cannot run without Django in the workspace, so schema validation should be rechecked once Django is available.
@@ -453,3 +475,54 @@ Use this file for reviewer outcomes:
 - Accepted because [README.md](/home/sundaram/code/temp/test/apps/project-tracker/README.md) now follows the locked `pyenv` plus Poetry workflow, stays project-local under `apps/project-tracker/`, preserves the current `manage.py` entrypoint, and documents the focused verification commands required by the active item.
 - Accepted with a narrowed caveat: the README correctly preserves `ModuleNotFoundError: No module named 'django'` as a setup failure mode for an uninitialized environment, while current workspace validation passed with `poetry run python apps/project-tracker/manage.py test tracker.tests.test_domain tracker.tests.test_views` at 36 tests.
 - No scope drift found: the documentation remains aligned with the locked Django, SQLite, and vanilla HTML/CSS/JS stack and does not introduce alternate dependency-management or runtime tooling.
+
+## DEV Implementation Notes
+
+- Removed the tracked Python bytecode artifacts under `apps/project-tracker/` for `ITEM-0009`, covering the top-level project tree plus the nested `project_tracker`, `tracker`, `tracker/migrations`, and `tracker/tests` cache directories.
+- Kept the slice limited to repository hygiene: no source `.py`, template, static asset, or documentation files changed.
+- Re-ran the accepted verification commands after the cleanup, then removed the regenerated local `__pycache__` directories so the working tree only carries the intended deletions.
+
+## Validation Evidence
+
+- `python3 -m py_compile $(find apps/project-tracker -name '*.py' | sort)` passed.
+- `poetry run python apps/project-tracker/manage.py test tracker.tests.test_domain tracker.tests.test_views` passed with 36 tests.
+
+## Known Risks
+
+- `py_compile` regenerates local `__pycache__` directories as part of verification, so future validation runs should expect those artifacts to reappear transiently unless they are cleaned again after execution.
+
+## Validator Outcome
+
+- Result: PASS for `ITEM-0009`.
+- Acceptance criteria check:
+  - The tracked bytecode artifacts under `apps/project-tracker/` are removed from the worktree, covering the top-level project tree plus the nested `project_tracker`, `tracker`, `tracker/migrations`, and `tracker/tests` cache locations.
+  - The slice stayed deletion-only inside `apps/project-tracker/`; no source `.py`, template, static asset, or documentation files changed.
+  - The accepted verification commands both pass in the current workspace: `python3 -m py_compile $(find apps/project-tracker -name '*.py' | sort)` and `poetry run python apps/project-tracker/manage.py test tracker.tests.test_domain tracker.tests.test_views`.
+  - The cleanup remains scoped to repository hygiene inside the existing Django app tree and introduces no tooling or stack changes.
+- Regression check:
+  - No regressions found from the cleanup; the app diff is limited to deleting 18 tracked `.pyc` artifacts under `apps/project-tracker/`.
+  - `py_compile` recreated local `__pycache__` directories during validation, but they are untracked transient outputs and did not change the tracked-source scope of the slice.
+
+## Validation Evidence
+
+- `git diff --name-status -- apps infra` shows only 18 deletions under `apps/project-tracker/` and no `infra/` changes.
+- `python3 -m py_compile $(find apps/project-tracker -name '*.py' | sort)` passed.
+- `poetry run python apps/project-tracker/manage.py test tracker.tests.test_domain tracker.tests.test_views` passed with 36 tests.
+
+## Known Risks
+
+- Future verification runs that include `py_compile` will recreate local `__pycache__` directories unless they are cleaned afterward, so repository hygiene depends on preserving that post-check cleanup step.
+
+## Reviewer Decision
+
+- Decision: DONE for `ITEM-0009`.
+- Accepted because the cleanup stays inside `apps/project-tracker/`, removes only tracked Python bytecode artifacts, and preserves a deletion-only diff with no source, template, static, or documentation changes.
+- Accepted with one narrow operational caveat: `python3 -m py_compile $(find apps/project-tracker -name '*.py' | sort)` transiently recreates local `__pycache__` directories during verification, so future hygiene checks need the same post-run cleanup step to keep the worktree clean.
+- No scope drift found: the slice is repository hygiene only, and the accepted focused Django test command still passes at 36 tests.
+
+## Reviewer Decision
+
+- Decision: DONE for idle completion handoff.
+- Accepted because `ai/active_item.yaml` remains intentionally idle, every backlog item in `ai/backlog.yaml` is already `done`, and this turn introduces no new application diff that would justify reopening implementation work.
+- Accepted with the standing operational caveat preserved from validator review: `python3 -m py_compile $(find apps/project-tracker -name '*.py' | sort)` can transiently regenerate local `__pycache__` directories under `apps/project-tracker/`, so future verification runs should still clean those artifacts afterward when repository hygiene matters.
+- No scope drift found: the current handoff updates baton-state files only, and the accepted focused Django test command remains the same 36-test pass in the current Poetry environment.

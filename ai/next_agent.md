@@ -1,30 +1,23 @@
 # Next Agent
 
-- Current role: `DEV`
-- Prompt: `ai/prompts/04-dev.md`
+- Current role: `PLANNER`
+- Prompt: `ai/prompts/03-planner.md`
 - Execution command for Codex sessions: **Follow `ai/next_agent.yaml` exactly.**
 
 ## Handoff Summary
 
-- `ITEM-0008` is accepted and marked done.
-- Planning has activated `ITEM-0009` as a small repository-hygiene follow-up already called out in prior review notes: remove tracked Python bytecode artifacts from `apps/project-tracker/`.
-- Keep the existing locked stack and behavior unchanged. This slice is cleanup only, not feature work.
+- Reviewer accepted the idle completion handoff as `DONE`; this is still a completion-state baton pass, not a reopened implementation slice.
+- `ai/active_item.yaml` remains idle and now points ownership back to `PLANNER` because every backlog item in `ai/backlog.yaml` is already `done`.
+- The current turn only updates baton-state files under `ai/`; there is still no application diff under `apps/` or `infra/`.
 
-## Active Item
+## Accepted Validation Context
 
-- `ITEM-0009` Remove tracked Python bytecode artifacts
-- Goal: clean tracked `__pycache__` directories and `.pyc` files from `apps/project-tracker/` so the repository reflects source-controlled Django code only.
+- `python3 -m py_compile $(find apps/project-tracker -name '*.py' | sort)` passed in the current Poetry environment.
+- `poetry run python apps/project-tracker/manage.py test tracker.tests.test_domain tracker.tests.test_views` passed with 36 tests.
+- No new regressions were introduced because this handoff did not change application code.
 
-## DEV Focus
+## Planner Focus
 
-- Delete tracked bytecode artifacts under:
-  - `apps/project-tracker/__pycache__/`
-  - `apps/project-tracker/project_tracker/__pycache__/`
-  - `apps/project-tracker/tracker/__pycache__/`
-  - `apps/project-tracker/tracker/migrations/__pycache__/`
-  - `apps/project-tracker/tracker/tests/__pycache__/`
-- Do not modify source files, templates, static assets, or docs for this slice.
-- Re-run:
-  - `python3 -m py_compile $(find apps/project-tracker -name '*.py' | sort)`
-  - `poetry run python apps/project-tracker/manage.py test tracker.tests.test_domain tracker.tests.test_views`
-- Record cleanup and verification evidence in `ai/review.md`, then hand off to VALIDATOR.
+- Preserve the explicit project-complete state unless new user scope appears.
+- Do not invent a new backlog item or implementation slice without new requirements, a recorded exception, or direct user direction.
+- Keep the standing repository-hygiene caveat visible: rerunning `py_compile` can transiently regenerate local `__pycache__` directories under `apps/project-tracker/`.

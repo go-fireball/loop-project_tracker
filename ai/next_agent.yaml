@@ -1,20 +1,18 @@
-next_role: DEV
-prompt_file: ai/prompts/04-dev.md
+next_role: PLANNER
+prompt_file: ai/prompts/03-planner.md
 read:
+  - ai/backlog.yaml
   - ai/active_item.yaml
-  - ai/requirements.md
-  - ai/judgment.yaml
-  - ai/simplification.md
-  - ai/decision-lock.yaml
   - ai/goal.yaml
+  - ai/decision-lock.yaml
+  - ai/review.md
   - ai/constitution.yaml
   - ai/active_agent.txt
   - ai/next_agent.md
   - ai/user-questions.yaml
 allowed_edits:
-  - apps/
-  - infra/
-  - ai/review.md
+  - ai/backlog.yaml
+  - ai/active_item.yaml
   - ai/decision-lock.yaml
   - ai/user-questions.yaml
   - ai/iterations/ITER-0001.md
@@ -25,11 +23,10 @@ stop_conditions:
   - WAITING FOR BATON when active agent mismatch
   - WAITING FOR USER when clarification is required
 success_criteria:
-  - active item implemented with tests
+  - active item selected and implementation-ready
 handoff_on_success:
-  print_exact: HANDOFF TO VALIDATOR
+  print_exact: HANDOFF TO DEV
 notes:
-  - ITEM-0009 active
-  - remove tracked __pycache__ and .pyc files under apps/project-tracker
-  - rerun py_compile and focused Django tests
-  - do not change source, templates, static assets, or docs
+  - review decision DONE
+  - idle completion state accepted with no app diff
+  - backlog remains complete and planner should preserve completion state until new scope appears

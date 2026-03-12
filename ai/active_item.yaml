@@ -1,20 +1,11 @@
-id: ITEM-0009
-title: Remove tracked Python bytecode artifacts
-goal: "Clean tracked `__pycache__` directories and `.pyc` files from `apps/project-tracker/` so the repository reflects source-controlled Django code only."
-status: ready
-owner_role: DEV
-related_files:
-  - apps/project-tracker/__pycache__/
-  - apps/project-tracker/project_tracker/__pycache__/
-  - apps/project-tracker/tracker/__pycache__/
-  - apps/project-tracker/tracker/migrations/__pycache__/
-  - apps/project-tracker/tracker/tests/__pycache__/
+id: null
+title: Project complete; no remaining backlog work
+goal: "Preserve the completed tracker state and avoid further implementation until new backlog scope or user direction is provided."
+status: idle
+owner_role: PLANNER
+related_files: []
 acceptance_criteria:
-  - "Tracked Python bytecode artifacts under `apps/project-tracker/` are removed from the working tree, including nested `__pycache__` directories and `.pyc` files."
-  - "No source `.py`, template, static, or documentation files change as part of the cleanup."
-  - "The accepted verification commands still pass after the cleanup: `python3 -m py_compile $(find apps/project-tracker -name '*.py' | sort)` and `poetry run python apps/project-tracker/manage.py test tracker.tests.test_domain tracker.tests.test_views`."
-  - "The cleanup stays inside the existing project-local Django app tree and introduces no new tooling or stack changes."
+  - "All backlog items remain in `done` status with no unfinished implementation slice selected."
+  - "No additional product or cleanup changes are started without a new planned backlog item or explicit user request."
 done_definition:
-  - "All tracked bytecode artifacts targeted by the slice are deleted from `apps/project-tracker/`."
-  - "Verification evidence records the post-cleanup `py_compile` and focused Django test results."
-  - "The handoff keeps the cleanup scoped as repository hygiene rather than a product-behavior change."
+  - "The baton handoff explicitly states that the current project backlog is complete."

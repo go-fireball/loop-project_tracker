@@ -1,4 +1,4 @@
-Script started on 2026-03-11 23:14:16-05:00 [COMMAND="codex exec --model gpt-5.4 --full-auto Follow\ ai/next_agent.yaml\ exactly. " TERM="xterm-256color" TTY="/dev/pts/0" COLUMNS="184" LINES="43"]
+Script started on 2026-03-11 23:44:42-05:00 [COMMAND="codex exec --model gpt-5.4 --full-auto Follow\ ai/next_agent.yaml\ exactly. " TERM="xterm-256color" TTY="/dev/pts/0" COLUMNS="184" LINES="43"]
 OpenAI Codex v0.114.0 (research preview)
 --------
 [1mworkdir:[0m /home/sundaram/code/temp/test
@@ -8,15 +8,18 @@ OpenAI Codex v0.114.0 (research preview)
 [1msandbox:[0m workspace-write [workdir, /tmp, $TMPDIR, /home/sundaram/.codex/memories]
 [1mreasoning effort:[0m medium
 [1mreasoning summaries:[0m none
-[1msession id:[0m 019ce040-9dc3-7973-9453-37a00de9e5db
+[1msession id:[0m 019ce05c-792c-78b3-9c99-c53c6a249d71
 --------
 [36muser[0m
 Follow ai/next_agent.yaml exactly.
 [36mmcp startup:[0m no servers
 [35m[3mcodex[0m[0m
-I’m checking the repository instructions and the exact contents of `ai/next_agent.yaml` first, then I’ll apply them literally.
+I’m going to inspect `ai/next_agent.yaml` and the surrounding repository instructions first, then I’ll carry out exactly what that file specifies.
 [35m[3mexec[0m[0m
+[1m/bin/bash -lc pwd[0m in /home/sundaram/code/temp/test[35m[3mexec[0m[0m
 [1m/bin/bash -lc "sed -n '1,220p' ai/next_agent.yaml"[0m in /home/sundaram/code/temp/test[32m succeeded in 0ms:[0m
+[2m/home/sundaram/code/temp/test[0m
+[32m succeeded in 0ms:[0m
 [2mnext_role: DEV
 prompt_file: ai/prompts/04-dev.md
 read:
@@ -38,52 +41,42 @@ allowed_edits:
   - ai/user-questions.yaml
   - ai/iterations/ITER-0001.md[0m
 [35m[3mexec[0m[0m
-[1m/bin/bash -lc 'pwd && rg --files .'[0m in /home/sundaram/code/temp/test[32m succeeded in 0ms:[0m
-[2m/home/sundaram/code/temp/test
-./init.sh
-./ai/logs/step-001-VALIDATOR.log
-./context/repo/architecture.md
-./ai/logs/step-005-REVIEWER.log
-./ai/next_agent.md
-./ai/active_agent.txt
-./ai/logs/step-008-DEV.log
-./ai/prompts/00-product-owner.md
-./ai/logs/step-003-ARCHITECT.log
-./ai/logs/step-008-PLANNER.log
-./ai/prompts/04-dev.md
-./ai/logs/step-006-VALIDATOR.log
-./ai/logs/step-005-VALIDATOR.log
-./ai/prompts/06-reviewer.md
-./ai/logs/step-002-VALIDATOR.log
-./ai/prompts/03-planner.md
-./ai/logs/step-002-REVIEWER.log
-./ai/prompts/01-senior-judgmental-engineer.md
-./ai/logs/step-009-REVIEWER.log[0m
-[35m[3mexec[0m[0m
-[1m/bin/bash -lc "sed -n '1,220p' AGENTS.md"[0m in /home/sundaram/code/temp/test[31m exited 2 in 0ms:[0m
-[2msed: can't read AGENTS.md: No such file or directory[0m
+[1m/bin/bash -lc 'rg --files'[0m in /home/sundaram/code/temp/test[32m succeeded in 0ms:[0m
+[2mpoetry.lock
+pyproject.toml
+init.sh
+scripts/check-baton.sh
+scripts/validate_baton.py
+scripts/run-baton.sh
+scripts/check-goal.sh
+scripts/resume-baton.sh
+scripts/generate-next-agent.sh
+scripts/bootstrap.sh
+ai/next_agent.md
+ai/active_agent.txt
+ai/logs/step-008-DEV.log
+ai/logs/step-003-ARCHITECT.log
+ai/logs/step-008-PLANNER.log
+ai/logs/step-006-VALIDATOR.log
+ai/logs/step-005-VALIDATOR.log
+ai/logs/step-002-VALIDATOR.log
+ai/logs/step-002-REVIEWER.log
+ai/logs/step-009-REVIEWER.log[0m
 [35m[3mcodex[0m[0m
-`ai/next_agent.yaml` assigns the `DEV` step for ITEM-0008. I’m loading the required baton files now, then I’ll verify whether this workspace is the active agent before making the documentation change.
+I’ve loaded the baton instructions. Next I’m reading the required AI state files to determine whether I should implement, wait for baton transfer, or stop for user input.
 [35m[3mexec[0m[0m
 [1m/bin/bash -lc "sed -n '1,220p' ai/active_item.yaml"[0m in /home/sundaram/code/temp/test[32m succeeded in 0ms:[0m
-[2mid: ITEM-0008
-title: Document local setup and verification workflow
-goal: "Add concise project-local documentation under `apps/project-tracker/` covering Django setup, test commands, and the known workspace limitation blocking runtime verification."
-status: in_progress
+[2mid: null
+title: Project complete; no remaining backlog work
+goal: "Preserve the completed tracker state and avoid further implementation until new backlog scope or user direction is provided."
+status: idle
 owner_role: DEV
-related_files:
-  - apps/project-tracker/README.md
-  - apps/project-tracker/manage.py
-  - apps/project-tracker/project_tracker/settings.py
+related_files: []
 acceptance_criteria:
-  - "A project-local README or equivalent doc is added under `apps/project-tracker/` with concrete setup steps for creating a Python environment, installing Django, applying migrations, and running the development server."
-  - "The documentation lists the focused verification commands for `py_compile` and the Django test modules currently used by the project."
-  - "The known workspace limitation is documented explicitly as `ModuleNotFoundError: No module named 'django'`, framed as an environment/setup issue rather than a tracker application defect."
-  - "The documentation stays aligned with the locked stack: Django, SQLite, and vanilla HTML/CSS/JS only."
+  - "All backlog items remain in `done` status with no unfinished implementation slice selected."
+  - "No additional product or cleanup changes are started without a new planned backlog item or explicit user request."
 done_definition:
-  - "The new documentation reflects the current repository layout and existing `manage.py` entrypoint without inventing new tooling."
-  - "The listed commands are specific enough for a fresh local checkout to reproduce migrations, server startup, and focused test execution once Django is installed."
-  - "If DEV cannot run Django commands in the workspace, the handoff and review artifacts keep that runtime limitation visible."[0m
+  - "The baton handoff explicitly states that the current project backlog is complete."[0m
 [35m[3mexec[0m[0m
 [1m/bin/bash -lc "sed -n '1,220p' ai/requirements.md"[0m in /home/sundaram/code/temp/test[32m succeeded in 0ms:[0m
 [2m# Requirements (One Pager)
@@ -107,6 +100,26 @@ Build a personal project tracker web app in Django that lets a single user manag
 - Multi-user accounts, authentication, or permissions
 - External APIs, background jobs, or real-time collaboration[0m
 [35m[3mexec[0m[0m
+[1m/bin/bash -lc "sed -n '1,220p' ai/judgment.yaml"[0m in /home/sundaram/code/temp/test[32m succeeded in 0ms:[0m
+[2mbackend_default: aspnet_core
+frontend_default: react_nextjs
+frontend_alternative: nuxt_if_explicitly_requested
+database_default: postgresql
+architecture_default: modular_monolith
+coding_style: functional_testable_pragmatic
+preserve_business_behavior: true
+avoid_unnecessary_microservices: true
+avoid_clever_abstractions: true
+cloud_default: aws
+iac_default: cdk
+container_default: fargate
+static_assets_default: s3_cloudfront
+auth_default: cognito
+python_only_for_data_workloads: true
+nosql_only_when_justified: true
+relational_bias: true
+human_for_high_level_decisions_only: true[0m
+[35m[3mexec[0m[0m
 [1m/bin/bash -lc "sed -n '1,220p' ai/simplification.md"[0m in /home/sundaram/code/temp/test[32m succeeded in 0ms:[0m
 [2m# Simplification Guidance
 
@@ -128,26 +141,6 @@ Build a personal project tracker web app in Django that lets a single user manag
 - Keep human escalation reserved for genuine product tradeoffs. Routine engineering choices should be resolved in favor of the simplest maintainable implementation.
 - Architecture should optimize for easy local development, readable server-rendered flows, and testable CRUD behavior, not for hypothetical multi-user or distributed futures.
 [0m
-[35m[3mexec[0m[0m
-[1m/bin/bash -lc "sed -n '1,220p' ai/judgment.yaml"[0m in /home/sundaram/code/temp/test[32m succeeded in 0ms:[0m
-[2mbackend_default: aspnet_core
-frontend_default: react_nextjs
-frontend_alternative: nuxt_if_explicitly_requested
-database_default: postgresql
-architecture_default: modular_monolith
-coding_style: functional_testable_pragmatic
-preserve_business_behavior: true
-avoid_unnecessary_microservices: true
-avoid_clever_abstractions: true
-cloud_default: aws
-iac_default: cdk
-container_default: fargate
-static_assets_default: s3_cloudfront
-auth_default: cognito
-python_only_for_data_workloads: true
-nosql_only_when_justified: true
-relational_bias: true
-human_for_high_level_decisions_only: true[0m
 [35m[3mexec[0m[0m
 [1m/bin/bash -lc "sed -n '1,220p' ai/decision-lock.yaml"[0m in /home/sundaram/code/temp/test[35m[3mexec[0m[0m
 [1m/bin/bash -lc "sed -n '1,220p' ai/goal.yaml"[0m in /home/sundaram/code/temp/test[32m succeeded in 0ms:[0m
@@ -173,10 +166,10 @@ context_notes:
   - Django serves both the API and static/template files
   - All code lives in apps/project-tracker/
   - Use Django models with proper foreign key and many-to-many relationships
-constraints:
-  - Django and its built-in dependencies only, no additional pip packages (no DRF, no celery, etc.)
-  - No frontend JS frameworks
-  - Single Django project, no microservices[0m
+  - Use Poetry for dependency management (pyproject.toml at the repository root)
+  - Use pyenv for Python version management (Python 3.12+)
+  - Run Django commands via `poetry run python manage.py ...`
+constraints:[0m
 [35m[3mexec[0m[0m
 [1m/bin/bash -lc "sed -n '1,220p' ai/constitution.yaml"[0m in /home/sundaram/code/temp/test[32m succeeded in 0ms:[0m
 [2mcore_rules:
@@ -192,99 +185,81 @@ stop_rules:
   - if human clarification is needed, print exactly WAITING FOR USER
   - always append an iteration log entry before handoff[0m
 [35m[3mexec[0m[0m
-[1m/bin/bash -lc "sed -n '1,220p' ai/user-questions.yaml"[0m in /home/sundaram/code/temp/test[32m succeeded in 0ms:[0m
-[2mstatus: none
-return_to_role: null
-questions: [][0m
-[35m[3mexec[0m[0m
 [1m/bin/bash -lc "sed -n '1,220p' ai/active_agent.txt"[0m in /home/sundaram/code/temp/test[32m succeeded in 0ms:[0m
 [2mDEV[0m
 [35m[3mexec[0m[0m
-[1m/bin/bash -lc "sed -n '1,220p' ai/next_agent.md"[0m in /home/sundaram/code/temp/test[32m succeeded in 0ms:[0m
+[1m/bin/bash -lc "sed -n '1,220p' ai/user-questions.yaml"[0m in /home/sundaram/code/temp/test[35m[3mexec[0m[0m
+[1m/bin/bash -lc "sed -n '1,260p' ai/next_agent.md"[0m in /home/sundaram/code/temp/test[32m succeeded in 0ms:[0m
+[2mstatus: none
+return_to_role: null
+questions: [][0m
+[32m succeeded in 0ms:[0m
 [2m# Next Agent
 
 - Current role: `DEV`
 - Prompt: `ai/prompts/04-dev.md`
 - Execution command for Codex sessions: **Follow `ai/next_agent.yaml` exactly.**
-- If role mismatch with `ai/active_agent.txt`, print: `WAITING FOR BATON`
 
-## Active Item
+## Handoff Summary
 
-- `ITEM-0008`: document local setup and verification workflow under `apps/project-tracker/`.
-- Keep the slice implementation-only and lightweight: this is a documentation closeout task, not new feature work.
+- `ITEM-0009` is accepted and marked done, and every backlog item in `ai/backlog.yaml` is now `done`.
+- The project is currently complete from the planner's perspective; `ai/active_item.yaml` has been reset to an idle completion state instead of selecting a new implementation slice.
+- The latest accepted verification remains the same: `python3 -m py_compile $(find apps/project-tracker -name '*.py' | sort)` plus `poetry run python apps/project-tracker/manage.py test tracker.tests.test_domain tracker.tests.test_views`, with the caveat that `py_compile` can transiently recreate local `__pycache__` directories.
 
-## Implementation Notes
+## Execution Focus
 
-- Add `apps/project-tracker/README.md` with concrete local setup steps for creating a Python environment, installing Django, applying migrations, running the dev server, and executing the accepted focused test commands.
-- Keep the commands aligned with the current project entrypoint and test surface:
-  - `python3 -m py_compile $(find apps/project-tracker -name '*.py' | sort)`
-  - `python3 apps/project-tracker/manage.py migrate`
-  - `python3 apps/project-tracker/manage.py runserver`
-  - `python3 apps/project-tracker/manage.py test tracker.tests.test_domain tracker.tests.test_views`[0m
+- Do not start new app changes unless the user provides new scope or a planner adds a new backlog item.
+- Treat the current state as a completion handoff, not as an instruction to invent follow-up work.
+- If future work resumes, preserve the review note that verification involving `py_compile` may need a post-run cache cleanup when repository hygiene matters.[0m
 [35m[3mcodex[0m[0m
-The baton matches `DEV`, so I can proceed. I’m checking the current Django entrypoint and test layout to keep the new README accurate, then I’ll add the doc and log the iteration before handoff.
+The baton state is consistent: I am the active `DEV`, and the active item is an idle completion state. I’m checking the role prompt now for any required bookkeeping before I stop or hand off.
 [35m[3mexec[0m[0m
-[1m/bin/bash -lc "sed -n '1,260p' apps/project-tracker/project_tracker/settings.py"[0m in /home/sundaram/code/temp/test[35m[3mexec[0m[0m
-[1m/bin/bash -lc "sed -n '1,220p' apps/project-tracker/manage.py"[0m in /home/sundaram/code/temp/test[32m succeeded in 0ms:[0m
-[2mfrom pathlib import Path
+[1m/bin/bash -lc "sed -n '1,260p' ai/prompts/04-dev.md"[0m in /home/sundaram/code/temp/test[32m succeeded in 0ms:[0m
+[2m# ROLE: DEV
 
+## 1) Baton check
+- Read `ai/active_agent.txt`.
+- If value is not exactly `DEV`, output exactly:
+`WAITING FOR BATON`
+- Stop.
 
-BASE_DIR = Path(__file__).resolve().parent.parent
-
-SECRET_KEY = "dev-only-project-tracker-secret-key"
-DEBUG = True
-ALLOWED_HOSTS: list[str] = []
-
-INSTALLED_APPS = [
-    "django.contrib.admin",
-    "django.contrib.auth",
-    "django.contrib.contenttypes",
-    "django.contrib.sessions",
-    "django.contrib.messages",
-    "django.contrib.staticfiles",
-    "tracker",
-]
-
-MIDDLEWARE = [[0m
-[32m succeeded in 0ms:[0m
-[2m#!/usr/bin/env python3
-import os
-import sys
-
-
-def main() -> None:
-    os.environ.setdefault("DJANGO_SETTINGS_MODULE", "project_tracker.settings")
-    from django.core.management import execute_from_command_line
-
-    execute_from_command_line(sys.argv)
-
-
-if __name__ == "__main__":
-    main()[0m
+## 2) Required reads
+- `ai/goal.yaml`
+- `ai/active_item.yaml`
+- `ai/requirements.md`
+- `ai/judgment.yaml`
+- `ai/simplification.md`
+- `ai/decision-lock.yaml`
+- `ai/user-questions.yaml`
+- `ai/constitution.yaml`
+- `ai/next_agent.md`
+- Relevant files in `apps/`, `infra/`, `context/repo/`
+[0m
+[35m[3mcodex[0m[0m
+The role prompt requires a normal end-of-turn handoff even though there’s no implementation slice. I’m updating the iteration log and baton files to pass this idle completion state to `VALIDATOR` without making app changes.
 [35m[3mexec[0m[0m
-[1m/bin/bash -lc "sed -n '1,220p' apps/project-tracker/tracker/tests/test_domain.py"[0m in /home/sundaram/code/temp/test[35m[3mexec[0m[0m
-[1m/bin/bash -lc "sed -n '1,220p' ai/iterations/ITER-0001.md"[0m in /home/sundaram/code/temp/test[35m[3mexec[0m[0m
-[1m/bin/bash -lc "sed -n '1,260p' apps/project-tracker/tracker/tests/test_views.py"[0m in /home/sundaram/code/temp/test[32m succeeded in 0ms:[0m
-[2mfrom datetime import date
+[1m/bin/bash -lc "sed -n '1,260p' scripts/generate-next-agent.sh"[0m in /home/sundaram/code/temp/test[35m[3mexec[0m[0m
+[1m/bin/bash -lc "sed -n '1,260p' ai/iterations/ITER-0001.md"[0m in /home/sundaram/code/temp/test[32m succeeded in 0ms:[0m
+[2m#!/usr/bin/env bash
+set -euo pipefail
+#
+# Usage: ./scripts/generate-next-agent.sh <ROLE> [--notes "context"] [--return-to "ROLE"]
+#
+# Generates ai/next_agent.yaml with the correct config for the given role.
+# Pass --notes to include handoff context (what was done, what to watch for).
+# Pass --return-to to specify which role the baton returns to (used with HUMAN).
+# Called by each role prompt at handoff time so agents don't hand-write YAML.
 
-from django.core.exceptions import ValidationError
-from django.test import TestCase
+ROOT="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)"
+cd "$ROOT"
 
-from tracker.forms import ProjectForm, TagForm, TaskForm
-from tracker.models import Project, Tag, Task
+ROLE=""
+NOTES=""
+RETURN_TO=""
 
-
-class TrackerModelTests(TestCase):
-    def test_project_and_task_defaults_use_locked_choice_values(self):
-        project = Project.objects.create(name="Defaulted", description="")
-        task = Task.objects.create(project=project, title="Default task")
-
-        self.assertEqual(project.status, Project.STATUS_ACTIVE)
-        self.assertEqual(task.status, Task.STATUS_TODO)
-        self.assertEqual(task.priority, Task.PRIORITY_MEDIUM)
-
-    def test_project_and_task_support_tag_assignment(self):
-        project = Project.objects.create([0m
+# Parse args
+while [[ $# -gt 0 ]]; do
+  case "$1" in[0m
 [32m succeeded in 0ms:[0m
 [2m# ITER-0001 Decision Log
 
@@ -306,576 +281,250 @@ class TrackerModelTests(TestCase):
 | 2026-03-12 | VALIDATOR | Accepted the read-only page slice for ITEM-0003 and handed off to review with the Django-environment caveat preserved | Static validation passed, acceptance criteria are met by inspection, and the only blocked verification step is the missing Django package in the workspace |
 | 2026-03-12 | REVIEWER | Marked ITEM-0003 done and returned the baton to planning for the next implementation slice | The read-only tracker pages satisfy the locked acceptance criteria without scope drift, and the blocked Django runtime checks remain an environment caveat rather than a delivered-code gap |
 | 2026-03-12 | PLANNER | Split the async CRUD epic into project and task/tag mutation slices, activated ITEM-0004, and handed implementation to DEV | The original no-reload CRUD item was too large for one safe pass, and project mutations are the smallest vertical slice that builds directly on the accepted read-only pages |[0m
-[32m succeeded in 0ms:[0m
-[2mfrom datetime import timedelta
-
-from django.test import TestCase
-from django.urls import reverse
-from django.utils import timezone
-
-from tracker.models import Project, Tag, Task
-
-
-class TrackerViewTests(TestCase):
-    def setUp(self):
-        self.project = Project.objects.create(
-            name="Launch site",
-            description="Ship the marketing site.",
-            status=Project.STATUS_ACTIVE,
-        )
-        self.other_project = Project.objects.create(
-            name="Archive docs",
-            description="Tidy older project notes.",
-            status=Project.STATUS_ARCHIVED,[0m
 [35m[3mcodex[0m[0m
-I’ve confirmed the command surface from `manage.py`, settings, and the focused test modules. Next I’m adding `apps/project-tracker/README.md` with the exact local setup, migration, server, `py_compile`, and test commands, plus the explicit missing-Django caveat.
+I’m writing the required bookkeeping only: one iteration log entry, validator handoff notes, and the baton transfer to `VALIDATOR`. No `apps/` changes are being made because the active item explicitly says the backlog is complete.
 [3m[35mfile update[0m[0m
-[35mA /home/sundaram/code/temp/test/apps/project-tracker/README.md[0m
-[32m# Project Tracker Local Setup[0m
-[32m[0m
-[32mThis Django project lives entirely under `apps/project-tracker/` and uses SQLite plus server-rendered HTML with vanilla JavaScript.[0m
-[32m[0m
-[32m## Prerequisites[0m
-[32m[0m
-[32m- Python 3[0m
-[32m- `pip`[0m
-[32m[0m
-[32mIf Django is not installed in your local environment yet, Django commands in this workspace currently fail with:[0m
-[32m[0m
-[32m```text[0m
-[32mModuleNotFoundError: No module named 'django'[0m
-[32m```[0m
-[32m[0m
-[32mThat error is an environment/setup issue, not a tracker application defect.[0m
-[32m[0m
-[32m## Create a local virtual environment[0m
-[32m[0m
-[32mFrom the repository root:[0m
-[32m[0m
-[32m```bash[0m
-[32mpython3 -m venv .venv[0m
-[32msource .venv/bin/activate[0m
-[32mpython3 -m pip install --upgrade pip[0m
-[32mpython3 -m pip install django[0m
-[32m```[0m
-[32m[0m
-[32m## Apply migrations[0m
-[32m[0m
-[32mFrom the repository root:[0m
-[32m[0m
-[32m```bash[0m
-[32mpython3 apps/project-tracker/manage.py migrate[0m
-[32m```[0m
-[32m[0m
-[32mThe default database is SQLite at `apps/project-tracker/db.sqlite3`.[0m
-[32m[0m
-[32m## Run the development server[0m
-[32m[0m
-[32mFrom the repository root:[0m
-[32m[0m
-[32m```bash[0m
-[32mpython3 apps/project-tracker/manage.py runserver[0m
-[32m```[0m
-[32m[0m
-[32mOpen the local URL shown by Django, typically `http://127.0.0.1:8000/`.[0m
-[32m[0m
-[32m## Focused verification commands[0m
-[32m[0m
-[32mRun the Python syntax check used in this workspace:[0m
-[32m[0m
-[32m```bash[0m
-[32mpython3 -m py_compile $(find apps/project-tracker -name '*.py' | sort)[0m
-[32m```[0m
-[32m[0m
-[32mRun the focused Django test modules used for the tracker app:[0m
-[32m[0m
-[32m```bash[0m
-[32mpython3 apps/project-tracker/manage.py test tracker.tests.test_domain tracker.tests.test_views[0m
-[32m```[0m
-[32m[0m
-[32mIf the test command still raises `ModuleNotFoundError: No module named 'django'`, install Django in the active environment first and rerun the command.[0m
-[32mapply_patch(auto_approved=true) exited 0 in 4ms:[0m
-[2mSuccess. Updated the following files:[0m
-[2mA /home/sundaram/code/temp/test/apps/project-tracker/README.md[0m
-[3m[35mfile update:[0m[0m
-diff --git a/apps/project-tracker/README.md b/apps/project-tracker/README.md
-new file mode 100644
-index 0000000000000000000000000000000000000000..4efc2e2ee829ed4377de44a99b7198184ef230e3
---- /dev/null
-+++ b/apps/project-tracker/README.md
-@@ -0,0 +1,63 @@
-+# Project Tracker Local Setup
-+
-+This Django project lives entirely under `apps/project-tracker/` and uses SQLite plus server-rendered HTML with vanilla JavaScript.
-+
-+## Prerequisites
-+
-+- Python 3
-+- `pip`
-+
-+If Django is not installed in your local environment yet, Django commands in this workspace currently fail with:
-+
-+```text
-+ModuleNotFoundError: No module named 'django'
-+```
-+
-+That error is an environment/setup issue, not a tracker application defect.
-+
-+## Create a local virtual environment
-+
-+From the repository root:
-+
-+```bash
-+python3 -m venv .venv
-+source .venv/bin/activate
-+python3 -m pip install --upgrade pip
-+python3 -m pip install django
-+```
-+
-+## Apply migrations
-+
-+From the repository root:
-+
-+```bash
-+python3 apps/project-tracker/manage.py migrate
-+```
-+
-+The default database is SQLite at `apps/project-tracker/db.sqlite3`.
-+
-+## Run the development server
-+
-+From the repository root:
-+
-+```bash
-+python3 apps/project-tracker/manage.py runserver
-+```
-+
-+Open the local URL shown by Django, typically `http://127.0.0.1:8000/`.
-+
-+## Focused verification commands
-+
-+Run the Python syntax check used in this workspace:
-+
-+```bash
-+python3 -m py_compile $(find apps/project-tracker -name '*.py' | sort)
-+```
-+
-+Run the focused Django test modules used for the tracker app:
-+
-+```bash
-+python3 apps/project-tracker/manage.py test tracker.tests.test_domain tracker.tests.test_views
-+```
-+
-+If the test command still raises `ModuleNotFoundError: No module named 'django'`, install Django in the active environment first and rerun the command.
-
-[3m[35mfile update:[0m[0m
-diff --git a/apps/project-tracker/README.md b/apps/project-tracker/README.md
-new file mode 100644
-index 0000000000000000000000000000000000000000..4efc2e2ee829ed4377de44a99b7198184ef230e3
---- /dev/null
-+++ b/apps/project-tracker/README.md
-@@ -0,0 +1,63 @@
-+# Project Tracker Local Setup
-+
-+This Django project lives entirely under `apps/project-tracker/` and uses SQLite plus server-rendered HTML with vanilla JavaScript.
-+
-+## Prerequisites
-+
-+- Python 3
-+- `pip`
-+
-+If Django is not installed in your local environment yet, Django commands in this workspace currently fail with:
-+
-+```text
-+ModuleNotFoundError: No module named 'django'
-+```
-+
-+That error is an environment/setup issue, not a tracker application defect.
-+
-+## Create a local virtual environment
-+
-+From the repository root:
-+
-+```bash
-+python3 -m venv .venv
-+source .venv/bin/activate
-+python3 -m pip install --upgrade pip
-+python3 -m pip install django
-+```
-+
-+## Apply migrations
-+
-+From the repository root:
-+
-+```bash
-+python3 apps/project-tracker/manage.py migrate
-+```
-+
-+The default database is SQLite at `apps/project-tracker/db.sqlite3`.
-+
-+## Run the development server
-+
-+From the repository root:
-+
-+```bash
-+python3 apps/project-tracker/manage.py runserver
-+```
-+
-+Open the local URL shown by Django, typically `http://127.0.0.1:8000/`.
-+
-+## Focused verification commands
-+
-+Run the Python syntax check used in this workspace:
-+
-+```bash
-+python3 -m py_compile $(find apps/project-tracker -name '*.py' | sort)
-+```
-+
-+Run the focused Django test modules used for the tracker app:
-+
-+```bash
-+python3 apps/project-tracker/manage.py test tracker.tests.test_domain tracker.tests.test_views
-+```
-+
-+If the test command still raises `ModuleNotFoundError: No module named 'django'`, install Django in the active environment first and rerun the command.
-
-[35m[3mcodex[0m[0m
-The README is in place. I’m running the allowed verification path now: first the repository’s `py_compile` command, then I’ll probe the Django test command to capture whether the known missing-package caveat still holds before I append the iteration log.
-[35m[3mexec[0m[0m
-[1m/bin/bash -lc 'python3 -m py_compile $(find apps/project-tracker -name '"'*.py' | sort)"[0m in /home/sundaram/code/temp/test[32m succeeded in 0ms:[0m
-[2m[0m
-[35m[3mexec[0m[0m
-[1m/bin/bash -lc 'python3 apps/project-tracker/manage.py test tracker.tests.test_domain tracker.tests.test_views'[0m in /home/sundaram/code/temp/test[31m exited 1 in 0ms:[0m
-[2mTraceback (most recent call last):
-  File "/home/sundaram/code/temp/test/apps/project-tracker/manage.py", line 14, in <module>
-    main()
-  File "/home/sundaram/code/temp/test/apps/project-tracker/manage.py", line 8, in main
-    from django.core.management import execute_from_command_line
-ModuleNotFoundError: No module named 'django'[0m
-[3m[35mfile update:[0m[0m
-diff --git a/apps/project-tracker/README.md b/apps/project-tracker/README.md
-new file mode 100644
-index 0000000000000000000000000000000000000000..4efc2e2ee829ed4377de44a99b7198184ef230e3
---- /dev/null
-+++ b/apps/project-tracker/README.md
-@@ -0,0 +1,63 @@
-+# Project Tracker Local Setup
-+
-+This Django project lives entirely under `apps/project-tracker/` and uses SQLite plus server-rendered HTML with vanilla JavaScript.
-+
-+## Prerequisites
-+
-+- Python 3
-+- `pip`
-+
-+If Django is not installed in your local environment yet, Django commands in this workspace currently fail with:
-+
-+```text
-+ModuleNotFoundError: No module named 'django'
-+```
-+
-+That error is an environment/setup issue, not a tracker application defect.
-+
-+## Create a local virtual environment
-+
-+From the repository root:
-+
-+```bash
-+python3 -m venv .venv
-+source .venv/bin/activate
-+python3 -m pip install --upgrade pip
-+python3 -m pip install django
-+```
-+
-+## Apply migrations
-+
-+From the repository root:
-+
-+```bash
-+python3 apps/project-tracker/manage.py migrate
-+```
-+
-+The default database is SQLite at `apps/project-tracker/db.sqlite3`.
-+
-+## Run the development server
-+
-+From the repository root:
-+
-+```bash
-+python3 apps/project-tracker/manage.py runserver
-+```
-+
-+Open the local URL shown by Django, typically `http://127.0.0.1:8000/`.
-+
-+## Focused verification commands
-+
-+Run the Python syntax check used in this workspace:
-+
-+```bash
-+python3 -m py_compile $(find apps/project-tracker -name '*.py' | sort)
-+```
-+
-+Run the focused Django test modules used for the tracker app:
-+
-+```bash
-+python3 apps/project-tracker/manage.py test tracker.tests.test_domain tracker.tests.test_views
-+```
-+
-+If the test command still raises `ModuleNotFoundError: No module named 'django'`, install Django in the active environment first and rerun the command.
-
-[35m[3mcodex[0m[0m
-`py_compile` passed, and the Django test command still fails exactly with the expected `ModuleNotFoundError: No module named 'django'`. I’m recording this DEV slice in the iteration log now, then I’ll hand off cleanly to validator.
-[3m[35mfile update[0m[0m
+[35mM /home/sundaram/code/temp/test/ai/next_agent.md[0m
+@@ -2,4 +2,4 @@
+ 
+[31m-- Current role: `DEV`[0m
+[31m-- Prompt: `ai/prompts/04-dev.md`[0m
+[32m+- Current role: `VALIDATOR`[0m
+[32m+- Prompt: `ai/prompts/05-validator.md`[0m
+ - Execution command for Codex sessions: **Follow `ai/next_agent.yaml` exactly.**
+@@ -8,10 +8,10 @@
+ 
+[31m-- `ITEM-0009` is accepted and marked done, and every backlog item in `ai/backlog.yaml` is now `done`.[0m
+[31m-- The project is currently complete from the planner's perspective; `ai/active_item.yaml` has been reset to an idle completion state instead of selecting a new implementation slice.[0m
+[31m-- The latest accepted verification remains the same: `python3 -m py_compile $(find apps/project-tracker -name '*.py' | sort)` plus `poetry run python apps/project-tracker/manage.py test tracker.tests.test_domain tracker.tests.test_views`, with the caveat that `py_compile` can transiently recreate local `__pycache__` directories.[0m
+[32m+- No implementation work was performed in this DEV turn.[0m
+[32m+- `ai/active_item.yaml` remains in the idle completion state: project backlog complete, no remaining implementation slice selected.[0m
+[32m+- `ai/active_agent.txt` has been advanced to `VALIDATOR` only to satisfy the required baton workflow for the current role prompt.[0m
+ 
+[31m-## Execution Focus[0m
+[32m+## Validation Focus[0m
+ 
+[31m-- Do not start new app changes unless the user provides new scope or a planner adds a new backlog item.[0m
+[31m-- Treat the current state as a completion handoff, not as an instruction to invent follow-up work.[0m
+[31m-- If future work resumes, preserve the review note that verification involving `py_compile` may need a post-run cache cleanup when repository hygiene matters.[0m
+[32m+- Confirm this was a no-op DEV handoff driven by the completed backlog state, not a missed implementation step.[0m
+[32m+- Do not request new product or cleanup work unless a new backlog item or explicit user scope appears.[0m
+[32m+- Preserve the standing verification note from prior handoffs: `python3 -m py_compile $(find apps/project-tracker -name '*.py' | sort)` can transiently regenerate local `__pycache__` directories if future hygiene checks rerun it.[0m
+[35mM /home/sundaram/code/temp/test/ai/active_agent.txt[0m
+@@ -1 +1 @@
+[31m-DEV[0m
+[32m+VALIDATOR[0m
 [35mM /home/sundaram/code/temp/test/ai/iterations/ITER-0001.md[0m
-@@ -39 +39,2 @@
- | 2026-03-12 | PLANNER | Activated ITEM-0008 for project-local setup and verification documentation and handed off implementation to DEV | The tracker feature work is complete, so the next smallest useful slice is to document how to install Django and run the accepted verification commands while preserving the explicit environment caveat |
-[32m+| 2026-03-12 | DEV | Added a project-local README with Django environment setup, migration, runserver, `py_compile`, and focused test commands, then reran static verification and confirmed the existing missing-Django runtime caveat | ITEM-0008 is a documentation closeout slice, so the work stayed inside `apps/project-tracker/`, kept the command surface aligned with the current entrypoint and tests, and preserved `ModuleNotFoundError: No module named 'django'` as an environment limitation rather than an application defect |[0m
-[32mapply_patch(auto_approved=true) exited 0 in 4ms:[0m
+@@ -51 +51,2 @@
+ | 2026-03-12 | PLANNER | Closed the active-item state to idle and handed off with a completion note because all backlog items are done | The planner must keep backlog status accurate, and there is no remaining implementation-ready work without new user scope |
+[32m+| 2026-03-12 | DEV | Performed a no-op completion handoff to VALIDATOR with no app changes because the active item is idle and all backlog items are already done | The DEV role prompt still requires a validator handoff, but the locked project state explicitly forbids inventing new implementation work without new user scope or a newly planned backlog item |[0m
+[32mapply_patch(auto_approved=true) exited 0 in 6ms:[0m
 [2mSuccess. Updated the following files:[0m
 [2mM /home/sundaram/code/temp/test/ai/iterations/ITER-0001.md[0m
+[2mM /home/sundaram/code/temp/test/ai/next_agent.md[0m
+[2mM /home/sundaram/code/temp/test/ai/active_agent.txt[0m
 [3m[35mfile update:[0m[0m
+diff --git a/ai/active_agent.txt b/ai/active_agent.txt
+index a8b82c6896062c7b336ccc8bf7533a20fac54932..925a277add2e0889531e063e180e94c062e5dbb6
+--- a/ai/active_agent.txt
++++ b/ai/active_agent.txt
+@@ -1 +1 @@
+-DEV
++VALIDATOR
 diff --git a/ai/iterations/ITER-0001.md b/ai/iterations/ITER-0001.md
-index f185f973c3f8ee58b2227b9d556d04e3d9579ca2..d2b520168c2f3ffb618d2a35d6eab6ef4ef3ab44
+index 462bc02cd4e4045943d1b2e68bdeb53764a7e640..14f5b7cfe6d6487eaf501034108cf7e0eb7b30c1
 --- a/ai/iterations/ITER-0001.md
 +++ b/ai/iterations/ITER-0001.md
-@@ -37,3 +37,4 @@
- | 2026-03-12 | VALIDATOR | Accepted ITEM-0007 for reviewer handoff after matching the final test additions to the current tracker selector contract and rerunning available validation commands | The expanded coverage satisfies the active-item acceptance criteria without exposing a new regression, and the only remaining gap is the workspace-level `ModuleNotFoundError: No module named 'django'` runtime limitation |
- | 2026-03-12 | REVIEWER | Marked ITEM-0007 done and returned the baton to planning for the next backlog decision | The final coverage and validation slice satisfies the locked acceptance criteria without scope drift, and the only remaining gap is the documented workspace-level missing-Django runtime limitation |
- | 2026-03-12 | PLANNER | Activated ITEM-0008 for project-local setup and verification documentation and handed off implementation to DEV | The tracker feature work is complete, so the next smallest useful slice is to document how to install Django and run the accepted verification commands while preserving the explicit environment caveat |
-+| 2026-03-12 | DEV | Added a project-local README with Django environment setup, migration, runserver, `py_compile`, and focused test commands, then reran static verification and confirmed the existing missing-Django runtime caveat | ITEM-0008 is a documentation closeout slice, so the work stayed inside `apps/project-tracker/`, kept the command surface aligned with the current entrypoint and tests, and preserved `ModuleNotFoundError: No module named 'django'` as an environment limitation rather than an application defect |
-diff --git a/apps/project-tracker/README.md b/apps/project-tracker/README.md
-new file mode 100644
-index 0000000000000000000000000000000000000000..4efc2e2ee829ed4377de44a99b7198184ef230e3
---- /dev/null
-+++ b/apps/project-tracker/README.md
-@@ -0,0 +1,63 @@
-+# Project Tracker Local Setup
-+
-+This Django project lives entirely under `apps/project-tracker/` and uses SQLite plus server-rendered HTML with vanilla JavaScript.
-+
-+## Prerequisites
-+
-+- Python 3
-+- `pip`
-+
-+If Django is not installed in your local environment yet, Django commands in this workspace currently fail with:
-+
-+```text
-+ModuleNotFoundError: No module named 'django'
-+```
-+
-+That error is an environment/setup issue, not a tracker application defect.
-+
-+## Create a local virtual environment
-+
-+From the repository root:
-+
-+```bash
-+python3 -m venv .venv
-+source .venv/bin/activate
-+python3 -m pip install --upgrade pip
-+python3 -m pip install django
-+```
-+
-+## Apply migrations
-+
-+From the repository root:
-+
-+```bash
-+python3 apps/project-tracker/manage.py migrate
-+```
-+
-+The default database is SQLite at `apps/project-tracker/db.sqlite3`.
-+
-+## Run the development server
-+
-+From the repository root:
-+
-+```bash
-+python3 apps/project-tracker/manage.py runserver
-+```
-+
-+Open the local URL shown by Django, typically `http://127.0.0.1:8000/`.
-+
-+## Focused verification commands
-+
-+Run the Python syntax check used in this workspace:
-+
-+```bash
-+python3 -m py_compile $(find apps/project-tracker -name '*.py' | sort)
-+```
-+
-+Run the focused Django test modules used for the tracker app:
-+
-+```bash
-+python3 apps/project-tracker/manage.py test tracker.tests.test_domain tracker.tests.test_views
-+```
-+
-+If the test command still raises `ModuleNotFoundError: No module named 'django'`, install Django in the active environment first and rerun the command.
+@@ -49,3 +49,4 @@
+ | 2026-03-12 | VALIDATOR | Accepted ITEM-0009 for reviewer handoff after confirming the app diff is deletion-only and rerunning the accepted verification commands successfully | The cleanup removes only tracked bytecode artifacts under `apps/project-tracker/`, preserves source behavior, and the only ongoing caveat is that `py_compile` transiently recreates local `__pycache__` directories unless they are cleaned again |
+ | 2026-03-12 | REVIEWER | Marked ITEM-0009 done and returned the baton to planning for the next backlog decision | The repository-hygiene cleanup satisfies the active-item acceptance criteria with a deletion-only diff, passing `py_compile` plus focused Django tests, and only the transient `__pycache__` regeneration caveat remains for future verification runs |
+ | 2026-03-12 | PLANNER | Closed the active-item state to idle and handed off with a completion note because all backlog items are done | The planner must keep backlog status accurate, and there is no remaining implementation-ready work without new user scope |
++| 2026-03-12 | DEV | Performed a no-op completion handoff to VALIDATOR with no app changes because the active item is idle and all backlog items are already done | The DEV role prompt still requires a validator handoff, but the locked project state explicitly forbids inventing new implementation work without new user scope or a newly planned backlog item |
+diff --git a/ai/next_agent.md b/ai/next_agent.md
+index 9e0acdcafbf892b6e74331693e70a08c3a6b4a3b..1541a004be13be0f324488060607fcba43a89cdc
+--- a/ai/next_agent.md
++++ b/ai/next_agent.md
+@@ -1,17 +1,17 @@
+ # Next Agent
+ 
+-- Current role: `DEV`
+-- Prompt: `ai/prompts/04-dev.md`
++- Current role: `VALIDATOR`
++- Prompt: `ai/prompts/05-validator.md`
+ - Execution command for Codex sessions: **Follow `ai/next_agent.yaml` exactly.**
+ 
+ ## Handoff Summary
+ 
+-- `ITEM-0009` is accepted and marked done, and every backlog item in `ai/backlog.yaml` is now `done`.
+-- The project is currently complete from the planner's perspective; `ai/active_item.yaml` has been reset to an idle completion state instead of selecting a new implementation slice.
+-- The latest accepted verification remains the same: `python3 -m py_compile $(find apps/project-tracker -name '*.py' | sort)` plus `poetry run python apps/project-tracker/manage.py test tracker.tests.test_domain tracker.tests.test_views`, with the caveat that `py_compile` can transiently recreate local `__pycache__` directories.
++- No implementation work was performed in this DEV turn.
++- `ai/active_item.yaml` remains in the idle completion state: project backlog complete, no remaining implementation slice selected.
++- `ai/active_agent.txt` has been advanced to `VALIDATOR` only to satisfy the required baton workflow for the current role prompt.
+ 
+-## Execution Focus
++## Validation Focus
+ 
+-- Do not start new app changes unless the user provides new scope or a planner adds a new backlog item.
+-- Treat the current state as a completion handoff, not as an instruction to invent follow-up work.
+-- If future work resumes, preserve the review note that verification involving `py_compile` may need a post-run cache cleanup when repository hygiene matters.
++- Confirm this was a no-op DEV handoff driven by the completed backlog state, not a missed implementation step.
++- Do not request new product or cleanup work unless a new backlog item or explicit user scope appears.
++- Preserve the standing verification note from prior handoffs: `python3 -m py_compile $(find apps/project-tracker -name '*.py' | sort)` can transiently regenerate local `__pycache__` directories if future hygiene checks rerun it.
 
 [3m[35mfile update:[0m[0m
+diff --git a/ai/active_agent.txt b/ai/active_agent.txt
+index a8b82c6896062c7b336ccc8bf7533a20fac54932..925a277add2e0889531e063e180e94c062e5dbb6
+--- a/ai/active_agent.txt
++++ b/ai/active_agent.txt
+@@ -1 +1 @@
+-DEV
++VALIDATOR
 diff --git a/ai/iterations/ITER-0001.md b/ai/iterations/ITER-0001.md
-index f185f973c3f8ee58b2227b9d556d04e3d9579ca2..d2b520168c2f3ffb618d2a35d6eab6ef4ef3ab44
+index 462bc02cd4e4045943d1b2e68bdeb53764a7e640..14f5b7cfe6d6487eaf501034108cf7e0eb7b30c1
 --- a/ai/iterations/ITER-0001.md
 +++ b/ai/iterations/ITER-0001.md
-@@ -37,3 +37,4 @@
- | 2026-03-12 | VALIDATOR | Accepted ITEM-0007 for reviewer handoff after matching the final test additions to the current tracker selector contract and rerunning available validation commands | The expanded coverage satisfies the active-item acceptance criteria without exposing a new regression, and the only remaining gap is the workspace-level `ModuleNotFoundError: No module named 'django'` runtime limitation |
- | 2026-03-12 | REVIEWER | Marked ITEM-0007 done and returned the baton to planning for the next backlog decision | The final coverage and validation slice satisfies the locked acceptance criteria without scope drift, and the only remaining gap is the documented workspace-level missing-Django runtime limitation |
- | 2026-03-12 | PLANNER | Activated ITEM-0008 for project-local setup and verification documentation and handed off implementation to DEV | The tracker feature work is complete, so the next smallest useful slice is to document how to install Django and run the accepted verification commands while preserving the explicit environment caveat |
-+| 2026-03-12 | DEV | Added a project-local README with Django environment setup, migration, runserver, `py_compile`, and focused test commands, then reran static verification and confirmed the existing missing-Django runtime caveat | ITEM-0008 is a documentation closeout slice, so the work stayed inside `apps/project-tracker/`, kept the command surface aligned with the current entrypoint and tests, and preserved `ModuleNotFoundError: No module named 'django'` as an environment limitation rather than an application defect |
-diff --git a/apps/project-tracker/README.md b/apps/project-tracker/README.md
-new file mode 100644
-index 0000000000000000000000000000000000000000..4efc2e2ee829ed4377de44a99b7198184ef230e3
---- /dev/null
-+++ b/apps/project-tracker/README.md
-@@ -0,0 +1,63 @@
-+# Project Tracker Local Setup
-+
-+This Django project lives entirely under `apps/project-tracker/` and uses SQLite plus server-rendered HTML with vanilla JavaScript.
-+
-+## Prerequisites
-+
-+- Python 3
-+- `pip`
-+
-+If Django is not installed in your local environment yet, Django commands in this workspace currently fail with:
-+
-+```text
-+ModuleNotFoundError: No module named 'django'
-+```
-+
-+That error is an environment/setup issue, not a tracker application defect.
-+
-+## Create a local virtual environment
-+
-+From the repository root:
-+
-+```bash
-+python3 -m venv .venv
-+source .venv/bin/activate
-+python3 -m pip install --upgrade pip
-+python3 -m pip install django
-+```
-+
-+## Apply migrations
-+
-+From the repository root:
-+
-+```bash
-+python3 apps/project-tracker/manage.py migrate
-+```
-+
-+The default database is SQLite at `apps/project-tracker/db.sqlite3`.
-+
-+## Run the development server
-+
-+From the repository root:
-+
-+```bash
-+python3 apps/project-tracker/manage.py runserver
-+```
-+
-+Open the local URL shown by Django, typically `http://127.0.0.1:8000/`.
-+
-+## Focused verification commands
-+
-+Run the Python syntax check used in this workspace:
-+
-+```bash
-+python3 -m py_compile $(find apps/project-tracker -name '*.py' | sort)
-+```
-+
-+Run the focused Django test modules used for the tracker app:
-+
-+```bash
-+python3 apps/project-tracker/manage.py test tracker.tests.test_domain tracker.tests.test_views
-+```
-+
-+If the test command still raises `ModuleNotFoundError: No module named 'django'`, install Django in the active environment first and rerun the command.
+@@ -49,3 +49,4 @@
+ | 2026-03-12 | VALIDATOR | Accepted ITEM-0009 for reviewer handoff after confirming the app diff is deletion-only and rerunning the accepted verification commands successfully | The cleanup removes only tracked bytecode artifacts under `apps/project-tracker/`, preserves source behavior, and the only ongoing caveat is that `py_compile` transiently recreates local `__pycache__` directories unless they are cleaned again |
+ | 2026-03-12 | REVIEWER | Marked ITEM-0009 done and returned the baton to planning for the next backlog decision | The repository-hygiene cleanup satisfies the active-item acceptance criteria with a deletion-only diff, passing `py_compile` plus focused Django tests, and only the transient `__pycache__` regeneration caveat remains for future verification runs |
+ | 2026-03-12 | PLANNER | Closed the active-item state to idle and handed off with a completion note because all backlog items are done | The planner must keep backlog status accurate, and there is no remaining implementation-ready work without new user scope |
++| 2026-03-12 | DEV | Performed a no-op completion handoff to VALIDATOR with no app changes because the active item is idle and all backlog items are already done | The DEV role prompt still requires a validator handoff, but the locked project state explicitly forbids inventing new implementation work without new user scope or a newly planned backlog item |
+diff --git a/ai/next_agent.md b/ai/next_agent.md
+index 9e0acdcafbf892b6e74331693e70a08c3a6b4a3b..1541a004be13be0f324488060607fcba43a89cdc
+--- a/ai/next_agent.md
++++ b/ai/next_agent.md
+@@ -1,17 +1,17 @@
+ # Next Agent
+ 
+-- Current role: `DEV`
+-- Prompt: `ai/prompts/04-dev.md`
++- Current role: `VALIDATOR`
++- Prompt: `ai/prompts/05-validator.md`
+ - Execution command for Codex sessions: **Follow `ai/next_agent.yaml` exactly.**
+ 
+ ## Handoff Summary
+ 
+-- `ITEM-0009` is accepted and marked done, and every backlog item in `ai/backlog.yaml` is now `done`.
+-- The project is currently complete from the planner's perspective; `ai/active_item.yaml` has been reset to an idle completion state instead of selecting a new implementation slice.
+-- The latest accepted verification remains the same: `python3 -m py_compile $(find apps/project-tracker -name '*.py' | sort)` plus `poetry run python apps/project-tracker/manage.py test tracker.tests.test_domain tracker.tests.test_views`, with the caveat that `py_compile` can transiently recreate local `__pycache__` directories.
++- No implementation work was performed in this DEV turn.
++- `ai/active_item.yaml` remains in the idle completion state: project backlog complete, no remaining implementation slice selected.
++- `ai/active_agent.txt` has been advanced to `VALIDATOR` only to satisfy the required baton workflow for the current role prompt.
+ 
+-## Execution Focus
++## Validation Focus
+ 
+-- Do not start new app changes unless the user provides new scope or a planner adds a new backlog item.
+-- Treat the current state as a completion handoff, not as an instruction to invent follow-up work.
+-- If future work resumes, preserve the review note that verification involving `py_compile` may need a post-run cache cleanup when repository hygiene matters.
++- Confirm this was a no-op DEV handoff driven by the completed backlog state, not a missed implementation step.
++- Do not request new product or cleanup work unless a new backlog item or explicit user scope appears.
++- Preserve the standing verification note from prior handoffs: `python3 -m py_compile $(find apps/project-tracker -name '*.py' | sort)` can transiently regenerate local `__pycache__` directories if future hygiene checks rerun it.
+
+[35m[3mexec[0m[0m
+[1m/bin/bash -lc './scripts/generate-next-agent.sh VALIDATOR --notes "no implementation performed; active item idle completion state; preserve py_compile __pycache__ regeneration caveat"'[0m in /home/sundaram/code/temp/test[32m succeeded in 0ms:[0m
+[2mGenerated ai/next_agent.yaml for VALIDATOR (next: REVIEWER)[0m
+[3m[35mfile update:[0m[0m
+diff --git a/ai/active_agent.txt b/ai/active_agent.txt
+index a8b82c6896062c7b336ccc8bf7533a20fac54932..925a277add2e0889531e063e180e94c062e5dbb6
+--- a/ai/active_agent.txt
++++ b/ai/active_agent.txt
+@@ -1 +1 @@
+-DEV
++VALIDATOR
+diff --git a/ai/iterations/ITER-0001.md b/ai/iterations/ITER-0001.md
+index 462bc02cd4e4045943d1b2e68bdeb53764a7e640..14f5b7cfe6d6487eaf501034108cf7e0eb7b30c1
+--- a/ai/iterations/ITER-0001.md
++++ b/ai/iterations/ITER-0001.md
+@@ -49,3 +49,4 @@
+ | 2026-03-12 | VALIDATOR | Accepted ITEM-0009 for reviewer handoff after confirming the app diff is deletion-only and rerunning the accepted verification commands successfully | The cleanup removes only tracked bytecode artifacts under `apps/project-tracker/`, preserves source behavior, and the only ongoing caveat is that `py_compile` transiently recreates local `__pycache__` directories unless they are cleaned again |
+ | 2026-03-12 | REVIEWER | Marked ITEM-0009 done and returned the baton to planning for the next backlog decision | The repository-hygiene cleanup satisfies the active-item acceptance criteria with a deletion-only diff, passing `py_compile` plus focused Django tests, and only the transient `__pycache__` regeneration caveat remains for future verification runs |
+ | 2026-03-12 | PLANNER | Closed the active-item state to idle and handed off with a completion note because all backlog items are done | The planner must keep backlog status accurate, and there is no remaining implementation-ready work without new user scope |
++| 2026-03-12 | DEV | Performed a no-op completion handoff to VALIDATOR with no app changes because the active item is idle and all backlog items are already done | The DEV role prompt still requires a validator handoff, but the locked project state explicitly forbids inventing new implementation work without new user scope or a newly planned backlog item |
+diff --git a/ai/next_agent.md b/ai/next_agent.md
+index 9e0acdcafbf892b6e74331693e70a08c3a6b4a3b..1541a004be13be0f324488060607fcba43a89cdc
+--- a/ai/next_agent.md
++++ b/ai/next_agent.md
+@@ -1,17 +1,17 @@
+ # Next Agent
+ 
+-- Current role: `DEV`
+-- Prompt: `ai/prompts/04-dev.md`
++- Current role: `VALIDATOR`
++- Prompt: `ai/prompts/05-validator.md`
+ - Execution command for Codex sessions: **Follow `ai/next_agent.yaml` exactly.**
+ 
+ ## Handoff Summary
+ 
+-- `ITEM-0009` is accepted and marked done, and every backlog item in `ai/backlog.yaml` is now `done`.
+-- The project is currently complete from the planner's perspective; `ai/active_item.yaml` has been reset to an idle completion state instead of selecting a new implementation slice.
+-- The latest accepted verification remains the same: `python3 -m py_compile $(find apps/project-tracker -name '*.py' | sort)` plus `poetry run python apps/project-tracker/manage.py test tracker.tests.test_domain tracker.tests.test_views`, with the caveat that `py_compile` can transiently recreate local `__pycache__` directories.
++- No implementation work was performed in this DEV turn.
++- `ai/active_item.yaml` remains in the idle completion state: project backlog complete, no remaining implementation slice selected.
++- `ai/active_agent.txt` has been advanced to `VALIDATOR` only to satisfy the required baton workflow for the current role prompt.
+ 
+-## Execution Focus
++## Validation Focus
+ 
+-- Do not start new app changes unless the user provides new scope or a planner adds a new backlog item.
+-- Treat the current state as a completion handoff, not as an instruction to invent follow-up work.
+-- If future work resumes, preserve the review note that verification involving `py_compile` may need a post-run cache cleanup when repository hygiene matters.
++- Confirm this was a no-op DEV handoff driven by the completed backlog state, not a missed implementation step.
++- Do not request new product or cleanup work unless a new backlog item or explicit user scope appears.
++- Preserve the standing verification note from prior handoffs: `python3 -m py_compile $(find apps/project-tracker -name '*.py' | sort)` can transiently regenerate local `__pycache__` directories if future hygiene checks rerun it.
 
 [35m[3mcodex[0m[0m
 HANDOFF TO VALIDATOR
 [3m[35mfile update:[0m[0m
+diff --git a/ai/active_agent.txt b/ai/active_agent.txt
+index a8b82c6896062c7b336ccc8bf7533a20fac54932..925a277add2e0889531e063e180e94c062e5dbb6
+--- a/ai/active_agent.txt
++++ b/ai/active_agent.txt
+@@ -1 +1 @@
+-DEV
++VALIDATOR
 diff --git a/ai/iterations/ITER-0001.md b/ai/iterations/ITER-0001.md
-index f185f973c3f8ee58b2227b9d556d04e3d9579ca2..d2b520168c2f3ffb618d2a35d6eab6ef4ef3ab44
+index 462bc02cd4e4045943d1b2e68bdeb53764a7e640..14f5b7cfe6d6487eaf501034108cf7e0eb7b30c1
 --- a/ai/iterations/ITER-0001.md
 +++ b/ai/iterations/ITER-0001.md
-@@ -37,3 +37,4 @@
- | 2026-03-12 | VALIDATOR | Accepted ITEM-0007 for reviewer handoff after matching the final test additions to the current tracker selector contract and rerunning available validation commands | The expanded coverage satisfies the active-item acceptance criteria without exposing a new regression, and the only remaining gap is the workspace-level `ModuleNotFoundError: No module named 'django'` runtime limitation |
- | 2026-03-12 | REVIEWER | Marked ITEM-0007 done and returned the baton to planning for the next backlog decision | The final coverage and validation slice satisfies the locked acceptance criteria without scope drift, and the only remaining gap is the documented workspace-level missing-Django runtime limitation |
- | 2026-03-12 | PLANNER | Activated ITEM-0008 for project-local setup and verification documentation and handed off implementation to DEV | The tracker feature work is complete, so the next smallest useful slice is to document how to install Django and run the accepted verification commands while preserving the explicit environment caveat |
-+| 2026-03-12 | DEV | Added a project-local README with Django environment setup, migration, runserver, `py_compile`, and focused test commands, then reran static verification and confirmed the existing missing-Django runtime caveat | ITEM-0008 is a documentation closeout slice, so the work stayed inside `apps/project-tracker/`, kept the command surface aligned with the current entrypoint and tests, and preserved `ModuleNotFoundError: No module named 'django'` as an environment limitation rather than an application defect |
-diff --git a/apps/project-tracker/README.md b/apps/project-tracker/README.md
-new file mode 100644
-index 0000000000000000000000000000000000000000..4efc2e2ee829ed4377de44a99b7198184ef230e3
---- /dev/null
-+++ b/apps/project-tracker/README.md
-@@ -0,0 +1,63 @@
-+# Project Tracker Local Setup
-+
-+This Django project lives entirely under `apps/project-tracker/` and uses SQLite plus server-rendered HTML with vanilla JavaScript.
-+
-+## Prerequisites
-+
-+- Python 3
-+- `pip`
-+
-+If Django is not installed in your local environment yet, Django commands in this workspace currently fail with:
-+
-+```text
-+ModuleNotFoundError: No module named 'django'
-+```
-+
-+That error is an environment/setup issue, not a tracker application defect.
-+
-+## Create a local virtual environment
-+
-+From the repository root:
-+
-+```bash
-+python3 -m venv .venv
-+source .venv/bin/activate
-+python3 -m pip install --upgrade pip
-+python3 -m pip install django
-+```
-+
-+## Apply migrations
-+
-+From the repository root:
-+
-+```bash
-+python3 apps/project-tracker/manage.py migrate
-+```
-+
-+The default database is SQLite at `apps/project-tracker/db.sqlite3`.
-+
-+## Run the development server
-+
-+From the repository root:
-+
-+```bash
-+python3 apps/project-tracker/manage.py runserver
-+```
-+
-+Open the local URL shown by Django, typically `http://127.0.0.1:8000/`.
-+
-+## Focused verification commands
-+
-+Run the Python syntax check used in this workspace:
-+
-+```bash
-+python3 -m py_compile $(find apps/project-tracker -name '*.py' | sort)
-+```
-+
-+Run the focused Django test modules used for the tracker app:
-+
-+```bash
-+python3 apps/project-tracker/manage.py test tracker.tests.test_domain tracker.tests.test_views
-+```
-+
-+If the test command still raises `ModuleNotFoundError: No module named 'django'`, install Django in the active environment first and rerun the command.
+@@ -49,3 +49,4 @@
+ | 2026-03-12 | VALIDATOR | Accepted ITEM-0009 for reviewer handoff after confirming the app diff is deletion-only and rerunning the accepted verification commands successfully | The cleanup removes only tracked bytecode artifacts under `apps/project-tracker/`, preserves source behavior, and the only ongoing caveat is that `py_compile` transiently recreates local `__pycache__` directories unless they are cleaned again |
+ | 2026-03-12 | REVIEWER | Marked ITEM-0009 done and returned the baton to planning for the next backlog decision | The repository-hygiene cleanup satisfies the active-item acceptance criteria with a deletion-only diff, passing `py_compile` plus focused Django tests, and only the transient `__pycache__` regeneration caveat remains for future verification runs |
+ | 2026-03-12 | PLANNER | Closed the active-item state to idle and handed off with a completion note because all backlog items are done | The planner must keep backlog status accurate, and there is no remaining implementation-ready work without new user scope |
++| 2026-03-12 | DEV | Performed a no-op completion handoff to VALIDATOR with no app changes because the active item is idle and all backlog items are already done | The DEV role prompt still requires a validator handoff, but the locked project state explicitly forbids inventing new implementation work without new user scope or a newly planned backlog item |
+diff --git a/ai/next_agent.md b/ai/next_agent.md
+index 9e0acdcafbf892b6e74331693e70a08c3a6b4a3b..1541a004be13be0f324488060607fcba43a89cdc
+--- a/ai/next_agent.md
++++ b/ai/next_agent.md
+@@ -1,17 +1,17 @@
+ # Next Agent
+ 
+-- Current role: `DEV`
+-- Prompt: `ai/prompts/04-dev.md`
++- Current role: `VALIDATOR`
++- Prompt: `ai/prompts/05-validator.md`
+ - Execution command for Codex sessions: **Follow `ai/next_agent.yaml` exactly.**
+ 
+ ## Handoff Summary
+ 
+-- `ITEM-0009` is accepted and marked done, and every backlog item in `ai/backlog.yaml` is now `done`.
+-- The project is currently complete from the planner's perspective; `ai/active_item.yaml` has been reset to an idle completion state instead of selecting a new implementation slice.
+-- The latest accepted verification remains the same: `python3 -m py_compile $(find apps/project-tracker -name '*.py' | sort)` plus `poetry run python apps/project-tracker/manage.py test tracker.tests.test_domain tracker.tests.test_views`, with the caveat that `py_compile` can transiently recreate local `__pycache__` directories.
++- No implementation work was performed in this DEV turn.
++- `ai/active_item.yaml` remains in the idle completion state: project backlog complete, no remaining implementation slice selected.
++- `ai/active_agent.txt` has been advanced to `VALIDATOR` only to satisfy the required baton workflow for the current role prompt.
+ 
+-## Execution Focus
++## Validation Focus
+ 
+-- Do not start new app changes unless the user provides new scope or a planner adds a new backlog item.
+-- Treat the current state as a completion handoff, not as an instruction to invent follow-up work.
+-- If future work resumes, preserve the review note that verification involving `py_compile` may need a post-run cache cleanup when repository hygiene matters.
++- Confirm this was a no-op DEV handoff driven by the completed backlog state, not a missed implementation step.
++- Do not request new product or cleanup work unless a new backlog item or explicit user scope appears.
++- Preserve the standing verification note from prior handoffs: `python3 -m py_compile $(find apps/project-tracker -name '*.py' | sort)` can transiently regenerate local `__pycache__` directories if future hygiene checks rerun it.
 
 [3m[35mtokens used[0m[0m
-15,767
+14,210
 
-Script done on 2026-03-11 23:15:23-05:00 [COMMAND_EXIT_CODE="0"]
+Script done on 2026-03-11 23:45:47-05:00 [COMMAND_EXIT_CODE="0"]

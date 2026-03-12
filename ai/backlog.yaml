@@ -98,7 +98,7 @@ items:
     title: Remove tracked Python bytecode artifacts
     goal: Clean tracked `__pycache__` directories and `.pyc` files from `apps/project-tracker/` so the repository reflects source-controlled Django code only.
     type: chore
-    status: ready
+    status: done
     priority: low
     dependencies:
       - ITEM-0008
