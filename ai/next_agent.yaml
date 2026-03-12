@@ -1,16 +1,17 @@
-next_role: PRODUCT_OWNER
-prompt_file: ai/prompts/00-product-owner.md
+next_role: SENIOR_JUDGMENTAL_ENGINEER
+prompt_file: ai/prompts/01-senior-judgmental-engineer.md
 read:
-  - ai/goal.yaml
-  - ai/judgment.yaml
-  - ai/constitution.yaml
-  - ai/backlog.yaml
-  - ai/active_item.yaml
-  - ai/decision-lock.yaml
-  - ai/active_agent.txt
-allowed_edits:
   - ai/requirements.md
-  - ai/decision-lock.yaml
+  - ai/simplification.md
+  - ai/judgment.yaml
+  - ai/active_item.yaml
+  - ai/constitution.yaml
+  - ai/goal.yaml
+  - ai/active_agent.txt
+  - ai/next_agent.md
+allowed_edits:
+  - ai/simplification.md
+  - ai/review.md
   - ai/iterations/ITER-0001.md
   - ai/active_agent.txt
   - ai/next_agent.yaml
@@ -19,7 +20,10 @@ stop_conditions:
   - WAITING FOR BATON when active agent mismatch
   - WAITING FOR USER when clarification is required
 success_criteria:
-  - requirements updated
-  - baton handed to next role
+  - judgment guardrails applied and scope validated
 handoff_on_success:
-  print_exact: HANDOFF TO SENIOR_JUDGMENTAL_ENGINEER
+  print_exact: HANDOFF TO ARCHITECT
+notes:
+  - requirements.md fully written from goal.yaml — projects/tasks/tags CRUD with many-to-many tags, dashboard stats, tag-filter view, vanilla JS async mutations, Django+SQLite only
+  - key items to review: scope is tight (no auth, no DRF), all CRUD must work without full page reload, Django built-ins only constraint
+  - risks: judgment.yaml defaults (aspnet_core, react_nextjs) diverge from goal-mandated stack (Django, vanilla JS) — goal takes precedence, no exception needed
