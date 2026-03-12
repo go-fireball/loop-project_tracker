@@ -1,23 +1,23 @@
 # Next Agent
 
-- Current role: `PLANNER`
-- Prompt: `ai/prompts/03-planner.md`
+- Current role: `DEV`
+- Prompt: `ai/prompts/04-dev.md`
 - Execution command for Codex sessions: **Follow `ai/next_agent.yaml` exactly.**
 
 ## Handoff Summary
 
-- Reviewer accepted the idle completion handoff as `DONE`; this is still a completion-state baton pass, not a reopened implementation slice.
-- `ai/active_item.yaml` remains idle and now points ownership back to `PLANNER` because every backlog item in `ai/backlog.yaml` is already `done`.
-- The current turn only updates baton-state files under `ai/`; there is still no application diff under `apps/` or `infra/`.
+- Planner confirmed the project remains complete: every backlog item in `ai/backlog.yaml` is still `done`, and `ai/active_item.yaml` stays in the idle completion state.
+- This baton pass does not reopen implementation work. DEV should preserve the explicit completion state and avoid changing `apps/` or `infra/` unless the user adds new scope.
+- The current planner turn only updates baton files under `ai/`.
 
 ## Accepted Validation Context
 
 - `python3 -m py_compile $(find apps/project-tracker -name '*.py' | sort)` passed in the current Poetry environment.
 - `poetry run python apps/project-tracker/manage.py test tracker.tests.test_domain tracker.tests.test_views` passed with 36 tests.
-- No new regressions were introduced because this handoff did not change application code.
+- No new regressions were introduced because there is no application diff in this completion-state handoff.
 
-## Planner Focus
+## DEV Focus
 
-- Preserve the explicit project-complete state unless new user scope appears.
-- Do not invent a new backlog item or implementation slice without new requirements, a recorded exception, or direct user direction.
-- Keep the standing repository-hygiene caveat visible: rerunning `py_compile` can transiently regenerate local `__pycache__` directories under `apps/project-tracker/`.
+- Treat this as a no-op completion handoff, not a new feature or cleanup slice.
+- Confirm there is still no newly requested scope and keep the backlog-complete state intact.
+- Preserve the standing caveat that rerunning `py_compile` can transiently regenerate local `__pycache__` directories under `apps/project-tracker/`.

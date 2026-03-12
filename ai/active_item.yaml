@@ -2,7 +2,7 @@ id: null
 title: Project complete; no remaining backlog work
 goal: "Preserve the completed tracker state and avoid further implementation until new backlog scope or user direction is provided."
 status: idle
-owner_role: PLANNER
+owner_role: DEV
 related_files: []
 acceptance_criteria:
   - "All backlog items remain in `done` status with no unfinished implementation slice selected."

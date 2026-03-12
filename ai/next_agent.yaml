@@ -1,18 +1,20 @@
-next_role: PLANNER
-prompt_file: ai/prompts/03-planner.md
+next_role: DEV
+prompt_file: ai/prompts/04-dev.md
 read:
-  - ai/backlog.yaml
   - ai/active_item.yaml
-  - ai/goal.yaml
+  - ai/requirements.md
+  - ai/judgment.yaml
+  - ai/simplification.md
   - ai/decision-lock.yaml
-  - ai/review.md
+  - ai/goal.yaml
   - ai/constitution.yaml
   - ai/active_agent.txt
   - ai/next_agent.md
   - ai/user-questions.yaml
 allowed_edits:
-  - ai/backlog.yaml
-  - ai/active_item.yaml
+  - apps/
+  - infra/
+  - ai/review.md
   - ai/decision-lock.yaml
   - ai/user-questions.yaml
   - ai/iterations/ITER-0001.md
@@ -23,10 +25,11 @@ stop_conditions:
   - WAITING FOR BATON when active agent mismatch
   - WAITING FOR USER when clarification is required
 success_criteria:
-  - active item selected and implementation-ready
+  - active item implemented with tests
 handoff_on_success:
-  print_exact: HANDOFF TO DEV
+  print_exact: HANDOFF TO VALIDATOR
 notes:
-  - review decision DONE
-  - idle completion state accepted with no app diff
-  - backlog remains complete and planner should preserve completion state until new scope appears
+  - project remains complete
+  - preserve idle completion state with no app changes
+  - validate no new scope before handing on
+  - do not edit apps/ or infra/ unless user adds scope
