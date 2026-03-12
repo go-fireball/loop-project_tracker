@@ -1,26 +1,30 @@
 # Next Agent
 
-- Current role: `REVIEWER`
-- Prompt: `ai/prompts/06-reviewer.md`
+- Current role: `DEV`
+- Prompt: `ai/prompts/04-dev.md`
 - Execution command for Codex sessions: **Follow `ai/next_agent.yaml` exactly.**
+
+## Handoff Summary
+
+- `ITEM-0008` is accepted and marked done.
+- Planning has activated `ITEM-0009` as a small repository-hygiene follow-up already called out in prior review notes: remove tracked Python bytecode artifacts from `apps/project-tracker/`.
+- Keep the existing locked stack and behavior unchanged. This slice is cleanup only, not feature work.
 
 ## Active Item
 
-- `ITEM-0008`: document local setup and verification workflow under `apps/project-tracker/`.
+- `ITEM-0009` Remove tracked Python bytecode artifacts
+- Goal: clean tracked `__pycache__` directories and `.pyc` files from `apps/project-tracker/` so the repository reflects source-controlled Django code only.
 
-## Validator Result
+## DEV Focus
 
-- Validation passed for the revised documentation slice.
-- [README.md](/home/sundaram/code/temp/test/apps/project-tracker/README.md) now uses the locked `pyenv` plus Poetry workflow, keeps commands scoped to `apps/project-tracker/`, and preserves the exact `ModuleNotFoundError: No module named 'django'` caveat as an environment/setup issue.
-- The current workspace no longer reproduces the earlier missing-Django runtime block: the documented focused Django test command now succeeds in the Poetry environment.
-
-## Validation Evidence
-
-- Passed: `python3 -m py_compile $(find apps/project-tracker -name '*.py' | sort)`
-- Passed: `poetry run python apps/project-tracker/manage.py test tracker.tests.test_domain tracker.tests.test_views` with 36 tests green
-
-## Reviewer Focus
-
-- Confirm the revised README stays within the locked tooling and stack constraints from [goal.yaml](/home/sundaram/code/temp/test/ai/goal.yaml).
-- Confirm the documentation remains project-local and accurately reflects the live verification path under [manage.py](/home/sundaram/code/temp/test/apps/project-tracker/manage.py).
-- Decide whether the residual assumption about local `pyenv` and Poetry installation is acceptable for closing `ITEM-0008`.
+- Delete tracked bytecode artifacts under:
+  - `apps/project-tracker/__pycache__/`
+  - `apps/project-tracker/project_tracker/__pycache__/`
+  - `apps/project-tracker/tracker/__pycache__/`
+  - `apps/project-tracker/tracker/migrations/__pycache__/`
+  - `apps/project-tracker/tracker/tests/__pycache__/`
+- Do not modify source files, templates, static assets, or docs for this slice.
+- Re-run:
+  - `python3 -m py_compile $(find apps/project-tracker -name '*.py' | sort)`
+  - `poetry run python apps/project-tracker/manage.py test tracker.tests.test_domain tracker.tests.test_views`
+- Record cleanup and verification evidence in `ai/review.md`, then hand off to VALIDATOR.

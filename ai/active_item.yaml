@@ -1,18 +1,20 @@
-id: ITEM-0008
-title: Document local setup and verification workflow
-goal: "Add concise project-local documentation under `apps/project-tracker/` covering Django setup, test commands, and the known workspace limitation blocking runtime verification."
-status: in_progress
+id: ITEM-0009
+title: Remove tracked Python bytecode artifacts
+goal: "Clean tracked `__pycache__` directories and `.pyc` files from `apps/project-tracker/` so the repository reflects source-controlled Django code only."
+status: ready
 owner_role: DEV
 related_files:
-  - apps/project-tracker/README.md
-  - apps/project-tracker/manage.py
-  - apps/project-tracker/project_tracker/settings.py
+  - apps/project-tracker/__pycache__/
+  - apps/project-tracker/project_tracker/__pycache__/
+  - apps/project-tracker/tracker/__pycache__/
+  - apps/project-tracker/tracker/migrations/__pycache__/
+  - apps/project-tracker/tracker/tests/__pycache__/
 acceptance_criteria:
-  - "A project-local README or equivalent doc is added under `apps/project-tracker/` with concrete setup steps for creating a Python environment, installing Django, applying migrations, and running the development server."
-  - "The documentation lists the focused verification commands for `py_compile` and the Django test modules currently used by the project."
-  - "The known workspace limitation is documented explicitly as `ModuleNotFoundError: No module named 'django'`, framed as an environment/setup issue rather than a tracker application defect."
-  - "The documentation stays aligned with the locked stack: Django, SQLite, and vanilla HTML/CSS/JS only."
+  - "Tracked Python bytecode artifacts under `apps/project-tracker/` are removed from the working tree, including nested `__pycache__` directories and `.pyc` files."
+  - "No source `.py`, template, static, or documentation files change as part of the cleanup."
+  - "The accepted verification commands still pass after the cleanup: `python3 -m py_compile $(find apps/project-tracker -name '*.py' | sort)` and `poetry run python apps/project-tracker/manage.py test tracker.tests.test_domain tracker.tests.test_views`."
+  - "The cleanup stays inside the existing project-local Django app tree and introduces no new tooling or stack changes."
 done_definition:
-  - "The new documentation reflects the current repository layout and existing `manage.py` entrypoint without inventing new tooling."
-  - "The listed commands are specific enough for a fresh local checkout to reproduce migrations, server startup, and focused test execution once Django is installed."
-  - "If DEV cannot run Django commands in the workspace, the handoff and review artifacts keep that runtime limitation visible."
+  - "All tracked bytecode artifacts targeted by the slice are deleted from `apps/project-tracker/`."
+  - "Verification evidence records the post-cleanup `py_compile` and focused Django test results."
+  - "The handoff keeps the cleanup scoped as repository hygiene rather than a product-behavior change."

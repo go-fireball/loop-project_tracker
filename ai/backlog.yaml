@@ -86,7 +86,7 @@ items:
     title: Document local setup and verification workflow
     goal: Add concise project-local documentation under `apps/project-tracker/` covering Django setup, test commands, and the known workspace limitation blocking runtime verification.
     type: chore
-    status: in_progress
+    status: done
     priority: low
     dependencies:
       - ITEM-0007
@@ -94,3 +94,15 @@ items:
       - Keep the documentation close to the Django app so DEV can edit inside allowed paths.
       - Capture the exact `manage.py` commands for running the server, migrations, and focused tests once Django is installed.
       - Preserve the current `ModuleNotFoundError: No module named 'django'` caveat as an environment issue, not a product-code defect.
+  - id: ITEM-0009
+    title: Remove tracked Python bytecode artifacts
+    goal: Clean tracked `__pycache__` directories and `.pyc` files from `apps/project-tracker/` so the repository reflects source-controlled Django code only.
+    type: chore
+    status: ready
+    priority: low
+    dependencies:
+      - ITEM-0008
+    notes:
+      - Limit the cleanup to tracked Python bytecode artifacts under `apps/project-tracker/`.
+      - Do not introduce new tooling or repository-root changes such as `.gitignore` updates in this slice.
+      - Re-run the accepted `py_compile` and focused Django test commands after cleanup to confirm no behavioral regression.

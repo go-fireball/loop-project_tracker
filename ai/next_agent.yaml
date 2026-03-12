@@ -1,19 +1,20 @@
-next_role: REVIEWER
-prompt_file: ai/prompts/06-reviewer.md
+next_role: DEV
+prompt_file: ai/prompts/04-dev.md
 read:
   - ai/active_item.yaml
-  - ai/backlog.yaml
-  - ai/review.md
+  - ai/requirements.md
+  - ai/judgment.yaml
+  - ai/simplification.md
   - ai/decision-lock.yaml
-  - ai/constitution.yaml
   - ai/goal.yaml
+  - ai/constitution.yaml
   - ai/active_agent.txt
   - ai/next_agent.md
   - ai/user-questions.yaml
 allowed_edits:
+  - apps/
+  - infra/
   - ai/review.md
-  - ai/backlog.yaml
-  - ai/active_item.yaml
   - ai/decision-lock.yaml
   - ai/user-questions.yaml
   - ai/iterations/ITER-0001.md
@@ -24,10 +25,11 @@ stop_conditions:
   - WAITING FOR BATON when active agent mismatch
   - WAITING FOR USER when clarification is required
 success_criteria:
-  - review decision made (DONE/REVISE/ESCALATE)
+  - active item implemented with tests
 handoff_on_success:
-  print_exact: HANDOFF TO PLANNER
+  print_exact: HANDOFF TO VALIDATOR
 notes:
-  - validation results
-  - ITEM-0008 pass
-  - README now matches locked pyenv plus Poetry workflow and focused compile plus Django tests passed (36 tests)
+  - ITEM-0009 active
+  - remove tracked __pycache__ and .pyc files under apps/project-tracker
+  - rerun py_compile and focused Django tests
+  - do not change source, templates, static assets, or docs

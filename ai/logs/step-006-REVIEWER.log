@@ -1,4 +1,4 @@
-Script started on 2026-03-11 23:01:05-05:00 [COMMAND="codex exec --model gpt-5.4 --full-auto Follow\ ai/next_agent.yaml\ exactly. " TERM="xterm-256color" TTY="/dev/pts/0" COLUMNS="184" LINES="43"]
+Script started on 2026-03-11 23:32:52-05:00 [COMMAND="codex exec --model gpt-5.4 --full-auto Follow\ ai/next_agent.yaml\ exactly. " TERM="xterm-256color" TTY="/dev/pts/0" COLUMNS="184" LINES="43"]
 OpenAI Codex v0.114.0 (research preview)
 --------
 [1mworkdir:[0m /home/sundaram/code/temp/test
@@ -8,40 +8,37 @@ OpenAI Codex v0.114.0 (research preview)
 [1msandbox:[0m workspace-write [workdir, /tmp, $TMPDIR, /home/sundaram/.codex/memories]
 [1mreasoning effort:[0m medium
 [1mreasoning summaries:[0m none
-[1msession id:[0m 019ce034-8bb4-7241-bd8d-77f5935deb4f
+[1msession id:[0m 019ce051-a483-7052-8616-fbba76994164
 --------
 [36muser[0m
 Follow ai/next_agent.yaml exactly.
 [36mmcp startup:[0m no servers
 [35m[3mcodex[0m[0m
-I’m checking the workspace and opening `ai/next_agent.yaml` first so I can follow its instructions exactly and see whether it references any other required files.
+I’m locating `ai/next_agent.yaml` and the surrounding repo instructions first, then I’ll execute against those constraints exactly rather than guessing the workflow.
 [35m[3mexec[0m[0m
 [1m/bin/bash -lc pwd[0m in /home/sundaram/code/temp/test[32m succeeded in 0ms:[0m
 [2m/home/sundaram/code/temp/test[0m
 [35m[3mexec[0m[0m
-[1m/bin/bash -lc 'rg --files'[0m in /home/sundaram/code/temp/test[32m succeeded in 0ms:[0m
-[2minit.sh
-ai/logs/step-003-ARCHITECT.log
-ai/logs/step-008-PLANNER.log
-ai/logs/step-006-VALIDATOR.log
-ai/logs/step-005-VALIDATOR.log
-ai/logs/step-002-VALIDATOR.log
-ai/logs/step-002-REVIEWER.log
-ai/logs/step-009-REVIEWER.log
-ai/logs/step-007-REVIEWER.log
-ai/logs/step-007-DEV.log
-ai/logs/step-009-DEV.log
-ai/logs/step-001-DEV.log
-ai/logs/step-002-PLANNER.log
-ai/logs/step-010-VALIDATOR.log
-ai/logs/step-002-SENIOR_JUDGMENTAL_ENGINEER.log
-ai/logs/step-003-REVIEWER.log
-ai/logs/baton.log
-ai/logs/step-003-PLANNER.log
-ai/logs/step-005-DEV.log
-ai/logs/step-006-PLANNER.log[0m
+[1m/bin/bash -lc "rg --files -g 'AGENTS.md' -g 'ai/next_agent.yaml' -g 'next_agent.yaml'"[0m in /home/sundaram/code/temp/test[32m succeeded in 0ms:[0m
+[2mai/next_agent.yaml[0m
 [35m[3mexec[0m[0m
-[1m/bin/bash -lc "sed -n '1,240p' ai/next_agent.yaml"[0m in /home/sundaram/code/temp/test[32m succeeded in 0ms:[0m
+[1m/bin/bash -lc 'ls -la'[0m in /home/sundaram/code/temp/test[32m succeeded in 0ms:[0m
+[2mtotal 44
+drwxrwxr-x 8 sundaram sundaram 4096 Mar 11 23:19 .
+drwxrwxr-x 4 sundaram sundaram 4096 Mar 11 21:28 ..
+drwxrwxr-x 8 sundaram sundaram 4096 Mar 11 23:31 .git
+drwxrwxr-x 7 sundaram sundaram 4096 Mar 11 23:30 ai
+drwxrwxr-x 3 sundaram sundaram 4096 Mar 11 22:00 apps
+drwxrwxr-x 4 sundaram sundaram 4096 Mar 11 21:30 context
+drwxrwxr-x 2 sundaram sundaram 4096 Mar 11 21:30 infra
+-rwxrwxr-x 1 sundaram sundaram  610 Mar 11 21:29 init.sh
+-rw-rw-r-- 1 sundaram sundaram 2343 Mar 11 23:19 poetry.lock
+-rw-rw-r-- 1 sundaram sundaram  325 Mar 11 23:19 pyproject.toml
+drwxrwxr-x 2 sundaram sundaram 4096 Mar 11 21:50 scripts[0m
+[35m[3mcodex[0m[0m
+I found the control file. Next step is to read `ai/next_agent.yaml` verbatim and inspect only the files it points at so the execution matches the requested contract.
+[35m[3mexec[0m[0m
+[1m/bin/bash -lc "sed -n '1,220p' ai/next_agent.yaml"[0m in /home/sundaram/code/temp/test[32m succeeded in 0ms:[0m
 [2mnext_role: REVIEWER
 prompt_file: ai/prompts/06-reviewer.md
 read:
@@ -62,8 +59,30 @@ allowed_edits:
   - ai/user-questions.yaml
   - ai/iterations/ITER-0001.md
   - ai/active_agent.txt[0m
+[35m[3mexec[0m[0m
+[1m/bin/bash -lc 'find ai -maxdepth 2 -type f | sort'[0m in /home/sundaram/code/temp/test[32m succeeded in 0ms:[0m
+[2mai/active_agent.txt
+ai/active_item.yaml
+ai/backlog.yaml
+ai/constitution.yaml
+ai/decision-lock.yaml
+ai/defaults/active_item.yaml
+ai/defaults/backlog.yaml
+ai/defaults/constitution.yaml
+ai/defaults/decision-lock.yaml
+ai/defaults/goal.yaml
+ai/defaults/judgment.yaml
+ai/defaults/requirements.md
+ai/defaults/review.md
+ai/defaults/simplification.md
+ai/defaults/user-questions.yaml
+ai/goal.yaml
+ai/iterations/ITER-0001.md
+ai/judgment.yaml
+ai/logs/baton.log
+ai/logs/step-001-DEV.log[0m
 [35m[3mcodex[0m[0m
-The handoff file puts me in the `REVIEWER` role. I’m reading the required project state files now, then I’ll make the review decision and update only the allowed baton files.
+`next_role` is `REVIEWER`, so I’m switching into the reviewer workflow now: reading the mandated context files, then I’ll either make the review decision or stop on one of the explicit stop conditions.
 [35m[3mexec[0m[0m
 [1m/bin/bash -lc "sed -n '1,220p' ai/prompts/06-reviewer.md"[0m in /home/sundaram/code/temp/test[32m succeeded in 0ms:[0m
 [2m# ROLE: REVIEWER
@@ -87,29 +106,43 @@ The handoff file puts me in the `REVIEWER` role. I’m reading the required proj
 ## 3) Allowed edits (only)
 - `ai/review.md`[0m
 [35m[3mexec[0m[0m
-[1m/bin/bash -lc "sed -n '1,220p' ai/active_item.yaml"[0m in /home/sundaram/code/temp/test[32m succeeded in 0ms:[0m
-[2mid: ITEM-0006
-title: Add no-reload tag CRUD interactions
-goal: "Implement async create, update, and delete flows for tags using HTML partial responses and small vanilla JS fetch handlers on a server-rendered tag management surface."
-status: in_progress
-owner_role: DEV
-related_files:
-  - apps/project-tracker/tracker/views.py
-  - apps/project-tracker/tracker/urls.py
-  - apps/project-tracker/tracker/forms.py
-  - apps/project-tracker/templates/tracker/tag_detail.html
-  - apps/project-tracker/templates/tracker/partials/
-  - apps/project-tracker/static/tracker/app.js
-  - apps/project-tracker/static/tracker/app.css
-  - apps/project-tracker/tracker/tests/test_views.py
-acceptance_criteria:
-  - "Users can create a tag from the tag management surface and see the tag list and create form update without a full page reload."
-  - "Users can edit an existing tag from the tag management surface and see the updated tag content render via returned HTML partials."
-  - "Users can delete an existing tag from the tag management surface and the affected tag list plus selected tag detail state update without a full page reload."
-  - "Invalid tag submissions render inline form errors through partial HTML responses rather than forcing a full-page workflow."
-  - "The implementation stays inside the existing Django tracker app with plain HTML, CSS, and vanilla JS fetch handlers only."[0m
-[35m[3mexec[0m[0m
-[1m/bin/bash -lc "sed -n '1,260p' ai/review.md"[0m in /home/sundaram/code/temp/test[32m succeeded in 0ms:[0m
+[1m/bin/bash -lc "sed -n '1,220p' ai/backlog.yaml"[0m in /home/sundaram/code/temp/test[35m[3mexec[0m[0m
+[1m/bin/bash -lc "sed -n '1,220p' ai/constitution.yaml"[0m in /home/sundaram/code/temp/test[35m[3mexec[0m[0m
+[1m/bin/bash -lc "sed -n '1,220p' ai/review.md"[0m in /home/sundaram/code/temp/test[32m succeeded in 0ms:[0m
+[2mcore_rules:
+  - state lives in files, not chat memory
+  - baton ownership is authoritative
+  - roles must not edit outside allowed files
+baton_rules:
+  - if active agent mismatch, print exactly WAITING FOR BATON
+  - baton must be handed off explicitly
+edit_rules:
+  - only edit allowed files listed in the current role prompt
+stop_rules:
+  - if human clarification is needed, print exactly WAITING FOR USER
+  - always append an iteration log entry before handoff[0m
+[32m succeeded in 0ms:[0m
+[2mitems:
+  - id: ITEM-0001
+    title: Scaffold Django project tracker baseline
+    goal: Establish the single-project Django skeleton under `apps/project-tracker/` with the tracker app wired into settings, URLs, templates, and static assets.
+    type: feature
+    status: done
+    priority: high
+    dependencies: []
+    notes:
+      - Keep one Django project with one main `tracker` app.
+      - Create the baseline file structure for settings, root URLs, app URLs, templates, and static assets.
+      - Include a base template and shared asset wiring that later CRUD pages can extend.
+  - id: ITEM-0002
+    title: Implement tracker domain models and forms
+    goal: Add `Project`, `Task`, and `Tag` models, related forms, admin registration, and database migrations that match the approved domain surface.
+    type: feature
+    status: done
+    priority: high
+    dependencies:
+      - ITEM-0001[0m
+[32m succeeded in 0ms:[0m
 [2m# Review Notes
 
 Use this file for reviewer outcomes:
@@ -131,27 +164,25 @@ Use this file for reviewer outcomes:
 - Prefer HTML partial responses for mutations; allow narrow JSON responses only when HTML would be more awkward for the specific interaction.
 - Keep domain logic in models, forms, and views; reject speculative service, repository, command-bus, or multi-app splits.[0m
 [35m[3mexec[0m[0m
-[1m/bin/bash -lc "sed -n '1,260p' ai/backlog.yaml"[0m in /home/sundaram/code/temp/test[32m succeeded in 0ms:[0m
-[2mitems:
-  - id: ITEM-0001
-    title: Scaffold Django project tracker baseline
-    goal: Establish the single-project Django skeleton under `apps/project-tracker/` with the tracker app wired into settings, URLs, templates, and static assets.
-    type: feature
-    status: done
-    priority: high
-    dependencies: []
-    notes:
-      - Keep one Django project with one main `tracker` app.
-      - Create the baseline file structure for settings, root URLs, app URLs, templates, and static assets.
-      - Include a base template and shared asset wiring that later CRUD pages can extend.
-  - id: ITEM-0002
-    title: Implement tracker domain models and forms
-    goal: Add `Project`, `Task`, and `Tag` models, related forms, admin registration, and database migrations that match the approved domain surface.
-    type: feature
-    status: done
-    priority: high
-    dependencies:
-      - ITEM-0001[0m
+[1m/bin/bash -lc "sed -n '1,220p' ai/active_item.yaml"[0m in /home/sundaram/code/temp/test[32m succeeded in 0ms:[0m
+[2mid: ITEM-0008
+title: Document local setup and verification workflow
+goal: "Add concise project-local documentation under `apps/project-tracker/` covering Django setup, test commands, and the known workspace limitation blocking runtime verification."
+status: in_progress
+owner_role: DEV
+related_files:
+  - apps/project-tracker/README.md
+  - apps/project-tracker/manage.py
+  - apps/project-tracker/project_tracker/settings.py
+acceptance_criteria:
+  - "A project-local README or equivalent doc is added under `apps/project-tracker/` with concrete setup steps for creating a Python environment, installing Django, applying migrations, and running the development server."
+  - "The documentation lists the focused verification commands for `py_compile` and the Django test modules currently used by the project."
+  - "The known workspace limitation is documented explicitly as `ModuleNotFoundError: No module named 'django'`, framed as an environment/setup issue rather than a tracker application defect."
+  - "The documentation stays aligned with the locked stack: Django, SQLite, and vanilla HTML/CSS/JS only."
+done_definition:
+  - "The new documentation reflects the current repository layout and existing `manage.py` entrypoint without inventing new tooling."
+  - "The listed commands are specific enough for a fresh local checkout to reproduce migrations, server startup, and focused test execution once Django is installed."
+  - "If DEV cannot run Django commands in the workspace, the handoff and review artifacts keep that runtime limitation visible."[0m
 [35m[3mexec[0m[0m
 [1m/bin/bash -lc "sed -n '1,220p' ai/decision-lock.yaml"[0m in /home/sundaram/code/temp/test[32m succeeded in 0ms:[0m
 [2mconfirmed_by_user: false
@@ -160,21 +191,8 @@ last_user_decision: null
 approved_exceptions: []
 approved_decisions: [][0m
 [35m[3mexec[0m[0m
-[1m/bin/bash -lc "sed -n '1,220p' ai/constitution.yaml"[0m in /home/sundaram/code/temp/test[32m succeeded in 0ms:[0m
-[2mcore_rules:
-  - state lives in files, not chat memory
-  - baton ownership is authoritative
-  - roles must not edit outside allowed files
-baton_rules:
-  - if active agent mismatch, print exactly WAITING FOR BATON
-  - baton must be handed off explicitly
-edit_rules:
-  - only edit allowed files listed in the current role prompt
-stop_rules:
-  - if human clarification is needed, print exactly WAITING FOR USER
-  - always append an iteration log entry before handoff[0m
-[35m[3mexec[0m[0m
-[1m/bin/bash -lc "sed -n '1,220p' ai/goal.yaml"[0m in /home/sundaram/code/temp/test[32m succeeded in 0ms:[0m
+[1m/bin/bash -lc "sed -n '1,220p' ai/goal.yaml"[0m in /home/sundaram/code/temp/test[35m[3mexec[0m[0m
+[1m/bin/bash -lc "sed -n '1,220p' ai/user-questions.yaml"[0m in /home/sundaram/code/temp/test[32m succeeded in 0ms:[0m
 [2mproject_goal: Build a personal project tracker web app using Django with a SQLite database and HTML/JS frontend
 success_criteria:
   - Django REST endpoints for CRUD operations on projects, tasks, and tags
@@ -191,321 +209,66 @@ context_notes:
   - Django serves both the API and static/template files
   - All code lives in apps/project-tracker/
   - Use Django models with proper foreign key and many-to-many relationships
-constraints:
-  - Django and its built-in dependencies only, no additional pip packages (no DRF, no celery, etc.)
-  - No frontend JS frameworks
-  - Single Django project, no microservices[0m
+  - Use Poetry for dependency management (pyproject.toml at the repository root)
+  - Use pyenv for Python version management (Python 3.12+)
+  - Run Django commands via `poetry run python manage.py ...`
+constraints:[0m
+[32m succeeded in 0ms:[0m
+[2mstatus: none
+return_to_role: null
+questions: [][0m
 [35m[3mexec[0m[0m
-[1m/bin/bash -lc "sed -n '1,120p' ai/active_agent.txt"[0m in /home/sundaram/code/temp/test[32m succeeded in 0ms:[0m
-[2mREVIEWER[0m
-[35m[3mexec[0m[0m
-[1m/bin/bash -lc "sed -n '1,240p' ai/next_agent.md"[0m in /home/sundaram/code/temp/test[32m succeeded in 0ms:[0m
+[1m/bin/bash -lc "sed -n '1,220p' ai/next_agent.md"[0m in /home/sundaram/code/temp/test[32m succeeded in 0ms:[0m
 [2m# Next Agent
 
 - Current role: `REVIEWER`
 - Prompt: `ai/prompts/06-reviewer.md`
 - Execution command for Codex sessions: **Follow `ai/next_agent.yaml` exactly.**
-- If role mismatch with `ai/active_agent.txt`, print: `WAITING FOR BATON`
 
-## Handoff Notes
+## Active Item
 
-- Active item remains `ITEM-0006` "Add no-reload tag CRUD interactions".
-- Validator result: PASS.
-- Accepted by inspection because the tag management slice meets the locked acceptance criteria and the shared swap-helper change does not introduce an observed regression on the existing project/task mutation surfaces.
+- `ITEM-0008`: document local setup and verification workflow under `apps/project-tracker/`.
 
-## What Was Validated
+## Validator Result
 
-- `tracker/views.py` and `tracker/urls.py` now provide:
-  - `tag_list`
-  - `tag_detail`
-  - `tag_create`
-  - `tag_update`[0m
+- Validation passed for the revised documentation slice.
+- [README.md](/home/sundaram/code/temp/test/apps/project-tracker/README.md) now uses the locked `pyenv` plus Poetry workflow, keeps commands scoped to `apps/project-tracker/`, and preserves the exact `ModuleNotFoundError: No module named 'django'` caveat as an environment/setup issue.
+- The current workspace no longer reproduces the earlier missing-Django runtime block: the documented focused Django test command now succeeds in the Poetry environment.
+
+## Validation Evidence
+
+- Passed: `python3 -m py_compile $(find apps/project-tracker -name '*.py' | sort)`
+- Passed: `poetry run python apps/project-tracker/manage.py test tracker.tests.test_domain tracker.tests.test_views` with 36 tests green[0m
 [35m[3mexec[0m[0m
-[1m/bin/bash -lc "sed -n '1,220p' ai/user-questions.yaml"[0m in /home/sundaram/code/temp/test[32m succeeded in 0ms:[0m
-[2mstatus: none
-return_to_role: null
-questions: [][0m
+[1m/bin/bash -lc "sed -n '1,220p' ai/active_agent.txt"[0m in /home/sundaram/code/temp/test[32m succeeded in 0ms:[0m
+[2mREVIEWER[0m
 [35m[3mcodex[0m[0m
-I’ve got the baton and the prior validator context. I’m inspecting the tag CRUD implementation and the shared swap helper directly before I lock the item as done or send it back.
+The baton is valid and there’s no pending user clarification. I’m checking the actual documentation and the repository state now so the review decision is based on the current files rather than just the handoff note.
 [35m[3mexec[0m[0m
-[1m/bin/bash -lc "sed -n '1,320p' apps/project-tracker/tracker/views.py"[0m in /home/sundaram/code/temp/test[32m succeeded in 0ms:[0m
-[2mfrom django.db.models import Count, Prefetch, Q
-from django.http import HttpResponseNotAllowed
-from django.shortcuts import get_object_or_404, render
-from django.template.loader import render_to_string
-from django.urls import reverse
-from django.utils import timezone
+[1m/bin/bash -lc "sed -n '1,240p' apps/project-tracker/README.md"[0m in /home/sundaram/code/temp/test[32m succeeded in 0ms:[0m
+[2m# Project Tracker
 
-from .forms import ProjectForm, TagForm, TaskForm
-from .models import Project, Tag, Task
+Personal project tracker built with Django, SQLite, server-rendered templates, and vanilla JavaScript.
 
+## Local setup
 
-def _project_list_queryset():
-    return (
-        Project.objects.annotate(
-            task_count=Count("tasks", distinct=True),
-            open_task_count=Count(
-                "tasks",
-                filter=~Q(tasks__status=Task.STATUS_DONE),
-                distinct=True,
-            ),[0m
-[35m[3mexec[0m[0m
-[1m/bin/bash -lc "sed -n '1,240p' apps/project-tracker/tracker/urls.py"[0m in /home/sundaram/code/temp/test[32m succeeded in 0ms:[0m
-[2mfrom django.urls import path
+Run everything from the repository root unless a command says otherwise.
 
-from .views import (
-    dashboard,
-    project_create,
-    project_delete,
-    project_detail,
-    project_list,
-    project_update,
-    tag_create,
-    tag_detail,
-    tag_delete,
-    tag_list,
-    tag_update,
-    task_create,
-    task_delete,
-    task_update,
-)
+### 1. Install the locked Python version with pyenv
 
-app_name = "tracker"[0m
-[35m[3mexec[0m[0m
-[1m/bin/bash -lc "sed -n '1,260p' apps/project-tracker/static/tracker/app.js"[0m in /home/sundaram/code/temp/test[32m succeeded in 0ms:[0m
-[2mdocument.documentElement.dataset.app = "project-tracker";
+```bash
+pyenv install 3.12
+pyenv local 3.12
+```
 
-const parseAndSwap = async (response) => {
-  const html = await response.text();
-  const doc = new DOMParser().parseFromString(html, "text/html");
-  const swaps = doc.querySelectorAll("template[data-swap-target]");
+The repository is locked to Python 3.12+ in `pyproject.toml`. If your local `pyenv` already has a compatible 3.12.x version installed, reuse that version instead of reinstalling it.
 
-  swaps.forEach((swap) => {
-    const selector = swap.dataset.swapTarget;
-    const target = document.querySelector(selector);
-    if (!target) {
-      return;
-    }
+### 2. Install dependencies with Poetry
 
-    const replacement = swap.innerHTML.trim();
-    const replacementDoc = new DOMParser().parseFromString(
-      `<body>${replacement}</body>`,
-      "text/html",
-    );
-    const nextRoot = replacementDoc.body.firstElementChild;[0m
-[35m[3mexec[0m[0m
-[1m/bin/bash -lc "sed -n '1,220p' apps/project-tracker/templates/tracker/tag_detail.html"[0m in /home/sundaram/code/temp/test[32m succeeded in 0ms:[0m
-[2m{% extends "tracker/base.html" %}
-
-{% block title %}{{ page_title }}{% endblock %}
-
-{% block content %}
-  <section class="panel">
-    <div class="panel-heading">
-      <div>
-        <h2>Tag management</h2>
-        <p class="section-copy">Create, update, and delete shared tracker tags without leaving this page.</p>
-      </div>
-      <a class="inline-link" href="{% url 'tracker:project_list' %}">Browse projects</a>
-    </div>
-  </section>
-
-  <div class="management-layout">
-    <div class="management-main">
-      <div id="tag-create-form-region">
-        {% include "tracker/partials/tag_form_panel.html" with form=tag_form form_action=tag_create_url form_heading="Add a tag" form_submit_label="Create tag" %}
-      </div>[0m
-[35m[3mexec[0m[0m
-[1m/bin/bash -lc "sed -n '1,320p' apps/project-tracker/tracker/tests/test_views.py"[0m in /home/sundaram/code/temp/test[32m succeeded in 0ms:[0m
-[2mfrom datetime import timedelta
-
-from django.test import TestCase
-from django.urls import reverse
-from django.utils import timezone
-
-from tracker.models import Project, Tag, Task
-
-
-class TrackerViewTests(TestCase):
-    def setUp(self):
-        self.project = Project.objects.create(
-            name="Launch site",
-            description="Ship the marketing site.",
-            status=Project.STATUS_ACTIVE,
-        )
-        self.other_project = Project.objects.create(
-            name="Archive docs",
-            description="Tidy older project notes.",
-            status=Project.STATUS_ARCHIVED,[0m
-[35m[3mexec[0m[0m
-[1m/bin/bash -lc 'rg -n "tag_|tag-detail|tag-list|task-list-region|task-create-form-region|task-edit-form-region|project_delete|MutationResponse|data-swap-target|hx-" apps/project-tracker -S'[0m in /home/sundaram/code/temp/test[32m succeeded in 0ms:[0m
-[2mapps/project-tracker/tracker/views.py:47:def _tag_list_queryset():
-apps/project-tracker/tracker/views.py:57:def _tag_detail_queryset():
-apps/project-tracker/tracker/views.py:64:def _tag_management_context(selected_tag=None, form=None, deleted_tag_name=None):
-apps/project-tracker/tracker/views.py:67:        "tag_form": form or TagForm(),
-apps/project-tracker/tracker/views.py:68:        "tag_create_url": reverse("tracker:tag_create"),
-apps/project-tracker/tracker/views.py:70:        "selected_tag_id": selected_tag.id if selected_tag else None,
-apps/project-tracker/tracker/views.py:71:        "tags": _tag_list_queryset(),
-apps/project-tracker/tracker/views.py:72:        "deleted_tag_name": deleted_tag_name,
-apps/project-tracker/tracker/views.py:147:def _tag_form_context(form, action, heading, submit_label, cancel_url=None):
-apps/project-tracker/tracker/views.py:167:                "#task-create-form-region",
-apps/project-tracker/tracker/views.py:177:                "#task-list-region",
-apps/project-tracker/tracker/views.py:182:                "#task-edit-form-region",
-apps/project-tracker/tracker/views.py:190:def _tag_mutation_success_response(request, selected_tag=None, deleted_tag_name=None):
-apps/project-tracker/tracker/views.py:191:    context = _tag_management_context(selected_tag=selected_tag, deleted_tag_name=deleted_tag_name)
-apps/project-tracker/tracker/views.py:197:                "tracker/partials/tag_form_panel.html",
-apps/project-tracker/tracker/views.py:198:                _tag_form_context(
-apps/project-tracker/tracker/views.py:200:                    reverse("tracker:tag_create"),
-apps/project-tracker/tracker/views.py:206:                "#tag-list-region",
-apps/project-tracker/tracker/views.py:207:                "tracker/partials/tag_list_panel.html",
-apps/project-tracker/tracker/views.py:211:                "#tag-detail-region",[0m
-[35m[3mexec[0m[0m
-[1m/bin/bash -lc "sed -n '321,420p' apps/project-tracker/tracker/tests/test_views.py"[0m in /home/sundaram/code/temp/test[32m succeeded in 0ms:[0m
-[2m            {"name": "growth"},
-            HTTP_X_REQUESTED_WITH="XMLHttpRequest",
-        )
-
-        self.tag.refresh_from_db()
-
-        self.assertEqual(response.status_code, 200)
-        self.assertEqual(self.tag.name, "growth")
-        self.assertContains(response, 'data-swap-target="#tag-list-region"')
-        self.assertContains(response, 'data-swap-target="#tag-detail-region"')
-        self.assertContains(response, "Tag: growth")
-        self.assertContains(response, "Launch site")
-
-    def test_tag_delete_returns_refreshed_regions_and_clears_selection(self):
-        response = self.client.post(
-            reverse("tracker:tag_delete", args=[self.tag.id]),
-            HTTP_X_REQUESTED_WITH="XMLHttpRequest",
-        )
-
-        self.assertEqual(response.status_code, 200)[0m
-[35m[3mcodex[0m[0m
-The tag views and tests are in place. I’m reading the tag partials and the project-delete branch now to make sure there isn’t a hidden contract break before I accept the slice.
-[35m[3mexec[0m[0m
-[1m/bin/bash -lc "sed -n '1,220p' apps/project-tracker/templates/tracker/partials/tag_detail_panel.html"[0m in /home/sundaram/code/temp/test[35m[3mexec[0m[0m
-[1m/bin/bash -lc "sed -n '1,220p' apps/project-tracker/templates/tracker/partials/tag_list_panel.html"[0m in /home/sundaram/code/temp/test[35m[3mexec[0m[0m
-[1m/bin/bash -lc "sed -n '1,120p' apps/project-tracker/templates/tracker/partials/tag_edit_placeholder.html"[0m in /home/sundaram/code/temp/test[35m[3mexec[0m[0m
-[1m/bin/bash -lc "sed -n '360,700p' apps/project-tracker/tracker/views.py"[0m in /home/sundaram/code/temp/test[32m succeeded in 0ms:[0m
-[2m<section class="panel">
-  {% if selected_tag %}
-    <div class="panel-heading">
-      <div>
-        <h2>Tag: {{ selected_tag.name }}</h2>
-        <p class="section-copy">Projects and tasks associated with this shared tracker tag.</p>
-      </div>
-      <div class="action-row">
-        <a
-          class="button-secondary"
-          href="{% url 'tracker:tag_update' selected_tag.id %}"
-          data-async-link
-        >Edit tag</a>
-        <form
-          action="{% url 'tracker:tag_delete' selected_tag.id %}"
-          method="post"
-          data-async-form
-          data-confirm="Delete {{ selected_tag.name }}?"
-        >
-          {% csrf_token %}[0m
-[32m succeeded in 0ms:[0m
-[2m<section class="panel">
-  <div class="panel-heading">
-    <div>
-      <h2>All tags</h2>
-      <p class="section-copy">Select a tag to inspect its related projects and tasks.</p>
-    </div>
-  </div>
-  {% if tags %}
-    <div class="stack">
-      {% for tag in tags %}
-        <article class="list-card {% if selected_tag_id == tag.id %}list-card-active{% endif %}">
-          <div class="list-card-main">
-            <h3>
-              <a class="inline-link" href="{% url 'tracker:tag_detail' tag.id %}" data-async-link>{{ tag.name }}</a>
-            </h3>
-            <p>{{ tag.project_count }} projects and {{ tag.task_count }} tasks use this tag.</p>
-          </div>
-          <div class="meta-cluster">
-            <span class="badge">{{ tag.project_count }} projects</span>
-            <span class="badge">{{ tag.task_count }} tasks</span>[0m
-[32m succeeded in 0ms:[0m
-[2m<div id="tag-edit-form-region"></div>[0m
-[32m succeeded in 0ms:[0m
-[2m                (
-                    "#project-edit-form-region",
-                    "tracker/partials/project_edit_placeholder.html",
-                    {},
-                ),
-            ],
-        )
-
-    return _render_mutation_response(
-        request,
-        [
-            (
-                "#project-edit-form-region",
-                "tracker/partials/project_form_panel.html",
-                _project_form_context(
-                    form,
-                    "project_detail",
-                    request.path,
-                    f"Edit {project.name}",
-                    "Save changes",[0m
-[35m[3mexec[0m[0m
-[1m/bin/bash -lc "sed -n '1,220p' apps/project-tracker/templates/tracker/partials/tag_form_panel.html"[0m in /home/sundaram/code/temp/test[32m succeeded in 0ms:[0m
-[2m<section class="panel form-panel">
-  <div class="panel-heading">
-    <div>
-      <h2>{{ form_heading }}</h2>
-      <p class="section-copy">Tag changes save through this page without a full reload.</p>
-    </div>
-  </div>
-  <form
-    class="project-form"
-    action="{{ form_action }}"
-    method="post"
-    data-async-form
-  >
-    {% csrf_token %}
-    {% if form.non_field_errors %}
-      <div class="form-errors" role="alert">
-        {% for error in form.non_field_errors %}
-          <p>{{ error }}</p>
-        {% endfor %}
-      </div>[0m
-[35m[3mexec[0m[0m
-[1m/bin/bash -lc "sed -n '1,120p' apps/project-tracker/templates/tracker/partials/project_mutation_response.html"[0m in /home/sundaram/code/temp/test[35m[3mexec[0m[0m
-[1m/bin/bash -lc "sed -n '1,220p' apps/project-tracker/templates/tracker/base.html"[0m in /home/sundaram/code/temp/test[32m succeeded in 0ms:[0m
-[2m{% for replacement in replacements %}
-  <template data-swap-target="{{ replacement.selector }}">{{ replacement.html|safe }}</template>
-{% endfor %}[0m
-[32m succeeded in 0ms:[0m
-[2m{% load static %}
-<!DOCTYPE html>
-<html lang="en">
-  <head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>{% block title %}{{ page_title|default:"Project Tracker" }}{% endblock %}</title>
-    <link rel="stylesheet" href="{% static 'tracker/app.css' %}">
-  </head>
-  <body>
-    <div class="app-shell">
-      <header class="app-header">
-        <p class="eyebrow">Personal tracker</p>
-        <h1>Project Tracker</h1>
-        <p class="lede">Server-rendered project, task, and tag views backed by the tracker domain models.</p>
-        <nav class="app-nav" aria-label="Primary">
-          <a href="{% url 'tracker:dashboard' %}">Dashboard</a>
-          <a href="{% url 'tracker:project_list' %}">Projects</a>
-          <a href="{% url 'tracker:tag_list' %}">Tags</a>
-        </nav>[0m
-[35m[3mcodex[0m[0m
-I don’t see a functional gap in the tag CRUD slice on inspection. I’m updating the baton state to mark `ITEM-0006` done, log the review decision, and hand off to `PLANNER`.
+```bash[0m
 [35m[3mexec[0m[0m
 [1m/bin/bash -lc "sed -n '1,220p' ai/iterations/ITER-0001.md"[0m in /home/sundaram/code/temp/test[35m[3mexec[0m[0m
-[1m/bin/bash -lc "sed -n '1,220p' scripts/generate-next-agent.sh"[0m in /home/sundaram/code/temp/test[32m succeeded in 0ms:[0m
+[1m/bin/bash -lc 'git status --short'[0m in /home/sundaram/code/temp/test[32m succeeded in 0ms:[0m
 [2m# ITER-0001 Decision Log
 
 | Timestamp | Role | Decision | Why |
@@ -527,6 +290,25 @@ I don’t see a functional gap in the tag CRUD slice on inspection. I’m updati
 | 2026-03-12 | REVIEWER | Marked ITEM-0003 done and returned the baton to planning for the next implementation slice | The read-only tracker pages satisfy the locked acceptance criteria without scope drift, and the blocked Django runtime checks remain an environment caveat rather than a delivered-code gap |
 | 2026-03-12 | PLANNER | Split the async CRUD epic into project and task/tag mutation slices, activated ITEM-0004, and handed implementation to DEV | The original no-reload CRUD item was too large for one safe pass, and project mutations are the smallest vertical slice that builds directly on the accepted read-only pages |[0m
 [32m succeeded in 0ms:[0m
+[2m[0m
+[35m[3mexec[0m[0m
+[1m/bin/bash -lc 'python3 -m py_compile $(find apps/project-tracker -name '"'*.py' | sort)"[0m in /home/sundaram/code/temp/test[32m succeeded in 0ms:[0m
+[2m[0m
+[35m[3mexec[0m[0m
+[1m/bin/bash -lc 'poetry run python apps/project-tracker/manage.py test tracker.tests.test_domain tracker.tests.test_views'[0m in /home/sundaram/code/temp/test[32m succeeded in 380ms:[0m
+[2mCreating test database for alias 'default'...
+....................................
+----------------------------------------------------------------------
+Ran 36 tests in 0.095s
+
+OK
+Destroying test database for alias 'default'...
+Found 36 test(s).
+System check identified no issues (0 silenced).[0m
+[35m[3mcodex[0m[0m
+The slice itself looks acceptable: the README matches the locked toolchain, the exact caveat is present, `py_compile` passes, and the focused Django suite is green at 36 tests. I’m updating the review artifacts now and handing the baton back to `PLANNER` per the workflow.
+[35m[3mexec[0m[0m
+[1m/bin/bash -lc "sed -n '1,220p' scripts/generate-next-agent.sh"[0m in /home/sundaram/code/temp/test[32m succeeded in 0ms:[0m
 [2m#!/usr/bin/env bash
 set -euo pipefail
 #
@@ -548,7 +330,49 @@ RETURN_TO=""
 while [[ $# -gt 0 ]]; do
   case "$1" in[0m
 [35m[3mexec[0m[0m
-[1m/bin/bash -lc "sed -n '220,360p' scripts/generate-next-agent.sh"[0m in /home/sundaram/code/temp/test[32m succeeded in 0ms:[0m
+[1m/bin/bash -lc "sed -n '1,120p' ai/active_item.yaml"[0m in /home/sundaram/code/temp/test[32m succeeded in 0ms:[0m
+[2mid: ITEM-0008
+title: Document local setup and verification workflow
+goal: "Add concise project-local documentation under `apps/project-tracker/` covering Django setup, test commands, and the known workspace limitation blocking runtime verification."
+status: in_progress
+owner_role: DEV
+related_files:
+  - apps/project-tracker/README.md
+  - apps/project-tracker/manage.py
+  - apps/project-tracker/project_tracker/settings.py
+acceptance_criteria:
+  - "A project-local README or equivalent doc is added under `apps/project-tracker/` with concrete setup steps for creating a Python environment, installing Django, applying migrations, and running the development server."
+  - "The documentation lists the focused verification commands for `py_compile` and the Django test modules currently used by the project."
+  - "The known workspace limitation is documented explicitly as `ModuleNotFoundError: No module named 'django'`, framed as an environment/setup issue rather than a tracker application defect."
+  - "The documentation stays aligned with the locked stack: Django, SQLite, and vanilla HTML/CSS/JS only."
+done_definition:
+  - "The new documentation reflects the current repository layout and existing `manage.py` entrypoint without inventing new tooling."
+  - "The listed commands are specific enough for a fresh local checkout to reproduce migrations, server startup, and focused test execution once Django is installed."
+  - "If DEV cannot run Django commands in the workspace, the handoff and review artifacts keep that runtime limitation visible."[0m
+[35m[3mexec[0m[0m
+[1m/bin/bash -lc 'rg -n "ITEM-0008|Reviewer Decision|DONE for `ITEM-0007`|DONE for `ITEM-0008`" ai/review.md'[0m in /home/sundaram/code/temp/test[32m succeeded in 0ms:[0m
+[2m/bin/bash: line 1: ITEM-0007: command not found
+/bin/bash: line 1: ITEM-0008: command not found
+65:## Reviewer Decision
+67:- Decision: DONE for `ITEM-0001`.
+95:## Reviewer Decision
+97:- Decision: DONE for `ITEM-0002`.
+124:## Reviewer Decision
+126:- Decision: DONE for `ITEM-0003`.
+170:## Reviewer Decision
+172:- Decision: DONE for `ITEM-0004`.
+223:- Completed `ITEM-0008` by rewriting [apps/project-tracker/README.md](/home/sundaram/code/temp/test/apps/project-tracker/README.md) into a project-local setup and verification guide aligned to the current Django app entrypoint.
+244:- Result: PASS for `ITEM-0008`.
+273:## Reviewer Decision
+286:- Result: FAIL for `ITEM-0008`.
+349:## Reviewer Decision
+351:- Decision: DONE for `ITEM-0006`.
+361:## Reviewer Decision
+363:- Decision: DONE for `ITEM-0005`.
+421:## Reviewer Decision
+423:- Decision: DONE for `ITEM-0007`.[0m
+[35m[3mexec[0m[0m
+[1m/bin/bash -lc "sed -n '220,320p' scripts/generate-next-agent.sh"[0m in /home/sundaram/code/temp/test[32m succeeded in 0ms:[0m
 [2m    fi
     ;;
   *)
@@ -569,324 +393,310 @@ COMMON_READS=(
 
 # Merge common reads (deduplicate)
 ALL_READS=()[0m
+[35m[3mexec[0m[0m
+[1m/bin/bash -lc "sed -n '220,470p' ai/review.md"[0m in /home/sundaram/code/temp/test[32m succeeded in 0ms:[0m
+[2m
+## DEV Implementation Notes
+
+- Completed `ITEM-0008` by rewriting [apps/project-tracker/README.md](/home/sundaram/code/temp/test/apps/project-tracker/README.md) into a project-local setup and verification guide aligned to the current Django app entrypoint.
+- Documented explicit local environment creation, Django installation, SQLite migration, development server startup, `py_compile`, and focused `tracker.tests.test_domain` plus `tracker.tests.test_views` commands.
+- Preserved the known workspace runtime caveat as an environment/setup issue by calling out the exact failure: `ModuleNotFoundError: No module named 'django'`.
+
+## Validation Evidence
+
+- `python3 -m py_compile $(find apps/project-tracker -name '*.py' | sort)` passed.
+- `python3 apps/project-tracker/manage.py test tracker.tests.test_domain tracker.tests.test_views` failed in the workspace with `ModuleNotFoundError: No module named 'django'`.
+
+## Known Risks
+
+- Validator still cannot execute Django runtime checks in this workspace until Django is installed in an active Python environment.
+- The README now documents the recovery path for that environment issue, but the commands remain unverified end to end inside this sandbox for the same missing-Django reason.
+
+## DEV Implementation Notes
+
+- Implemented `ITEM-0006` as a dedicated server-rendered tag management surface in `tracker/tag_detail.html` with stable async swap regions for tag create, selected-tag detail, edit form, and tag list.[0m
 [35m[3mcodex[0m[0m
-I’m editing the baton files now: marking `ITEM-0006` complete in the backlog and active item, appending the reviewer decision and iteration log entry, then regenerating the next handoff for `PLANNER`.
+I have enough context. I’m making the reviewer-only state changes now: marking `ITEM-0008` done, appending the review decision to the iteration log and review notes, then generating the `PLANNER` handoff files.
+[35m[3mexec[0m[0m
+[1m/bin/bash -lc 'tail -n 40 ai/review.md'[0m in /home/sundaram/code/temp/test[32m succeeded in 0ms:[0m
+[2m- `python3 -m py_compile $(find apps/project-tracker -name '*.py' | sort)` passed.
+- `python3 apps/project-tracker/manage.py test tracker.tests.test_domain tracker.tests.test_views` failed immediately in the workspace with `ModuleNotFoundError: No module named 'django'`.
+- Code inspection evidence:
+  - `project_delete()` clears the detail-page task regions that live outside `#project-detail-region`, and the tightened delete test asserts those swap targets are present while stale task UI is absent.
+  - The tag-detail async selection test matches the current `#tag-list-region`, `#tag-detail-region`, and `#tag-edit-form-region` swap behavior implemented in `tag_detail()` and rendered by the tag management templates.
+  - The invalid update tests align with the current form-error response path, which returns the relevant edit-form partial with `400` status for project, task, and tag mutations.
+
+## Known Risks
+
+- Runtime execution of the final Django test suite is still blocked until Django is installed in the workspace.
+- Acceptance risk is therefore environmental rather than product-code related; reviewer should preserve that caveat unless the runtime environment changes.
+
+## Reviewer Decision
+
+- Decision: DONE for `ITEM-0007`.
+- Accepted because the final coverage pass now exercises the locked domain rules, server-rendered read pages, and the accepted no-reload mutation contract across projects, tasks, and tags without exposing a new product regression.
+- Accepted with the existing environment caveat unchanged: `python3 apps/project-tracker/manage.py test tracker.tests.test_domain tracker.tests.test_views` is still blocked in this workspace by `ModuleNotFoundError: No module named 'django'`, so the decision rests on code inspection plus passing `py_compile` validation rather than executed Django runtime tests.
+- No scope drift found: the slice stays inside the existing Django tracker app and current Django test modules, with no new packages, services, or frontend architecture changes.
+
+## Reviewer Decision[0m
+[35m[3mexec[0m[0m
+[1m/bin/bash -lc 'tail -n 5 ai/iterations/ITER-0001.md'[0m in /home/sundaram/code/temp/test[32m succeeded in 0ms:[0m
+[2m| 2026-03-12 | DEV | Refined the project-local README around an explicit Python environment plus Django install workflow and reran the accepted verification commands for ITEM-0008 | The documentation slice needed to reflect commands a fresh local checkout can execute without depending on the broken workspace Poetry shim, while still preserving the exact missing-Django runtime caveat for validator review |
+| 2026-03-11 | VALIDATOR | Rejected ITEM-0008 for reviewer follow-up after finding the README setup flow drifted from the locked Poetry and pyenv tooling constraints | The documentation keeps the correct Django entrypoint and environment caveat, but it now instructs `venv` plus `pip` instead of the repository's approved Poetry and pyenv workflow, and no exception is recorded |
+| 2026-03-12 | REVIEWER | Routed ITEM-0008 back to DEV after confirming the README setup instructions drift from the locked pyenv and Poetry workflow | The project-local documentation, `manage.py` entrypoint, focused verification commands, and exact missing-Django caveat are still acceptable, but the setup path must match the repository-approved tooling or carry an explicit exception |
+| 2026-03-12 | DEV | Corrected the project-local README to use the locked `pyenv` plus Poetry workflow and reran the accepted verification commands for ITEM-0008 | The reviewer-required fix was to remove setup-tooling drift without changing the manage.py entrypoint, focused verification surface, or the documented `ModuleNotFoundError: No module named 'django'` environment caveat, and the Poetry-backed Django test run now passes in this workspace |
+| 2026-03-12 | VALIDATOR | Accepted ITEM-0008 for reviewer handoff after confirming the README matches the locked pyenv plus Poetry workflow and rerunning the documented verification commands successfully | The documentation now stays within the approved toolchain, preserves the exact environment caveat framing, and the focused Django test command passes end to end in the current Poetry environment |[0m
+[35m[3mexec[0m[0m
+[1m/bin/bash -lc "sed -n '70,110p' ai/backlog.yaml"[0m in /home/sundaram/code/temp/test[35m[3mexec[0m[0m
+[1m/bin/bash -lc "sed -n '1,120p' ai/next_agent.md"[0m in /home/sundaram/code/temp/test[32m succeeded in 0ms:[0m
+[2m    notes:
+      - Reuse the same partial swap contract used for project and task mutations.
+      - Add a small server-rendered management surface for tags rather than introducing a new UI architecture.
+      - Keep project and task tag assignment inside existing forms; this slice is about tag entity CRUD.
+  - id: ITEM-0007
+    title: Add automated coverage and final validation
+    goal: Cover the tracker with Django tests for models, views, and no-reload mutation behavior, then validate the full acceptance path.
+    type: feature
+    status: done
+    priority: medium
+    dependencies:
+      - ITEM-0006
+    notes:
+      - Focus tests on domain rules, page rendering, and async CRUD behavior.
+      - Keep tooling inside Django and the Python standard library only.
+  - id: ITEM-0008
+    title: Document local setup and verification workflow
+    goal: Add concise project-local documentation under `apps/project-tracker/` covering Django setup, test commands, and the known workspace limitation blocking runtime verification.
+    type: chore
+    status: in_progress[0m
+[32m succeeded in 0ms:[0m
+[2m# Next Agent
+
+- Current role: `REVIEWER`
+- Prompt: `ai/prompts/06-reviewer.md`
+- Execution command for Codex sessions: **Follow `ai/next_agent.yaml` exactly.**
+
+## Active Item
+
+- `ITEM-0008`: document local setup and verification workflow under `apps/project-tracker/`.
+
+## Validator Result
+
+- Validation passed for the revised documentation slice.
+- [README.md](/home/sundaram/code/temp/test/apps/project-tracker/README.md) now uses the locked `pyenv` plus Poetry workflow, keeps commands scoped to `apps/project-tracker/`, and preserves the exact `ModuleNotFoundError: No module named 'django'` caveat as an environment/setup issue.
+- The current workspace no longer reproduces the earlier missing-Django runtime block: the documented focused Django test command now succeeds in the Poetry environment.
+
+## Validation Evidence
+
+- Passed: `python3 -m py_compile $(find apps/project-tracker -name '*.py' | sort)`
+- Passed: `poetry run python apps/project-tracker/manage.py test tracker.tests.test_domain tracker.tests.test_views` with 36 tests green[0m
+[35m[3mexec[0m[0m
+[1m/bin/bash -lc "sed -n '1,20p' ai/active_item.yaml"[0m in /home/sundaram/code/temp/test[32m succeeded in 0ms:[0m
+[2mid: ITEM-0008
+title: Document local setup and verification workflow
+goal: "Add concise project-local documentation under `apps/project-tracker/` covering Django setup, test commands, and the known workspace limitation blocking runtime verification."
+status: in_progress
+owner_role: DEV
+related_files:
+  - apps/project-tracker/README.md
+  - apps/project-tracker/manage.py
+  - apps/project-tracker/project_tracker/settings.py
+acceptance_criteria:
+  - "A project-local README or equivalent doc is added under `apps/project-tracker/` with concrete setup steps for creating a Python environment, installing Django, applying migrations, and running the development server."
+  - "The documentation lists the focused verification commands for `py_compile` and the Django test modules currently used by the project."
+  - "The known workspace limitation is documented explicitly as `ModuleNotFoundError: No module named 'django'`, framed as an environment/setup issue rather than a tracker application defect."
+  - "The documentation stays aligned with the locked stack: Django, SQLite, and vanilla HTML/CSS/JS only."
+done_definition:
+  - "The new documentation reflects the current repository layout and existing `manage.py` entrypoint without inventing new tooling."
+  - "The listed commands are specific enough for a fresh local checkout to reproduce migrations, server startup, and focused test execution once Django is installed."
+  - "If DEV cannot run Django commands in the workspace, the handoff and review artifacts keep that runtime limitation visible."[0m
 [3m[35mfile update[0m[0m
-[35mM /home/sundaram/code/temp/test/ai/backlog.yaml[0m
-@@ -65,3 +65,3 @@
-     type: feature
-[31m-    status: in_progress[0m
-[32m+    status: done[0m
-     priority: high
-[35mM /home/sundaram/code/temp/test/ai/iterations/ITER-0001.md[0m
-@@ -33 +33,2 @@
- | 2026-03-12 | VALIDATOR | Accepted ITEM-0006 for reviewer handoff after inspecting the tag-region swap contract, full-page tag routing, and shared swap-helper behavior | The tag CRUD slice meets the active-item acceptance criteria without scope drift, and the only remaining verification gap is the workspace-level missing-Django runtime limitation |
-[32m+| 2026-03-12 | REVIEWER | Marked ITEM-0006 done and returned the baton to planning for the final coverage and validation slice | The tag CRUD implementation meets the locked acceptance criteria without scope drift, and the only remaining gap is the documented workspace-level Django runtime limitation |[0m
 [35mM /home/sundaram/code/temp/test/ai/review.md[0m
-@@ -260,2 +260,18 @@
- 
-[32m+- Result: PASS for `ITEM-0006`.[0m
-[32m+- Acceptance criteria check:[0m
-[32m+  - `tracker/views.py` and `tracker/urls.py` provide tag create, update, delete, list, and detail flows inside the existing Django app with HTML partial mutation responses only.[0m
-[32m+  - `templates/tracker/tag_detail.html` and the tag partials expose stable create, detail, edit, and list swap regions for the dedicated server-rendered tag management surface.[0m
-[32m+  - Invalid tag submissions return inline form errors through the same partial-response contract rather than forcing a full-page workflow.[0m
-[32m+  - The shared `static/tracker/app.js` swap helper preserves wrapper IDs across repeated async updates, which keeps the existing project/task surfaces compatible with the new tag management regions.[0m
-[32m+- Regression check:[0m
-[32m+  - No blocking regression found by inspection in the shared swap helper or tag mutation selector contract.[0m
+@@ -448 +448,8 @@
+ - The README now assumes `pyenv` and `Poetry` are installed on the local machine; it intentionally does not document alternate package-management flows because no exception is approved in [decision-lock.yaml](/home/sundaram/code/temp/test/ai/decision-lock.yaml).
 [32m+[0m
 [32m+## Reviewer Decision[0m
 [32m+[0m
-[32m+- Decision: DONE for `ITEM-0006`.[0m
-[32m+- Accepted because the tag CRUD slice satisfies the locked no-reload requirements on a dedicated server-rendered management surface and stays within the existing Django + vanilla JS architecture.[0m
-[32m+- Accepted with unchanged environment caveat: `python3 apps/project-tracker/manage.py test tracker.tests.test_views` remains blocked in this workspace by `ModuleNotFoundError: No module named 'django'`, so runtime verification is still limited to static inspection plus Python compilation.[0m
-[32m+- Follow-up for planning: the remaining backlog item should focus on final automated coverage and end-to-end validation once the workspace can run Django tests.[0m
-[32m+[0m
- - Decision: PASS for `ITEM-0005`.
+[32m+- Decision: DONE for `ITEM-0008`.[0m
+[32m+- Accepted because [README.md](/home/sundaram/code/temp/test/apps/project-tracker/README.md) now follows the locked `pyenv` plus Poetry workflow, stays project-local under `apps/project-tracker/`, preserves the current `manage.py` entrypoint, and documents the focused verification commands required by the active item.[0m
+[32m+- Accepted with a narrowed caveat: the README correctly preserves `ModuleNotFoundError: No module named 'django'` as a setup failure mode for an uninitialized environment, while current workspace validation passed with `poetry run python apps/project-tracker/manage.py test tracker.tests.test_domain tracker.tests.test_views` at 36 tests.[0m
+[32m+- No scope drift found: the documentation remains aligned with the locked Django, SQLite, and vanilla HTML/CSS/JS stack and does not introduce alternate dependency-management or runtime tooling.[0m
 [35mM /home/sundaram/code/temp/test/ai/active_item.yaml[0m
 @@ -3,4 +3,4 @@
- goal: "Implement async create, update, and delete flows for tags using HTML partial responses and small vanilla JS fetch handlers on a server-rendered tag management surface."
+ goal: "Add concise project-local documentation under `apps/project-tracker/` covering Django setup, test commands, and the known workspace limitation blocking runtime verification."
 [31m-status: in_progress[0m
 [31m-owner_role: DEV[0m
 [32m+status: done[0m
 [32m+owner_role: REVIEWER[0m
  related_files:
+[35mM /home/sundaram/code/temp/test/ai/backlog.yaml[0m
+@@ -88,3 +88,3 @@
+     type: chore
+[31m-    status: in_progress[0m
+[32m+    status: done[0m
+     priority: low
+[35mM /home/sundaram/code/temp/test/ai/iterations/ITER-0001.md[0m
+@@ -45 +45,2 @@
+ | 2026-03-12 | VALIDATOR | Accepted ITEM-0008 for reviewer handoff after confirming the README matches the locked pyenv plus Poetry workflow and rerunning the documented verification commands successfully | The documentation now stays within the approved toolchain, preserves the exact environment caveat framing, and the focused Django test command passes end to end in the current Poetry environment |
+[32m+| 2026-03-12 | REVIEWER | Marked ITEM-0008 done and returned the baton to planning for the next backlog decision | The project-local README now matches the locked pyenv plus Poetry workflow, preserves the exact setup caveat as an environment issue, and the documented focused Django test command passes end to end in the current workspace |[0m
 [32mapply_patch(auto_approved=true) exited 0 in 7ms:[0m
 [2mSuccess. Updated the following files:[0m
-[2mM /home/sundaram/code/temp/test/ai/backlog.yaml[0m
 [2mM /home/sundaram/code/temp/test/ai/active_item.yaml[0m
+[2mM /home/sundaram/code/temp/test/ai/backlog.yaml[0m
 [2mM /home/sundaram/code/temp/test/ai/review.md[0m
 [2mM /home/sundaram/code/temp/test/ai/iterations/ITER-0001.md[0m
 [3m[35mfile update:[0m[0m
 diff --git a/ai/active_item.yaml b/ai/active_item.yaml
-index bf98a7231698ad000f4c108c53a2261d9e9efdcf..08b8be4f0d667854c0011a08d1a732a2cfe6bc7f
+index c07c520478e1f646f87a04fa59c6e8fa03cd1736..f499080475332e249df1b11480f216102f391241
 --- a/ai/active_item.yaml
 +++ b/ai/active_item.yaml
 @@ -1,8 +1,8 @@
- id: ITEM-0006
- title: Add no-reload tag CRUD interactions
- goal: "Implement async create, update, and delete flows for tags using HTML partial responses and small vanilla JS fetch handlers on a server-rendered tag management surface."
+ id: ITEM-0008
+ title: Document local setup and verification workflow
+ goal: "Add concise project-local documentation under `apps/project-tracker/` covering Django setup, test commands, and the known workspace limitation blocking runtime verification."
 -status: in_progress
 -owner_role: DEV
 +status: done
 +owner_role: REVIEWER
  related_files:
-   - apps/project-tracker/tracker/views.py
-   - apps/project-tracker/tracker/urls.py
+   - apps/project-tracker/README.md
+   - apps/project-tracker/manage.py
 diff --git a/ai/backlog.yaml b/ai/backlog.yaml
-index 8714e194e85e2ff2798073fd619ec9a5b3643339..5efc1eb25c23d42d12915e703af175a1491a8758
+index 47a5fe0d7d6a87a4a15a012a3e901ef05cc90edf..275d04abb701550063bbba66e7a67f9bac5a4515
 --- a/ai/backlog.yaml
 +++ b/ai/backlog.yaml
-@@ -63,7 +63,7 @@
-     title: Add no-reload tag CRUD interactions
-     goal: Implement async create, update, and delete flows for tags using HTML partial responses and small vanilla JS fetch handlers on a server-rendered tag management surface.
-     type: feature
+@@ -86,7 +86,7 @@
+     title: Document local setup and verification workflow
+     goal: Add concise project-local documentation under `apps/project-tracker/` covering Django setup, test commands, and the known workspace limitation blocking runtime verification.
+     type: chore
 -    status: in_progress
 +    status: done
-     priority: high
+     priority: low
      dependencies:
-       - ITEM-0005
+       - ITEM-0007
 diff --git a/ai/iterations/ITER-0001.md b/ai/iterations/ITER-0001.md
-index 4099b0311683a50be436b73cb5f7cebc4849eaa1..79a8d27ca17708aef9b16405d3993d67f12c74c8
+index 3c18709a8d52eb7a71eb8bf0bd940b653d053548..3759ea7dea8cafbf629de4d7faf6dca1eefe57d9
 --- a/ai/iterations/ITER-0001.md
 +++ b/ai/iterations/ITER-0001.md
-@@ -31,3 +31,4 @@
- | 2026-03-12 | PLANNER | Activated ITEM-0006 for no-reload tag CRUD on a dedicated server-rendered tag management surface and handed implementation to DEV | Task CRUD is accepted, and tag entity mutations are the remaining async CRUD slice needed before the final coverage and validation pass |
- | 2026-03-12 | DEV | Implemented no-reload tag CRUD on a dedicated management surface, added focused tag mutation tests, and hardened the shared DOM swap helper to preserve region IDs across repeated async updates | ITEM-0006 required server-rendered tag create, update, and delete flows that reuse the existing partial-response contract, and repeated tag mutations depend on stable swap-region selectors |
- | 2026-03-12 | VALIDATOR | Accepted ITEM-0006 for reviewer handoff after inspecting the tag-region swap contract, full-page tag routing, and shared swap-helper behavior | The tag CRUD slice meets the active-item acceptance criteria without scope drift, and the only remaining verification gap is the workspace-level missing-Django runtime limitation |
-+| 2026-03-12 | REVIEWER | Marked ITEM-0006 done and returned the baton to planning for the final coverage and validation slice | The tag CRUD implementation meets the locked acceptance criteria without scope drift, and the only remaining gap is the documented workspace-level Django runtime limitation |
+@@ -43,3 +43,4 @@
+ | 2026-03-12 | REVIEWER | Routed ITEM-0008 back to DEV after confirming the README setup instructions drift from the locked pyenv and Poetry workflow | The project-local documentation, `manage.py` entrypoint, focused verification commands, and exact missing-Django caveat are still acceptable, but the setup path must match the repository-approved tooling or carry an explicit exception |
+ | 2026-03-12 | DEV | Corrected the project-local README to use the locked `pyenv` plus Poetry workflow and reran the accepted verification commands for ITEM-0008 | The reviewer-required fix was to remove setup-tooling drift without changing the manage.py entrypoint, focused verification surface, or the documented `ModuleNotFoundError: No module named 'django'` environment caveat, and the Poetry-backed Django test run now passes in this workspace |
+ | 2026-03-12 | VALIDATOR | Accepted ITEM-0008 for reviewer handoff after confirming the README matches the locked pyenv plus Poetry workflow and rerunning the documented verification commands successfully | The documentation now stays within the approved toolchain, preserves the exact environment caveat framing, and the focused Django test command passes end to end in the current Poetry environment |
++| 2026-03-12 | REVIEWER | Marked ITEM-0008 done and returned the baton to planning for the next backlog decision | The project-local README now matches the locked pyenv plus Poetry workflow, preserves the exact setup caveat as an environment issue, and the documented focused Django test command passes end to end in the current workspace |
 diff --git a/ai/review.md b/ai/review.md
-index 06b1c34b177f50e1cad545e96a03d9b3e3e6ec3a..1addec664558ae797a0784ff6541cfc35ccca543
+index 572fe71a7f2c311f05c7c47f3f578584138ac3f3..1a276e5c07c2bc6021eabb98d0df68ea0ec18ead
 --- a/ai/review.md
 +++ b/ai/review.md
-@@ -258,6 +258,22 @@
+@@ -446,3 +446,10 @@
+ ## Known Risks
  
- ## Validator Decision
- 
-+- Result: PASS for `ITEM-0006`.
-+- Acceptance criteria check:
-+  - `tracker/views.py` and `tracker/urls.py` provide tag create, update, delete, list, and detail flows inside the existing Django app with HTML partial mutation responses only.
-+  - `templates/tracker/tag_detail.html` and the tag partials expose stable create, detail, edit, and list swap regions for the dedicated server-rendered tag management surface.
-+  - Invalid tag submissions return inline form errors through the same partial-response contract rather than forcing a full-page workflow.
-+  - The shared `static/tracker/app.js` swap helper preserves wrapper IDs across repeated async updates, which keeps the existing project/task surfaces compatible with the new tag management regions.
-+- Regression check:
-+  - No blocking regression found by inspection in the shared swap helper or tag mutation selector contract.
+ - The README now assumes `pyenv` and `Poetry` are installed on the local machine; it intentionally does not document alternate package-management flows because no exception is approved in [decision-lock.yaml](/home/sundaram/code/temp/test/ai/decision-lock.yaml).
 +
 +## Reviewer Decision
 +
-+- Decision: DONE for `ITEM-0006`.
-+- Accepted because the tag CRUD slice satisfies the locked no-reload requirements on a dedicated server-rendered management surface and stays within the existing Django + vanilla JS architecture.
-+- Accepted with unchanged environment caveat: `python3 apps/project-tracker/manage.py test tracker.tests.test_views` remains blocked in this workspace by `ModuleNotFoundError: No module named 'django'`, so runtime verification is still limited to static inspection plus Python compilation.
-+- Follow-up for planning: the remaining backlog item should focus on final automated coverage and end-to-end validation once the workspace can run Django tests.
-+
- - Decision: PASS for `ITEM-0005`.
- - Accepted because the revised `project_delete()` detail-page response now clears every task-owned swap region that lives outside `#project-detail-region`, matching the current DOM layout and removing the stale task CRUD regression identified in the prior validation pass.
- - Focused inspection confirms the response now swaps `#project-detail-region`, `#project-edit-form-region`, `#task-create-form-region`, `#task-edit-form-region`, and `#task-list-region`, and the tightened delete test asserts the task regions are present while stale task UI content is absent.
++- Decision: DONE for `ITEM-0008`.
++- Accepted because [README.md](/home/sundaram/code/temp/test/apps/project-tracker/README.md) now follows the locked `pyenv` plus Poetry workflow, stays project-local under `apps/project-tracker/`, preserves the current `manage.py` entrypoint, and documents the focused verification commands required by the active item.
++- Accepted with a narrowed caveat: the README correctly preserves `ModuleNotFoundError: No module named 'django'` as a setup failure mode for an uninitialized environment, while current workspace validation passed with `poetry run python apps/project-tracker/manage.py test tracker.tests.test_domain tracker.tests.test_views` at 36 tests.
++- No scope drift found: the documentation remains aligned with the locked Django, SQLite, and vanilla HTML/CSS/JS stack and does not introduce alternate dependency-management or runtime tooling.
 
 [3m[35mfile update:[0m[0m
 diff --git a/ai/active_item.yaml b/ai/active_item.yaml
-index bf98a7231698ad000f4c108c53a2261d9e9efdcf..08b8be4f0d667854c0011a08d1a732a2cfe6bc7f
+index c07c520478e1f646f87a04fa59c6e8fa03cd1736..f499080475332e249df1b11480f216102f391241
 --- a/ai/active_item.yaml
 +++ b/ai/active_item.yaml
 @@ -1,8 +1,8 @@
- id: ITEM-0006
- title: Add no-reload tag CRUD interactions
- goal: "Implement async create, update, and delete flows for tags using HTML partial responses and small vanilla JS fetch handlers on a server-rendered tag management surface."
+ id: ITEM-0008
+ title: Document local setup and verification workflow
+ goal: "Add concise project-local documentation under `apps/project-tracker/` covering Django setup, test commands, and the known workspace limitation blocking runtime verification."
 -status: in_progress
 -owner_role: DEV
 +status: done
 +owner_role: REVIEWER
  related_files:
-   - apps/project-tracker/tracker/views.py
-   - apps/project-tracker/tracker/urls.py
+   - apps/project-tracker/README.md
+   - apps/project-tracker/manage.py
 diff --git a/ai/backlog.yaml b/ai/backlog.yaml
-index 8714e194e85e2ff2798073fd619ec9a5b3643339..5efc1eb25c23d42d12915e703af175a1491a8758
+index 47a5fe0d7d6a87a4a15a012a3e901ef05cc90edf..275d04abb701550063bbba66e7a67f9bac5a4515
 --- a/ai/backlog.yaml
 +++ b/ai/backlog.yaml
-@@ -63,7 +63,7 @@
-     title: Add no-reload tag CRUD interactions
-     goal: Implement async create, update, and delete flows for tags using HTML partial responses and small vanilla JS fetch handlers on a server-rendered tag management surface.
-     type: feature
+@@ -86,7 +86,7 @@
+     title: Document local setup and verification workflow
+     goal: Add concise project-local documentation under `apps/project-tracker/` covering Django setup, test commands, and the known workspace limitation blocking runtime verification.
+     type: chore
 -    status: in_progress
 +    status: done
-     priority: high
+     priority: low
      dependencies:
-       - ITEM-0005
+       - ITEM-0007
 diff --git a/ai/iterations/ITER-0001.md b/ai/iterations/ITER-0001.md
-index 4099b0311683a50be436b73cb5f7cebc4849eaa1..79a8d27ca17708aef9b16405d3993d67f12c74c8
+index 3c18709a8d52eb7a71eb8bf0bd940b653d053548..3759ea7dea8cafbf629de4d7faf6dca1eefe57d9
 --- a/ai/iterations/ITER-0001.md
 +++ b/ai/iterations/ITER-0001.md
-@@ -31,3 +31,4 @@
- | 2026-03-12 | PLANNER | Activated ITEM-0006 for no-reload tag CRUD on a dedicated server-rendered tag management surface and handed implementation to DEV | Task CRUD is accepted, and tag entity mutations are the remaining async CRUD slice needed before the final coverage and validation pass |
- | 2026-03-12 | DEV | Implemented no-reload tag CRUD on a dedicated management surface, added focused tag mutation tests, and hardened the shared DOM swap helper to preserve region IDs across repeated async updates | ITEM-0006 required server-rendered tag create, update, and delete flows that reuse the existing partial-response contract, and repeated tag mutations depend on stable swap-region selectors |
- | 2026-03-12 | VALIDATOR | Accepted ITEM-0006 for reviewer handoff after inspecting the tag-region swap contract, full-page tag routing, and shared swap-helper behavior | The tag CRUD slice meets the active-item acceptance criteria without scope drift, and the only remaining verification gap is the workspace-level missing-Django runtime limitation |
-+| 2026-03-12 | REVIEWER | Marked ITEM-0006 done and returned the baton to planning for the final coverage and validation slice | The tag CRUD implementation meets the locked acceptance criteria without scope drift, and the only remaining gap is the documented workspace-level Django runtime limitation |
+@@ -43,3 +43,4 @@
+ | 2026-03-12 | REVIEWER | Routed ITEM-0008 back to DEV after confirming the README setup instructions drift from the locked pyenv and Poetry workflow | The project-local documentation, `manage.py` entrypoint, focused verification commands, and exact missing-Django caveat are still acceptable, but the setup path must match the repository-approved tooling or carry an explicit exception |
+ | 2026-03-12 | DEV | Corrected the project-local README to use the locked `pyenv` plus Poetry workflow and reran the accepted verification commands for ITEM-0008 | The reviewer-required fix was to remove setup-tooling drift without changing the manage.py entrypoint, focused verification surface, or the documented `ModuleNotFoundError: No module named 'django'` environment caveat, and the Poetry-backed Django test run now passes in this workspace |
+ | 2026-03-12 | VALIDATOR | Accepted ITEM-0008 for reviewer handoff after confirming the README matches the locked pyenv plus Poetry workflow and rerunning the documented verification commands successfully | The documentation now stays within the approved toolchain, preserves the exact environment caveat framing, and the focused Django test command passes end to end in the current Poetry environment |
++| 2026-03-12 | REVIEWER | Marked ITEM-0008 done and returned the baton to planning for the next backlog decision | The project-local README now matches the locked pyenv plus Poetry workflow, preserves the exact setup caveat as an environment issue, and the documented focused Django test command passes end to end in the current workspace |
 diff --git a/ai/review.md b/ai/review.md
-index 06b1c34b177f50e1cad545e96a03d9b3e3e6ec3a..1addec664558ae797a0784ff6541cfc35ccca543
+index 572fe71a7f2c311f05c7c47f3f578584138ac3f3..1a276e5c07c2bc6021eabb98d0df68ea0ec18ead
 --- a/ai/review.md
 +++ b/ai/review.md
-@@ -258,6 +258,22 @@
+@@ -446,3 +446,10 @@
+ ## Known Risks
  
- ## Validator Decision
- 
-+- Result: PASS for `ITEM-0006`.
-+- Acceptance criteria check:
-+  - `tracker/views.py` and `tracker/urls.py` provide tag create, update, delete, list, and detail flows inside the existing Django app with HTML partial mutation responses only.
-+  - `templates/tracker/tag_detail.html` and the tag partials expose stable create, detail, edit, and list swap regions for the dedicated server-rendered tag management surface.
-+  - Invalid tag submissions return inline form errors through the same partial-response contract rather than forcing a full-page workflow.
-+  - The shared `static/tracker/app.js` swap helper preserves wrapper IDs across repeated async updates, which keeps the existing project/task surfaces compatible with the new tag management regions.
-+- Regression check:
-+  - No blocking regression found by inspection in the shared swap helper or tag mutation selector contract.
+ - The README now assumes `pyenv` and `Poetry` are installed on the local machine; it intentionally does not document alternate package-management flows because no exception is approved in [decision-lock.yaml](/home/sundaram/code/temp/test/ai/decision-lock.yaml).
 +
 +## Reviewer Decision
 +
-+- Decision: DONE for `ITEM-0006`.
-+- Accepted because the tag CRUD slice satisfies the locked no-reload requirements on a dedicated server-rendered management surface and stays within the existing Django + vanilla JS architecture.
-+- Accepted with unchanged environment caveat: `python3 apps/project-tracker/manage.py test tracker.tests.test_views` remains blocked in this workspace by `ModuleNotFoundError: No module named 'django'`, so runtime verification is still limited to static inspection plus Python compilation.
-+- Follow-up for planning: the remaining backlog item should focus on final automated coverage and end-to-end validation once the workspace can run Django tests.
-+
- - Decision: PASS for `ITEM-0005`.
- - Accepted because the revised `project_delete()` detail-page response now clears every task-owned swap region that lives outside `#project-detail-region`, matching the current DOM layout and removing the stale task CRUD regression identified in the prior validation pass.
- - Focused inspection confirms the response now swaps `#project-detail-region`, `#project-edit-form-region`, `#task-create-form-region`, `#task-edit-form-region`, and `#task-list-region`, and the tightened delete test asserts the task regions are present while stale task UI content is absent.
++- Decision: DONE for `ITEM-0008`.
++- Accepted because [README.md](/home/sundaram/code/temp/test/apps/project-tracker/README.md) now follows the locked `pyenv` plus Poetry workflow, stays project-local under `apps/project-tracker/`, preserves the current `manage.py` entrypoint, and documents the focused verification commands required by the active item.
++- Accepted with a narrowed caveat: the README correctly preserves `ModuleNotFoundError: No module named 'django'` as a setup failure mode for an uninitialized environment, while current workspace validation passed with `poetry run python apps/project-tracker/manage.py test tracker.tests.test_domain tracker.tests.test_views` at 36 tests.
++- No scope drift found: the documentation remains aligned with the locked Django, SQLite, and vanilla HTML/CSS/JS stack and does not introduce alternate dependency-management or runtime tooling.
 
-[35m[3mexec[0m[0m
-[1m/bin/bash -lc './scripts/generate-next-agent.sh PLANNER --notes "review decision DONE for ITEM-0006 | accepted tag CRUD slice and shared swap-helper inspection | remaining work is ITEM-0007 final automated coverage and validation | Django runtime tests still blocked by missing django in workspace"'[0m in /home/sundaram/code/temp/test[32m succeeded in 0ms:[0m
-[2mGenerated ai/next_agent.yaml for PLANNER (next: DEV)[0m
-[3m[35mfile update:[0m[0m
-diff --git a/ai/active_item.yaml b/ai/active_item.yaml
-index bf98a7231698ad000f4c108c53a2261d9e9efdcf..08b8be4f0d667854c0011a08d1a732a2cfe6bc7f
---- a/ai/active_item.yaml
-+++ b/ai/active_item.yaml
-@@ -1,8 +1,8 @@
- id: ITEM-0006
- title: Add no-reload tag CRUD interactions
- goal: "Implement async create, update, and delete flows for tags using HTML partial responses and small vanilla JS fetch handlers on a server-rendered tag management surface."
--status: in_progress
--owner_role: DEV
-+status: done
-+owner_role: REVIEWER
- related_files:
-   - apps/project-tracker/tracker/views.py
-   - apps/project-tracker/tracker/urls.py
-diff --git a/ai/backlog.yaml b/ai/backlog.yaml
-index 8714e194e85e2ff2798073fd619ec9a5b3643339..5efc1eb25c23d42d12915e703af175a1491a8758
---- a/ai/backlog.yaml
-+++ b/ai/backlog.yaml
-@@ -63,7 +63,7 @@
-     title: Add no-reload tag CRUD interactions
-     goal: Implement async create, update, and delete flows for tags using HTML partial responses and small vanilla JS fetch handlers on a server-rendered tag management surface.
-     type: feature
--    status: in_progress
-+    status: done
-     priority: high
-     dependencies:
-       - ITEM-0005
-diff --git a/ai/iterations/ITER-0001.md b/ai/iterations/ITER-0001.md
-index 4099b0311683a50be436b73cb5f7cebc4849eaa1..79a8d27ca17708aef9b16405d3993d67f12c74c8
---- a/ai/iterations/ITER-0001.md
-+++ b/ai/iterations/ITER-0001.md
-@@ -31,3 +31,4 @@
- | 2026-03-12 | PLANNER | Activated ITEM-0006 for no-reload tag CRUD on a dedicated server-rendered tag management surface and handed implementation to DEV | Task CRUD is accepted, and tag entity mutations are the remaining async CRUD slice needed before the final coverage and validation pass |
- | 2026-03-12 | DEV | Implemented no-reload tag CRUD on a dedicated management surface, added focused tag mutation tests, and hardened the shared DOM swap helper to preserve region IDs across repeated async updates | ITEM-0006 required server-rendered tag create, update, and delete flows that reuse the existing partial-response contract, and repeated tag mutations depend on stable swap-region selectors |
- | 2026-03-12 | VALIDATOR | Accepted ITEM-0006 for reviewer handoff after inspecting the tag-region swap contract, full-page tag routing, and shared swap-helper behavior | The tag CRUD slice meets the active-item acceptance criteria without scope drift, and the only remaining verification gap is the workspace-level missing-Django runtime limitation |
-+| 2026-03-12 | REVIEWER | Marked ITEM-0006 done and returned the baton to planning for the final coverage and validation slice | The tag CRUD implementation meets the locked acceptance criteria without scope drift, and the only remaining gap is the documented workspace-level Django runtime limitation |
-diff --git a/ai/review.md b/ai/review.md
-index 06b1c34b177f50e1cad545e96a03d9b3e3e6ec3a..1addec664558ae797a0784ff6541cfc35ccca543
---- a/ai/review.md
-+++ b/ai/review.md
-@@ -258,6 +258,22 @@
- 
- ## Validator Decision
- 
-+- Result: PASS for `ITEM-0006`.
-+- Acceptance criteria check:
-+  - `tracker/views.py` and `tracker/urls.py` provide tag create, update, delete, list, and detail flows inside the existing Django app with HTML partial mutation responses only.
-+  - `templates/tracker/tag_detail.html` and the tag partials expose stable create, detail, edit, and list swap regions for the dedicated server-rendered tag management surface.
-+  - Invalid tag submissions return inline form errors through the same partial-response contract rather than forcing a full-page workflow.
-+  - The shared `static/tracker/app.js` swap helper preserves wrapper IDs across repeated async updates, which keeps the existing project/task surfaces compatible with the new tag management regions.
-+- Regression check:
-+  - No blocking regression found by inspection in the shared swap helper or tag mutation selector contract.
-+
-+## Reviewer Decision
-+
-+- Decision: DONE for `ITEM-0006`.
-+- Accepted because the tag CRUD slice satisfies the locked no-reload requirements on a dedicated server-rendered management surface and stays within the existing Django + vanilla JS architecture.
-+- Accepted with unchanged environment caveat: `python3 apps/project-tracker/manage.py test tracker.tests.test_views` remains blocked in this workspace by `ModuleNotFoundError: No module named 'django'`, so runtime verification is still limited to static inspection plus Python compilation.
-+- Follow-up for planning: the remaining backlog item should focus on final automated coverage and end-to-end validation once the workspace can run Django tests.
-+
- - Decision: PASS for `ITEM-0005`.
- - Accepted because the revised `project_delete()` detail-page response now clears every task-owned swap region that lives outside `#project-detail-region`, matching the current DOM layout and removing the stale task CRUD regression identified in the prior validation pass.
- - Focused inspection confirms the response now swaps `#project-detail-region`, `#project-edit-form-region`, `#task-create-form-region`, `#task-edit-form-region`, and `#task-list-region`, and the tightened delete test asserts the task regions are present while stale task UI content is absent.
-
-[35m[3mcodex[0m[0m
-The review state is updated. I’m writing the planner handoff notes and switching baton ownership to `PLANNER` now.
 [3m[35mfile update[0m[0m
-[35mM /home/sundaram/code/temp/test/ai/active_agent.txt[0m
-@@ -1 +1 @@
-[31m-REVIEWER[0m
-[32m+PLANNER[0m
 [35mM /home/sundaram/code/temp/test/ai/next_agent.md[0m
-@@ -2,4 +2,4 @@
+@@ -2,25 +2,17 @@
  
 [31m-- Current role: `REVIEWER`[0m
 [31m-- Prompt: `ai/prompts/06-reviewer.md`[0m
 [32m+- Current role: `PLANNER`[0m
 [32m+- Prompt: `ai/prompts/03-planner.md`[0m
  - Execution command for Codex sessions: **Follow `ai/next_agent.yaml` exactly.**
-@@ -9,40 +9,20 @@
  
-[31m-- Active item remains `ITEM-0006` "Add no-reload tag CRUD interactions".[0m
-[31m-- Validator result: PASS.[0m
-[31m-- Accepted by inspection because the tag management slice meets the locked acceptance criteria and the shared swap-helper change does not introduce an observed regression on the existing project/task mutation surfaces.[0m
-[32m+- `ITEM-0006` is accepted and marked done.[0m
-[32m+- Reviewer decision: DONE.[0m
-[32m+- The remaining backlog item is `ITEM-0007` "Add automated coverage and final validation".[0m
+[31m-## Active Item[0m
+[32m+## Handoff Summary[0m
  
-[31m-## What Was Validated[0m
-[32m+## Accepted State[0m
+[31m-- `ITEM-0008`: document local setup and verification workflow under `apps/project-tracker/`.[0m
+[32m+- `ITEM-0008` is accepted and marked done.[0m
+[32m+- [README.md](/home/sundaram/code/temp/test/apps/project-tracker/README.md) now matches the locked `pyenv` plus Poetry workflow, stays project-local under `apps/project-tracker/`, preserves the `manage.py` entrypoint, and retains the exact `ModuleNotFoundError: No module named 'django'` caveat as an environment/setup issue.[0m
+[32m+- Reviewer confirmed the documented verification path in the current workspace:[0m
+[32m+  - `python3 -m py_compile $(find apps/project-tracker -name '*.py' | sort)`[0m
+[32m+  - `poetry run python apps/project-tracker/manage.py test tracker.tests.test_domain tracker.tests.test_views` with 36 tests green[0m
  
-[31m-- `tracker/views.py` and `tracker/urls.py` now provide:[0m
-[31m-  - `tag_list`[0m
-[31m-  - `tag_detail`[0m
-[31m-  - `tag_create`[0m
-[31m-  - `tag_update`[0m
-[31m-  - `tag_delete`[0m
-[31m-- `templates/tracker/tag_detail.html` exposes four stable async regions:[0m
-[31m-  - `#tag-create-form-region`[0m
-[31m-  - `#tag-detail-region`[0m
-[31m-  - `#tag-edit-form-region`[0m
-[31m-  - `#tag-list-region`[0m
-[31m-- Async selector contract matches the flow:[0m
-[31m-  - create swaps create/list/detail/edit reset[0m
-[31m-  - selection swaps list/detail/edit reset[0m
-[31m-  - update swaps list/detail/edit reset[0m
-[31m-  - delete swaps create/list/detail/edit reset[0m
-[31m-- Direct navigation contract is preserved:[0m
-[31m-  - project/task tag chips still link normally to `tag_detail`[0m
-[31m-  - `tag_detail()` returns a full page for normal requests and partial swaps only for XHR[0m
-[31m-- Shared JS helper check:[0m
-[31m-  - `static/tracker/app.js` replaces the wrapper only when the returned fragment root already matches the target wrapper ID[0m
-[31m-  - otherwise it updates `innerHTML`, which preserves the existing region IDs used by repeated project/task/tag swaps[0m
-[32m+- Tag CRUD now exists on a dedicated server-rendered management surface with stable async swap regions for create, detail, edit, and list updates.[0m
-[32m+- The shared `static/tracker/app.js` swap helper change was inspected and does not show a blocking selector-parity regression on the existing project/task surfaces.[0m
-[32m+- The async contract remains HTML-partial based and stays inside the single Django tracker app with plain templates and vanilla JS only.[0m
+[31m-## Validator Result[0m
+[32m+## Planning Focus[0m
  
-[31m-## Verification Evidence[0m
-[32m+## Environment Caveat[0m
- 
+[31m-- Validation passed for the revised documentation slice.[0m
+[31m-- [README.md](/home/sundaram/code/temp/test/apps/project-tracker/README.md) now uses the locked `pyenv` plus Poetry workflow, keeps commands scoped to `apps/project-tracker/`, and preserves the exact `ModuleNotFoundError: No module named 'django'` caveat as an environment/setup issue.[0m
+[31m-- The current workspace no longer reproduces the earlier missing-Django runtime block: the documented focused Django test command now succeeds in the Poetry environment.[0m
+[31m-[0m
+[31m-## Validation Evidence[0m
+[31m-[0m
 [31m-- Passed: `python3 -m py_compile $(find apps/project-tracker -name '*.py' | sort)`[0m
-[31m-- Blocked in workspace: `python3 apps/project-tracker/manage.py test tracker.tests.test_views`[0m
-[31m-  - failure: `ModuleNotFoundError: No module named 'django'`[0m
-[32m+- Static validation passed via `python3 -m py_compile $(find apps/project-tracker -name '*.py' | sort)`.[0m
-[32m+- Django runtime tests are still blocked in this workspace: `python3 apps/project-tracker/manage.py test tracker.tests.test_views` fails with `ModuleNotFoundError: No module named 'django'`.[0m
- 
+[31m-- Passed: `poetry run python apps/project-tracker/manage.py test tracker.tests.test_domain tracker.tests.test_views` with 36 tests green[0m
+[31m-[0m
 [31m-## Reviewer Focus[0m
-[32m+## Planner Focus[0m
- 
-[31m-- Confirm the tag CRUD slice should be marked done despite the unchanged environment caveat blocking Django runtime tests.[0m
-[31m-- Keep an eye on the shared `app.js` helper change because it affects all async mutation surfaces, although validator inspection did not find a parity break.[0m
-[32m+- Activate the final backlog slice for automated coverage and validation.[0m
-[32m+- Preserve the documented environment caveat unless the workspace gains Django during that slice.[0m
-[32mapply_patch(auto_approved=true) exited 0 in 8ms:[0m
+[31m-[0m
+[31m-- Confirm the revised README stays within the locked tooling and stack constraints from [goal.yaml](/home/sundaram/code/temp/test/ai/goal.yaml).[0m
+[31m-- Confirm the documentation remains project-local and accurately reflects the live verification path under [manage.py](/home/sundaram/code/temp/test/apps/project-tracker/manage.py).[0m
+[31m-- Decide whether the residual assumption about local `pyenv` and Poetry installation is acceptable for closing `ITEM-0008`.[0m
+[32m+- Select the next backlog decision now that `ITEM-0008` is complete.[0m
+[32m+- Keep the locked stack and tooling constraints unchanged unless a later item explicitly requires a decision update.[0m
+[35mM /home/sundaram/code/temp/test/ai/active_agent.txt[0m
+@@ -1 +1 @@
+[31m-REVIEWER[0m
+[32m+PLANNER[0m
+[32mapply_patch(auto_approved=true) exited 0 in 7ms:[0m
 [2mSuccess. Updated the following files:[0m
 [2mM /home/sundaram/code/temp/test/ai/next_agent.md[0m
 [2mM /home/sundaram/code/temp/test/ai/active_agent.txt[0m
@@ -899,47 +709,47 @@ index 9b1cdc0e7e5ff55ba45e80b0786b46c37c9c32ac..b51ee722eae8ec12054c26b379735fce
 -REVIEWER
 +PLANNER
 diff --git a/ai/active_item.yaml b/ai/active_item.yaml
-index bf98a7231698ad000f4c108c53a2261d9e9efdcf..08b8be4f0d667854c0011a08d1a732a2cfe6bc7f
+index c07c520478e1f646f87a04fa59c6e8fa03cd1736..f499080475332e249df1b11480f216102f391241
 --- a/ai/active_item.yaml
 +++ b/ai/active_item.yaml
 @@ -1,8 +1,8 @@
- id: ITEM-0006
- title: Add no-reload tag CRUD interactions
- goal: "Implement async create, update, and delete flows for tags using HTML partial responses and small vanilla JS fetch handlers on a server-rendered tag management surface."
+ id: ITEM-0008
+ title: Document local setup and verification workflow
+ goal: "Add concise project-local documentation under `apps/project-tracker/` covering Django setup, test commands, and the known workspace limitation blocking runtime verification."
 -status: in_progress
 -owner_role: DEV
 +status: done
 +owner_role: REVIEWER
  related_files:
-   - apps/project-tracker/tracker/views.py
-   - apps/project-tracker/tracker/urls.py
+   - apps/project-tracker/README.md
+   - apps/project-tracker/manage.py
 diff --git a/ai/backlog.yaml b/ai/backlog.yaml
-index 8714e194e85e2ff2798073fd619ec9a5b3643339..5efc1eb25c23d42d12915e703af175a1491a8758
+index 47a5fe0d7d6a87a4a15a012a3e901ef05cc90edf..275d04abb701550063bbba66e7a67f9bac5a4515
 --- a/ai/backlog.yaml
 +++ b/ai/backlog.yaml
-@@ -63,7 +63,7 @@
-     title: Add no-reload tag CRUD interactions
-     goal: Implement async create, update, and delete flows for tags using HTML partial responses and small vanilla JS fetch handlers on a server-rendered tag management surface.
-     type: feature
+@@ -86,7 +86,7 @@
+     title: Document local setup and verification workflow
+     goal: Add concise project-local documentation under `apps/project-tracker/` covering Django setup, test commands, and the known workspace limitation blocking runtime verification.
+     type: chore
 -    status: in_progress
 +    status: done
-     priority: high
+     priority: low
      dependencies:
-       - ITEM-0005
+       - ITEM-0007
 diff --git a/ai/iterations/ITER-0001.md b/ai/iterations/ITER-0001.md
-index 4099b0311683a50be436b73cb5f7cebc4849eaa1..79a8d27ca17708aef9b16405d3993d67f12c74c8
+index 3c18709a8d52eb7a71eb8bf0bd940b653d053548..3759ea7dea8cafbf629de4d7faf6dca1eefe57d9
 --- a/ai/iterations/ITER-0001.md
 +++ b/ai/iterations/ITER-0001.md
-@@ -31,3 +31,4 @@
- | 2026-03-12 | PLANNER | Activated ITEM-0006 for no-reload tag CRUD on a dedicated server-rendered tag management surface and handed implementation to DEV | Task CRUD is accepted, and tag entity mutations are the remaining async CRUD slice needed before the final coverage and validation pass |
- | 2026-03-12 | DEV | Implemented no-reload tag CRUD on a dedicated management surface, added focused tag mutation tests, and hardened the shared DOM swap helper to preserve region IDs across repeated async updates | ITEM-0006 required server-rendered tag create, update, and delete flows that reuse the existing partial-response contract, and repeated tag mutations depend on stable swap-region selectors |
- | 2026-03-12 | VALIDATOR | Accepted ITEM-0006 for reviewer handoff after inspecting the tag-region swap contract, full-page tag routing, and shared swap-helper behavior | The tag CRUD slice meets the active-item acceptance criteria without scope drift, and the only remaining verification gap is the workspace-level missing-Django runtime limitation |
-+| 2026-03-12 | REVIEWER | Marked ITEM-0006 done and returned the baton to planning for the final coverage and validation slice | The tag CRUD implementation meets the locked acceptance criteria without scope drift, and the only remaining gap is the documented workspace-level Django runtime limitation |
+@@ -43,3 +43,4 @@
+ | 2026-03-12 | REVIEWER | Routed ITEM-0008 back to DEV after confirming the README setup instructions drift from the locked pyenv and Poetry workflow | The project-local documentation, `manage.py` entrypoint, focused verification commands, and exact missing-Django caveat are still acceptable, but the setup path must match the repository-approved tooling or carry an explicit exception |
+ | 2026-03-12 | DEV | Corrected the project-local README to use the locked `pyenv` plus Poetry workflow and reran the accepted verification commands for ITEM-0008 | The reviewer-required fix was to remove setup-tooling drift without changing the manage.py entrypoint, focused verification surface, or the documented `ModuleNotFoundError: No module named 'django'` environment caveat, and the Poetry-backed Django test run now passes in this workspace |
+ | 2026-03-12 | VALIDATOR | Accepted ITEM-0008 for reviewer handoff after confirming the README matches the locked pyenv plus Poetry workflow and rerunning the documented verification commands successfully | The documentation now stays within the approved toolchain, preserves the exact environment caveat framing, and the focused Django test command passes end to end in the current Poetry environment |
++| 2026-03-12 | REVIEWER | Marked ITEM-0008 done and returned the baton to planning for the next backlog decision | The project-local README now matches the locked pyenv plus Poetry workflow, preserves the exact setup caveat as an environment issue, and the documented focused Django test command passes end to end in the current workspace |
 diff --git a/ai/next_agent.md b/ai/next_agent.md
-index c89b739d32d7b75b64044ef65880c5255795310d..087d197b0a768241e4b60356cb3b957fdbaedd56
+index 5bfd0f552efa65e02f61e71a9e9994ae2dcc8dad..68e2f75b0945aaf250814fd41a5a90d3ce5c2024
 --- a/ai/next_agent.md
 +++ b/ai/next_agent.md
-@@ -1,48 +1,28 @@
+@@ -1,26 +1,18 @@
  # Next Agent
  
 -- Current role: `REVIEWER`
@@ -947,89 +757,51 @@ index c89b739d32d7b75b64044ef65880c5255795310d..087d197b0a768241e4b60356cb3b957f
 +- Current role: `PLANNER`
 +- Prompt: `ai/prompts/03-planner.md`
  - Execution command for Codex sessions: **Follow `ai/next_agent.yaml` exactly.**
- - If role mismatch with `ai/active_agent.txt`, print: `WAITING FOR BATON`
  
- ## Handoff Notes
+-## Active Item
++## Handoff Summary
  
--- Active item remains `ITEM-0006` "Add no-reload tag CRUD interactions".
--- Validator result: PASS.
--- Accepted by inspection because the tag management slice meets the locked acceptance criteria and the shared swap-helper change does not introduce an observed regression on the existing project/task mutation surfaces.
-+- `ITEM-0006` is accepted and marked done.
-+- Reviewer decision: DONE.
-+- The remaining backlog item is `ITEM-0007` "Add automated coverage and final validation".
+-- `ITEM-0008`: document local setup and verification workflow under `apps/project-tracker/`.
++- `ITEM-0008` is accepted and marked done.
++- [README.md](/home/sundaram/code/temp/test/apps/project-tracker/README.md) now matches the locked `pyenv` plus Poetry workflow, stays project-local under `apps/project-tracker/`, preserves the `manage.py` entrypoint, and retains the exact `ModuleNotFoundError: No module named 'django'` caveat as an environment/setup issue.
++- Reviewer confirmed the documented verification path in the current workspace:
++  - `python3 -m py_compile $(find apps/project-tracker -name '*.py' | sort)`
++  - `poetry run python apps/project-tracker/manage.py test tracker.tests.test_domain tracker.tests.test_views` with 36 tests green
  
--## What Was Validated
-+## Accepted State
+-## Validator Result
++## Planning Focus
  
--- `tracker/views.py` and `tracker/urls.py` now provide:
--  - `tag_list`
--  - `tag_detail`
--  - `tag_create`
--  - `tag_update`
--  - `tag_delete`
--- `templates/tracker/tag_detail.html` exposes four stable async regions:
--  - `#tag-create-form-region`
--  - `#tag-detail-region`
--  - `#tag-edit-form-region`
--  - `#tag-list-region`
--- Async selector contract matches the flow:
--  - create swaps create/list/detail/edit reset
--  - selection swaps list/detail/edit reset
--  - update swaps list/detail/edit reset
--  - delete swaps create/list/detail/edit reset
--- Direct navigation contract is preserved:
--  - project/task tag chips still link normally to `tag_detail`
--  - `tag_detail()` returns a full page for normal requests and partial swaps only for XHR
--- Shared JS helper check:
--  - `static/tracker/app.js` replaces the wrapper only when the returned fragment root already matches the target wrapper ID
--  - otherwise it updates `innerHTML`, which preserves the existing region IDs used by repeated project/task/tag swaps
-+- Tag CRUD now exists on a dedicated server-rendered management surface with stable async swap regions for create, detail, edit, and list updates.
-+- The shared `static/tracker/app.js` swap helper change was inspected and does not show a blocking selector-parity regression on the existing project/task surfaces.
-+- The async contract remains HTML-partial based and stays inside the single Django tracker app with plain templates and vanilla JS only.
- 
--## Verification Evidence
-+## Environment Caveat
- 
+-- Validation passed for the revised documentation slice.
+-- [README.md](/home/sundaram/code/temp/test/apps/project-tracker/README.md) now uses the locked `pyenv` plus Poetry workflow, keeps commands scoped to `apps/project-tracker/`, and preserves the exact `ModuleNotFoundError: No module named 'django'` caveat as an environment/setup issue.
+-- The current workspace no longer reproduces the earlier missing-Django runtime block: the documented focused Django test command now succeeds in the Poetry environment.
+-
+-## Validation Evidence
+-
 -- Passed: `python3 -m py_compile $(find apps/project-tracker -name '*.py' | sort)`
--- Blocked in workspace: `python3 apps/project-tracker/manage.py test tracker.tests.test_views`
--  - failure: `ModuleNotFoundError: No module named 'django'`
-+- Static validation passed via `python3 -m py_compile $(find apps/project-tracker -name '*.py' | sort)`.
-+- Django runtime tests are still blocked in this workspace: `python3 apps/project-tracker/manage.py test tracker.tests.test_views` fails with `ModuleNotFoundError: No module named 'django'`.
- 
+-- Passed: `poetry run python apps/project-tracker/manage.py test tracker.tests.test_domain tracker.tests.test_views` with 36 tests green
+-
 -## Reviewer Focus
-+## Planner Focus
- 
--- Confirm the tag CRUD slice should be marked done despite the unchanged environment caveat blocking Django runtime tests.
--- Keep an eye on the shared `app.js` helper change because it affects all async mutation surfaces, although validator inspection did not find a parity break.
-+- Activate the final backlog slice for automated coverage and validation.
-+- Preserve the documented environment caveat unless the workspace gains Django during that slice.
+-
+-- Confirm the revised README stays within the locked tooling and stack constraints from [goal.yaml](/home/sundaram/code/temp/test/ai/goal.yaml).
+-- Confirm the documentation remains project-local and accurately reflects the live verification path under [manage.py](/home/sundaram/code/temp/test/apps/project-tracker/manage.py).
+-- Decide whether the residual assumption about local `pyenv` and Poetry installation is acceptable for closing `ITEM-0008`.
++- Select the next backlog decision now that `ITEM-0008` is complete.
++- Keep the locked stack and tooling constraints unchanged unless a later item explicitly requires a decision update.
 diff --git a/ai/review.md b/ai/review.md
-index 06b1c34b177f50e1cad545e96a03d9b3e3e6ec3a..1addec664558ae797a0784ff6541cfc35ccca543
+index 572fe71a7f2c311f05c7c47f3f578584138ac3f3..1a276e5c07c2bc6021eabb98d0df68ea0ec18ead
 --- a/ai/review.md
 +++ b/ai/review.md
-@@ -258,6 +258,22 @@
+@@ -446,3 +446,10 @@
+ ## Known Risks
  
- ## Validator Decision
- 
-+- Result: PASS for `ITEM-0006`.
-+- Acceptance criteria check:
-+  - `tracker/views.py` and `tracker/urls.py` provide tag create, update, delete, list, and detail flows inside the existing Django app with HTML partial mutation responses only.
-+  - `templates/tracker/tag_detail.html` and the tag partials expose stable create, detail, edit, and list swap regions for the dedicated server-rendered tag management surface.
-+  - Invalid tag submissions return inline form errors through the same partial-response contract rather than forcing a full-page workflow.
-+  - The shared `static/tracker/app.js` swap helper preserves wrapper IDs across repeated async updates, which keeps the existing project/task surfaces compatible with the new tag management regions.
-+- Regression check:
-+  - No blocking regression found by inspection in the shared swap helper or tag mutation selector contract.
+ - The README now assumes `pyenv` and `Poetry` are installed on the local machine; it intentionally does not document alternate package-management flows because no exception is approved in [decision-lock.yaml](/home/sundaram/code/temp/test/ai/decision-lock.yaml).
 +
 +## Reviewer Decision
 +
-+- Decision: DONE for `ITEM-0006`.
-+- Accepted because the tag CRUD slice satisfies the locked no-reload requirements on a dedicated server-rendered management surface and stays within the existing Django + vanilla JS architecture.
-+- Accepted with unchanged environment caveat: `python3 apps/project-tracker/manage.py test tracker.tests.test_views` remains blocked in this workspace by `ModuleNotFoundError: No module named 'django'`, so runtime verification is still limited to static inspection plus Python compilation.
-+- Follow-up for planning: the remaining backlog item should focus on final automated coverage and end-to-end validation once the workspace can run Django tests.
-+
- - Decision: PASS for `ITEM-0005`.
- - Accepted because the revised `project_delete()` detail-page response now clears every task-owned swap region that lives outside `#project-detail-region`, matching the current DOM layout and removing the stale task CRUD regression identified in the prior validation pass.
- - Focused inspection confirms the response now swaps `#project-detail-region`, `#project-edit-form-region`, `#task-create-form-region`, `#task-edit-form-region`, and `#task-list-region`, and the tightened delete test asserts the task regions are present while stale task UI content is absent.
++- Decision: DONE for `ITEM-0008`.
++- Accepted because [README.md](/home/sundaram/code/temp/test/apps/project-tracker/README.md) now follows the locked `pyenv` plus Poetry workflow, stays project-local under `apps/project-tracker/`, preserves the current `manage.py` entrypoint, and documents the focused verification commands required by the active item.
++- Accepted with a narrowed caveat: the README correctly preserves `ModuleNotFoundError: No module named 'django'` as a setup failure mode for an uninitialized environment, while current workspace validation passed with `poetry run python apps/project-tracker/manage.py test tracker.tests.test_domain tracker.tests.test_views` at 36 tests.
++- No scope drift found: the documentation remains aligned with the locked Django, SQLite, and vanilla HTML/CSS/JS stack and does not introduce alternate dependency-management or runtime tooling.
 
 [3m[35mfile update:[0m[0m
 diff --git a/ai/active_agent.txt b/ai/active_agent.txt
@@ -1040,47 +812,47 @@ index 9b1cdc0e7e5ff55ba45e80b0786b46c37c9c32ac..b51ee722eae8ec12054c26b379735fce
 -REVIEWER
 +PLANNER
 diff --git a/ai/active_item.yaml b/ai/active_item.yaml
-index bf98a7231698ad000f4c108c53a2261d9e9efdcf..08b8be4f0d667854c0011a08d1a732a2cfe6bc7f
+index c07c520478e1f646f87a04fa59c6e8fa03cd1736..f499080475332e249df1b11480f216102f391241
 --- a/ai/active_item.yaml
 +++ b/ai/active_item.yaml
 @@ -1,8 +1,8 @@
- id: ITEM-0006
- title: Add no-reload tag CRUD interactions
- goal: "Implement async create, update, and delete flows for tags using HTML partial responses and small vanilla JS fetch handlers on a server-rendered tag management surface."
+ id: ITEM-0008
+ title: Document local setup and verification workflow
+ goal: "Add concise project-local documentation under `apps/project-tracker/` covering Django setup, test commands, and the known workspace limitation blocking runtime verification."
 -status: in_progress
 -owner_role: DEV
 +status: done
 +owner_role: REVIEWER
  related_files:
-   - apps/project-tracker/tracker/views.py
-   - apps/project-tracker/tracker/urls.py
+   - apps/project-tracker/README.md
+   - apps/project-tracker/manage.py
 diff --git a/ai/backlog.yaml b/ai/backlog.yaml
-index 8714e194e85e2ff2798073fd619ec9a5b3643339..5efc1eb25c23d42d12915e703af175a1491a8758
+index 47a5fe0d7d6a87a4a15a012a3e901ef05cc90edf..275d04abb701550063bbba66e7a67f9bac5a4515
 --- a/ai/backlog.yaml
 +++ b/ai/backlog.yaml
-@@ -63,7 +63,7 @@
-     title: Add no-reload tag CRUD interactions
-     goal: Implement async create, update, and delete flows for tags using HTML partial responses and small vanilla JS fetch handlers on a server-rendered tag management surface.
-     type: feature
+@@ -86,7 +86,7 @@
+     title: Document local setup and verification workflow
+     goal: Add concise project-local documentation under `apps/project-tracker/` covering Django setup, test commands, and the known workspace limitation blocking runtime verification.
+     type: chore
 -    status: in_progress
 +    status: done
-     priority: high
+     priority: low
      dependencies:
-       - ITEM-0005
+       - ITEM-0007
 diff --git a/ai/iterations/ITER-0001.md b/ai/iterations/ITER-0001.md
-index 4099b0311683a50be436b73cb5f7cebc4849eaa1..79a8d27ca17708aef9b16405d3993d67f12c74c8
+index 3c18709a8d52eb7a71eb8bf0bd940b653d053548..3759ea7dea8cafbf629de4d7faf6dca1eefe57d9
 --- a/ai/iterations/ITER-0001.md
 +++ b/ai/iterations/ITER-0001.md
-@@ -31,3 +31,4 @@
- | 2026-03-12 | PLANNER | Activated ITEM-0006 for no-reload tag CRUD on a dedicated server-rendered tag management surface and handed implementation to DEV | Task CRUD is accepted, and tag entity mutations are the remaining async CRUD slice needed before the final coverage and validation pass |
- | 2026-03-12 | DEV | Implemented no-reload tag CRUD on a dedicated management surface, added focused tag mutation tests, and hardened the shared DOM swap helper to preserve region IDs across repeated async updates | ITEM-0006 required server-rendered tag create, update, and delete flows that reuse the existing partial-response contract, and repeated tag mutations depend on stable swap-region selectors |
- | 2026-03-12 | VALIDATOR | Accepted ITEM-0006 for reviewer handoff after inspecting the tag-region swap contract, full-page tag routing, and shared swap-helper behavior | The tag CRUD slice meets the active-item acceptance criteria without scope drift, and the only remaining verification gap is the workspace-level missing-Django runtime limitation |
-+| 2026-03-12 | REVIEWER | Marked ITEM-0006 done and returned the baton to planning for the final coverage and validation slice | The tag CRUD implementation meets the locked acceptance criteria without scope drift, and the only remaining gap is the documented workspace-level Django runtime limitation |
+@@ -43,3 +43,4 @@
+ | 2026-03-12 | REVIEWER | Routed ITEM-0008 back to DEV after confirming the README setup instructions drift from the locked pyenv and Poetry workflow | The project-local documentation, `manage.py` entrypoint, focused verification commands, and exact missing-Django caveat are still acceptable, but the setup path must match the repository-approved tooling or carry an explicit exception |
+ | 2026-03-12 | DEV | Corrected the project-local README to use the locked `pyenv` plus Poetry workflow and reran the accepted verification commands for ITEM-0008 | The reviewer-required fix was to remove setup-tooling drift without changing the manage.py entrypoint, focused verification surface, or the documented `ModuleNotFoundError: No module named 'django'` environment caveat, and the Poetry-backed Django test run now passes in this workspace |
+ | 2026-03-12 | VALIDATOR | Accepted ITEM-0008 for reviewer handoff after confirming the README matches the locked pyenv plus Poetry workflow and rerunning the documented verification commands successfully | The documentation now stays within the approved toolchain, preserves the exact environment caveat framing, and the focused Django test command passes end to end in the current Poetry environment |
++| 2026-03-12 | REVIEWER | Marked ITEM-0008 done and returned the baton to planning for the next backlog decision | The project-local README now matches the locked pyenv plus Poetry workflow, preserves the exact setup caveat as an environment issue, and the documented focused Django test command passes end to end in the current workspace |
 diff --git a/ai/next_agent.md b/ai/next_agent.md
-index c89b739d32d7b75b64044ef65880c5255795310d..087d197b0a768241e4b60356cb3b957fdbaedd56
+index 5bfd0f552efa65e02f61e71a9e9994ae2dcc8dad..68e2f75b0945aaf250814fd41a5a90d3ce5c2024
 --- a/ai/next_agent.md
 +++ b/ai/next_agent.md
-@@ -1,48 +1,28 @@
+@@ -1,26 +1,18 @@
  # Next Agent
  
 -- Current role: `REVIEWER`
@@ -1088,92 +860,163 @@ index c89b739d32d7b75b64044ef65880c5255795310d..087d197b0a768241e4b60356cb3b957f
 +- Current role: `PLANNER`
 +- Prompt: `ai/prompts/03-planner.md`
  - Execution command for Codex sessions: **Follow `ai/next_agent.yaml` exactly.**
- - If role mismatch with `ai/active_agent.txt`, print: `WAITING FOR BATON`
  
- ## Handoff Notes
+-## Active Item
++## Handoff Summary
  
--- Active item remains `ITEM-0006` "Add no-reload tag CRUD interactions".
--- Validator result: PASS.
--- Accepted by inspection because the tag management slice meets the locked acceptance criteria and the shared swap-helper change does not introduce an observed regression on the existing project/task mutation surfaces.
-+- `ITEM-0006` is accepted and marked done.
-+- Reviewer decision: DONE.
-+- The remaining backlog item is `ITEM-0007` "Add automated coverage and final validation".
+-- `ITEM-0008`: document local setup and verification workflow under `apps/project-tracker/`.
++- `ITEM-0008` is accepted and marked done.
++- [README.md](/home/sundaram/code/temp/test/apps/project-tracker/README.md) now matches the locked `pyenv` plus Poetry workflow, stays project-local under `apps/project-tracker/`, preserves the `manage.py` entrypoint, and retains the exact `ModuleNotFoundError: No module named 'django'` caveat as an environment/setup issue.
++- Reviewer confirmed the documented verification path in the current workspace:
++  - `python3 -m py_compile $(find apps/project-tracker -name '*.py' | sort)`
++  - `poetry run python apps/project-tracker/manage.py test tracker.tests.test_domain tracker.tests.test_views` with 36 tests green
  
--## What Was Validated
-+## Accepted State
+-## Validator Result
++## Planning Focus
  
--- `tracker/views.py` and `tracker/urls.py` now provide:
--  - `tag_list`
--  - `tag_detail`
--  - `tag_create`
--  - `tag_update`
--  - `tag_delete`
--- `templates/tracker/tag_detail.html` exposes four stable async regions:
--  - `#tag-create-form-region`
--  - `#tag-detail-region`
--  - `#tag-edit-form-region`
--  - `#tag-list-region`
--- Async selector contract matches the flow:
--  - create swaps create/list/detail/edit reset
--  - selection swaps list/detail/edit reset
--  - update swaps list/detail/edit reset
--  - delete swaps create/list/detail/edit reset
--- Direct navigation contract is preserved:
--  - project/task tag chips still link normally to `tag_detail`
--  - `tag_detail()` returns a full page for normal requests and partial swaps only for XHR
--- Shared JS helper check:
--  - `static/tracker/app.js` replaces the wrapper only when the returned fragment root already matches the target wrapper ID
--  - otherwise it updates `innerHTML`, which preserves the existing region IDs used by repeated project/task/tag swaps
-+- Tag CRUD now exists on a dedicated server-rendered management surface with stable async swap regions for create, detail, edit, and list updates.
-+- The shared `static/tracker/app.js` swap helper change was inspected and does not show a blocking selector-parity regression on the existing project/task surfaces.
-+- The async contract remains HTML-partial based and stays inside the single Django tracker app with plain templates and vanilla JS only.
- 
--## Verification Evidence
-+## Environment Caveat
- 
+-- Validation passed for the revised documentation slice.
+-- [README.md](/home/sundaram/code/temp/test/apps/project-tracker/README.md) now uses the locked `pyenv` plus Poetry workflow, keeps commands scoped to `apps/project-tracker/`, and preserves the exact `ModuleNotFoundError: No module named 'django'` caveat as an environment/setup issue.
+-- The current workspace no longer reproduces the earlier missing-Django runtime block: the documented focused Django test command now succeeds in the Poetry environment.
+-
+-## Validation Evidence
+-
 -- Passed: `python3 -m py_compile $(find apps/project-tracker -name '*.py' | sort)`
--- Blocked in workspace: `python3 apps/project-tracker/manage.py test tracker.tests.test_views`
--  - failure: `ModuleNotFoundError: No module named 'django'`
-+- Static validation passed via `python3 -m py_compile $(find apps/project-tracker -name '*.py' | sort)`.
-+- Django runtime tests are still blocked in this workspace: `python3 apps/project-tracker/manage.py test tracker.tests.test_views` fails with `ModuleNotFoundError: No module named 'django'`.
- 
+-- Passed: `poetry run python apps/project-tracker/manage.py test tracker.tests.test_domain tracker.tests.test_views` with 36 tests green
+-
 -## Reviewer Focus
-+## Planner Focus
- 
--- Confirm the tag CRUD slice should be marked done despite the unchanged environment caveat blocking Django runtime tests.
--- Keep an eye on the shared `app.js` helper change because it affects all async mutation surfaces, although validator inspection did not find a parity break.
-+- Activate the final backlog slice for automated coverage and validation.
-+- Preserve the documented environment caveat unless the workspace gains Django during that slice.
+-
+-- Confirm the revised README stays within the locked tooling and stack constraints from [goal.yaml](/home/sundaram/code/temp/test/ai/goal.yaml).
+-- Confirm the documentation remains project-local and accurately reflects the live verification path under [manage.py](/home/sundaram/code/temp/test/apps/project-tracker/manage.py).
+-- Decide whether the residual assumption about local `pyenv` and Poetry installation is acceptable for closing `ITEM-0008`.
++- Select the next backlog decision now that `ITEM-0008` is complete.
++- Keep the locked stack and tooling constraints unchanged unless a later item explicitly requires a decision update.
 diff --git a/ai/review.md b/ai/review.md
-index 06b1c34b177f50e1cad545e96a03d9b3e3e6ec3a..1addec664558ae797a0784ff6541cfc35ccca543
+index 572fe71a7f2c311f05c7c47f3f578584138ac3f3..1a276e5c07c2bc6021eabb98d0df68ea0ec18ead
 --- a/ai/review.md
 +++ b/ai/review.md
-@@ -258,6 +258,22 @@
+@@ -446,3 +446,10 @@
+ ## Known Risks
  
- ## Validator Decision
- 
-+- Result: PASS for `ITEM-0006`.
-+- Acceptance criteria check:
-+  - `tracker/views.py` and `tracker/urls.py` provide tag create, update, delete, list, and detail flows inside the existing Django app with HTML partial mutation responses only.
-+  - `templates/tracker/tag_detail.html` and the tag partials expose stable create, detail, edit, and list swap regions for the dedicated server-rendered tag management surface.
-+  - Invalid tag submissions return inline form errors through the same partial-response contract rather than forcing a full-page workflow.
-+  - The shared `static/tracker/app.js` swap helper preserves wrapper IDs across repeated async updates, which keeps the existing project/task surfaces compatible with the new tag management regions.
-+- Regression check:
-+  - No blocking regression found by inspection in the shared swap helper or tag mutation selector contract.
+ - The README now assumes `pyenv` and `Poetry` are installed on the local machine; it intentionally does not document alternate package-management flows because no exception is approved in [decision-lock.yaml](/home/sundaram/code/temp/test/ai/decision-lock.yaml).
 +
 +## Reviewer Decision
 +
-+- Decision: DONE for `ITEM-0006`.
-+- Accepted because the tag CRUD slice satisfies the locked no-reload requirements on a dedicated server-rendered management surface and stays within the existing Django + vanilla JS architecture.
-+- Accepted with unchanged environment caveat: `python3 apps/project-tracker/manage.py test tracker.tests.test_views` remains blocked in this workspace by `ModuleNotFoundError: No module named 'django'`, so runtime verification is still limited to static inspection plus Python compilation.
-+- Follow-up for planning: the remaining backlog item should focus on final automated coverage and end-to-end validation once the workspace can run Django tests.
-+
- - Decision: PASS for `ITEM-0005`.
- - Accepted because the revised `project_delete()` detail-page response now clears every task-owned swap region that lives outside `#project-detail-region`, matching the current DOM layout and removing the stale task CRUD regression identified in the prior validation pass.
- - Focused inspection confirms the response now swaps `#project-detail-region`, `#project-edit-form-region`, `#task-create-form-region`, `#task-edit-form-region`, and `#task-list-region`, and the tightened delete test asserts the task regions are present while stale task UI content is absent.
++- Decision: DONE for `ITEM-0008`.
++- Accepted because [README.md](/home/sundaram/code/temp/test/apps/project-tracker/README.md) now follows the locked `pyenv` plus Poetry workflow, stays project-local under `apps/project-tracker/`, preserves the current `manage.py` entrypoint, and documents the focused verification commands required by the active item.
++- Accepted with a narrowed caveat: the README correctly preserves `ModuleNotFoundError: No module named 'django'` as a setup failure mode for an uninitialized environment, while current workspace validation passed with `poetry run python apps/project-tracker/manage.py test tracker.tests.test_domain tracker.tests.test_views` at 36 tests.
++- No scope drift found: the documentation remains aligned with the locked Django, SQLite, and vanilla HTML/CSS/JS stack and does not introduce alternate dependency-management or runtime tooling.
 
 [35m[3mexec[0m[0m
-[1m/bin/bash -lc "sed -n '1,220p' ai/next_agent.yaml"[0m in /home/sundaram/code/temp/test[32m succeeded in 0ms:[0m
+[1m/bin/bash -lc './scripts/generate-next-agent.sh PLANNER --notes "review decision DONE for ITEM-0008 | accepted project-local README aligned to locked pyenv plus Poetry workflow | verified py_compile plus poetry-backed Django tests passed with 36 tests green"'[0m in /home/sundaram/code/temp/test[32m succeeded in 0ms:[0m
+[2mGenerated ai/next_agent.yaml for PLANNER (next: DEV)[0m
+[3m[35mfile update:[0m[0m
+diff --git a/ai/active_agent.txt b/ai/active_agent.txt
+index 9b1cdc0e7e5ff55ba45e80b0786b46c37c9c32ac..b51ee722eae8ec12054c26b379735fcea599c2f6
+--- a/ai/active_agent.txt
++++ b/ai/active_agent.txt
+@@ -1 +1 @@
+-REVIEWER
++PLANNER
+diff --git a/ai/active_item.yaml b/ai/active_item.yaml
+index c07c520478e1f646f87a04fa59c6e8fa03cd1736..f499080475332e249df1b11480f216102f391241
+--- a/ai/active_item.yaml
++++ b/ai/active_item.yaml
+@@ -1,8 +1,8 @@
+ id: ITEM-0008
+ title: Document local setup and verification workflow
+ goal: "Add concise project-local documentation under `apps/project-tracker/` covering Django setup, test commands, and the known workspace limitation blocking runtime verification."
+-status: in_progress
+-owner_role: DEV
++status: done
++owner_role: REVIEWER
+ related_files:
+   - apps/project-tracker/README.md
+   - apps/project-tracker/manage.py
+diff --git a/ai/backlog.yaml b/ai/backlog.yaml
+index 47a5fe0d7d6a87a4a15a012a3e901ef05cc90edf..275d04abb701550063bbba66e7a67f9bac5a4515
+--- a/ai/backlog.yaml
++++ b/ai/backlog.yaml
+@@ -86,7 +86,7 @@
+     title: Document local setup and verification workflow
+     goal: Add concise project-local documentation under `apps/project-tracker/` covering Django setup, test commands, and the known workspace limitation blocking runtime verification.
+     type: chore
+-    status: in_progress
++    status: done
+     priority: low
+     dependencies:
+       - ITEM-0007
+diff --git a/ai/iterations/ITER-0001.md b/ai/iterations/ITER-0001.md
+index 3c18709a8d52eb7a71eb8bf0bd940b653d053548..3759ea7dea8cafbf629de4d7faf6dca1eefe57d9
+--- a/ai/iterations/ITER-0001.md
++++ b/ai/iterations/ITER-0001.md
+@@ -43,3 +43,4 @@
+ | 2026-03-12 | REVIEWER | Routed ITEM-0008 back to DEV after confirming the README setup instructions drift from the locked pyenv and Poetry workflow | The project-local documentation, `manage.py` entrypoint, focused verification commands, and exact missing-Django caveat are still acceptable, but the setup path must match the repository-approved tooling or carry an explicit exception |
+ | 2026-03-12 | DEV | Corrected the project-local README to use the locked `pyenv` plus Poetry workflow and reran the accepted verification commands for ITEM-0008 | The reviewer-required fix was to remove setup-tooling drift without changing the manage.py entrypoint, focused verification surface, or the documented `ModuleNotFoundError: No module named 'django'` environment caveat, and the Poetry-backed Django test run now passes in this workspace |
+ | 2026-03-12 | VALIDATOR | Accepted ITEM-0008 for reviewer handoff after confirming the README matches the locked pyenv plus Poetry workflow and rerunning the documented verification commands successfully | The documentation now stays within the approved toolchain, preserves the exact environment caveat framing, and the focused Django test command passes end to end in the current Poetry environment |
++| 2026-03-12 | REVIEWER | Marked ITEM-0008 done and returned the baton to planning for the next backlog decision | The project-local README now matches the locked pyenv plus Poetry workflow, preserves the exact setup caveat as an environment issue, and the documented focused Django test command passes end to end in the current workspace |
+diff --git a/ai/next_agent.md b/ai/next_agent.md
+index 5bfd0f552efa65e02f61e71a9e9994ae2dcc8dad..68e2f75b0945aaf250814fd41a5a90d3ce5c2024
+--- a/ai/next_agent.md
++++ b/ai/next_agent.md
+@@ -1,26 +1,18 @@
+ # Next Agent
+ 
+-- Current role: `REVIEWER`
+-- Prompt: `ai/prompts/06-reviewer.md`
++- Current role: `PLANNER`
++- Prompt: `ai/prompts/03-planner.md`
+ - Execution command for Codex sessions: **Follow `ai/next_agent.yaml` exactly.**
+ 
+-## Active Item
++## Handoff Summary
+ 
+-- `ITEM-0008`: document local setup and verification workflow under `apps/project-tracker/`.
++- `ITEM-0008` is accepted and marked done.
++- [README.md](/home/sundaram/code/temp/test/apps/project-tracker/README.md) now matches the locked `pyenv` plus Poetry workflow, stays project-local under `apps/project-tracker/`, preserves the `manage.py` entrypoint, and retains the exact `ModuleNotFoundError: No module named 'django'` caveat as an environment/setup issue.
++- Reviewer confirmed the documented verification path in the current workspace:
++  - `python3 -m py_compile $(find apps/project-tracker -name '*.py' | sort)`
++  - `poetry run python apps/project-tracker/manage.py test tracker.tests.test_domain tracker.tests.test_views` with 36 tests green
+ 
+-## Validator Result
++## Planning Focus
+ 
+-- Validation passed for the revised documentation slice.
+-- [README.md](/home/sundaram/code/temp/test/apps/project-tracker/README.md) now uses the locked `pyenv` plus Poetry workflow, keeps commands scoped to `apps/project-tracker/`, and preserves the exact `ModuleNotFoundError: No module named 'django'` caveat as an environment/setup issue.
+-- The current workspace no longer reproduces the earlier missing-Django runtime block: the documented focused Django test command now succeeds in the Poetry environment.
+-
+-## Validation Evidence
+-
+-- Passed: `python3 -m py_compile $(find apps/project-tracker -name '*.py' | sort)`
+-- Passed: `poetry run python apps/project-tracker/manage.py test tracker.tests.test_domain tracker.tests.test_views` with 36 tests green
+-
+-## Reviewer Focus
+-
+-- Confirm the revised README stays within the locked tooling and stack constraints from [goal.yaml](/home/sundaram/code/temp/test/ai/goal.yaml).
+-- Confirm the documentation remains project-local and accurately reflects the live verification path under [manage.py](/home/sundaram/code/temp/test/apps/project-tracker/manage.py).
+-- Decide whether the residual assumption about local `pyenv` and Poetry installation is acceptable for closing `ITEM-0008`.
++- Select the next backlog decision now that `ITEM-0008` is complete.
++- Keep the locked stack and tooling constraints unchanged unless a later item explicitly requires a decision update.
+diff --git a/ai/review.md b/ai/review.md
+index 572fe71a7f2c311f05c7c47f3f578584138ac3f3..1a276e5c07c2bc6021eabb98d0df68ea0ec18ead
+--- a/ai/review.md
++++ b/ai/review.md
+@@ -446,3 +446,10 @@
+ ## Known Risks
+ 
+ - The README now assumes `pyenv` and `Poetry` are installed on the local machine; it intentionally does not document alternate package-management flows because no exception is approved in [decision-lock.yaml](/home/sundaram/code/temp/test/ai/decision-lock.yaml).
++
++## Reviewer Decision
++
++- Decision: DONE for `ITEM-0008`.
++- Accepted because [README.md](/home/sundaram/code/temp/test/apps/project-tracker/README.md) now follows the locked `pyenv` plus Poetry workflow, stays project-local under `apps/project-tracker/`, preserves the current `manage.py` entrypoint, and documents the focused verification commands required by the active item.
++- Accepted with a narrowed caveat: the README correctly preserves `ModuleNotFoundError: No module named 'django'` as a setup failure mode for an uninitialized environment, while current workspace validation passed with `poetry run python apps/project-tracker/manage.py test tracker.tests.test_domain tracker.tests.test_views` at 36 tests.
++- No scope drift found: the documentation remains aligned with the locked Django, SQLite, and vanilla HTML/CSS/JS stack and does not introduce alternate dependency-management or runtime tooling.
+
+[35m[3mexec[0m[0m
+[1m/bin/bash -lc "sed -n '1,40p' ai/active_agent.txt"[0m in /home/sundaram/code/temp/test[35m[3mexec[0m[0m
+[1m/bin/bash -lc "sed -n '1,120p' ai/next_agent.yaml"[0m in /home/sundaram/code/temp/test[32m succeeded in 0ms:[0m
+[2mPLANNER[0m
+[32m succeeded in 0ms:[0m
 [2mnext_role: PLANNER
 prompt_file: ai/prompts/03-planner.md
 read:
@@ -1195,27 +1038,65 @@ allowed_edits:
   - ai/active_agent.txt
   - ai/next_agent.yaml[0m
 [35m[3mexec[0m[0m
-[1m/bin/bash -lc 'git diff -- ai/backlog.yaml ai/active_item.yaml ai/review.md ai/iterations/ITER-0001.md ai/next_agent.md ai/active_agent.txt ai/next_agent.yaml'[0m in /home/sundaram/code/temp/test[32m succeeded in 0ms:[0m
-[2mdiff --git a/ai/active_agent.txt b/ai/active_agent.txt
-index a8b82c6..b51ee72 100644
---- a/ai/active_agent.txt
-+++ b/ai/active_agent.txt
-@@ -1 +1 @@
--DEV
-+PLANNER
-diff --git a/ai/active_item.yaml b/ai/active_item.yaml
-index f20d0fb..08b8be4 100644
---- a/ai/active_item.yaml
-+++ b/ai/active_item.yaml
-@@ -1,28 +1,26 @@
--id: ITEM-0004
--title: Add no-reload project CRUD interactions
--goal: "Implement async create, update, and delete flows for projects using HTML partial responses and small vanilla JS fetch handlers."
--status: in_progress
--owner_role: DEV
-+id: ITEM-0006
-+title: Add no-reload tag CRUD interactions
-+goal: "Implement async create, update, and delete flows for tags using HTML partial responses and small vanilla JS fetch handlers on a server-rendered tag management surface."[0m
+[1m/bin/bash -lc "sed -n '1,20p' ai/active_item.yaml"[0m in /home/sundaram/code/temp/test[35m[3mexec[0m[0m
+[1m/bin/bash -lc 'tail -n 3 ai/iterations/ITER-0001.md'[0m in /home/sundaram/code/temp/test[32m succeeded in 0ms:[0m
+[2m| 2026-03-12 | DEV | Corrected the project-local README to use the locked `pyenv` plus Poetry workflow and reran the accepted verification commands for ITEM-0008 | The reviewer-required fix was to remove setup-tooling drift without changing the manage.py entrypoint, focused verification surface, or the documented `ModuleNotFoundError: No module named 'django'` environment caveat, and the Poetry-backed Django test run now passes in this workspace |
+| 2026-03-12 | VALIDATOR | Accepted ITEM-0008 for reviewer handoff after confirming the README matches the locked pyenv plus Poetry workflow and rerunning the documented verification commands successfully | The documentation now stays within the approved toolchain, preserves the exact environment caveat framing, and the focused Django test command passes end to end in the current Poetry environment |
+| 2026-03-12 | REVIEWER | Marked ITEM-0008 done and returned the baton to planning for the next backlog decision | The project-local README now matches the locked pyenv plus Poetry workflow, preserves the exact setup caveat as an environment issue, and the documented focused Django test command passes end to end in the current workspace |[0m
+[32m succeeded in 0ms:[0m
+[2mid: ITEM-0008
+title: Document local setup and verification workflow
+goal: "Add concise project-local documentation under `apps/project-tracker/` covering Django setup, test commands, and the known workspace limitation blocking runtime verification."
+status: done
+owner_role: REVIEWER
+related_files:
+  - apps/project-tracker/README.md
+  - apps/project-tracker/manage.py
+  - apps/project-tracker/project_tracker/settings.py
+acceptance_criteria:
+  - "A project-local README or equivalent doc is added under `apps/project-tracker/` with concrete setup steps for creating a Python environment, installing Django, applying migrations, and running the development server."
+  - "The documentation lists the focused verification commands for `py_compile` and the Django test modules currently used by the project."
+  - "The known workspace limitation is documented explicitly as `ModuleNotFoundError: No module named 'django'`, framed as an environment/setup issue rather than a tracker application defect."
+  - "The documentation stays aligned with the locked stack: Django, SQLite, and vanilla HTML/CSS/JS only."
+done_definition:
+  - "The new documentation reflects the current repository layout and existing `manage.py` entrypoint without inventing new tooling."
+  - "The listed commands are specific enough for a fresh local checkout to reproduce migrations, server startup, and focused test execution once Django is installed."
+  - "If DEV cannot run Django commands in the workspace, the handoff and review artifacts keep that runtime limitation visible."[0m
+[35m[3mexec[0m[0m
+[1m/bin/bash -lc 'tail -n 20 ai/review.md'[0m in /home/sundaram/code/temp/test[32m succeeded in 0ms:[0m
+[2m
+- Updated [README.md](/home/sundaram/code/temp/test/apps/project-tracker/README.md) so the local setup flow now uses the locked repository tooling from the repo root: `pyenv` for Python selection and `Poetry` for dependency installation and Django command execution.
+- Kept the documentation project-local under `apps/project-tracker/`, preserved the existing `apps/project-tracker/manage.py` entrypoint, and retained the focused verification commands for `py_compile` plus the domain/view test modules.
+- Tightened the caveat wording so it still documents the exact `ModuleNotFoundError: No module named 'django'` failure mode as an environment/setup issue without incorrectly claiming the current workspace is still in that broken state.
+
+## Validation Evidence
+
+- `python3 -m py_compile $(find apps/project-tracker -name '*.py' | sort)` passed.
+- `poetry run python apps/project-tracker/manage.py test tracker.tests.test_domain tracker.tests.test_views` passed with 36 tests.
+
+## Known Risks
+
+- The README now assumes `pyenv` and `Poetry` are installed on the local machine; it intentionally does not document alternate package-management flows because no exception is approved in [decision-lock.yaml](/home/sundaram/code/temp/test/ai/decision-lock.yaml).
+
+## Reviewer Decision
+
+- Decision: DONE for `ITEM-0008`.
+- Accepted because [README.md](/home/sundaram/code/temp/test/apps/project-tracker/README.md) now follows the locked `pyenv` plus Poetry workflow, stays project-local under `apps/project-tracker/`, preserves the current `manage.py` entrypoint, and documents the focused verification commands required by the active item.
+- Accepted with a narrowed caveat: the README correctly preserves `ModuleNotFoundError: No module named 'django'` as a setup failure mode for an uninitialized environment, while current workspace validation passed with `poetry run python apps/project-tracker/manage.py test tracker.tests.test_domain tracker.tests.test_views` at 36 tests.
+- No scope drift found: the documentation remains aligned with the locked Django, SQLite, and vanilla HTML/CSS/JS stack and does not introduce alternate dependency-management or runtime tooling.[0m
+[35m[3mexec[0m[0m
+[1m/bin/bash -lc "sed -n '86,108p' ai/backlog.yaml"[0m in /home/sundaram/code/temp/test[32m succeeded in 0ms:[0m
+[2m    title: Document local setup and verification workflow
+    goal: Add concise project-local documentation under `apps/project-tracker/` covering Django setup, test commands, and the known workspace limitation blocking runtime verification.
+    type: chore
+    status: done
+    priority: low
+    dependencies:
+      - ITEM-0007
+    notes:
+      - Keep the documentation close to the Django app so DEV can edit inside allowed paths.
+      - Capture the exact `manage.py` commands for running the server, migrations, and focused tests once Django is installed.
+      - Preserve the current `ModuleNotFoundError: No module named 'django'` caveat as an environment issue, not a product-code defect.[0m
 [3m[35mfile update:[0m[0m
 diff --git a/ai/active_agent.txt b/ai/active_agent.txt
 index 9b1cdc0e7e5ff55ba45e80b0786b46c37c9c32ac..b51ee722eae8ec12054c26b379735fcea599c2f6
@@ -1225,47 +1106,47 @@ index 9b1cdc0e7e5ff55ba45e80b0786b46c37c9c32ac..b51ee722eae8ec12054c26b379735fce
 -REVIEWER
 +PLANNER
 diff --git a/ai/active_item.yaml b/ai/active_item.yaml
-index bf98a7231698ad000f4c108c53a2261d9e9efdcf..08b8be4f0d667854c0011a08d1a732a2cfe6bc7f
+index c07c520478e1f646f87a04fa59c6e8fa03cd1736..f499080475332e249df1b11480f216102f391241
 --- a/ai/active_item.yaml
 +++ b/ai/active_item.yaml
 @@ -1,8 +1,8 @@
- id: ITEM-0006
- title: Add no-reload tag CRUD interactions
- goal: "Implement async create, update, and delete flows for tags using HTML partial responses and small vanilla JS fetch handlers on a server-rendered tag management surface."
+ id: ITEM-0008
+ title: Document local setup and verification workflow
+ goal: "Add concise project-local documentation under `apps/project-tracker/` covering Django setup, test commands, and the known workspace limitation blocking runtime verification."
 -status: in_progress
 -owner_role: DEV
 +status: done
 +owner_role: REVIEWER
  related_files:
-   - apps/project-tracker/tracker/views.py
-   - apps/project-tracker/tracker/urls.py
+   - apps/project-tracker/README.md
+   - apps/project-tracker/manage.py
 diff --git a/ai/backlog.yaml b/ai/backlog.yaml
-index 8714e194e85e2ff2798073fd619ec9a5b3643339..5efc1eb25c23d42d12915e703af175a1491a8758
+index 47a5fe0d7d6a87a4a15a012a3e901ef05cc90edf..275d04abb701550063bbba66e7a67f9bac5a4515
 --- a/ai/backlog.yaml
 +++ b/ai/backlog.yaml
-@@ -63,7 +63,7 @@
-     title: Add no-reload tag CRUD interactions
-     goal: Implement async create, update, and delete flows for tags using HTML partial responses and small vanilla JS fetch handlers on a server-rendered tag management surface.
-     type: feature
+@@ -86,7 +86,7 @@
+     title: Document local setup and verification workflow
+     goal: Add concise project-local documentation under `apps/project-tracker/` covering Django setup, test commands, and the known workspace limitation blocking runtime verification.
+     type: chore
 -    status: in_progress
 +    status: done
-     priority: high
+     priority: low
      dependencies:
-       - ITEM-0005
+       - ITEM-0007
 diff --git a/ai/iterations/ITER-0001.md b/ai/iterations/ITER-0001.md
-index 4099b0311683a50be436b73cb5f7cebc4849eaa1..79a8d27ca17708aef9b16405d3993d67f12c74c8
+index 3c18709a8d52eb7a71eb8bf0bd940b653d053548..3759ea7dea8cafbf629de4d7faf6dca1eefe57d9
 --- a/ai/iterations/ITER-0001.md
 +++ b/ai/iterations/ITER-0001.md
-@@ -31,3 +31,4 @@
- | 2026-03-12 | PLANNER | Activated ITEM-0006 for no-reload tag CRUD on a dedicated server-rendered tag management surface and handed implementation to DEV | Task CRUD is accepted, and tag entity mutations are the remaining async CRUD slice needed before the final coverage and validation pass |
- | 2026-03-12 | DEV | Implemented no-reload tag CRUD on a dedicated management surface, added focused tag mutation tests, and hardened the shared DOM swap helper to preserve region IDs across repeated async updates | ITEM-0006 required server-rendered tag create, update, and delete flows that reuse the existing partial-response contract, and repeated tag mutations depend on stable swap-region selectors |
- | 2026-03-12 | VALIDATOR | Accepted ITEM-0006 for reviewer handoff after inspecting the tag-region swap contract, full-page tag routing, and shared swap-helper behavior | The tag CRUD slice meets the active-item acceptance criteria without scope drift, and the only remaining verification gap is the workspace-level missing-Django runtime limitation |
-+| 2026-03-12 | REVIEWER | Marked ITEM-0006 done and returned the baton to planning for the final coverage and validation slice | The tag CRUD implementation meets the locked acceptance criteria without scope drift, and the only remaining gap is the documented workspace-level Django runtime limitation |
+@@ -43,3 +43,4 @@
+ | 2026-03-12 | REVIEWER | Routed ITEM-0008 back to DEV after confirming the README setup instructions drift from the locked pyenv and Poetry workflow | The project-local documentation, `manage.py` entrypoint, focused verification commands, and exact missing-Django caveat are still acceptable, but the setup path must match the repository-approved tooling or carry an explicit exception |
+ | 2026-03-12 | DEV | Corrected the project-local README to use the locked `pyenv` plus Poetry workflow and reran the accepted verification commands for ITEM-0008 | The reviewer-required fix was to remove setup-tooling drift without changing the manage.py entrypoint, focused verification surface, or the documented `ModuleNotFoundError: No module named 'django'` environment caveat, and the Poetry-backed Django test run now passes in this workspace |
+ | 2026-03-12 | VALIDATOR | Accepted ITEM-0008 for reviewer handoff after confirming the README matches the locked pyenv plus Poetry workflow and rerunning the documented verification commands successfully | The documentation now stays within the approved toolchain, preserves the exact environment caveat framing, and the focused Django test command passes end to end in the current Poetry environment |
++| 2026-03-12 | REVIEWER | Marked ITEM-0008 done and returned the baton to planning for the next backlog decision | The project-local README now matches the locked pyenv plus Poetry workflow, preserves the exact setup caveat as an environment issue, and the documented focused Django test command passes end to end in the current workspace |
 diff --git a/ai/next_agent.md b/ai/next_agent.md
-index c89b739d32d7b75b64044ef65880c5255795310d..087d197b0a768241e4b60356cb3b957fdbaedd56
+index 5bfd0f552efa65e02f61e71a9e9994ae2dcc8dad..68e2f75b0945aaf250814fd41a5a90d3ce5c2024
 --- a/ai/next_agent.md
 +++ b/ai/next_agent.md
-@@ -1,48 +1,28 @@
+@@ -1,26 +1,18 @@
  # Next Agent
  
 -- Current role: `REVIEWER`
@@ -1273,89 +1154,51 @@ index c89b739d32d7b75b64044ef65880c5255795310d..087d197b0a768241e4b60356cb3b957f
 +- Current role: `PLANNER`
 +- Prompt: `ai/prompts/03-planner.md`
  - Execution command for Codex sessions: **Follow `ai/next_agent.yaml` exactly.**
- - If role mismatch with `ai/active_agent.txt`, print: `WAITING FOR BATON`
  
- ## Handoff Notes
+-## Active Item
++## Handoff Summary
  
--- Active item remains `ITEM-0006` "Add no-reload tag CRUD interactions".
--- Validator result: PASS.
--- Accepted by inspection because the tag management slice meets the locked acceptance criteria and the shared swap-helper change does not introduce an observed regression on the existing project/task mutation surfaces.
-+- `ITEM-0006` is accepted and marked done.
-+- Reviewer decision: DONE.
-+- The remaining backlog item is `ITEM-0007` "Add automated coverage and final validation".
+-- `ITEM-0008`: document local setup and verification workflow under `apps/project-tracker/`.
++- `ITEM-0008` is accepted and marked done.
++- [README.md](/home/sundaram/code/temp/test/apps/project-tracker/README.md) now matches the locked `pyenv` plus Poetry workflow, stays project-local under `apps/project-tracker/`, preserves the `manage.py` entrypoint, and retains the exact `ModuleNotFoundError: No module named 'django'` caveat as an environment/setup issue.
++- Reviewer confirmed the documented verification path in the current workspace:
++  - `python3 -m py_compile $(find apps/project-tracker -name '*.py' | sort)`
++  - `poetry run python apps/project-tracker/manage.py test tracker.tests.test_domain tracker.tests.test_views` with 36 tests green
  
--## What Was Validated
-+## Accepted State
+-## Validator Result
++## Planning Focus
  
--- `tracker/views.py` and `tracker/urls.py` now provide:
--  - `tag_list`
--  - `tag_detail`
--  - `tag_create`
--  - `tag_update`
--  - `tag_delete`
--- `templates/tracker/tag_detail.html` exposes four stable async regions:
--  - `#tag-create-form-region`
--  - `#tag-detail-region`
--  - `#tag-edit-form-region`
--  - `#tag-list-region`
--- Async selector contract matches the flow:
--  - create swaps create/list/detail/edit reset
--  - selection swaps list/detail/edit reset
--  - update swaps list/detail/edit reset
--  - delete swaps create/list/detail/edit reset
--- Direct navigation contract is preserved:
--  - project/task tag chips still link normally to `tag_detail`
--  - `tag_detail()` returns a full page for normal requests and partial swaps only for XHR
--- Shared JS helper check:
--  - `static/tracker/app.js` replaces the wrapper only when the returned fragment root already matches the target wrapper ID
--  - otherwise it updates `innerHTML`, which preserves the existing region IDs used by repeated project/task/tag swaps
-+- Tag CRUD now exists on a dedicated server-rendered management surface with stable async swap regions for create, detail, edit, and list updates.
-+- The shared `static/tracker/app.js` swap helper change was inspected and does not show a blocking selector-parity regression on the existing project/task surfaces.
-+- The async contract remains HTML-partial based and stays inside the single Django tracker app with plain templates and vanilla JS only.
- 
--## Verification Evidence
-+## Environment Caveat
- 
+-- Validation passed for the revised documentation slice.
+-- [README.md](/home/sundaram/code/temp/test/apps/project-tracker/README.md) now uses the locked `pyenv` plus Poetry workflow, keeps commands scoped to `apps/project-tracker/`, and preserves the exact `ModuleNotFoundError: No module named 'django'` caveat as an environment/setup issue.
+-- The current workspace no longer reproduces the earlier missing-Django runtime block: the documented focused Django test command now succeeds in the Poetry environment.
+-
+-## Validation Evidence
+-
 -- Passed: `python3 -m py_compile $(find apps/project-tracker -name '*.py' | sort)`
--- Blocked in workspace: `python3 apps/project-tracker/manage.py test tracker.tests.test_views`
--  - failure: `ModuleNotFoundError: No module named 'django'`
-+- Static validation passed via `python3 -m py_compile $(find apps/project-tracker -name '*.py' | sort)`.
-+- Django runtime tests are still blocked in this workspace: `python3 apps/project-tracker/manage.py test tracker.tests.test_views` fails with `ModuleNotFoundError: No module named 'django'`.
- 
+-- Passed: `poetry run python apps/project-tracker/manage.py test tracker.tests.test_domain tracker.tests.test_views` with 36 tests green
+-
 -## Reviewer Focus
-+## Planner Focus
- 
--- Confirm the tag CRUD slice should be marked done despite the unchanged environment caveat blocking Django runtime tests.
--- Keep an eye on the shared `app.js` helper change because it affects all async mutation surfaces, although validator inspection did not find a parity break.
-+- Activate the final backlog slice for automated coverage and validation.
-+- Preserve the documented environment caveat unless the workspace gains Django during that slice.
+-
+-- Confirm the revised README stays within the locked tooling and stack constraints from [goal.yaml](/home/sundaram/code/temp/test/ai/goal.yaml).
+-- Confirm the documentation remains project-local and accurately reflects the live verification path under [manage.py](/home/sundaram/code/temp/test/apps/project-tracker/manage.py).
+-- Decide whether the residual assumption about local `pyenv` and Poetry installation is acceptable for closing `ITEM-0008`.
++- Select the next backlog decision now that `ITEM-0008` is complete.
++- Keep the locked stack and tooling constraints unchanged unless a later item explicitly requires a decision update.
 diff --git a/ai/review.md b/ai/review.md
-index 06b1c34b177f50e1cad545e96a03d9b3e3e6ec3a..1addec664558ae797a0784ff6541cfc35ccca543
+index 572fe71a7f2c311f05c7c47f3f578584138ac3f3..1a276e5c07c2bc6021eabb98d0df68ea0ec18ead
 --- a/ai/review.md
 +++ b/ai/review.md
-@@ -258,6 +258,22 @@
+@@ -446,3 +446,10 @@
+ ## Known Risks
  
- ## Validator Decision
- 
-+- Result: PASS for `ITEM-0006`.
-+- Acceptance criteria check:
-+  - `tracker/views.py` and `tracker/urls.py` provide tag create, update, delete, list, and detail flows inside the existing Django app with HTML partial mutation responses only.
-+  - `templates/tracker/tag_detail.html` and the tag partials expose stable create, detail, edit, and list swap regions for the dedicated server-rendered tag management surface.
-+  - Invalid tag submissions return inline form errors through the same partial-response contract rather than forcing a full-page workflow.
-+  - The shared `static/tracker/app.js` swap helper preserves wrapper IDs across repeated async updates, which keeps the existing project/task surfaces compatible with the new tag management regions.
-+- Regression check:
-+  - No blocking regression found by inspection in the shared swap helper or tag mutation selector contract.
+ - The README now assumes `pyenv` and `Poetry` are installed on the local machine; it intentionally does not document alternate package-management flows because no exception is approved in [decision-lock.yaml](/home/sundaram/code/temp/test/ai/decision-lock.yaml).
 +
 +## Reviewer Decision
 +
-+- Decision: DONE for `ITEM-0006`.
-+- Accepted because the tag CRUD slice satisfies the locked no-reload requirements on a dedicated server-rendered management surface and stays within the existing Django + vanilla JS architecture.
-+- Accepted with unchanged environment caveat: `python3 apps/project-tracker/manage.py test tracker.tests.test_views` remains blocked in this workspace by `ModuleNotFoundError: No module named 'django'`, so runtime verification is still limited to static inspection plus Python compilation.
-+- Follow-up for planning: the remaining backlog item should focus on final automated coverage and end-to-end validation once the workspace can run Django tests.
-+
- - Decision: PASS for `ITEM-0005`.
- - Accepted because the revised `project_delete()` detail-page response now clears every task-owned swap region that lives outside `#project-detail-region`, matching the current DOM layout and removing the stale task CRUD regression identified in the prior validation pass.
- - Focused inspection confirms the response now swaps `#project-detail-region`, `#project-edit-form-region`, `#task-create-form-region`, `#task-edit-form-region`, and `#task-list-region`, and the tightened delete test asserts the task regions are present while stale task UI content is absent.
++- Decision: DONE for `ITEM-0008`.
++- Accepted because [README.md](/home/sundaram/code/temp/test/apps/project-tracker/README.md) now follows the locked `pyenv` plus Poetry workflow, stays project-local under `apps/project-tracker/`, preserves the current `manage.py` entrypoint, and documents the focused verification commands required by the active item.
++- Accepted with a narrowed caveat: the README correctly preserves `ModuleNotFoundError: No module named 'django'` as a setup failure mode for an uninitialized environment, while current workspace validation passed with `poetry run python apps/project-tracker/manage.py test tracker.tests.test_domain tracker.tests.test_views` at 36 tests.
++- No scope drift found: the documentation remains aligned with the locked Django, SQLite, and vanilla HTML/CSS/JS stack and does not introduce alternate dependency-management or runtime tooling.
 
 [35m[3mcodex[0m[0m
 HANDOFF TO PLANNER
@@ -1368,47 +1211,47 @@ index 9b1cdc0e7e5ff55ba45e80b0786b46c37c9c32ac..b51ee722eae8ec12054c26b379735fce
 -REVIEWER
 +PLANNER
 diff --git a/ai/active_item.yaml b/ai/active_item.yaml
-index bf98a7231698ad000f4c108c53a2261d9e9efdcf..08b8be4f0d667854c0011a08d1a732a2cfe6bc7f
+index c07c520478e1f646f87a04fa59c6e8fa03cd1736..f499080475332e249df1b11480f216102f391241
 --- a/ai/active_item.yaml
 +++ b/ai/active_item.yaml
 @@ -1,8 +1,8 @@
- id: ITEM-0006
- title: Add no-reload tag CRUD interactions
- goal: "Implement async create, update, and delete flows for tags using HTML partial responses and small vanilla JS fetch handlers on a server-rendered tag management surface."
+ id: ITEM-0008
+ title: Document local setup and verification workflow
+ goal: "Add concise project-local documentation under `apps/project-tracker/` covering Django setup, test commands, and the known workspace limitation blocking runtime verification."
 -status: in_progress
 -owner_role: DEV
 +status: done
 +owner_role: REVIEWER
  related_files:
-   - apps/project-tracker/tracker/views.py
-   - apps/project-tracker/tracker/urls.py
+   - apps/project-tracker/README.md
+   - apps/project-tracker/manage.py
 diff --git a/ai/backlog.yaml b/ai/backlog.yaml
-index 8714e194e85e2ff2798073fd619ec9a5b3643339..5efc1eb25c23d42d12915e703af175a1491a8758
+index 47a5fe0d7d6a87a4a15a012a3e901ef05cc90edf..275d04abb701550063bbba66e7a67f9bac5a4515
 --- a/ai/backlog.yaml
 +++ b/ai/backlog.yaml
-@@ -63,7 +63,7 @@
-     title: Add no-reload tag CRUD interactions
-     goal: Implement async create, update, and delete flows for tags using HTML partial responses and small vanilla JS fetch handlers on a server-rendered tag management surface.
-     type: feature
+@@ -86,7 +86,7 @@
+     title: Document local setup and verification workflow
+     goal: Add concise project-local documentation under `apps/project-tracker/` covering Django setup, test commands, and the known workspace limitation blocking runtime verification.
+     type: chore
 -    status: in_progress
 +    status: done
-     priority: high
+     priority: low
      dependencies:
-       - ITEM-0005
+       - ITEM-0007
 diff --git a/ai/iterations/ITER-0001.md b/ai/iterations/ITER-0001.md
-index 4099b0311683a50be436b73cb5f7cebc4849eaa1..79a8d27ca17708aef9b16405d3993d67f12c74c8
+index 3c18709a8d52eb7a71eb8bf0bd940b653d053548..3759ea7dea8cafbf629de4d7faf6dca1eefe57d9
 --- a/ai/iterations/ITER-0001.md
 +++ b/ai/iterations/ITER-0001.md
-@@ -31,3 +31,4 @@
- | 2026-03-12 | PLANNER | Activated ITEM-0006 for no-reload tag CRUD on a dedicated server-rendered tag management surface and handed implementation to DEV | Task CRUD is accepted, and tag entity mutations are the remaining async CRUD slice needed before the final coverage and validation pass |
- | 2026-03-12 | DEV | Implemented no-reload tag CRUD on a dedicated management surface, added focused tag mutation tests, and hardened the shared DOM swap helper to preserve region IDs across repeated async updates | ITEM-0006 required server-rendered tag create, update, and delete flows that reuse the existing partial-response contract, and repeated tag mutations depend on stable swap-region selectors |
- | 2026-03-12 | VALIDATOR | Accepted ITEM-0006 for reviewer handoff after inspecting the tag-region swap contract, full-page tag routing, and shared swap-helper behavior | The tag CRUD slice meets the active-item acceptance criteria without scope drift, and the only remaining verification gap is the workspace-level missing-Django runtime limitation |
-+| 2026-03-12 | REVIEWER | Marked ITEM-0006 done and returned the baton to planning for the final coverage and validation slice | The tag CRUD implementation meets the locked acceptance criteria without scope drift, and the only remaining gap is the documented workspace-level Django runtime limitation |
+@@ -43,3 +43,4 @@
+ | 2026-03-12 | REVIEWER | Routed ITEM-0008 back to DEV after confirming the README setup instructions drift from the locked pyenv and Poetry workflow | The project-local documentation, `manage.py` entrypoint, focused verification commands, and exact missing-Django caveat are still acceptable, but the setup path must match the repository-approved tooling or carry an explicit exception |
+ | 2026-03-12 | DEV | Corrected the project-local README to use the locked `pyenv` plus Poetry workflow and reran the accepted verification commands for ITEM-0008 | The reviewer-required fix was to remove setup-tooling drift without changing the manage.py entrypoint, focused verification surface, or the documented `ModuleNotFoundError: No module named 'django'` environment caveat, and the Poetry-backed Django test run now passes in this workspace |
+ | 2026-03-12 | VALIDATOR | Accepted ITEM-0008 for reviewer handoff after confirming the README matches the locked pyenv plus Poetry workflow and rerunning the documented verification commands successfully | The documentation now stays within the approved toolchain, preserves the exact environment caveat framing, and the focused Django test command passes end to end in the current Poetry environment |
++| 2026-03-12 | REVIEWER | Marked ITEM-0008 done and returned the baton to planning for the next backlog decision | The project-local README now matches the locked pyenv plus Poetry workflow, preserves the exact setup caveat as an environment issue, and the documented focused Django test command passes end to end in the current workspace |
 diff --git a/ai/next_agent.md b/ai/next_agent.md
-index c89b739d32d7b75b64044ef65880c5255795310d..087d197b0a768241e4b60356cb3b957fdbaedd56
+index 5bfd0f552efa65e02f61e71a9e9994ae2dcc8dad..68e2f75b0945aaf250814fd41a5a90d3ce5c2024
 --- a/ai/next_agent.md
 +++ b/ai/next_agent.md
-@@ -1,48 +1,28 @@
+@@ -1,26 +1,18 @@
  # Next Agent
  
 -- Current role: `REVIEWER`
@@ -1416,91 +1259,53 @@ index c89b739d32d7b75b64044ef65880c5255795310d..087d197b0a768241e4b60356cb3b957f
 +- Current role: `PLANNER`
 +- Prompt: `ai/prompts/03-planner.md`
  - Execution command for Codex sessions: **Follow `ai/next_agent.yaml` exactly.**
- - If role mismatch with `ai/active_agent.txt`, print: `WAITING FOR BATON`
  
- ## Handoff Notes
+-## Active Item
++## Handoff Summary
  
--- Active item remains `ITEM-0006` "Add no-reload tag CRUD interactions".
--- Validator result: PASS.
--- Accepted by inspection because the tag management slice meets the locked acceptance criteria and the shared swap-helper change does not introduce an observed regression on the existing project/task mutation surfaces.
-+- `ITEM-0006` is accepted and marked done.
-+- Reviewer decision: DONE.
-+- The remaining backlog item is `ITEM-0007` "Add automated coverage and final validation".
+-- `ITEM-0008`: document local setup and verification workflow under `apps/project-tracker/`.
++- `ITEM-0008` is accepted and marked done.
++- [README.md](/home/sundaram/code/temp/test/apps/project-tracker/README.md) now matches the locked `pyenv` plus Poetry workflow, stays project-local under `apps/project-tracker/`, preserves the `manage.py` entrypoint, and retains the exact `ModuleNotFoundError: No module named 'django'` caveat as an environment/setup issue.
++- Reviewer confirmed the documented verification path in the current workspace:
++  - `python3 -m py_compile $(find apps/project-tracker -name '*.py' | sort)`
++  - `poetry run python apps/project-tracker/manage.py test tracker.tests.test_domain tracker.tests.test_views` with 36 tests green
  
--## What Was Validated
-+## Accepted State
+-## Validator Result
++## Planning Focus
  
--- `tracker/views.py` and `tracker/urls.py` now provide:
--  - `tag_list`
--  - `tag_detail`
--  - `tag_create`
--  - `tag_update`
--  - `tag_delete`
--- `templates/tracker/tag_detail.html` exposes four stable async regions:
--  - `#tag-create-form-region`
--  - `#tag-detail-region`
--  - `#tag-edit-form-region`
--  - `#tag-list-region`
--- Async selector contract matches the flow:
--  - create swaps create/list/detail/edit reset
--  - selection swaps list/detail/edit reset
--  - update swaps list/detail/edit reset
--  - delete swaps create/list/detail/edit reset
--- Direct navigation contract is preserved:
--  - project/task tag chips still link normally to `tag_detail`
--  - `tag_detail()` returns a full page for normal requests and partial swaps only for XHR
--- Shared JS helper check:
--  - `static/tracker/app.js` replaces the wrapper only when the returned fragment root already matches the target wrapper ID
--  - otherwise it updates `innerHTML`, which preserves the existing region IDs used by repeated project/task/tag swaps
-+- Tag CRUD now exists on a dedicated server-rendered management surface with stable async swap regions for create, detail, edit, and list updates.
-+- The shared `static/tracker/app.js` swap helper change was inspected and does not show a blocking selector-parity regression on the existing project/task surfaces.
-+- The async contract remains HTML-partial based and stays inside the single Django tracker app with plain templates and vanilla JS only.
- 
--## Verification Evidence
-+## Environment Caveat
- 
+-- Validation passed for the revised documentation slice.
+-- [README.md](/home/sundaram/code/temp/test/apps/project-tracker/README.md) now uses the locked `pyenv` plus Poetry workflow, keeps commands scoped to `apps/project-tracker/`, and preserves the exact `ModuleNotFoundError: No module named 'django'` caveat as an environment/setup issue.
+-- The current workspace no longer reproduces the earlier missing-Django runtime block: the documented focused Django test command now succeeds in the Poetry environment.
+-
+-## Validation Evidence
+-
 -- Passed: `python3 -m py_compile $(find apps/project-tracker -name '*.py' | sort)`
--- Blocked in workspace: `python3 apps/project-tracker/manage.py test tracker.tests.test_views`
--  - failure: `ModuleNotFoundError: No module named 'django'`
-+- Static validation passed via `python3 -m py_compile $(find apps/project-tracker -name '*.py' | sort)`.
-+- Django runtime tests are still blocked in this workspace: `python3 apps/project-tracker/manage.py test tracker.tests.test_views` fails with `ModuleNotFoundError: No module named 'django'`.
- 
+-- Passed: `poetry run python apps/project-tracker/manage.py test tracker.tests.test_domain tracker.tests.test_views` with 36 tests green
+-
 -## Reviewer Focus
-+## Planner Focus
- 
--- Confirm the tag CRUD slice should be marked done despite the unchanged environment caveat blocking Django runtime tests.
--- Keep an eye on the shared `app.js` helper change because it affects all async mutation surfaces, although validator inspection did not find a parity break.
-+- Activate the final backlog slice for automated coverage and validation.
-+- Preserve the documented environment caveat unless the workspace gains Django during that slice.
+-
+-- Confirm the revised README stays within the locked tooling and stack constraints from [goal.yaml](/home/sundaram/code/temp/test/ai/goal.yaml).
+-- Confirm the documentation remains project-local and accurately reflects the live verification path under [manage.py](/home/sundaram/code/temp/test/apps/project-tracker/manage.py).
+-- Decide whether the residual assumption about local `pyenv` and Poetry installation is acceptable for closing `ITEM-0008`.
++- Select the next backlog decision now that `ITEM-0008` is complete.
++- Keep the locked stack and tooling constraints unchanged unless a later item explicitly requires a decision update.
 diff --git a/ai/review.md b/ai/review.md
-index 06b1c34b177f50e1cad545e96a03d9b3e3e6ec3a..1addec664558ae797a0784ff6541cfc35ccca543
+index 572fe71a7f2c311f05c7c47f3f578584138ac3f3..1a276e5c07c2bc6021eabb98d0df68ea0ec18ead
 --- a/ai/review.md
 +++ b/ai/review.md
-@@ -258,6 +258,22 @@
+@@ -446,3 +446,10 @@
+ ## Known Risks
  
- ## Validator Decision
- 
-+- Result: PASS for `ITEM-0006`.
-+- Acceptance criteria check:
-+  - `tracker/views.py` and `tracker/urls.py` provide tag create, update, delete, list, and detail flows inside the existing Django app with HTML partial mutation responses only.
-+  - `templates/tracker/tag_detail.html` and the tag partials expose stable create, detail, edit, and list swap regions for the dedicated server-rendered tag management surface.
-+  - Invalid tag submissions return inline form errors through the same partial-response contract rather than forcing a full-page workflow.
-+  - The shared `static/tracker/app.js` swap helper preserves wrapper IDs across repeated async updates, which keeps the existing project/task surfaces compatible with the new tag management regions.
-+- Regression check:
-+  - No blocking regression found by inspection in the shared swap helper or tag mutation selector contract.
+ - The README now assumes `pyenv` and `Poetry` are installed on the local machine; it intentionally does not document alternate package-management flows because no exception is approved in [decision-lock.yaml](/home/sundaram/code/temp/test/ai/decision-lock.yaml).
 +
 +## Reviewer Decision
 +
-+- Decision: DONE for `ITEM-0006`.
-+- Accepted because the tag CRUD slice satisfies the locked no-reload requirements on a dedicated server-rendered management surface and stays within the existing Django + vanilla JS architecture.
-+- Accepted with unchanged environment caveat: `python3 apps/project-tracker/manage.py test tracker.tests.test_views` remains blocked in this workspace by `ModuleNotFoundError: No module named 'django'`, so runtime verification is still limited to static inspection plus Python compilation.
-+- Follow-up for planning: the remaining backlog item should focus on final automated coverage and end-to-end validation once the workspace can run Django tests.
-+
- - Decision: PASS for `ITEM-0005`.
- - Accepted because the revised `project_delete()` detail-page response now clears every task-owned swap region that lives outside `#project-detail-region`, matching the current DOM layout and removing the stale task CRUD regression identified in the prior validation pass.
- - Focused inspection confirms the response now swaps `#project-detail-region`, `#project-edit-form-region`, `#task-create-form-region`, `#task-edit-form-region`, and `#task-list-region`, and the tightened delete test asserts the task regions are present while stale task UI content is absent.
++- Decision: DONE for `ITEM-0008`.
++- Accepted because [README.md](/home/sundaram/code/temp/test/apps/project-tracker/README.md) now follows the locked `pyenv` plus Poetry workflow, stays project-local under `apps/project-tracker/`, preserves the current `manage.py` entrypoint, and documents the focused verification commands required by the active item.
++- Accepted with a narrowed caveat: the README correctly preserves `ModuleNotFoundError: No module named 'django'` as a setup failure mode for an uninitialized environment, while current workspace validation passed with `poetry run python apps/project-tracker/manage.py test tracker.tests.test_domain tracker.tests.test_views` at 36 tests.
++- No scope drift found: the documentation remains aligned with the locked Django, SQLite, and vanilla HTML/CSS/JS stack and does not introduce alternate dependency-management or runtime tooling.
 
 [3m[35mtokens used[0m[0m
-38,459
+35,910
 
-Script done on 2026-03-11 23:03:02-05:00 [COMMAND_EXIT_CODE="0"]
+Script done on 2026-03-11 23:35:14-05:00 [COMMAND_EXIT_CODE="0"]

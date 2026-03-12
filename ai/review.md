@@ -446,3 +446,10 @@ Use this file for reviewer outcomes:
 ## Known Risks
 
 - The README now assumes `pyenv` and `Poetry` are installed on the local machine; it intentionally does not document alternate package-management flows because no exception is approved in [decision-lock.yaml](/home/sundaram/code/temp/test/ai/decision-lock.yaml).
+
+## Reviewer Decision
+
+- Decision: DONE for `ITEM-0008`.
+- Accepted because [README.md](/home/sundaram/code/temp/test/apps/project-tracker/README.md) now follows the locked `pyenv` plus Poetry workflow, stays project-local under `apps/project-tracker/`, preserves the current `manage.py` entrypoint, and documents the focused verification commands required by the active item.
+- Accepted with a narrowed caveat: the README correctly preserves `ModuleNotFoundError: No module named 'django'` as a setup failure mode for an uninitialized environment, while current workspace validation passed with `poetry run python apps/project-tracker/manage.py test tracker.tests.test_domain tracker.tests.test_views` at 36 tests.
+- No scope drift found: the documentation remains aligned with the locked Django, SQLite, and vanilla HTML/CSS/JS stack and does not introduce alternate dependency-management or runtime tooling.
